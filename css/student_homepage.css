@@ -57,6 +57,7 @@ h3 {
 
 .logout-button:hover {
   text-decoration: underline;
+  cursor: pointer;
 }
 
 .navbar {
@@ -98,4 +99,37 @@ h3 {
   font-style: normal;
   font-weight: 600;
   line-height: normal;
+}
+
+.answer-button:hover {
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 811px) {
+  h1 {
+    text-align: left;
+    font-size: 16px;
+  }
+
+  h2 {
+    font-size: 16px;
+  }
+
+  h3 {
+    font-size: 20px;
+  }
+
+  .logout-button {
+    font-size: 16px;
+  }
+
+  .main {
+    padding-top: 30px;
+    justify-content: start;
+  }
+
+  .main-graphics {
+    height: 50vw;
+    width: 85vw;
+  }
 }

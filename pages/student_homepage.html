@@ -16,7 +16,7 @@
   <body>
     <nav class="navbar">
       <h1>PUP HDF Attendance System</h1>
-      <a class="logout-button"><p>LOGOUT</p></a>
+      <a class="logout-button" onclick="toLogin()"><p>LOGOUT</p></a>
     </nav>
     <section class="main">
       <div>
@@ -38,6 +38,10 @@
     </section>
     <script src="../scripts.js"></script>
     <script>
+      function toLogin() {
+        window.location.href = "../index.html";
+        return false;
+      }
       function toHDF() {
         window.location.href = "hdf_page.html";
         return false;
