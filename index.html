@@ -30,20 +30,26 @@
           </div>
           <div><a1>LOGIN</a1></div>
           <div>
-            <button class="login-as-button" onclick="toStudentPage()">
+            <button class="login-as-button" onclick="toStudentLoginPage()">
               AS A STUDENT
             </button>
           </div>
           <div>
-            <button class="login-as-button">AS A PROFESSOR</button>
+            <button class="login-as-button" onclick="toProfessorLoginPage()">
+              AS A PROFESSOR
+            </button>
           </div>
         </div>
       </section>
     </div>
     <script src="scripts.js"></script>
     <script>
-      function toStudentPage() {
+      function toStudentLoginPage() {
         window.location.href = "pages/login_as_student.html";
+        return false;
+      }
+      function toProfessorLoginPage() {
+        window.location.href = "pages/login_as_professor.html";
         return false;
       }
     </script>
