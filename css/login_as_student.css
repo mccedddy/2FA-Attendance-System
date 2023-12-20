@@ -1,0 +1,137 @@
+body {
+  margin: auto;
+  padding: 0px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+}
+
+div {
+  border: 0px solid red;
+}
+
+a {
+  color: #000;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a1 {
+  color: #000;
+  text-align: center;
+  font-family: "Poppins";
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.login-div {
+  display: flex;
+  height: 100vh;
+  border: 0px solid red;
+}
+
+.login-div-L {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-div-center {
+  display: flex;
+  height: 50vh;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.login-title {
+  margin-bottom: 30px;
+}
+
+.login-form {
+  height: 50vh;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border: 0px solid blue;
+}
+
+.login-textbox-container {
+  width: 295px;
+  height: 47px;
+  margin: 5px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 0px;
+  background: #e9e9e9;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-textbox {
+  color: #000;
+  background: #e9e9e9;
+  border: 0px;
+  font-family: "Poppins";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  outline: none;
+}
+
+.textbox-icon {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  padding-right: 13px;
+}
+
+.login-button {
+  width: 300px;
+  height: 50px;
+  margin-top: 20px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 0px;
+  background: #810000;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  color: #fff;
+  text-align: center;
+  font-family: "Poppins";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.login-button:hover {
+  cursor: pointer;
+}
+
+.login-div-R {
+  width: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-graphics {
+  height: 45vw;
+  width: 45vw;
+}
+
+@media only screen and (max-width: 811px) {
+}

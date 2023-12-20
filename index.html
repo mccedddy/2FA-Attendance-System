@@ -30,7 +30,9 @@
           </div>
           <div><a1>LOGIN</a1></div>
           <div>
-            <button class="login-as-button">AS A STUDENT</button>
+            <button class="login-as-button" onclick="toStudentPage()">
+              AS A STUDENT
+            </button>
           </div>
           <div>
             <button class="login-as-button">AS A PROFESSOR</button>
@@ -39,5 +41,11 @@
       </section>
     </div>
     <script src="scripts.js"></script>
+    <script>
+      function toStudentPage() {
+        window.location.href = "pages/login_as_student.html";
+        return false;
+      }
+    </script>
   </body>
 </html>
