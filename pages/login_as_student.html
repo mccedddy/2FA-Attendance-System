@@ -18,7 +18,8 @@
       <section class="login-div-L">
         <div class="login-div-center">
           <div class="login-title"><a1>STUDENT LOGIN</a1></div>
-          <form action="" method="POST" class="login-form">
+          <!-- <form action="" method="POST" class="login-form"> -->
+          <form class="login-form"></form>
             <div class="login-textbox-container">
               <img
                 src="../assets/images/icons/person.png"
@@ -39,7 +40,13 @@
               />
             </div>
             <div>
-              <button type="submit" class="login-button">LOGIN</button>
+              <button
+                type="submit"
+                class="login-button"
+                onclick="toStudentHomePage()"
+              >
+                LOGIN
+              </button>
             </div>
           </form>
           <div>
@@ -52,12 +59,18 @@
       <section class="login-div-R">
         <div>
           <img
-            src="..\assets\images\graphics\login_as_student.png"
+            src="..\assets\images\graphics\students.png"
             class="login-graphics"
           />
         </div>
       </section>
     </div>
     <script src="../scripts.js"></script>
+    <script>
+      function toStudentHomePage() {
+        window.location.href = "student_homepage.html";
+        return false;
+      }
+    </script>
   </body>
 </html>
