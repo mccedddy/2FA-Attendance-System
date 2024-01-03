@@ -23,6 +23,7 @@ a1 {
 .login-div {
   display: flex;
   height: 100vh;
+  flex-shrink: 1;
   /* border: 1px solid red; */
 }
 
@@ -65,7 +66,7 @@ a1 {
 }
 
 .login-as-button {
-  width: 300px;
+  width: 20vw;
   height: 50px;
   margin: 5px;
   flex-shrink: 0;
