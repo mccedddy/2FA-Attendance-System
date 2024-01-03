@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PUP HDF Attendance System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/student_homepage.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <h1>PUP HDF Attendance System</h1>
+      <a class="logout-button" onclick="toLogin()">LOGOUT</a>
+    </nav>
+    <section class="main">
+      <div>
+        <h2>LAST NAME, FIRST NAME, M.I</h2>
+        <h2>STUDENT NUMBER</h2>
+      </div>
+      <div>
+        <img
+          src="..\assets\images\graphics\scientists.png"
+          class="main-graphics"
+        />
+      </div>
+      <div><h3>HEALTH DECLARATION FORM</h3></div>
+      <div>
+        <button class="answer-button" onclick="toHDF()">ANSWER</button>
+      </div>
+    </section>
+    <!-- <script src="../scripts.js"></script> -->
+    <script>
+      function toLogin() {
+        window.location.href = "../index.html";
+        return false;
+      }
+      function toHDF() {
+        window.location.href = "hdf_page.html";
+        return false;
+      }
+    </script>
+  </body>
+</html>
