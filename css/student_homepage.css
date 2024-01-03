@@ -110,6 +110,11 @@ h3 {
     font-size: 16px;
   }
 
+  .logout-button {
+    text-align: left;
+    font-size: 12px;
+  }
+
   h2 {
     font-size: 16px;
   }

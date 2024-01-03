@@ -347,10 +347,14 @@ p {
 }
 
 @media only screen and (max-width: 811px) {
-  h1,
-  .logout-button {
+  h1 {
     text-align: left;
     font-size: 16px;
+  }
+
+  .logout-button {
+    text-align: left;
+    font-size: 12px;
   }
 
   h2 {
