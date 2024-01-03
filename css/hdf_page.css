@@ -58,7 +58,7 @@
   width: 70%;
 }
 
-#confirmationModal #confirmationSubmitButton {
+#confirmationModal #submitButton {
   height: 40px;
   width: 50%;
   flex-shrink: 0;
@@ -141,7 +141,7 @@ body {
 h1 {
   color: #000;
   font-family: "Poppins";
-  font-size: 24px;
+  font-size: 20px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -214,7 +214,7 @@ p {
   color: #000;
   text-align: center;
   font-family: "Poppins";
-  font-size: 20px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -315,13 +315,17 @@ p {
   width: max-content;
 }
 
+.q6-textbox-container {
+  display: flex;
+}
+
 .button-container {
   padding: 0px 50px 50px 0px;
   display: flex;
   justify-content: end;
 }
 
-.submit-button {
+.confirm-button {
   width: 300px;
   height: 50px;
   flex-shrink: 0;
@@ -338,15 +342,19 @@ p {
   line-height: normal;
 }
 
-.submit-button:hover {
+.confirm-button:hover {
   cursor: pointer;
 }
 
 @media only screen and (max-width: 811px) {
-  h1,
-  .logout-button {
+  h1 {
     text-align: left;
     font-size: 16px;
+  }
+
+  .logout-button {
+    text-align: left;
+    font-size: 12px;
   }
 
   h2 {
@@ -390,7 +398,7 @@ p {
     padding-left: 0px;
   }
 
-  .submit-button {
+  .confirm-button {
     width: 40vw;
   }
 
