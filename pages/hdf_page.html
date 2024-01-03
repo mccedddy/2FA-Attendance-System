@@ -269,7 +269,10 @@
               </div>
             </div>
             <div class="button-container">
-              <button type="submit" class="submit-button" id="submit-button">
+              <!-- <button type="submit" class="submit-button" id="submit-button">
+                SUBMIT
+              </button> -->
+              <button class="submit-button" id="submit-button" onclick="openConfirmationModal()">
                 SUBMIT
               </button>
             </div>
@@ -277,7 +280,37 @@
         </div>
       </div>
     </section>
-    <script src="../js/scripts.js"></script>
+
+    <div id="confirmationModal" class="modal-blur">
+      <div class="modal-content">
+        <img src="../assets/images/graphics/falling_girl_with_phone.png" class="confirmation-graphics" />
+        <h6>ARE YOU SURE?</h6>
+        <p>Kindly make sure that the data submitted is all true.</p>
+        <div class="buttons-container">
+          <button id="confirmationBackButton" onclick="closeConfirmationModal()">BACK</button>
+          <button id="confirmationSubmitButton" onclick="submitForm()">SUBMIT</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="perfectScoreModal" class="modal-blur">
+      <div class="modal-content">
+        <span class="close-modal" onclick="closePerfectScoreModal()">&times;</span>
+        <div class="score-container">
+          <div id="yellow">
+            <div id="white">
+              <h2>100</h2>
+            </div>
+          </div>
+        </div>
+        <h2>PERFECT SCORE</h2>
+        <p>All are reminded to follow basic health sanitation and health protocols while inside the campus such as washing of hands with soap, using alcohol to sanitize hands and personal belongings, observing social distance, and avoiding mass gatherings among others.</p>
+        <h6>Your score has been stored in your NFC tag. Tap your NFC tag on the scanner in front of the main gate to be able to enter.</h6>
+      </div>
+    </div>
+
+
+    <script src="../js/hdf_validator.js"></script>
     <script>
       function toLogin() {
         window.location.href = "../index.html";
