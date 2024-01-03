@@ -11,8 +11,67 @@ document.addEventListener('DOMContentLoaded', function () {
         hiddenQuestions.style.display = 'none';
       }
     });
-  }
+  }  
 });
+
+// Form Validator
+function validateForm() {
+  // Validate radio buttons
+  var checkedRadioCount = document.querySelectorAll('input[type="radio"]:checked').length;
+  if (checkedRadioCount !== 4) {
+    alert("Please answer all required questions.");
+    return;
+  }
+
+  // Validate checkboxes
+  var checkboxes = document.getElementsByName("q2[]");
+  var checkboxValid = Array.prototype.slice.call(checkboxes).some(x => x.checked);
+  if (!checkboxValid) {
+    alert("Please check at least 1 checkbox.");
+    return;
+  }
+
+  // Validate textboxes
+  var textboxes = document.querySelectorAll('.textbox');
+  var checkboxQ5no = document.querySelector('input[name="q5"][value="no"]');
+
+  if (checkboxQ5no.checked) {
+    var textboxes = document.querySelectorAll('.textbox:not([name="q6a"]):not([name="q6b"])');
+    var q6aTextbox = document.querySelector('input[name="q6a"]');
+    var q6bTextbox = document.querySelector('input[name="q6b"]');
+    q6aTextbox.value = "";
+    q6bTextbox.value = "";
+  } 
+
+  for (var i = 0; i < textboxes.length; i++) {
+    var value = textboxes[i].value.trim();
+    var type = textboxes[i].getAttribute('name');
+    if (value === "") {
+      alert("Please fill in all required textboxes.");
+      return;
+    }
+
+    // Validate contact number
+    if (type === "q7b" || type === "q8b") {
+      if (!/^\d{10,13}$/.test(value)) {
+        alert("Please enter a valid contact number.");
+        return;
+      }
+    }
+
+    // Validate email address
+    if (type === "q7a" || type === "q8c") {
+      if (!/^\S+@\S+\.\S+$/.test(value)) {
+        alert("Please enter a valid email address.");
+        return;
+      }
+    }
+  }
+
+  // If all validations pass, open the confirmation modal
+  openConfirmationModal();
+}
+
 
 // Popup Controller
 function openPerfectScoreModal() {

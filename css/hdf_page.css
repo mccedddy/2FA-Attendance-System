@@ -58,7 +58,7 @@
   width: 70%;
 }
 
-#confirmationModal #confirmationSubmitButton {
+#confirmationModal #submitButton {
   height: 40px;
   width: 50%;
   flex-shrink: 0;
@@ -325,7 +325,7 @@ p {
   justify-content: end;
 }
 
-.submit-button {
+.confirm-button {
   width: 300px;
   height: 50px;
   flex-shrink: 0;
@@ -342,7 +342,7 @@ p {
   line-height: normal;
 }
 
-.submit-button:hover {
+.confirm-button:hover {
   cursor: pointer;
 }
 
@@ -394,7 +394,7 @@ p {
     padding-left: 0px;
   }
 
-  .submit-button {
+  .confirm-button {
     width: 40vw;
   }
 
