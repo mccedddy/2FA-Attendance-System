@@ -23,7 +23,7 @@ a1 {
 .login-div {
   display: flex;
   height: 100vh;
-  border: 1px solid red;
+  /* border: 1px solid red; */
 }
 
 .login-div-L {
