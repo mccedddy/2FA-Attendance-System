@@ -315,6 +315,10 @@ p {
   width: max-content;
 }
 
+.q6-textbox-container {
+  display: flex;
+}
+
 .button-container {
   padding: 0px 50px 50px 0px;
   display: flex;
