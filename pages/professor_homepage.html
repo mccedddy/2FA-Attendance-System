@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PUP HDF Attendance System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/professor_homepage.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+        <a onclick="toProfessorHomepage()"><img src="..\assets\images\logos\pup_logo.png" /></a>
+        <img src="..\assets\images\icons\notepad.svg" class="nav-button"/>
+        <img src="..\assets\images\icons\graph.svg" class="nav-button"/>
+    </nav>
+    <section class="main">
+        <div class="header">
+            <a onclick="toProfessorHomepage()"><h1>PUP HDF Attendance System</h1></a>
+            <div>
+                <a class="logout-button" onclick="toLogin()">LOGOUT</a>
+            </div>
+        </div>
+    </section>
+    <!-- <script src="../scripts.js"></script> -->
+    <script>
+      function toLogin() {
+        window.location.href = "../index.html";
+        return false;
+      }
+      function toProfessorHomepage() {
+        window.location.href = "professor_homepage.html";
+        return false;
+      }
+    </script>
+  </body>
+</html>

@@ -15,7 +15,7 @@
   </head>
   <body>
     <nav class="navbar">
-      <h1>PUP HDF Attendance System</h1>
+      <a onclick="toStudentHomepage()"><h1>PUP HDF Attendance System</h1></a>
       <a class="logout-button" onclick="toLogin()">LOGOUT</a>
     </nav>
     <section class="main">
@@ -317,6 +317,10 @@
     <script>
       function toLogin() {
         window.location.href = "../index.html";
+        return false;
+      }
+      function toStudentHomepage() {
+        window.location.href = "student_homepage.html";
         return false;
       }
     </script>
