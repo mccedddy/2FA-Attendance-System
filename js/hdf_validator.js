@@ -2,16 +2,27 @@ document.addEventListener('DOMContentLoaded', function () {
   // Show / Hide Question 6
   var hiddenQuestions = document.querySelector('.hidden-question');
   hiddenQuestions.style.display = 'none';
+
+  var radioQ3 = document.getElementsByName('q3');
+  var radioQ4 = document.getElementsByName('q4');
   var radioQ5 = document.getElementsByName('q5');
+
+  function handleRadioChange() {
+    var showQuestions = radioQ3[0].checked || radioQ4[0].checked || radioQ5[1].checked || radioQ5[2].checked || radioQ5[3].checked;
+    hiddenQuestions.style.display = showQuestions ? 'block' : 'none';
+  }
+
+  for (var i = 0; i < radioQ3.length; i++) {
+    radioQ3[i].addEventListener('change', handleRadioChange);
+  }
+
+  for (var i = 0; i < radioQ4.length; i++) {
+    radioQ4[i].addEventListener('change', handleRadioChange);
+  }
+
   for (var i = 0; i < radioQ5.length; i++) {
-    radioQ5[i].addEventListener('change', function () {
-      if (this.value === 'yes-positive' || this.value === 'yes-negative' || this.value === 'yes-pending') {
-        hiddenQuestions.style.display = 'block';
-      } else if (this.value === 'no') {
-        hiddenQuestions.style.display = 'none';
-      }
-    });
-  }  
+    radioQ5[i].addEventListener('change', handleRadioChange);
+  }
 });
 
 // Form Validator
@@ -33,9 +44,9 @@ function validateForm() {
 
   // Validate textboxes
   var textboxes = document.querySelectorAll('.textbox');
-  var checkboxQ5no = document.querySelector('input[name="q5"][value="no"]');
+  var hiddenQuestions = document.querySelector('.hidden-question');
 
-  if (checkboxQ5no.checked) {
+  if (hiddenQuestions.style.display === 'none') {
     var textboxes = document.querySelectorAll('.textbox:not([name="q6a"]):not([name="q6b"])');
     var q6aTextbox = document.querySelector('input[name="q6a"]');
     var q6bTextbox = document.querySelector('input[name="q6b"]');
