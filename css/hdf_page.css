@@ -1,3 +1,230 @@
+html {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+}
+
+h1 {
+  color: #000;
+  font-family: "Poppins";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+h2 {
+  margin: 0px;
+  color: #fff;
+  text-align: center;
+  font-family: "Poppins";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+h3 {
+  color: #000;
+  text-align: center;
+  font-family: "Poppins";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+h4 {
+  margin: 0px;
+  color: #ffe000;
+  text-align: center;
+  font-family: "Poppins";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+h5 {
+  margin: 10px 0px 5px 0px;
+  color: #810000;
+  font-family: "Poppins";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+h6 {
+  margin: 10px 0px 5px 0px;
+  color: #000;
+  text-align: left;
+  font-family: "Poppins";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+p {
+  color: #000;
+  text-align: left;
+  font-family: "Poppins";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.logout-button {
+  color: #000;
+  text-align: center;
+  font-family: "Poppins";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.logout-button:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+a:hover {
+  cursor: pointer;
+}
+
+.navbar {
+  height: 75px;
+  padding: 0px 30px 0px 30px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-container {
+  margin: 40px;
+  padding: 0px;
+  width: 90vw;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 2px solid #000;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.top-container {
+  padding: 15px;
+  border-radius: 8px 8px 0px 0px;
+  background: #810000;
+  border: 5px solid #810000;
+}
+
+.bottom-container {
+  display: flex;
+  flex-direction: column;
+  border-top: 2px solid black
+}
+
+.questions {
+  display: flex;
+}
+
+.questions-L {
+  padding: 30px 20px 0px 20px;
+  width: 50%;
+}
+
+.questions-R {
+  padding: 30px 20px 0px 20px;
+  width: 50%;
+}
+
+.question::after {
+  content: "*";
+  color: red;
+}
+
+.radio-choices {
+  margin-bottom: 10px;
+  padding-left: 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.checkbox-choices {
+  display: flex;
+}
+
+.checkbox-choices-L {
+  padding-left: 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.question-textbox {
+  display: flex;
+  align-items: center;
+}
+
+.textbox {
+  margin: 0px 10px 0px 10px;
+  border-radius: 5px;
+  border: 1px solid #000;
+  height: 20px;
+  flex-grow: 1;
+  width: max-content;
+}
+
+.q6-textbox-container {
+  display: flex;
+}
+
+.button-container {
+  padding: 0px 50px 50px 0px;
+  display: flex;
+  justify-content: end;
+}
+
+.confirm-button {
+  width: 300px;
+  height: 50px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 0px;
+  background: #810000;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  color: #fff;
+  text-align: center;
+  font-family: "Poppins";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.confirm-button:hover {
+  cursor: pointer;
+}
+
 .modal-blur {
   display: none;
   position: fixed;
@@ -131,225 +358,7 @@
 }
 
 
-body {
-  margin: auto;
-  padding: 0px;
-  font-family: "Poppins", sans-serif;
-  font-weight: 400;
-}
 
-h1 {
-  color: #000;
-  font-family: "Poppins";
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-}
-
-h2 {
-  margin: 0px;
-  color: #fff;
-  text-align: center;
-  font-family: "Poppins";
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-}
-
-h3 {
-  color: #000;
-  text-align: center;
-  font-family: "Poppins";
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-}
-
-h4 {
-  margin: 0px;
-  color: #ffe000;
-  text-align: center;
-  font-family: "Poppins";
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
-
-h5 {
-  margin: 10px 0px 5px 0px;
-  color: #810000;
-  font-family: "Poppins";
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-}
-
-h6 {
-  margin: 10px 0px 5px 0px;
-  color: #000;
-  text-align: left;
-  font-family: "Poppins";
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-}
-
-p {
-  color: #000;
-  text-align: left;
-  font-family: "Poppins";
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
-
-.logout-button {
-  color: #000;
-  text-align: center;
-  font-family: "Poppins";
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-}
-
-.logout-button:hover {
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-a:hover {
-  cursor: pointer;
-}
-
-.navbar {
-  height: 10vh;
-  padding: 0px 30px 0px 30px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-}
-
-.main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.main-container {
-  margin: 40px;
-  padding: 0px;
-  width: 90vw;
-  flex-shrink: 0;
-  border-radius: 10px;
-  border: 2px solid #000;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-}
-
-.top-container {
-  padding: 15px;
-  border-radius: 8px 8px 0px 0px;
-  background: #810000;
-  border: 5px solid #810000;
-}
-
-.bottom-container {
-  display: flex;
-  flex-direction: column;
-  border-top: 2px solid black
-}
-
-.questions {
-  display: flex;
-}
-
-.questions-L {
-  padding: 30px 20px 0px 20px;
-  width: 50%;
-}
-
-.questions-R {
-  padding: 30px 20px 0px 20px;
-  width: 50%;
-}
-
-.question::after {
-  content: "*";
-  color: red;
-}
-
-.radio-choices {
-  margin-bottom: 10px;
-  padding-left: 40px;
-  display: flex;
-  flex-direction: column;
-}
-
-.checkbox-choices {
-  display: flex;
-}
-
-.checkbox-choices-L {
-  padding-left: 40px;
-  display: flex;
-  flex-direction: column;
-}
-
-.question-textbox {
-  display: flex;
-  align-items: center;
-}
-
-.textbox {
-  margin: 0px 10px 0px 10px;
-  border-radius: 5px;
-  border: 1px solid #000;
-  height: 20px;
-  flex-grow: 1;
-  width: max-content;
-}
-
-.q6-textbox-container {
-  display: flex;
-}
-
-.button-container {
-  padding: 0px 50px 50px 0px;
-  display: flex;
-  justify-content: end;
-}
-
-.confirm-button {
-  width: 300px;
-  height: 50px;
-  flex-shrink: 0;
-  border-radius: 10px;
-  border: 0px;
-  background: #810000;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  color: #fff;
-  text-align: center;
-  font-family: "Poppins";
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-}
-
-.confirm-button:hover {
-  cursor: pointer;
-}
 
 @media only screen and (max-width: 811px) {
   h1 {

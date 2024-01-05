@@ -1,10 +1,17 @@
+html {
+  height: 100%;
+  width: 100%;
+}
+
 body {
-    margin: auto;
-    padding: 0px;
-    font-family: "Poppins", sans-serif;
-    font-weight: 400;
-    display: flex;
-  }
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  display: flex;
+}
 
   h1 {
     color: #000;
@@ -65,46 +72,37 @@ body {
   }
 
   .navbar {
-    height: 100vh;
+    height: 100%;
     width: 65px;
+    margin: 0px;
     padding-top: 13px;
     background-color: #810000;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
+  }
+
+  .navbar-top {
+    display: flex;
+    justify-content: center;
     flex-direction: column;
   }
 
   .navbar img {
     height: 40px;
     width: 40px;
-    /* margin-bottom: 30px; */
-  }
-
-  .navbar-buttons {
-    margin-top: 30px;
-    display: flex;
-    flex-direction: column;
-    height: 80vh;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .navbar-top-buttons {
-    display: flex;
-    flex-direction: column;
-    height: 20vh;
-    justify-content: space-around;
   }
 
   .nav-button {
+    margin: 20px 0px 20px 0px;
     cursor: pointer;
   }
 
   .main {
     height: 100%;
     width: 100%;
-    padding: 10px 40px 10px 40px;
+    padding: 0px 60px 0px 60px;
   }
 
   .main .header {
@@ -132,7 +130,7 @@ body {
     justify-content: center;
   }
   
-  .filter-textbox:hover, .filter-textbox:focus {
+  .search-textbox:hover, .filter-search:focus {
     outline: 1px solid #810000;
   }
 
@@ -164,10 +162,20 @@ body {
     outline: 1px solid #810000;
   }
 
-  .filters-container {
+  .filters-and-export {
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+  
+  .filters-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .time-container {
+    display: flex;
+    flex-wrap: wrap;
   }
 
   .date-time-filter {
@@ -273,6 +281,7 @@ body {
 
   #closeNavbar {
     display: none;
+    margin-top: 0px;
   }
 
   @media only screen and (max-width: 811px) {
@@ -281,11 +290,20 @@ body {
     }
 
     .main {
-      padding: 0px 10px 0px 10px;
+      padding: 10px 10px 0px 10px;
     }
 
     .navbar {
+      width: 50px;
       display: none;
+      position: fixed;  
+      top: 0;  
+      left: 0;  
+      z-index: 1000;
+    }
+
+    .hamburger {
+      margin-right: 10px;
     }
 
     #closeNavbar {
@@ -299,12 +317,21 @@ body {
     }
 
     .title {
-      font-size: 16px;
+      font-size: 12px;
     }
 
-    .filters-container {
-    flex-direction: column;
-    align-items: start;
+    .search-container {
+      margin-bottom: 5px;
+    }
+
+    .search-textbox {
+      width: 150px;
+      height: 20px;
+    }
+
+    input[type="text"] {
+      width: 110px;
+      font-size: 10px;
     }
 
     #sectionFilter {
@@ -312,28 +339,70 @@ body {
       font-size: 10px;
     }
 
+    .filters-and-export {
+      display: flex;
+      margin-top: 5px;
+      justify-content: space-between;
+      align-items: end ;
+      gap: 5px;
+    }
+
+    .filters-container {
+      display: flex;
+      gap: 5px;
+    }
+
     .date-time-filter {
       width: 80px;
       font-size: 10px;
+      margin: 0px;
     }
 
     #export {
       width: 106px;
       font-size: 10px;
-      margin-bottom: 10px;
+    }
+
+    .room-button-container {
+      margin-top: 25px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
     }
 
     .room-button {
-      width: 140px;
+      width: 130px;
       height: 50px;
       flex-shrink: 0;
       border-radius: 10px;
       border: 1px solid #000;
       box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
       font-size: 10px;
+      align-items: center;
+      margin: 5px;
+    }
+
+    #attendanceTable {
+      margin-top: 7px;
     }
 
     #attendanceTable th, #attendanceTable td {
       font-size: 8px;
+    }
+  }
+
+  @media only screen and (max-width: 345px) {
+    .filters-and-export {
+      flex-direction: column;
+      align-items: start;
+    }
+
+    .filters-container {
+      flex-direction: column;
+    }
+
+    .time-container {
+      flex-direction: column;
     }
   }

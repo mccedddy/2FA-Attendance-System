@@ -1,5 +1,12 @@
+html {
+  height: 100%;
+  width: 100%;
+}
+
 body {
-  margin: auto;
+  height: 100%;
+  width: 100%;
+  margin: 0px;
   padding: 0px;
   font-family: "Poppins", sans-serif;
   font-weight: 400;
@@ -45,10 +52,9 @@ a1 {
 
 .login-div-center {
   display: flex;
-  height: 50vh;
   flex-direction: column;
   flex-wrap: nowrap;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
 }
 
@@ -57,7 +63,6 @@ a1 {
 }
 
 .login-form {
-  height: 50vh;
   max-width: 300px;
   display: flex;
   flex-direction: column;
