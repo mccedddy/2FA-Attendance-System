@@ -114,23 +114,27 @@ body {
     align-items: center;
   }
 
-  .filter-container {
+  .search-container {
     display: flex;
     justify-content: end;
   }
 
-  .filter-textbox {
+  .search-textbox {
     width: 200px;
     height: 25px;
     padding-left: 5px;
     flex-shrink: 0;
     border-radius: 10px;
-    border: 1px solid #000;
+    border: 1px solid #810000;
     background: #FFF;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  
+  .filter-textbox:hover, .filter-textbox:focus {
+    outline: 1px solid #810000;
   }
 
   input[type="text"] {
@@ -157,6 +161,16 @@ body {
     line-height: normal;
   }
 
+  #sectionFilter:hover, #sectionFilter:focus{
+    outline: 1px solid #810000;
+  }
+
+  .filters-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
   .date-time-filter {
     width: 125px;
     height: 28px;
@@ -169,6 +183,67 @@ body {
     color: #810000;
     padding: 0px 12px 0px 12px;
     cursor: pointer;
+  }
+
+  .date-time-filter:hover, .date-time-filter:focus {
+    outline: 1px solid #810000;
+  }
+
+  #export {
+    width: 149px;
+    height: 30px;
+    flex-shrink: 0;
+    border-radius: 5px;
+    border: 1px solid #810000;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #fff;
+    color: #810000;
+    font-family: "Poppins";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
+
+  #export:hover {
+    outline: 1px solid #810000;
+  }
+
+  .room-button-container {
+    margin-top: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .room-button {
+    width: 200px;
+    height: 95px;
+    margin-bottom: 25px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    border: 1px solid #810000;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    background-color: white;
+    color: black;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    color: #000;
+    font-family: "Poppins";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+
+  .room-button:hover {
+    background-color: #810000;
+    color: white;
+    outline: 3px solid #810000;
   }
 
   #attendanceTable {

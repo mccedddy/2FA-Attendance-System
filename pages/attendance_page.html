@@ -30,8 +30,8 @@
             <a onclick="toProfessorHomepage()"><h1>PUP HDF Attendance System</h1></a>
         </div>
         <h1 class="title">ROOM 300</h1>
-        <div class="filter-container">
-          <div class="filter-textbox">
+        <div class="search-container">
+          <div class="search-textbox">
             <input type="text" name="search" id="search">
             <img src="..\assets\images\icons\search.svg"/>
           </div>
@@ -44,10 +44,15 @@
             <option value="option2">BSCOE 4-4</option>
             <option value="option2">BSCOE 4-5</option>
             <option value="option2">BSCOE 4-6</option>
-        </select><br>
-        <input type="date" id="date" class="date-time-filter" required>
-        <input type="time" id="startTime" class="date-time-filter" required>
-        <input type="time" id="endTime" class="date-time-filter" required>
+        </select>
+        <div class="filters-container">
+          <div>
+            <input type="date" id="date" class="date-time-filter" required>
+            <input type="time" id="startTime" class="date-time-filter" required>
+            <input type="time" id="endTime" class="date-time-filter" required>
+          </div>
+          <button id="export"><p>EXPORT DATA</p><img src="..\assets\images\icons\download.svg"/></button>
+        </div>
         <table id="attendanceTable">
             <thead>
               <tr>
