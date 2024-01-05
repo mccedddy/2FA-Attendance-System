@@ -46,11 +46,13 @@
             <option value="option2">BSCOE 4-5</option>
             <option value="option2">BSCOE 4-6</option>
         </select>
-        <div class="filters-container">
-          <div>
+        <div class="filters-and-export">
+          <div class="filters-container">
             <input type="date" id="date" class="date-time-filter" required>
-            <input type="time" id="startTime" class="date-time-filter" required>
-            <input type="time" id="endTime" class="date-time-filter" required>
+            <div class="time-container">
+              <input type="time" id="startTime" class="date-time-filter" required>
+              <input type="time" id="endTime" class="date-time-filter" required>
+            </div>
           </div>
           <button id="export"><p>EXPORT DATA</p><img src="..\assets\images\icons\download.svg"/></button>
         </div>
