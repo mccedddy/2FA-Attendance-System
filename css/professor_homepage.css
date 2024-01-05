@@ -1,10 +1,17 @@
+html {
+  height: 100%;
+  width: 100%;
+}
+
 body {
-    margin: auto;
-    padding: 0px;
-    font-family: "Poppins", sans-serif;
-    font-weight: 400;
-    display: flex;
-  }
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  display: flex;
+}
 
   h1 {
     color: #000;
@@ -65,46 +72,37 @@ body {
   }
 
   .navbar {
-    height: 100vh;
+    height: 100%;
     width: 65px;
+    margin: 0px;
     padding-top: 13px;
     background-color: #810000;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
+  }
+
+  .navbar-top {
+    display: flex;
+    justify-content: center;
     flex-direction: column;
   }
 
   .navbar img {
     height: 40px;
     width: 40px;
-    /* margin-bottom: 30px; */
-  }
-
-  .navbar-buttons {
-    margin-top: 30px;
-    display: flex;
-    flex-direction: column;
-    height: 80vh;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .navbar-top-buttons {
-    display: flex;
-    flex-direction: column;
-    height: 20vh;
-    justify-content: space-around;
   }
 
   .nav-button {
+    margin: 20px 0px 20px 0px;
     cursor: pointer;
   }
 
   .main {
     height: 100%;
     width: 100%;
-    padding: 10px 40px 10px 40px;
+    padding: 0px 60px 0px 60px;
   }
 
   .main .header {
@@ -283,6 +281,7 @@ body {
 
   #closeNavbar {
     display: none;
+    margin-top: 0px;
   }
 
   @media only screen and (max-width: 811px) {
@@ -291,7 +290,7 @@ body {
     }
 
     .main {
-      padding: 0px 10px 0px 10px;
+      padding: 10px 10px 0px 10px;
     }
 
     .navbar {

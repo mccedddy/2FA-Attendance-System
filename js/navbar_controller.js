@@ -4,6 +4,5 @@ function toggleMobileNavbar() {
       mobileNavbar.style.display = 'none';
     } else {
       mobileNavbar.style.display = 'flex';
-      mobileNavbar.style.justifyContent = 'center';
     }
   }

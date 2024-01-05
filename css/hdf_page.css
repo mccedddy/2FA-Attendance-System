@@ -1,138 +1,12 @@
-.modal-blur {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
+html {
   height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(2px);
-}
-
-.modal-content {
-  background-color: #fefefe;
-  margin: 10% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 30%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: 30px;
-  border: 1px solid #000;
-  background: #FFF;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-}
-
-.close-modal {
-  position: relative;
-  height: 0px;
-  top: -20px;
-  left: 5px;
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-  align-self: flex-end;
-  padding-bottom: 0px;
-}
-
-.close-modal:hover,
-.close-modal:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-#confirmationModal .buttons-container {
   width: 100%;
-  display: flex;
-  justify-content: center;
 }
-
-.confirmation-graphics {
-  height: 70%;
-  width: 70%;
-}
-
-#confirmationModal #submitButton {
-  height: 40px;
-  width: 50%;
-  flex-shrink: 0;
-  border-radius: 10px;
-  border: 0px;
-  background: #810000;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  color: #fff;
-  text-align: center;
-  font-family: "Poppins";
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-}
-
-#confirmationModal #confirmationBackButton {
-  height: 40px;
-  width: 50%;
-  flex-shrink: 0;
-  border-radius: 10px;
-  border: 0px;
-  background: #fff;
-  color: #810000; 
-  text-align: center;
-  font-family: "Poppins";
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-}
-
-#confirmationModal button:hover {
-  cursor: pointer;
-}
-
-.score-container #yellow {
-  height: 100px;
-  width: 100px;
-  border-radius: 50%;
-  background-color: #DBA61A;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.score-container #white {
-  height: 90px;
-  width: 90px;
-  border-radius: 50%;
-  background-color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#perfectScoreModal h2 {
-  color: #DBA61A;
-  font-family: "Poppins";
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 900;
-  line-height: normal;
-}
-
-#perfectScoreModal p, #perfectScoreModal h6, #confirmationModal p {
-  font-size: 10px;
-  text-align: center;
-}
-
 
 body {
-  margin: auto;
+  height: 100%;
+  width: 100%;
+  margin: 0px;
   padding: 0px;
   font-family: "Poppins", sans-serif;
   font-weight: 400;
@@ -350,6 +224,141 @@ a:hover {
 .confirm-button:hover {
   cursor: pointer;
 }
+
+.modal-blur {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(2px);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  border: 1px solid #000;
+  background: #FFF;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.close-modal {
+  position: relative;
+  height: 0px;
+  top: -20px;
+  left: 5px;
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  align-self: flex-end;
+  padding-bottom: 0px;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#confirmationModal .buttons-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.confirmation-graphics {
+  height: 70%;
+  width: 70%;
+}
+
+#confirmationModal #submitButton {
+  height: 40px;
+  width: 50%;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 0px;
+  background: #810000;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  color: #fff;
+  text-align: center;
+  font-family: "Poppins";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+#confirmationModal #confirmationBackButton {
+  height: 40px;
+  width: 50%;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 0px;
+  background: #fff;
+  color: #810000; 
+  text-align: center;
+  font-family: "Poppins";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+#confirmationModal button:hover {
+  cursor: pointer;
+}
+
+.score-container #yellow {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  background-color: #DBA61A;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.score-container #white {
+  height: 90px;
+  width: 90px;
+  border-radius: 50%;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#perfectScoreModal h2 {
+  color: #DBA61A;
+  font-family: "Poppins";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: normal;
+}
+
+#perfectScoreModal p, #perfectScoreModal h6, #confirmationModal p {
+  font-size: 10px;
+  text-align: center;
+}
+
+
+
 
 @media only screen and (max-width: 811px) {
   h1 {
