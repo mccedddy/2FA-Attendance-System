@@ -15,18 +15,19 @@
   </head>
   <body>
     <nav class="navbar">
-        <a onclick="toProfessorHomepage()"><img src="..\assets\images\logos\pup_logo.png" /></a>
-        <div class="navbar-buttons">
-          <div class="navbar-top-buttons">
-            <img src="..\assets\images\icons\notepad.svg" class="nav-button"/>
-            <img src="..\assets\images\icons\graph.svg" class="nav-button"/>
-          </div>
-          <a href="..\index.html"><img src="..\assets\images\icons\logout.svg" class="nav-button"/></a>
-        </div>
+      <img src="..\assets\images\icons\arrow_left.svg" id="closeNavbar" class="nav-button" onclick="toggleMobileNavbar()"/>
+      <a onclick="toProfessorHomepage()"><img src="..\assets\images\logos\pup_logo.png" /></a>
+      <div class="navbar-buttons">
+        <a onclick="toProfessorHomepage()"><img src="..\assets\images\icons\notepad.svg" class="nav-button"/></a>
+        <a href="..\index.html"><img src="..\assets\images\icons\logout.svg" class="nav-button"/></a>
+      </div>
         
     </nav>
     <section class="main">
         <div class="header">
+          <div class="mobile-navbar-toggle" onclick="toggleMobileNavbar()">
+            <img src="..\assets\images\icons\hamburger.svg" class="hamburger">
+          </div>
             <a onclick="toProfessorHomepage()"><h1>PUP HDF Attendance System</h1></a>
         </div>
         <h1 class="title">ROOM 300</h1>
@@ -90,7 +91,7 @@
             </tbody>
           </table>
     </section>
-    <!-- <script src="../scripts.js"></script> -->
+    <script src="../js/navbar_controller.js"></script>
     <script>
       function toLogin() {
         window.location.href = "../index.html";
