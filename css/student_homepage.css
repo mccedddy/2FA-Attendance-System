@@ -59,10 +59,14 @@ h3 {
   cursor: pointer;
 }
 
+a:hover {
+  cursor: pointer;
+}
+
 .navbar {
   height: 10vh;
   padding: 0px 30px 0px 30px;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
   overflow: hidden;
   display: flex;
   align-items: center;
