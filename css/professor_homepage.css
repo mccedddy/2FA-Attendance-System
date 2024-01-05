@@ -344,8 +344,7 @@ body {
       display: flex;
       margin-top: 5px;
       justify-content: space-between;
-      align-items: center ;
-      flex-wrap: wrap;
+      align-items: end ;
       gap: 5px;
     }
 
