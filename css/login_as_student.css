@@ -68,7 +68,6 @@ a1 {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  border: 0px solid blue;
 }
 
 .login-textbox-container {
