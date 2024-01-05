@@ -51,7 +51,6 @@ a1 {
 
 .login-div-center {
   display: flex;
-  height: 50vh;
   flex-direction: column;
   flex-wrap: nowrap;
   justify-content: space-around;
@@ -91,12 +90,13 @@ a1 {
   .login-div {
     display: flex;
     flex-direction: column;
-    width: 100vw;
-    /* border: 1px solid blue; */
+    align-items: center;
+
+    border: 1px solid blue;
   }
 
   .login-div-L {
-    width: auto;
+    width: 100%;
     background: #dba61a;
     display: flex;
     align-items: center;
@@ -118,8 +118,8 @@ a1 {
   }
 
   .login-div-center {
+    margin-top: 20px;
     display: flex;
-    height: 40vh;
     flex-direction: column;
     flex-wrap: nowrap;
     justify-content: center;
