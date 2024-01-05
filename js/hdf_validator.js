@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var radioQ5 = document.getElementsByName('q5');
 
   function handleRadioChange() {
-    var showQuestions = radioQ3[0].checked || radioQ4[0].checked || radioQ5[1].checked || radioQ5[2].checked || radioQ5[3].checked;
+    var showQuestions = radioQ3[0].checked || radioQ4[0].checked || radioQ5[1].checked || radioQ5[3].checked;
     hiddenQuestions.style.display = showQuestions ? 'block' : 'none';
   }
 
