@@ -16,6 +16,7 @@ body {
   }
 
   .title {
+    margin: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -103,6 +104,7 @@ body {
   .main {
     height: 100%;
     width: 100%;
+    padding: 10px 40px 10px 40px;
   }
 
   .main .header {
@@ -115,7 +117,6 @@ body {
   .filter-container {
     display: flex;
     justify-content: end;
-    padding: 0px 20px 0px 20px
   }
 
   .filter-textbox {
@@ -138,6 +139,58 @@ body {
   
   input[type="text"]:focus {
     outline: none;
+  }
+
+  #sectionFilter {
+    width: 150px;
+    height: 30px;
+    flex-shrink: 0;
+    border-radius: 5px;
+    background: #810000;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    color: #FFF;
+    text-align: center;
+    font-family: "Poppins";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+
+  .date-time-filter {
+    width: 125px;
+    height: 28px;
+    margin: 15px 3px 15px 0px;
+    flex-shrink: 0;
+    border-radius: 5px;
+    border: 1px solid #810000;
+    font-family: "Poppins";
+    font-size: 12px;
+    color: #810000;
+    padding: 0px 12px 0px 12px;
+    cursor: pointer;
+  }
+
+  #attendanceTable {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  #attendanceTable th, #attendanceTable td {
+    border: 1px solid #000;
+    padding: 8px;
+    text-align: left;
+    text-align: center;
+    font-family: Poppins;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+
+  #attendanceTable th {
+    background-color: #810000;
+    color: #FFF;
   }
 
   /* div {

@@ -32,11 +32,58 @@
         <h1 class="title">ROOM 300</h1>
         <div class="filter-container">
           <div class="filter-textbox">
-            <input type="text" name="room-filter" id="roomFilter">
+            <input type="text" name="search" id="search">
             <img src="..\assets\images\icons\search.svg"/>
           </div>
         </div>
-        <h1>ATTENDANCE HERE</h1>
+        <select id="sectionFilter">
+            <option value="option1">ALL</option>
+            <option value="option2">BSCOE 4-1</option>
+            <option value="option2">BSCOE 4-2</option>
+            <option value="option2">BSCOE 4-3</option>
+            <option value="option2">BSCOE 4-4</option>
+            <option value="option2">BSCOE 4-5</option>
+            <option value="option2">BSCOE 4-6</option>
+        </select><br>
+        <input type="date" id="date" class="date-time-filter" required>
+        <input type="time" id="startTime" class="date-time-filter" required>
+        <input type="time" id="endTime" class="date-time-filter" required>
+        <table id="attendanceTable">
+            <thead>
+              <tr>
+                <th>STUDENT NAME</th>
+                <th>STUDENT NUMBER</th>
+                <th>SECTION</th>
+                <th>TIME IN</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>JACOB, KYLE LESTER</td>
+                <td>2020-XXXXX-MN-0</td>
+                <td>4-6</td>
+                <td>0:00 AM</td>
+              </tr>
+              <tr>
+                <td>LIBRE, MARIA ANGELA</td>
+                <td>2020-XXXXX-MN-0</td>
+                <td>4-6</td>
+                <td>0:00 AM</td>
+              </tr>
+              <tr>
+                <td>MACALLAN, DANIEL JOHN CEDRIC</td>
+                <td>2020-12082-MN-0</td>
+                <td>4-6</td>
+                <td>0:00 AM</td>
+              </tr>
+              <tr>
+                <td>REBULANAN, BRIENT NEILSON</td>
+                <td>2020-XXXXX-MN-0</td>
+                <td>4-6</td>
+                <td>0:00 AM</td>
+              </tr>
+            </tbody>
+          </table>
     </section>
     <!-- <script src="../scripts.js"></script> -->
     <script>
