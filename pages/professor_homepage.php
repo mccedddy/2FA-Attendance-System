@@ -20,7 +20,7 @@
         <a onclick="toProfessorHomepage()"><img src="..\assets\images\logos\pup_logo.png" /></a>
         <a onclick="toProfessorHomepage()"><img src="..\assets\images\icons\notepad.svg" class="nav-button"/></a>
       </div>
-      <a href="..\index.html"><img src="..\assets\images\icons\logout.svg" class="nav-button"/></a>
+      <a href="..\index.php"><img src="..\assets\images\icons\logout.svg" class="nav-button"/></a>
     </nav>
     <section class="main">
         <div class="header">
@@ -31,22 +31,22 @@
         </div>
         <h1 class="title">Computer Engineering Department Sections</h1>
         <div class="section-button-container">
-          <a href="attendance_page.html"><button class="section-button">SECTION 4-1</button></a>
-          <a href="attendance_page.html"><button class="section-button">SECTION 4-2</button></a>
-          <a href="attendance_page.html"><button class="section-button">SECTION 4-3</button></a>
-          <a href="attendance_page.html"><button class="section-button">SECTION 4-4</button></a>
-          <a href="attendance_page.html"><button class="section-button">SECTION 4-5</button></a>
-          <a href="attendance_page.html"><button class="section-button">SECTION 4-6</button></a>
+          <a href="attendance_page.php"><button class="section-button">SECTION 4-1</button></a>
+          <a href="attendance_page.php"><button class="section-button">SECTION 4-2</button></a>
+          <a href="attendance_page.php"><button class="section-button">SECTION 4-3</button></a>
+          <a href="attendance_page.php"><button class="section-button">SECTION 4-4</button></a>
+          <a href="attendance_page.php"><button class="section-button">SECTION 4-5</button></a>
+          <a href="attendance_page.php"><button class="section-button">SECTION 4-6</button></a>
         </div>
     </section>
     <script src="../js/navbar_controller.js"></script>
     <script>
       function toLogin() {
-        window.location.href = "../index.html";
+        window.location.href = "../index.php";
         return false;
       }
       function toProfessorHomepage() {
-        window.location.href = "professor_homepage.html";
+        window.location.href = "professor_homepage.php";
         return false;
       }
     </script>

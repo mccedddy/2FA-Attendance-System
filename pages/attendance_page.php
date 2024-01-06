@@ -1,3 +1,13 @@
+<?php 
+$sectionPage = '4-6';
+$students = [
+  ['name' => 'Jacob, Kyle Lester', 'student_number' => '2020-XXXXX-MN-0', 'room' => '312', 'time' => '3:00 PM'],
+  ['name' => 'Libre, Maria Angela', 'student_number' => '2020-XXXXX-MN-0', 'room' => '312', 'time' => '3:00 PM'],
+  ['name' => 'Macallan, Daniel John Cedric', 'student_number' => '2020-12082-MN-0', 'room' => '312', 'time' => '3:00 PM'],
+  ['name' => 'Rebulanan, Brient Neilson', 'student_number' => '2020-XXXXX-MN-0', 'room' => '312', 'time' => '3:00 PM'],
+]
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -20,7 +30,7 @@
         <a onclick="toProfessorHomepage()"><img src="..\assets\images\logos\pup_logo.png" /></a>
         <a onclick="toProfessorHomepage()"><img src="..\assets\images\icons\notepad.svg" class="nav-button"/></a>
       </div>
-      <a href="..\index.html"><img src="..\assets\images\icons\logout.svg" class="nav-button"/></a>
+      <a href="..\index.php"><img src="..\assets\images\icons\logout.svg" class="nav-button"/></a>
     </nav>
     <section class="main">
         <div class="header">
@@ -29,7 +39,7 @@
           </div>
             <a onclick="toProfessorHomepage()"><h1>PUP HDF Attendance System</h1></a>
         </div>
-        <h1 class="title">ROOM 300</h1>
+        <h1 class="title">SECTION <?php echo $sectionPage ?></h1>
         <div class="search-container">
           <div class="search-textbox">
             <input type="text" name="search" id="search">
@@ -62,46 +72,30 @@
               <tr>
                 <th>STUDENT NAME</th>
                 <th>STUDENT NUMBER</th>
-                <th>SECTION</th>
+                <th>ROOM</th>
                 <th>TIME IN</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>JACOB, KYLE LESTER</td>
-                <td>2020-XXXXX-MN-0</td>
-                <td>4-6</td>
-                <td>0:00 AM</td>
-              </tr>
-              <tr>
-                <td>LIBRE, MARIA ANGELA</td>
-                <td>2020-XXXXX-MN-0</td>
-                <td>4-6</td>
-                <td>0:00 AM</td>
-              </tr>
-              <tr>
-                <td>MACALLAN, DANIEL JOHN CEDRIC</td>
-                <td>2020-12082-MN-0</td>
-                <td>4-6</td>
-                <td>0:00 AM</td>
-              </tr>
-              <tr>
-                <td>REBULANAN, BRIENT NEILSON</td>
-                <td>2020-XXXXX-MN-0</td>
-                <td>4-6</td>
-                <td>0:00 AM</td>
-              </tr>
+              <?php foreach ($students as $student): ?>
+                <tr>
+                  <td><?php echo $student['name']; ?></td>
+                  <td><?php echo $student['student_number']; ?></td>
+                  <td><?php echo $student['room']; ?></td>
+                  <td><?php echo $student['time']; ?></td>
+                </tr>
+              <?php endforeach; ?>
             </tbody>
           </table>
     </section>
     <script src="../js/navbar_controller.js"></script>
     <script>
       function toLogin() {
-        window.location.href = "../index.html";
+        window.location.href = "../index.php";
         return false;
       }
       function toProfessorHomepage() {
-        window.location.href = "professor_homepage.html";
+        window.location.href = "professor_homepage.php";
         return false;
       }
     </script>

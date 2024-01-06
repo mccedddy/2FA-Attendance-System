@@ -321,7 +321,7 @@ $studentNumber = 'STUDENT NUMBER';
     <script src="../js/hdf_validator.js"></script>
     <script>
       function toLogin() {
-        window.location.href = "../index.html";
+        window.location.href = "../index.php";
         return false;
       }
       function toStudentHomepage() {

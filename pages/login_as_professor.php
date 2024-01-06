@@ -1,10 +1,10 @@
 <?php
-$studentNumber = '';
+$idNumber = '';
 $error_message = '';
 // Check if the form is submitted
 if (isset($_POST['login'])) {
     // Retrieve the values from the form
-    $studentNumber = $_POST['student-number'];
+    $idNumber = $_POST['id-number'];
     $password = $_POST['password'];
 
     // Perform authentication or any other necessary actions here
@@ -12,11 +12,11 @@ if (isset($_POST['login'])) {
     // For example, you might want to validate the credentials against a database
 
     // After successful login, you can redirect the user to the student homepage
-    if ($studentNumber == 'admin' && $password == 'admin') {
-      header("Location: student_homepage.php");
+    if ($idNumber == 'admin' && $password == 'admin') {
+      header("Location: professor_homepage.php");
       exit();
     } else {
-      $error_message = 'Student number or password is incorrect!';
+      $error_message = 'ID number or password is incorrect!';
     }
 }
 ?>
@@ -41,7 +41,10 @@ if (isset($_POST['login'])) {
       <section class="login-div-L">
         <div class="login-div-center">
           <div class="login-title">
-            <a1>STUDENT LOGIN</a1>
+            <a href="professor_homepage.html"
+              >
+              <a1>PROFESSOR LOGIN</a1>
+            </a>
           </div>
           <form action="" method="POST" class="login-form">
             <div class="login-textbox-container">
@@ -50,15 +53,15 @@ if (isset($_POST['login'])) {
                 class="textbox-icon"
               />
               <input
-                type="text"
+                type="textbox"
                 class="login-textbox"
-                name="student-number"
-                value="<?php echo htmlspecialchars($studentNumber); ?>"
-                placeholder="Student Number"
+                name="id-number"
+                value="<?php echo htmlspecialchars($idNumber); ?>"
+                placeholder="ID Number"
               />
             </div>
             <div class="login-textbox-container">
-                <img src="../assets/images/icons/lock.png" class="textbox-icon" />
+              <img src="../assets/images/icons/lock.png" class="textbox-icon" />
               <input
                 type="password"
                 class="login-textbox"
@@ -81,7 +84,7 @@ if (isset($_POST['login'])) {
       <section class="login-div-R">
         <div>
           <img
-            src="..\assets\images\graphics\students.png"
+            src="..\assets\images\graphics\professor.png"
             class="login-graphics"
           />
         </div>

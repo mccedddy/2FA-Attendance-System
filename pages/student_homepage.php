@@ -42,7 +42,7 @@ $studentNumber = 'STUDENT NUMBER';
     <!-- <script src="../scripts.js"></script> -->
     <script>
       function toLogin() {
-        window.location.href = "../index.html";
+        window.location.href = "../index.php";
         return false;
       }
       function toHDF() {
