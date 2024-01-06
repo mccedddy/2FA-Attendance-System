@@ -142,7 +142,7 @@ body {
     outline: none;
   }
 
-  #sectionFilter {
+  #roomFilter {
     width: 150px;
     height: 30px;
     flex-shrink: 0;
@@ -158,7 +158,7 @@ body {
     line-height: normal;
   }
 
-  #sectionFilter:hover, #sectionFilter:focus{
+  #roomFilter:hover, #roomFilter:focus{
     outline: 1px solid #810000;
   }
 
@@ -218,7 +218,7 @@ body {
     outline: 1px solid #810000;
   }
 
-  .room-button-container {
+  .section-button-container {
     margin-top: 25px;
     display: flex;
     justify-content: center;
@@ -226,7 +226,7 @@ body {
     flex-wrap: wrap;
   }
 
-  .room-button {
+  .section-button {
     width: 200px;
     height: 95px;
     margin: 0px 20px 25px 0px;
@@ -247,7 +247,7 @@ body {
     line-height: normal;
   }
 
-  .room-button:hover {
+  .section-button:hover {
     background-color: #810000;
     color: white;
     outline: 3px solid #810000;
@@ -334,7 +334,7 @@ body {
       font-size: 10px;
     }
 
-    #sectionFilter {
+    #roomFilter {
       width: 106px;
       font-size: 10px;
     }
@@ -363,7 +363,7 @@ body {
       font-size: 10px;
     }
 
-    .room-button-container {
+    .section-button-container {
       margin-top: 25px;
       display: flex;
       justify-content: center;
@@ -371,7 +371,7 @@ body {
       flex-wrap: wrap;
     }
 
-    .room-button {
+    .section-button {
       width: 130px;
       height: 50px;
       flex-shrink: 0;
