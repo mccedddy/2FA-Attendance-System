@@ -357,9 +357,6 @@ a:hover {
   text-align: center;
 }
 
-
-
-
 @media only screen and (max-width: 811px) {
   h1 {
     text-align: left;
@@ -368,7 +365,7 @@ a:hover {
 
   .logout-button {
     text-align: left;
-    font-size: 12px;
+    font-size: 10px;
   }
 
   h2 {

@@ -73,7 +73,7 @@ body {
 
   .navbar {
     height: 100%;
-    width: 65px;
+    width: 80px;
     margin: 0px;
     padding-top: 13px;
     background-color: #810000;
@@ -160,6 +160,17 @@ body {
 
   #roomFilter:hover, #roomFilter:focus{
     outline: 1px solid #810000;
+  }
+
+  #roomFilter option {
+    background-color: white;
+    color: #810000;
+    border: 1px solid #810000;
+  }
+
+  #roomFilter option:checked {
+    background-color: #810000;
+    color: #FFF;
   }
 
   .filters-and-export {
