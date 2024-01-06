@@ -1,23 +1,33 @@
 <?php
+session_start();
 $studentNumber = '';
 $error_message = '';
 // Check if the form is submitted
 if (isset($_POST['login'])) {
-    // Retrieve the values from the form
-    $studentNumber = $_POST['student-number'];
-    $password = $_POST['password'];
+  // Retrieve the values from the form
+  $studentNumber = $_POST['student-number'];
+  $password = $_POST['password'];
 
-    // Perform authentication or any other necessary actions here
-    // You can add your PHP login logic here
-    // For example, you might want to validate the credentials against a database
+  // Connect to database
+  require 'database_connection.php';
 
-    // After successful login, you can redirect the user to the student homepage
-    if ($studentNumber == 'admin' && $password == 'admin') {
+  // SQL query
+  $sql = "SELECT * FROM students WHERE student_number = '$studentNumber'";
+  $result = mysqli_query($connection, $sql);
+
+  // Check if the query was successful
+  if ($result) {
+    $students = mysqli_fetch_assoc($result);
+
+    // Check the password
+    if ($students && $password == $students['last_name']) {
+      $_SESSION['student_number'] = $studentNumber;
       header("Location: student_homepage.php");
       exit();
     } else {
       $error_message = 'Student number or password is incorrect!';
     }
+  }
 }
 ?>
 
