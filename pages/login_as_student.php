@@ -13,7 +13,7 @@ if (isset($_POST['login'])) {
 
     // After successful login, you can redirect the user to the student homepage
     if ($studentNumber == 'admin' && $password == 'admin') {
-      header("Location: student_homepage.html");
+      header("Location: student_homepage.php");
       exit();
     } else {
       $error_message = 'Student number or password is incorrect!';
