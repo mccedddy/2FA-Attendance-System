@@ -3,6 +3,10 @@ session_start();
 require '../includes/database_connection.php';
 
 // If logged in
+if (isset($_SESSION['student_number'])) {
+  // Redirect to student homepage
+  header("Location: student_homepage.php");
+}
 if (isset($_SESSION['id_number'])) {
   $idNumber = $_SESSION['id_number'];
 
