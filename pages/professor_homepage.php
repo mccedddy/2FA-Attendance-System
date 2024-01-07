@@ -1,3 +1,44 @@
+<?php
+session_start();
+require '../includes/database_connection.php';
+
+// If logged in
+if (isset($_SESSION['id_number'])) {
+  $idNumber = $_SESSION['id_number'];
+
+  // SQL query
+  $sql = "SELECT * FROM professors WHERE id_number = '$idNumber'";
+  $result = mysqli_query($connection, $sql);
+
+  // Check if the query was successful
+  if ($result) {
+    $professor = mysqli_fetch_assoc($result);
+
+    // Get professor info
+    if ($professor) {
+      $name = strtoupper($professor['last_name']) . ', ' . strtoupper($professor['first_name']);
+      $idNumber = $professor['id_number'];
+    }
+        
+    // Free result from memory
+    mysqli_free_result($result);
+  } else {
+    echo 'Error: ' . mysqli_error($connection);
+  }
+    
+  // Close database connection
+  mysqli_close($connection);
+} else {
+  // Redirect to login
+  header("Location: ../index.php");
+}
+
+// Logout
+if (isset($_POST['logout'])) {
+  require '../includes/logout.php';
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -28,6 +69,9 @@
             <img src="..\assets\images\icons\hamburger.svg" class="hamburger">
           </div>
           <a onclick="toProfessorHomepage()"><h1>PUP HDF Attendance System</h1></a>
+          <form method="POST" class="logout-form">
+            <button type="submit" name="logout" class="logout-button"><p class="logout-text">TEMPORARY LOGOUT</p></button>
+          </form>
         </div>
         <h1 class="title">Computer Engineering Department Sections</h1>
         <div class="section-button-container">
