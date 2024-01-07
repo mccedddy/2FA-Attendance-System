@@ -1,7 +1,15 @@
 <?php
 session_start();
+require '../includes/database_connection.php';
 $studentNumber = '';
 $error_message = '';
+
+// If logged in
+if (isset($_SESSION['student_number'])) {
+  // Redirect to student homepage
+  header("Location: pages/student_homepage.php");
+}
+
 // Check if the form is submitted
 if (isset($_POST['login'])) {
   // Retrieve the values from the form
