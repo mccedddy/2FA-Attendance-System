@@ -1,6 +1,23 @@
 <?php
-$name = 'LAST NAME, FIRST NAME, M.I';
-$studentNumber = 'STUDENT NUMBER';
+session_start();
+
+// If logged in
+if (isset($_SESSION['student_number'])) {
+
+  $name = 'LAST NAME, FIRST NAME, M.I';
+  $studentNumber = 'STUDENT NUMBER';
+
+}
+
+else {
+  // Redirect to login
+  header("Location: ../index.php");
+}
+
+// Logout
+if (isset($_POST['logout'])) {
+  require 'logout.php';
+}
 ?>
 
 <!DOCTYPE html>
@@ -21,7 +38,9 @@ $studentNumber = 'STUDENT NUMBER';
   <body>
     <nav class="navbar">
       <a onclick="toStudentHomepage()"><h1>PUP HDF Attendance System</h1></a>
-      <a class="logout-button" onclick="toLogin()">LOGOUT</a>
+      <form method="POST" class="logout-form">
+        <button type="submit" name="logout" class="logout-button"><p class="logout-text">LOGOUT</p></button>
+      </form>
     </nav>
     <section class="main">
       <div class="main-container">
@@ -320,10 +339,6 @@ $studentNumber = 'STUDENT NUMBER';
 
     <script src="../js/hdf_validator.js"></script>
     <script>
-      function toLogin() {
-        window.location.href = "../index.php";
-        return false;
-      }
       function toStudentHomepage() {
         window.location.href = "student_homepage.php";
         return false;

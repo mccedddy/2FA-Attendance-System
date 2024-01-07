@@ -16,7 +16,7 @@ if (isset($_SESSION['student_number'])) {
 
         // Get student info
         if ($student) {
-            $name = $student['last_name'] . ', ' . $student['first_name'];
+            $name = strtoupper($student['last_name']) . ', ' . strtoupper($student['first_name']);
             $studentNumber = $student['student_number'];
         }
         
@@ -30,7 +30,12 @@ if (isset($_SESSION['student_number'])) {
     mysqli_close($connection);
 } else {
     // Redirect to login
-    header("Location: ../index.php");;
+    header("Location: ../index.php");
+}
+
+// Logout
+if (isset($_POST['logout'])) {
+  require 'logout.php';
 }
 ?>
 
@@ -53,7 +58,9 @@ if (isset($_SESSION['student_number'])) {
   <body>
     <nav class="navbar">
       <a onclick="toStudentHomepage()"><h1>PUP HDF Attendance System</h1></a>
-      <a class="logout-button" onclick="toLogin()">LOGOUT</a>
+      <form method="POST" class="logout-form">
+        <button type="submit" name="logout" class="logout-button"><p class="logout-text">LOGOUT</p></button>
+      </form>
     </nav>
     <section class="main">
       <div>
@@ -73,10 +80,6 @@ if (isset($_SESSION['student_number'])) {
     </section>
     <!-- <script src="../scripts.js"></script> -->
     <script>
-      function toLogin() {
-        window.location.href = "../index.php";
-        return false;
-      }
       function toHDF() {
         window.location.href = "hdf_page.php";
         return false;
