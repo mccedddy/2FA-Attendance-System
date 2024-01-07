@@ -63,7 +63,7 @@ if (isset($_POST['logout'])) {
           <h4><?php echo $name ?> - <?php echo $studentNumber ?></h4>
         </div>
         <div class="bottom-container">
-          <form action="" method="POST" class="hdf-form">
+          <form action="submit_hdf.php" method="POST" name="hdf-form" class="hdf-form" id="hdf-form">
             <div class="questions">
               <div class="questions-L">
                 <!-- Question 1 -->
@@ -126,7 +126,7 @@ if (isset($_POST['logout'])) {
                         <input
                           type="checkbox"
                           name="q2[]"
-                          value="Muscle/body-pains"
+                          value="muscle-body-pains"
                         />
                         Muscle/body pains
                       </label>
@@ -313,6 +313,7 @@ if (isset($_POST['logout'])) {
                 </div>
               </div>
             </div>
+            <button type="submit" name="submit" id="hidden-submit-button" style="display: none;"></button>
           </form>
           <div class="button-container">
             <button class="confirm-button" id="confirm-button" onclick="validateForm()">
@@ -330,7 +331,7 @@ if (isset($_POST['logout'])) {
         <p>Kindly make sure that the data submitted is all true.</p>
         <div class="buttons-container">
           <button id="confirmationBackButton" onclick="closeConfirmationModal()">BACK</button>
-          <button type="submit" id="submitButton" onclick="submitForm()">SUBMIT</button>
+          <button id="submitButton" onclick="submitForm()">SUBMIT</button>
         </div>
       </div>
     </div>
