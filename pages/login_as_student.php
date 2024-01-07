@@ -9,6 +9,10 @@ if (isset($_SESSION['student_number'])) {
   // Redirect to student homepage
   header("Location: student_homepage.php");
 }
+if (isset($_SESSION['id_number'])) {
+  // Redirect to professor homepage
+  header("Location: professor_homepage.php");
+}
 
 // Check if the form is submitted
 if (isset($_POST['login'])) {
