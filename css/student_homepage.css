@@ -48,6 +48,13 @@ h3 {
 }
 
 .logout-button {
+  border: 0px;
+  background-color: #00000000;
+  padding: 0px;
+  margin: 0px;
+}
+
+.logout-text {
   color: #000;
   text-align: center;
   font-family: "Poppins";
@@ -57,7 +64,7 @@ h3 {
   line-height: normal;
 }
 
-.logout-button:hover {
+.logout-text:hover {
   text-decoration: underline;
   cursor: pointer;
 }
@@ -118,9 +125,9 @@ a:hover {
     font-size: 16px;
   }
 
-  .logout-button {
+  .logout-text {
     text-align: left;
-    font-size: 12px;
+    font-size: 10px;
   }
 
   h2 {
@@ -129,10 +136,6 @@ a:hover {
 
   h3 {
     font-size: 20px;
-  }
-
-  .logout-button {
-    font-size: 10px;
   }
 
   .main {

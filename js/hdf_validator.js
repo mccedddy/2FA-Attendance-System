@@ -64,7 +64,9 @@ function validateForm() {
 
     // Validate contact number
     if (type === "q7b" || type === "q8b") {
-      if (!/^\d{10,13}$/.test(value)) {
+      // Remove '+' if present and validate
+      value = value.replace(/\+/g, ''); // Remove all '+' occurrences
+      if (!/^\d{10,15}$/.test(value)) {
         alert("Please enter a valid contact number.");
         return;
       }
@@ -106,6 +108,7 @@ function closeConfirmationModal() {
 }
 
 function submitForm() {
+  document.getElementById("hidden-submit-button").click();
   closeConfirmationModal();
   openPerfectScoreModal();
 }
