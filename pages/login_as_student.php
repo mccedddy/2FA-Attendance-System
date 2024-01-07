@@ -9,7 +9,7 @@ if (isset($_POST['login'])) {
   $password = $_POST['password'];
 
   // Connect to database
-  require 'database_connection.php';
+  require '../includes/database_connection.php';
 
   // SQL query
   $sql = "SELECT * FROM students WHERE student_number = '$studentNumber'";

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'database_connection.php';
+require '../includes/database_connection.php';
 
 // If logged in
 if (isset($_SESSION['student_number'])) {
@@ -30,7 +30,12 @@ if (isset($_SESSION['student_number'])) {
 
 // Logout
 if (isset($_POST['logout'])) {
-  require 'logout.php';
+  require '../includes/logout.php';
+}
+
+// Submit HDF
+if (isset($_POST['submit'])) {
+  require '../includes/submit_hdf.php';
 }
 ?>
 
@@ -63,7 +68,7 @@ if (isset($_POST['logout'])) {
           <h4><?php echo $name ?> - <?php echo $studentNumber ?></h4>
         </div>
         <div class="bottom-container">
-          <form action="submit_hdf.php" method="POST" name="hdf-form" class="hdf-form" id="hdf-form">
+          <form action="" method="POST" name="hdf-form" class="hdf-form" id="hdf-form">
             <div class="questions">
               <div class="questions-L">
                 <!-- Question 1 -->

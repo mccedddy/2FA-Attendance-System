@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'database_connection.php';
+require '../includes/database_connection.php';
 
 // If logged in
 if (isset($_SESSION['student_number'])) {
@@ -35,7 +35,7 @@ if (isset($_SESSION['student_number'])) {
 
 // Logout
 if (isset($_POST['logout'])) {
-  require 'logout.php';
+  require '../includes/logout.php';
 }
 ?>
 
