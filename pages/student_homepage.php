@@ -4,33 +4,33 @@ require 'database_connection.php';
 
 // If logged in
 if (isset($_SESSION['student_number'])) {
-    $studentNumber = $_SESSION['student_number'];
+  $studentNumber = $_SESSION['student_number'];
 
-    // SQL query
-    $sql = "SELECT * FROM students WHERE student_number = '$studentNumber'";
-    $result = mysqli_query($connection, $sql);
+  // SQL query
+  $sql = "SELECT * FROM students WHERE student_number = '$studentNumber'";
+  $result = mysqli_query($connection, $sql);
 
-    // Check if the query was successful
-    if ($result) {
-      $student = mysqli_fetch_assoc($result);
+  // Check if the query was successful
+  if ($result) {
+    $student = mysqli_fetch_assoc($result);
 
-        // Get student info
-        if ($student) {
-            $name = strtoupper($student['last_name']) . ', ' . strtoupper($student['first_name']);
-            $studentNumber = $student['student_number'];
-        }
-        
-        // Free result from memory
-        mysqli_free_result($result);
-    } else {
-        echo 'Error: ' . mysqli_error($connection);
+    // Get student info
+    if ($student) {
+      $name = strtoupper($student['last_name']) . ', ' . strtoupper($student['first_name']);
+      $studentNumber = $student['student_number'];
     }
+        
+    // Free result from memory
+    mysqli_free_result($result);
+  } else {
+    echo 'Error: ' . mysqli_error($connection);
+  }
     
-    // Close database connection
-    mysqli_close($connection);
+  // Close database connection
+  mysqli_close($connection);
 } else {
-    // Redirect to login
-    header("Location: ../index.php");
+  // Redirect to login
+  header("Location: ../index.php");
 }
 
 // Logout
