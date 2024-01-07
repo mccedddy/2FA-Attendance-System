@@ -7,7 +7,7 @@ $error_message = '';
 // If logged in
 if (isset($_SESSION['student_number'])) {
   // Redirect to student homepage
-  header("Location: pages/student_homepage.php");
+  header("Location: student_homepage.php");
 }
 
 // Check if the form is submitted
