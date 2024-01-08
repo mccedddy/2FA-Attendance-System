@@ -4,10 +4,14 @@ require '../includes/database_connection.php';
 
 $sectionPage = '4-6';
 $students = [
-  ['name' => 'Jacob, Kyle Lester', 'student_number' => '2020-XXXXX-MN-0', 'room' => '312', 'time' => '3:00 PM'],
-  ['name' => 'Libre, Maria Angela', 'student_number' => '2020-XXXXX-MN-0', 'room' => '312', 'time' => '3:00 PM'],
-  ['name' => 'Macallan, Daniel John Cedric', 'student_number' => '2020-12082-MN-0', 'room' => '312', 'time' => '3:00 PM'],
-  ['name' => 'Rebulanan, Brient Neilson', 'student_number' => '2020-XXXXX-MN-0', 'room' => '312', 'time' => '3:00 PM'],
+  ['name' => 'Jacob, Kyle Lester', 'student_number' => '2020-XXXXX-MN-0', 'room' => '312', 'time' => '15:05', 'date' => 'January 8, 2024'],
+  ['name' => 'Libre, Maria Angela', 'student_number' => '2020-XXXXX-MN-0', 'room' => '312', 'time' => '15:01', 'date' => 'January 8, 2024'],
+  ['name' => 'Macallan, Daniel John Cedric', 'student_number' => '2020-12082-MN-0', 'room' => '312', 'time' => '18:09', 'date' => 'January 8, 2024'],
+  ['name' => 'Rebulanan, Brient Neilson', 'student_number' => '2020-XXXXX-MN-0', 'room' => '312', 'time' => '17:58', 'date' => 'January 8, 2024'],
+  ['name' => 'Gonzalez, Miguel Carlos', 'student_number' => '2020-XXXXX-MN-0', 'room' => '312', 'time' => '14:49', 'date' => 'January 7, 2024'],
+  ['name' => 'Pamoleras, Danica', 'student_number' => '2020-XXXXX-MN-0', 'room' => '312', 'time' => '15:02', 'date' => 'January 7, 2024'],
+  ['name' => 'Natividad, Clarence', 'student_number' => '2020-12082-MN-0', 'room' => '312', 'time' => '17:40', 'date' => 'January 7, 2024'],
+  ['name' => 'Tiaga, Carlos', 'student_number' => '2020-XXXXX-MN-0', 'room' => '312', 'time' => '18:30', 'date' => 'January 7, 2024'],
 ];
 
 // If logged in
@@ -84,10 +88,7 @@ if (isset($_POST['logout'])) {
           <div class="mobile-navbar-toggle" onclick="toggleMobileNavbar()">
             <img src="..\assets\images\icons\hamburger.svg" class="hamburger">
           </div>
-            <a onclick="toProfessorHomepage()"><h1>PUP HDF Attendance System</h1></a>
-            <form method="POST" class="logout-form">
-              <button type="submit" name="logout" class="logout-button"><p class="logout-text">TEMPORARY LOGOUT</p></button>
-            </form>
+          <a onclick="toProfessorHomepage()"><h1>PUP HDF Attendance System</h1></a>
         </div>
         <h1 class="title">SECTION <?php echo $sectionPage ?></h1>
         <div class="search-container">
@@ -109,10 +110,10 @@ if (isset($_POST['logout'])) {
         </select>
         <div class="filters-and-export">
           <div class="filters-container">
-            <input type="date" id="date" class="date-time-filter" required>
+            <input type="date" id="date" class="date-time-filter" required value="<?php echo date('Y-m-d'); ?>">
             <div class="time-container">
-              <input type="time" id="startTime" class="date-time-filter" required>
-              <input type="time" id="endTime" class="date-time-filter" required>
+              <input type="time" id="startTime" class="date-time-filter" required value="00:00">
+              <input type="time" id="endTime" class="date-time-filter" required value="23:59">
             </div>
           </div>
           <button id="export"><p>EXPORT DATA</p><img src="..\assets\images\icons\download.svg"/></button>
@@ -123,7 +124,8 @@ if (isset($_POST['logout'])) {
                 <th>STUDENT NAME</th>
                 <th>STUDENT NUMBER</th>
                 <th>ROOM</th>
-                <th>TIME IN</th>
+                <th>TIME</th>
+                <th>DATE</th>
               </tr>
             </thead>
             <tbody>
@@ -133,12 +135,14 @@ if (isset($_POST['logout'])) {
                   <td><?php echo $student['student_number']; ?></td>
                   <td><?php echo $student['room']; ?></td>
                   <td><?php echo $student['time']; ?></td>
+                  <td><?php echo $student['date']; ?></td>
                 </tr>
               <?php endforeach; ?>
             </tbody>
           </table>
     </section>
     <script src="../js/navbar_controller.js"></script>
+    <script src="../js/attendance_filter.js"></script>
     <script>
       function toLogin() {
         window.location.href = "../index.php";
