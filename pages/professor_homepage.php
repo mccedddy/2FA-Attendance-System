@@ -65,7 +65,11 @@ if (isset($_POST['logout'])) {
         <a onclick="toProfessorHomepage()"><img src="..\assets\images\logos\pup_logo.png" /></a>
         <a onclick="toProfessorHomepage()"><img src="..\assets\images\icons\notepad.svg" class="nav-button"/></a>
       </div>
-      <a href="..\index.php"><img src="..\assets\images\icons\logout.svg" class="nav-button"/></a>
+      <form method="POST" class="logout-form">
+        <button type="submit" name="logout" class="logout-button">
+          <img src="..\assets\images\icons\logout.svg" class="nav-button"/>
+        </button>
+      </form>
     </nav>
     <section class="main">
         <div class="header">
@@ -73,9 +77,6 @@ if (isset($_POST['logout'])) {
             <img src="..\assets\images\icons\hamburger.svg" class="hamburger">
           </div>
           <a onclick="toProfessorHomepage()"><h1>PUP HDF Attendance System</h1></a>
-          <form method="POST" class="logout-form">
-            <button type="submit" name="logout" class="logout-button"><p class="logout-text">TEMPORARY LOGOUT</p></button>
-          </form>
         </div>
         <h1 class="title">Computer Engineering Department Sections</h1>
         <div class="section-button-container">
