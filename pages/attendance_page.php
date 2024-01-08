@@ -1,18 +1,9 @@
 <?php 
 session_start();
 require '../includes/database_connection.php';
+date_default_timezone_set('Asia/Manila');
 
 $sectionPage = '4-6';
-$students = [
-  ['name' => 'Jacob, Kyle Lester', 'student_number' => '2020-XXXXX-MN-0', 'room' => '312', 'time' => '15:05', 'date' => 'January 8, 2024'],
-  ['name' => 'Libre, Maria Angela', 'student_number' => '2020-XXXXX-MN-0', 'room' => '312', 'time' => '15:01', 'date' => 'January 8, 2024'],
-  ['name' => 'Macallan, Daniel John Cedric', 'student_number' => '2020-12082-MN-0', 'room' => '312', 'time' => '18:09', 'date' => 'January 8, 2024'],
-  ['name' => 'Rebulanan, Brient Neilson', 'student_number' => '2020-XXXXX-MN-0', 'room' => '312', 'time' => '17:58', 'date' => 'January 8, 2024'],
-  ['name' => 'Gonzalez, Miguel Carlos', 'student_number' => '2020-XXXXX-MN-0', 'room' => '312', 'time' => '14:49', 'date' => 'January 7, 2024'],
-  ['name' => 'Pamoleras, Danica', 'student_number' => '2020-XXXXX-MN-0', 'room' => '312', 'time' => '15:02', 'date' => 'January 7, 2024'],
-  ['name' => 'Natividad, Clarence', 'student_number' => '2020-12082-MN-0', 'room' => '312', 'time' => '17:40', 'date' => 'January 7, 2024'],
-  ['name' => 'Tiaga, Carlos', 'student_number' => '2020-XXXXX-MN-0', 'room' => '312', 'time' => '18:30', 'date' => 'January 7, 2024'],
-];
 
 // If logged in
 if (isset($_SESSION['student_number'])) {
@@ -129,15 +120,7 @@ if (isset($_POST['logout'])) {
               </tr>
             </thead>
             <tbody>
-              <?php foreach ($students as $student): ?>
-                <tr>
-                  <td><?php echo $student['name']; ?></td>
-                  <td><?php echo $student['student_number']; ?></td>
-                  <td><?php echo $student['room']; ?></td>
-                  <td><?php echo $student['time']; ?></td>
-                  <td><?php echo $student['date']; ?></td>
-                </tr>
-              <?php endforeach; ?>
+              
             </tbody>
           </table>
     </section>

@@ -1,6 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
     const table = document.getElementById('attendanceTable');
     const tbody = table.querySelector('tbody');
+    const dateFilter = document.getElementById('date');
+
+    fetchAttendance(dateFilter.value);
 
     // Initial sort
     sortTable();
@@ -16,18 +19,57 @@ document.addEventListener('DOMContentLoaded', function () {
         };
     });
 
-    console.log('haha orig');
-    console.log(originalData, table, tbody);
-    
     // Initial filter
     filterTable(originalData);
 
     // Event listeners
     document.getElementById('startTime').addEventListener('change', () => {filterTable(originalData);});
     document.getElementById('endTime').addEventListener('change', () => {filterTable(originalData);});
+    dateFilter.addEventListener('change', () => {fetchAttendance(dateFilter.value);})
 
     console.log('=== END OF STARTUP ===');
 });
+
+// For attendance
+function fetchAttendance(date) {
+    var url = '../includes/fetch_attendance.php';
+    var formData = new FormData();
+    formData.append('date', date);
+
+    fetch(url, { 
+        method: 'POST', 
+        body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+        displayAttendanceData(data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+function displayAttendanceData(data) {
+    const table = document.getElementById('attendanceTable');
+    const tbody = table.querySelector('tbody');
+
+    // Clear existing rows from the table
+    tbody.innerHTML = '';
+
+    // Append new rows based on the fetched data
+    data.forEach(rowData => {
+        const row = document.createElement('tr');
+        const cells = Object.values(rowData).map(value => {
+            const cell = document.createElement('td');
+            cell.innerText = value;
+            return cell;
+        });
+        cells.forEach(cell => {
+            row.appendChild(cell);
+        });
+        tbody.appendChild(row);
+    });
+}
 
 // For table sort
 function compareDateTime(a, b) {
@@ -55,18 +97,11 @@ function filterTable(originalData) {
     const table = document.getElementById('attendanceTable');
     const tbody = table.querySelector('tbody');
 
-    console.log('Original Data:');
-    console.log(originalData);
-
     // Filter original data based on time range
     const filteredData = originalData.filter(row => {
         const time = row.time;
         return time >= startTime && time <= endTime;
     });
-
-    console.log('Filtered Data:');
-    console.log(filteredData);
-
 
     // Clear existing rows from the table
     tbody.innerHTML = '';
