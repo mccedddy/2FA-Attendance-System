@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var table = document.getElementById('attendanceTable');
     var tbody = table.querySelector('tbody');
     var dateFilter = document.getElementById('date');
+    var roomFilter = document.getElementById('roomFilter');
 
     // Declare originalData outside the fetchAttendance function
     var originalData = [];
@@ -16,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
     filterTable(originalData);
 
     // Event listeners
+    document.getElementById('roomFilter').addEventListener('change', () => { filterTable(originalData); });
     document.getElementById('startTime').addEventListener('change', () => { filterTable(originalData); });
     document.getElementById('endTime').addEventListener('change', () => { filterTable(originalData); });
     dateFilter.addEventListener('change', () => {
@@ -98,13 +100,20 @@ document.addEventListener('DOMContentLoaded', function () {
     function filterTable(originalData) {
         var startTime = document.getElementById('startTime').value;
         var endTime = document.getElementById('endTime').value;
+        var selectedRoom = roomFilter.value;
         table = document.getElementById('attendanceTable');
         tbody = table.querySelector('tbody');
 
-        // Filter original data based on time range
+        // Filter original data based on time range and room
         const filteredData = originalData.filter(row => {
             var time = row["TIME_FORMAT(a.time, '%H:%i')"];
-            return time >= startTime && time <= endTime;
+            var room = row.room;
+
+            if (selectedRoom === 'ALL' || room === selectedRoom) {
+                return time >= startTime && time <= endTime;
+            }
+
+            return false;
         });
     
         // Clear existing rows from the table

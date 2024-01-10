@@ -96,15 +96,15 @@ if (isset($_POST['logout'])) {
           </div>
         </div>
         <select id="roomFilter">
-            <option value="option1">ALL</option>
-            <option value="option2">ROOM 300</option>
-            <option value="option2">ROOM 310</option>
-            <option value="option2">ROOM 311</option>
-            <option value="option2">ROOM 312</option>
-            <option value="option2">ROOM 313</option>
-            <option value="option2">ROOM 314</option>
-            <option value="option2">ROOM 315</option>
-            <option value="option2">ROOM 316</option>
+            <option value="ALL">ALL</option>
+            <option value="300">ROOM 300</option>
+            <option value="310">ROOM 310</option>
+            <option value="311">ROOM 311</option>
+            <option value="312">ROOM 312</option>
+            <option value="313">ROOM 313</option>
+            <option value="314">ROOM 314</option>
+            <option value="315">ROOM 315</option>
+            <option value="316">ROOM 316</option>
         </select>
         <div class="filters-and-export">
           <div class="filters-container">
