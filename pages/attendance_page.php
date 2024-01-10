@@ -3,14 +3,21 @@ session_start();
 require '../includes/database_connection.php';
 date_default_timezone_set('Asia/Manila');
 
-$sectionPage = '4-6';
-
 // If logged in
 if (isset($_SESSION['student_number'])) {
   // Redirect to student homepage
   header("Location: student_homepage.php");
 }
 if (isset($_SESSION['id_number'])) {
+
+  // Redirect to homepage if no section is selected
+  if (!isset($_SESSION['selected_section'])) {
+    header("Location: professor_homepage.php");
+  } else {
+    $sectionPage = $_SESSION['selected_section'];
+  }
+
+
   $idNumber = $_SESSION['id_number'];
 
   // SQL query

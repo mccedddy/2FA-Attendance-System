@@ -2,6 +2,9 @@
 session_start();
 require '../includes/database_connection.php';
 
+// Clear selection
+unset($_SESSION['selected_section']);
+
 // If logged in
 if (isset($_SESSION['student_number'])) {
   // Redirect to student homepage
@@ -35,6 +38,12 @@ if (isset($_SESSION['id_number'])) {
 } else {
   // Redirect to login
   header("Location: ../index.php");
+}
+
+// Section button
+if (isset($_POST['section-button'])) {
+  $_SESSION['selected_section'] = $_POST['section'];
+  header("Location: attendance_page.php");
 }
 
 // Logout
@@ -80,12 +89,30 @@ if (isset($_POST['logout'])) {
         </div>
         <h1 class="title">Computer Engineering Department Sections</h1>
         <div class="section-button-container">
-          <a href="attendance_page.php"><button class="section-button">SECTION 4-1</button></a>
-          <a href="attendance_page.php"><button class="section-button">SECTION 4-2</button></a>
-          <a href="attendance_page.php"><button class="section-button">SECTION 4-3</button></a>
-          <a href="attendance_page.php"><button class="section-button">SECTION 4-4</button></a>
-          <a href="attendance_page.php"><button class="section-button">SECTION 4-5</button></a>
-          <a href="attendance_page.php"><button class="section-button">SECTION 4-6</button></a>
+          <form method="POST">
+            <input type="hidden" name="section" value="4-1">
+            <button type="submit" name="section-button" class="section-button">SECTION 4-1</button>
+          </form>
+          <form method="POST">
+            <input type="hidden" name="section" value="4-2">
+            <button type="submit" name="section-button" class="section-button">SECTION 4-2</button>
+          </form>
+          <form method="POST">
+            <input type="hidden" name="section" value="4-3">
+            <button type="submit" name="section-button" class="section-button">SECTION 4-3</button>
+          </form>
+          <form method="POST">
+            <input type="hidden" name="section" value="4-4">
+            <button type="submit" name="section-button" class="section-button">SECTION 4-4</button>
+          </form>
+          <form method="POST">
+            <input type="hidden" name="section" value="4-5">
+            <button type="submit" name="section-button" class="section-button">SECTION 4-5</button>
+          </form>
+          <form method="POST">
+            <input type="hidden" name="section" value="4-6">
+            <button type="submit" name="section-button" class="section-button">SECTION 4-6</button>
+          </form>
         </div>
     </section>
     <script src="../js/navbar_controller.js"></script>
