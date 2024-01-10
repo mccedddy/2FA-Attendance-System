@@ -26,14 +26,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function updateOriginalData(newData) {
         originalData = newData;
-        console.log('Original Data updated:', originalData);
     
         // Perform necessary operations after updating originalData
         sortTable();
-        filterTable(originalData);
-    
-        // After sorting and filtering, update the displayed table
         displayAttendanceData(originalData);
+        filterTable(originalData);
     }
 
     // For attendance
@@ -65,8 +62,8 @@ document.addEventListener('DOMContentLoaded', function () {
     
         // Append new rows based on the fetched data
         data.forEach(rowData => {
-            const row = document.createElement('tr');
-            const cells = Object.values(rowData).map(value => {
+            let row = document.createElement('tr');
+            let cells = Object.values(rowData).map(value => {
                 const cell = document.createElement('td');
                 cell.innerText = value;
                 return cell;
@@ -99,14 +96,14 @@ document.addEventListener('DOMContentLoaded', function () {
     
     // For table filter
     function filterTable(originalData) {
-        const startTime = document.getElementById('startTime').value;
-        const endTime = document.getElementById('endTime').value;
-        const table = document.getElementById('attendanceTable');
-        const tbody = table.querySelector('tbody');
-    
+        var startTime = document.getElementById('startTime').value;
+        var endTime = document.getElementById('endTime').value;
+        table = document.getElementById('attendanceTable');
+        tbody = table.querySelector('tbody');
+
         // Filter original data based on time range
         const filteredData = originalData.filter(row => {
-            const time = row.time;
+            var time = row["TIME_FORMAT(a.time, '%H:%i')"];
             return time >= startTime && time <= endTime;
         });
     
