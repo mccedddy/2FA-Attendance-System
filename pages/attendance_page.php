@@ -91,7 +91,7 @@ if (isset($_POST['logout'])) {
         <h1 class="title">SECTION <?php echo $sectionPage ?></h1>
         <div class="search-container">
           <div class="search-textbox">
-            <input type="text" name="search" id="search">
+            <input type="text" name="search" id="search" value="">
             <img src="..\assets\images\icons\search.svg"/>
           </div>
         </div>

@@ -3,8 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var tbody = table.querySelector('tbody');
     var dateFilter = document.getElementById('date');
     var roomFilter = document.getElementById('roomFilter');
-
-    // Declare originalData outside the fetchAttendance function
+    var searchInput = document.getElementById('search');
     var originalData = [];
 
     // Fetch attendance data on page load
@@ -18,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Event listeners
     document.getElementById('roomFilter').addEventListener('change', () => { filterTable(originalData); });
+    searchInput.addEventListener('change', () => {filterTable(originalData); });
     document.getElementById('startTime').addEventListener('change', () => { filterTable(originalData); });
     document.getElementById('endTime').addEventListener('change', () => { filterTable(originalData); });
     dateFilter.addEventListener('change', () => {
@@ -101,18 +101,27 @@ document.addEventListener('DOMContentLoaded', function () {
         var startTime = document.getElementById('startTime').value;
         var endTime = document.getElementById('endTime').value;
         var selectedRoom = roomFilter.value;
+        var searchValue = searchInput.value.toLowerCase();
         table = document.getElementById('attendanceTable');
         tbody = table.querySelector('tbody');
 
-        // Filter original data based on time range and room
+        // Filter original data based on time range, room, and search
         const filteredData = originalData.filter(row => {
             var time = row["TIME_FORMAT(a.time, '%H:%i')"];
             var room = row.room;
+            var studentName = row['name'].toLowerCase();
+            
+            // Check if the search input is present in the student's name
+            const isNameMatch = studentName.includes(searchValue);
 
-            if (selectedRoom === 'ALL' || room === selectedRoom) {
-                return time >= startTime && time <= endTime;
+            if (
+                (selectedRoom === 'ALL' || room === selectedRoom) &&
+                time >= startTime &&
+                time <= endTime &&
+                (searchValue === '' || isNameMatch)
+            ) {
+                return true;
             }
-
             return false;
         });
     
