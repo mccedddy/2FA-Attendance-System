@@ -17,7 +17,7 @@ if (isset($_SESSION['id_number'])) {
     $sectionPage = $_SESSION['selected_section'];
   }
 
-
+  // Professor ID
   $idNumber = $_SESSION['id_number'];
 
   // SQL query
