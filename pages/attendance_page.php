@@ -114,7 +114,7 @@ if (isset($_POST['logout'])) {
               <input type="time" id="endTime" class="date-time-filter" required value="23:59">
             </div>
           </div>
-          <button id="export"><p>EXPORT DATA</p><img src="..\assets\images\icons\download.svg"/></button>
+          <button id="export" onclick="exportAttendance()"><p>EXPORT DATA</p><img src="..\assets\images\icons\download.svg"/></button>
         </div>
         <table id="attendanceTable">
             <thead>
@@ -132,7 +132,7 @@ if (isset($_POST['logout'])) {
           </table>
     </section>
     <script src="../js/navbar_controller.js"></script>
-    <script src="../js/attendance_filter.js"></script>
+    <script src="../js/attendance.js"></script>
     <script>
       function toLogin() {
         window.location.href = "../index.php";

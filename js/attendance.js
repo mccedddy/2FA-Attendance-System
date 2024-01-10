@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var dateFilter = document.getElementById('date');
     var roomFilter = document.getElementById('roomFilter');
     var searchInput = document.getElementById('search');
+    var exportButton = document.getElementById('export');
     var originalData = [];
 
     // Fetch attendance data on page load
