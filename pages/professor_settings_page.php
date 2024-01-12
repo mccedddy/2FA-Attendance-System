@@ -89,13 +89,13 @@ if (isset($_POST['logout'])) {
           <a onclick="toProfessorHomepage()"><h1>PUP HDF Attendance System</h1></a>
         </div>
         <h1 class="title">Account Settings</h1>
-        <form>
+        <form method="POST">
             <div class="settings-container">
                 <h4>RECOVERY E-MAIL</h4>
                 <div class="div-left-right">
                     <div class="settings-input">
                         <p>E-mail:</p>
-                        <input type="email" name="email" class="settings-textbox"></input>
+                        <input type="email" name="email" class="settings-textbox" value='<?php echo $professor['email']; ?>'></input>
                     </div>
                     <div class="settings-input">
                         <p>Confirm E-mail:</p>
@@ -107,16 +107,16 @@ if (isset($_POST['logout'])) {
                 <h4>CHANGE PASSWORD</h4>
                 <div class="settings-input">
                     <p>Current Password:</p>
-                    <input type="text" name="email" class="settings-textbox"></input>
+                    <input type="password" name="email" class="settings-textbox"></input>
                 </div>
                 <div class="div-left-right">
                     <div class="settings-input">
                         <p>New Password:</p>
-                        <input type="text" name="confirm-email" class="settings-textbox"></input>
+                        <input type="password" name="confirm-email" class="settings-textbox"></input>
                     </div>
                     <div class="settings-input">
                         <p>Confirm New Password:</p>
-                        <input type="text" name="confirm-email" class="settings-textbox"></input>
+                        <input type="password" name="confirm-email" class="settings-textbox"></input>
                     </div>
                 </div>
             </div>

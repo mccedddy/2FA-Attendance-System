@@ -342,7 +342,7 @@ body {
     margin: 0px;
   }
 
-  .settings-input input[type="text"], 
+  .settings-input input[type="password"], 
   .settings-input input[type="email"] {
     height: 20px;
     width: 60%;
@@ -514,7 +514,7 @@ body {
       width: 100%;
     }
 
-    .settings-input input[type="text"], 
+    .settings-input input[type="password"], 
     .settings-input input[type="email"] { 
       margin-right: 0px;
       width: 55%;
