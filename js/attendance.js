@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
     dateFilter.addEventListener('change', () => {
         fetchAttendance(dateFilter.value);
     });
+    exportButton.addEventListener('click', () => {exportAttendance(); });
 
     console.log('=== END OF STARTUP ===');
 
@@ -144,5 +145,24 @@ document.addEventListener('DOMContentLoaded', function () {
     
             tbody.appendChild(row);
         });
+    }
+
+    function exportAttendance() {
+        var table2excel = new Table2Excel();
+        var table = document.getElementById('attendanceTable');
+        var tbody = table.querySelector('tbody');
+        var section = document.getElementById('title').innerHTML;
+        var date = document.getElementById('date').value;
+        var startTime = document.getElementById('startTime').value;
+        var endTime = document.getElementById('endTime').value;
+        var fileName = section + " - " + date;
+
+        if (startTime != '00:00' || endTime != '23:59') {
+            fileName = section + " - " + date + " - " + startTime + "-" + endTime;
+        }
+
+        if (tbody.innerHTML != '') {
+            table2excel.export(document.getElementById("attendanceTable"), fileName);
+        }
     }
 });

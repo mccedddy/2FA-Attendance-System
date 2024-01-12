@@ -233,6 +233,7 @@ body {
 
   #export:hover {
     outline: 1px solid #810000;
+    cursor: pointer;
   }
 
   .section-button-container {

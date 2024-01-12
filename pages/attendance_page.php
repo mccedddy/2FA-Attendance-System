@@ -88,7 +88,7 @@ if (isset($_POST['logout'])) {
           </div>
           <a onclick="toProfessorHomepage()"><h1>PUP HDF Attendance System</h1></a>
         </div>
-        <h1 class="title">SECTION <?php echo $sectionPage ?></h1>
+        <h1 class="title" id="title">SECTION <?php echo $sectionPage ?></h1>
         <div class="search-container">
           <div class="search-textbox">
             <input type="text" name="search" id="search" value="">
@@ -114,7 +114,7 @@ if (isset($_POST['logout'])) {
               <input type="time" id="endTime" class="date-time-filter" required value="23:59">
             </div>
           </div>
-          <button id="export" onclick="exportAttendance()"><p>EXPORT DATA</p><img src="..\assets\images\icons\download.svg"/></button>
+          <button id="export"><p>EXPORT DATA</p><img src="..\assets\images\icons\download.svg"/></button>
         </div>
         <table id="attendanceTable">
             <thead>
@@ -131,6 +131,7 @@ if (isset($_POST['logout'])) {
             </tbody>
           </table>
     </section>
+    <script src="../js/table2excel.js"></script>
     <script src="../js/navbar_controller.js"></script>
     <script src="../js/attendance.js"></script>
     <script>
