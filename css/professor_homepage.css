@@ -87,6 +87,9 @@ body {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    position: fixed; /* Add this line to make it fixed */
+    left: 0; /* Adjust the positioning as needed */
+    top: 0; /* Adjust the positioning as needed */
   }
 
   .navbar-top {
@@ -105,10 +108,17 @@ body {
     cursor: pointer;
   }
 
+  .logout-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
   .main {
     height: 100%;
     width: 100%;
-    padding: 0px 60px 0px 60px;
+    padding: 0px 60px 0px 140px;
   }
 
   .main .header {
@@ -302,6 +312,88 @@ body {
     margin-top: 0px;
   }
 
+  /* div {
+    border: 1px solid red;
+  } */
+
+  .settings-container {
+    padding: 5px 20px 20px 20px;
+    margin: 15px 0px 10px 0px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    border: 1px solid #810000;
+  }
+
+  .div-left-right {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .settings-input {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .settings-input p {
+    font-size: 12px;
+    margin: 0px;
+  }
+
+  .settings-input input[type="text"], 
+  .settings-input input[type="email"] {
+    height: 20px;
+    width: 60%;
+    margin: 10px 20px 10px 0px;
+  }
+
+  .settings-textbox {
+    border: 1px solid #810000 !important; 
+    stroke-width: 1px;
+    stroke: #000;
+    border-radius: 5px;
+  }
+
+  .save-button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: end;
+    padding-bottom: 20px;
+  }
+
+  .save-response {
+    margin: 0px;
+    padding: 0px;
+    font-size: 12px;
+    color: green;
+    display: none;
+  }
+
+  .save-button {
+    width: 300px;
+    height: 50px;
+    margin-top: 5px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    border: 0px;
+    background: #810000;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    color: #fff;
+    text-align: center;
+    font-family: "Poppins";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+  
+  .save-button:hover {
+    cursor: pointer;
+  }
+
   @media only screen and (max-width: 811px) {
     h1 {
       font-size: 12px;
@@ -408,8 +500,38 @@ body {
     #attendanceTable th, #attendanceTable td {
       font-size: 8px;
     }
-  }
 
+    .settings-container {
+      padding-left: 7px;
+      padding-right: 7px;
+    }
+
+    .div-left-right {
+      flex-direction: column;
+    }
+
+    .settings-input {
+      width: 100%;
+    }
+
+    .settings-input input[type="text"], 
+    .settings-input input[type="email"] { 
+      margin-right: 0px;
+      width: 55%;
+    }
+
+    .settings-input p {
+      font-size: 10px;
+    }
+
+    .save-button-container {
+      align-items: center;
+    }
+
+    .save-button {
+      width: 50%;
+    }
+  }
   @media only screen and (max-width: 345px) {
     .filters-and-export {
       flex-direction: column;

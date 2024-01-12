@@ -1,7 +1,9 @@
-<?php 
+<?php
 session_start();
 require '../includes/database_connection.php';
-date_default_timezone_set('Asia/Manila');
+
+// Clear selection
+unset($_SESSION['selected_section']);
 
 // If logged in
 if (isset($_SESSION['student_number'])) {
@@ -9,15 +11,6 @@ if (isset($_SESSION['student_number'])) {
   header("Location: student_homepage.php");
 }
 if (isset($_SESSION['id_number'])) {
-
-  // Redirect to homepage if no section is selected
-  if (!isset($_SESSION['selected_section'])) {
-    header("Location: professor_homepage.php");
-  } else {
-    $sectionPage = $_SESSION['selected_section'];
-  }
-
-  // Professor ID
   $idNumber = $_SESSION['id_number'];
 
   // SQL query
@@ -45,6 +38,12 @@ if (isset($_SESSION['id_number'])) {
 } else {
   // Redirect to login
   header("Location: ../index.php");
+}
+
+// Section button
+if (isset($_POST['section-button'])) {
+  $_SESSION['selected_section'] = $_POST['section'];
+  header("Location: attendance_page.php");
 }
 
 // Logout
@@ -89,52 +88,46 @@ if (isset($_POST['logout'])) {
           </div>
           <a onclick="toProfessorHomepage()"><h1>PUP HDF Attendance System</h1></a>
         </div>
-        <h1 class="title" id="title">SECTION <?php echo $sectionPage ?></h1>
-        <div class="search-container">
-          <div class="search-textbox">
-            <input type="text" name="search" id="search" value="">
-            <img src="..\assets\images\icons\search.svg"/>
-          </div>
-        </div>
-        <select id="roomFilter">
-            <option value="ALL">ALL</option>
-            <option value="300">ROOM 300</option>
-            <option value="310">ROOM 310</option>
-            <option value="311">ROOM 311</option>
-            <option value="312">ROOM 312</option>
-            <option value="313">ROOM 313</option>
-            <option value="314">ROOM 314</option>
-            <option value="315">ROOM 315</option>
-            <option value="316">ROOM 316</option>
-        </select>
-        <div class="filters-and-export">
-          <div class="filters-container">
-            <input type="date" id="date" class="date-time-filter" required value="<?php echo date('Y-m-d'); ?>">
-            <div class="time-container">
-              <input type="time" id="startTime" class="date-time-filter" required value="00:00">
-              <input type="time" id="endTime" class="date-time-filter" required value="23:59">
+        <h1 class="title">Account Settings</h1>
+        <form>
+            <div class="settings-container">
+                <h4>RECOVERY E-MAIL</h4>
+                <div class="div-left-right">
+                    <div class="settings-input">
+                        <p>E-mail:</p>
+                        <input type="email" name="email" class="settings-textbox"></input>
+                    </div>
+                    <div class="settings-input">
+                        <p>Confirm E-mail:</p>
+                        <input type="email" name="confirm-email" class="settings-textbox"></input>
+                    </div>
+                </div>
             </div>
-          </div>
-          <button id="export"><p>EXPORT DATA</p><img src="..\assets\images\icons\download.svg"/></button>
-        </div>
-        <table id="attendanceTable">
-            <thead>
-              <tr>
-                <th>STUDENT NAME</th>
-                <th>STUDENT NUMBER</th>
-                <th>ROOM</th>
-                <th>TIME</th>
-                <th>DATE</th>
-              </tr>
-            </thead>
-            <tbody>
-              
-            </tbody>
-          </table>
+            <div class="settings-container">
+                <h4>CHANGE PASSWORD</h4>
+                <div class="settings-input">
+                    <p>Current Password:</p>
+                    <input type="text" name="email" class="settings-textbox"></input>
+                </div>
+                <div class="div-left-right">
+                    <div class="settings-input">
+                        <p>New Password:</p>
+                        <input type="text" name="confirm-email" class="settings-textbox"></input>
+                    </div>
+                    <div class="settings-input">
+                        <p>Confirm New Password:</p>
+                        <input type="text" name="confirm-email" class="settings-textbox"></input>
+                    </div>
+                </div>
+            </div>
+            <div class="save-button-container">
+                <p class="save-response">Saved!</p>
+                <button type="submit" name="submit" class="save-button">SAVE</button>
+            <div>
+        </form>
+        
     </section>
-    <script src="../js/table2excel.js"></script>
     <script src="../js/navbar_controller.js"></script>
-    <script src="../js/attendance.js"></script>
     <script>
       function toLogin() {
         window.location.href = "../index.php";
