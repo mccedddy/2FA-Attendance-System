@@ -145,7 +145,7 @@ if (isset($_POST['logout'])) {
         return false;
       }
       function toSettings() {
-        window.location.href = "settings_page.php";
+        window.location.href = "professor_settings_page.php";
         return false;
       }
     </script>

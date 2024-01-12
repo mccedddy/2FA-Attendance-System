@@ -88,33 +88,43 @@ if (isset($_POST['logout'])) {
           </div>
           <a onclick="toProfessorHomepage()"><h1>PUP HDF Attendance System</h1></a>
         </div>
-        <h1 class="title">Computer Engineering Department Sections</h1>
-        <div class="section-button-container">
-          <form method="POST">
-            <input type="hidden" name="section" value="4-1">
-            <button type="submit" name="section-button" class="section-button">SECTION 4-1</button>
-          </form>
-          <form method="POST">
-            <input type="hidden" name="section" value="4-2">
-            <button type="submit" name="section-button" class="section-button">SECTION 4-2</button>
-          </form>
-          <form method="POST">
-            <input type="hidden" name="section" value="4-3">
-            <button type="submit" name="section-button" class="section-button">SECTION 4-3</button>
-          </form>
-          <form method="POST">
-            <input type="hidden" name="section" value="4-4">
-            <button type="submit" name="section-button" class="section-button">SECTION 4-4</button>
-          </form>
-          <form method="POST">
-            <input type="hidden" name="section" value="4-5">
-            <button type="submit" name="section-button" class="section-button">SECTION 4-5</button>
-          </form>
-          <form method="POST">
-            <input type="hidden" name="section" value="4-6">
-            <button type="submit" name="section-button" class="section-button">SECTION 4-6</button>
-          </form>
-        </div>
+        <h1 class="title">Account Settings</h1>
+        <form>
+            <div class="settings-container">
+                <h4>RECOVERY E-MAIL</h4>
+                <div class="div-left-right">
+                    <div class="settings-input">
+                        <p>E-mail:</p>
+                        <input type="email" name="email" class="settings-textbox"></input>
+                    </div>
+                    <div class="settings-input">
+                        <p>Confirm E-mail:</p>
+                        <input type="email" name="confirm-email" class="settings-textbox"></input>
+                    </div>
+                </div>
+            </div>
+            <div class="settings-container">
+                <h4>CHANGE PASSWORD</h4>
+                <div class="settings-input">
+                    <p>Current Password:</p>
+                    <input type="text" name="email" class="settings-textbox"></input>
+                </div>
+                <div class="div-left-right">
+                    <div class="settings-input">
+                        <p>New Password:</p>
+                        <input type="text" name="confirm-email" class="settings-textbox"></input>
+                    </div>
+                    <div class="settings-input">
+                        <p>Confirm New Password:</p>
+                        <input type="text" name="confirm-email" class="settings-textbox"></input>
+                    </div>
+                </div>
+            </div>
+            <div class="save-button-container">
+                <p class="save-response">Saved!</p>
+                <button type="submit" name="submit" class="save-button">SAVE</button>
+            <div>
+        </form>
     </section>
     <script src="../js/navbar_controller.js"></script>
     <script>

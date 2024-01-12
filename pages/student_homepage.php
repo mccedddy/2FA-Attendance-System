@@ -64,6 +64,7 @@ if (isset($_POST['logout'])) {
       <a onclick="toStudentHomepage()"><h1>PUP HDF Attendance System</h1></a>
       <form method="POST" class="logout-form">
         <button type="submit" name="logout" class="logout-button"><p class="logout-text">LOGOUT</p></button>
+        <img src="../assets/images/icons/settings_black.svg" onclick="toSettings()" class="nav-button" />
       </form>
     </nav>
     <section class="main">
@@ -90,6 +91,10 @@ if (isset($_POST['logout'])) {
       }
       function toStudentHomepage() {
         window.location.href = "student_homepage.php";
+        return false;
+      }
+      function toSettings() {
+        window.location.href = "student_settings_page.php";
         return false;
       }
     </script>
