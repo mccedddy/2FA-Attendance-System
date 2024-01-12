@@ -1,3 +1,57 @@
+<?php
+session_start();
+require '../includes/database_connection.php';
+
+// Clear selection
+unset($_SESSION['selected_section']);
+
+// If logged in
+if (isset($_SESSION['student_number'])) {
+  // Redirect to student homepage
+  header("Location: student_homepage.php");
+}
+if (isset($_SESSION['id_number'])) {
+  $idNumber = $_SESSION['id_number'];
+
+  // SQL query
+  $sql = "SELECT * FROM professors WHERE id_number = '$idNumber'";
+  $result = mysqli_query($connection, $sql);
+
+  // Check if the query was successful
+  if ($result) {
+    $professor = mysqli_fetch_assoc($result);
+
+    // Get professor info
+    if ($professor) {
+      $name = strtoupper($professor['last_name']) . ', ' . strtoupper($professor['first_name']);
+      $idNumber = $professor['id_number'];
+    }
+        
+    // Free result from memory
+    mysqli_free_result($result);
+  } else {
+    echo 'Error: ' . mysqli_error($connection);
+  }
+    
+  // Close database connection
+  mysqli_close($connection);
+} else {
+  // Redirect to login
+  header("Location: ../index.php");
+}
+
+// Section button
+if (isset($_POST['section-button'])) {
+  $_SESSION['selected_section'] = $_POST['section'];
+  header("Location: attendance_page.php");
+}
+
+// Logout
+if (isset($_POST['logout'])) {
+  require '../includes/logout.php';
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -20,7 +74,11 @@
         <a onclick="toProfessorHomepage()"><img src="..\assets\images\logos\pup_logo.png" /></a>
         <a onclick="toProfessorHomepage()"><img src="..\assets\images\icons\notepad.svg" class="nav-button"/></a>
       </div>
-      <a href="..\index.php"><img src="..\assets\images\icons\logout.svg" class="nav-button"/></a>
+      <form method="POST" class="logout-form">
+        <button type="submit" name="logout" class="logout-button">
+          <img src="..\assets\images\icons\logout.svg" class="nav-button"/>
+        </button>
+      </form>
     </nav>
     <section class="main">
         <div class="header">
@@ -31,12 +89,30 @@
         </div>
         <h1 class="title">Computer Engineering Department Sections</h1>
         <div class="section-button-container">
-          <a href="attendance_page.php"><button class="section-button">SECTION 4-1</button></a>
-          <a href="attendance_page.php"><button class="section-button">SECTION 4-2</button></a>
-          <a href="attendance_page.php"><button class="section-button">SECTION 4-3</button></a>
-          <a href="attendance_page.php"><button class="section-button">SECTION 4-4</button></a>
-          <a href="attendance_page.php"><button class="section-button">SECTION 4-5</button></a>
-          <a href="attendance_page.php"><button class="section-button">SECTION 4-6</button></a>
+          <form method="POST">
+            <input type="hidden" name="section" value="4-1">
+            <button type="submit" name="section-button" class="section-button">SECTION 4-1</button>
+          </form>
+          <form method="POST">
+            <input type="hidden" name="section" value="4-2">
+            <button type="submit" name="section-button" class="section-button">SECTION 4-2</button>
+          </form>
+          <form method="POST">
+            <input type="hidden" name="section" value="4-3">
+            <button type="submit" name="section-button" class="section-button">SECTION 4-3</button>
+          </form>
+          <form method="POST">
+            <input type="hidden" name="section" value="4-4">
+            <button type="submit" name="section-button" class="section-button">SECTION 4-4</button>
+          </form>
+          <form method="POST">
+            <input type="hidden" name="section" value="4-5">
+            <button type="submit" name="section-button" class="section-button">SECTION 4-5</button>
+          </form>
+          <form method="POST">
+            <input type="hidden" name="section" value="4-6">
+            <button type="submit" name="section-button" class="section-button">SECTION 4-6</button>
+          </form>
         </div>
     </section>
     <script src="../js/navbar_controller.js"></script>

@@ -1,23 +1,45 @@
 <?php
+session_start();
+require '../includes/database_connection.php';
 $idNumber = '';
 $error_message = '';
+
+// If logged in
+if (isset($_SESSION['id_number'])) {
+  // Redirect to professor homepage
+  header("Location: professor_homepage.php");
+}
+if (isset($_SESSION['student_number'])) {
+  // Redirect to professor homepage
+  header("Location: student_homepage.php");
+}
+
 // Check if the form is submitted
 if (isset($_POST['login'])) {
-    // Retrieve the values from the form
-    $idNumber = $_POST['id-number'];
-    $password = $_POST['password'];
+  // Retrieve the values from the form
+  $idNumber = $_POST['id-number'];
+  $password = $_POST['password'];
 
-    // Perform authentication or any other necessary actions here
-    // You can add your PHP login logic here
-    // For example, you might want to validate the credentials against a database
+  // Connect to database
+  require '../includes/database_connection.php';
 
-    // After successful login, you can redirect the user to the student homepage
-    if ($idNumber == 'admin' && $password == 'admin') {
+  // SQL query
+  $sql = "SELECT * FROM professors WHERE id_number = '$idNumber'";
+  $result = mysqli_query($connection, $sql);
+
+  // Check if the query was successful
+  if ($result) {
+    $professors = mysqli_fetch_assoc($result);
+
+    // Check the password
+    if ($professors && $password == $professors['last_name']) {
+      $_SESSION['id_number'] = $idNumber;
       header("Location: professor_homepage.php");
       exit();
     } else {
       $error_message = 'ID number or password is incorrect!';
     }
+  }
 }
 ?>
 
@@ -41,10 +63,7 @@ if (isset($_POST['login'])) {
       <section class="login-div-L">
         <div class="login-div-center">
           <div class="login-title">
-            <a href="professor_homepage.html"
-              >
-              <a1>PROFESSOR LOGIN</a1>
-            </a>
+            <a1>PROFESSOR LOGIN</a1>
           </div>
           <form action="" method="POST" class="login-form">
             <div class="login-textbox-container">
@@ -53,7 +72,7 @@ if (isset($_POST['login'])) {
                 class="textbox-icon"
               />
               <input
-                type="textbox"
+                type="text"
                 class="login-textbox"
                 name="id-number"
                 value="<?php echo htmlspecialchars($idNumber); ?>"
@@ -61,7 +80,7 @@ if (isset($_POST['login'])) {
               />
             </div>
             <div class="login-textbox-container">
-              <img src="../assets/images/icons/lock.png" class="textbox-icon" />
+                <img src="../assets/images/icons/lock.png" class="textbox-icon" />
               <input
                 type="password"
                 class="login-textbox"

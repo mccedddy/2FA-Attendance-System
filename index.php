@@ -7,6 +7,10 @@ if (isset($_SESSION['student_number'])) {
   // Redirect to student homepage
   header("Location: pages/student_homepage.php");
 }
+if (isset($_SESSION['id_number'])) {
+  // Redirect to student homepage
+  header("Location: pages/professor_homepage.php");
+}
 ?>
 
 <!DOCTYPE html>

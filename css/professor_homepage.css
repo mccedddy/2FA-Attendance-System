@@ -67,6 +67,12 @@ body {
     cursor: pointer;
   }
 
+  .logout-button {
+    border: 0px;
+    background-color: #00000000;
+    padding: 0px;
+  }
+
   .logout-button:hover {
     cursor: pointer;
   }
@@ -227,6 +233,7 @@ body {
 
   #export:hover {
     outline: 1px solid #810000;
+    cursor: pointer;
   }
 
   .section-button-container {
