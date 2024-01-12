@@ -259,6 +259,7 @@ a:hover {
   .title {
     padding: 0px;
     margin-top: 0px;
+    font-size: 16px;
   }
 
   .main form {
