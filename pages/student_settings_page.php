@@ -102,7 +102,7 @@ if (isset($_POST['logout'])) {
             </div>
             <div class="save-button-container">
                 <p class="save-response">Saved!</p>
-                <button type="submit" name="submit" class="save-button">SAVE</button>
+                <button type="submit" name="save" class="save-button">SAVE</button>
             <div>
         </form>
     </section>

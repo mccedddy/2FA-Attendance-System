@@ -50,6 +50,45 @@ if (isset($_POST['section-button'])) {
 if (isset($_POST['logout'])) {
   require '../includes/logout.php';
 }
+
+// Change email details
+if (isset($_POST['save'])) {
+  require '../includes/database_connection.php';
+  $email = $_POST['email'];
+  $confirmEmail = $_POST['confirm-email'];
+  $password = $_POST['password'];
+  $newPassword = $_POST['new-password'];
+  $confirmNewPassword = $_POST['confirm-new-password'];
+
+  if ($confirmEmail && $confirmNewPassword) {
+    if ($email !== $professor['email'] && 
+    $email === $confirmEmail &&
+    password_verify($password, $professor['password']) &&
+    $newPassword === $confirmNewPassword) {
+      $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+      $sql = "UPDATE professors SET email = '$email', password = '$hashedPassword' WHERE id_number = '$idNumber'";
+      $stmt = mysqli_prepare($connection, $sql);
+      mysqli_stmt_execute($stmt);
+      mysqli_stmt_close($stmt);
+      header("Location: professor_settings_page.php");
+    }
+  } else if ($confirmEmail && $email !== $professor['email'] && $email === $confirmEmail &&
+    !$password && !$newPassword && !$confirmNewPassword) {
+      $sql = "UPDATE professors SET email = '$email' WHERE id_number = '$idNumber'";
+      $stmt = mysqli_prepare($connection, $sql);
+      mysqli_stmt_execute($stmt);
+      mysqli_stmt_close($stmt);
+      header("Location: professor_settings_page.php");
+  } else if (!$confirmEmail && password_verify($password, $professor['password']) &&
+    $confirmNewPassword && $newPassword === $confirmNewPassword) {
+      $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+      $sql = "UPDATE professors SET password = '$hashedPassword' WHERE id_number = '$idNumber'";
+      $stmt = mysqli_prepare($connection, $sql);
+      mysqli_stmt_execute($stmt);
+      mysqli_stmt_close($stmt);
+      header("Location: professor_settings_page.php");
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -107,22 +146,22 @@ if (isset($_POST['logout'])) {
                 <h4>CHANGE PASSWORD</h4>
                 <div class="settings-input">
                     <p>Current Password:</p>
-                    <input type="password" name="email" class="settings-textbox"></input>
+                    <input type="password" name="password" class="settings-textbox"></input>
                 </div>
                 <div class="div-left-right">
                     <div class="settings-input">
                         <p>New Password:</p>
-                        <input type="password" name="confirm-email" class="settings-textbox"></input>
+                        <input type="password" name="new-password" class="settings-textbox"></input>
                     </div>
                     <div class="settings-input">
                         <p>Confirm New Password:</p>
-                        <input type="password" name="confirm-email" class="settings-textbox"></input>
+                        <input type="password" name="confirm-new-password" class="settings-textbox"></input>
                     </div>
                 </div>
             </div>
             <div class="save-button-container">
                 <p class="save-response">Saved!</p>
-                <button type="submit" name="submit" class="save-button">SAVE</button>
+                <button type="submit" name="save" class="save-button">SAVE</button>
             <div>
         </form>
     </section>
