@@ -90,7 +90,7 @@ if (isset($_POST['logout'])) {
         </div>
         <h1 class="title">Computer Engineering Department Sections</h1>
         <div class="add-section-container">
-            <button class="add-section-button">
+            <button class="add-section-button" onclick="openAddSectionModal()">
                 <img src="..\assets\images\icons\plus.svg" class="hamburger">
                 <p>ADD SECTION</p>
             </button>
@@ -127,12 +127,12 @@ if (isset($_POST['logout'])) {
         </div>
     </section>
 
-    <div id="confirmationModal" class="modal-blur">
+    <div id="addSectionModal" class="modal-blur">
       <div class="modal-content">
         <div class="top-modal">
             <h6>ADD CLASS SECTION</h6>
         </div>
-        <span class="close-modal" onclick="closePerfectScoreModal()">&times;</span>
+        <span class="close-modal" onclick="closeAddSectionModal()">&times;</span>
         <form class="add-section-form">
             <div class="year-section-container">
                 <div class="textbox-container">
@@ -170,6 +170,14 @@ if (isset($_POST['logout'])) {
       function toSettings() {
         window.location.href = "admin_settings_page.php";
         return false;
+      }
+      function openAddSectionModal() {
+        var addSectionModal = document.getElementById("addSectionModal");
+        addSectionModal.style.display = "block";
+      }
+      function closeAddSectionModal() {
+        var addSectionModal = document.getElementById("addSectionModal");
+        addSectionModal.style.display = "none";
       }
     </script>
   </body>
