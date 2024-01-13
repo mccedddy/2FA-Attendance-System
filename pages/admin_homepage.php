@@ -40,11 +40,11 @@ if (isset($_SESSION['id_number'])) {
   header("Location: ../index.php");
 }
 
-// // Section button
-// if (isset($_POST['section-button'])) {
-//   $_SESSION['selected_section'] = $_POST['section'];
-//   header("Location: attendance_page.php");
-// }
+// Section button
+if (isset($_POST['section-button'])) {
+  $_SESSION['selected_section'] = $_POST['section'];
+  header("Location: admin_section_page.php");
+}
 
 // Logout
 if (isset($_POST['logout'])) {

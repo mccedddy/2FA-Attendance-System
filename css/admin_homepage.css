@@ -208,23 +208,18 @@ html {
       color: #FFF;
     }
   
-    .filters-and-export {
+    .edit-and-export {
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
     
-    .filters-container {
+    .edit-container {
       display: flex;
       flex-wrap: wrap;
     }
   
-    .time-container {
-      display: flex;
-      flex-wrap: wrap;
-    }
-  
-    .date-time-filter {
+    .edit-class-button {
       width: 125px;
       height: 28px;
       margin: 15px 3px 15px 0px;
@@ -233,12 +228,16 @@ html {
       border: 1px solid #810000;
       font-family: "Poppins";
       font-size: 12px;
-      color: #810000;
+      color: #fff;
+      background-color: #810000;
       padding: 0px 12px 0px 12px;
       cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   
-    .date-time-filter:hover, .date-time-filter:focus {
+    .edit-class-button:hover, .edit-class-button:focus {
       outline: 1px solid #810000;
     }
   
@@ -612,12 +611,7 @@ html {
         font-size: 10px;
       }
   
-      #roomFilter {
-        width: 106px;
-        font-size: 10px;
-      }
-  
-      .filters-and-export {
+      .edit-and-export {
         display: flex;
         margin-top: 5px;
         justify-content: space-between;
@@ -625,12 +619,12 @@ html {
         gap: 5px;
       }
   
-      .filters-container {
+      .edit-container {
         display: flex;
         gap: 5px;
       }
   
-      .date-time-filter {
+      .edit-class-button {
         width: 80px;
         font-size: 10px;
         margin: 0px;
@@ -700,16 +694,14 @@ html {
       }
     }
     @media only screen and (max-width: 345px) {
-      .filters-and-export {
+      .edit-and-export {
         flex-direction: column;
         align-items: start;
       }
   
-      .filters-container {
+      .edit-container {
         flex-direction: column;
       }
   
-      .time-container {
-        flex-direction: column;
-      }
+
     }
