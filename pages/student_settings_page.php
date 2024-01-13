@@ -41,6 +41,55 @@ if (isset($_SESSION['student_number'])) {
 if (isset($_POST['logout'])) {
   require '../includes/logout.php';
 }
+
+// Change email details
+if (isset($_POST['save'])) {
+  require '../includes/database_connection.php';
+  $email = $_POST['email'];
+  $confirmEmail = $_POST['confirm-email'];
+  $password = $_POST['password'];
+  $newPassword = $_POST['new-password'];
+  $confirmNewPassword = $_POST['confirm-new-password'];
+
+  if ($confirmEmail && 
+    $confirmNewPassword && 
+    $email !== $student['email'] && 
+    $email === $confirmEmail && 
+    password_verify($password, $student['password']) &&
+    $newPassword === $confirmNewPassword) {
+      
+      $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+      $sql = "UPDATE students SET email = '$email', password = '$hashedPassword' WHERE student_number = '$studentNumber'";
+      $stmt = mysqli_prepare($connection, $sql);
+      mysqli_stmt_execute($stmt);
+      mysqli_stmt_close($stmt);
+      header("Location: student_settings_page.php");
+
+  } else if ($confirmEmail && 
+    $email !== $student['email'] && 
+    $email === $confirmEmail &&
+    !$password && !$newPassword && 
+    !$confirmNewPassword) {
+
+      $sql = "UPDATE students SET email = '$email' WHERE student_number = '$studentNumber'";
+      $stmt = mysqli_prepare($connection, $sql);
+      mysqli_stmt_execute($stmt);
+      mysqli_stmt_close($stmt);
+      header("Location: student_settings_page.php");
+
+  } else if (!$confirmEmail && 
+    password_verify($password, $student['password']) &&
+    $confirmNewPassword && 
+    $newPassword === $confirmNewPassword) {
+      
+      $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+      $sql = "UPDATE students SET password = '$hashedPassword' WHERE student_number = '$studentNumber'";
+      $stmt = mysqli_prepare($connection, $sql);
+      mysqli_stmt_execute($stmt);
+      mysqli_stmt_close($stmt);
+      header("Location: student_settings_page.php");
+    }
+}
 ?>
 
 

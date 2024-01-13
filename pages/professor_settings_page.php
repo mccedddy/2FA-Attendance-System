@@ -60,27 +60,37 @@ if (isset($_POST['save'])) {
   $newPassword = $_POST['new-password'];
   $confirmNewPassword = $_POST['confirm-new-password'];
 
-  if ($confirmEmail && $confirmNewPassword) {
-    if ($email !== $professor['email'] && 
-    $email === $confirmEmail &&
+  if ($confirmEmail && 
+    $confirmNewPassword && 
+    $email !== $professor['email'] && 
+    $email === $confirmEmail && 
     password_verify($password, $professor['password']) &&
     $newPassword === $confirmNewPassword) {
+      
       $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
       $sql = "UPDATE professors SET email = '$email', password = '$hashedPassword' WHERE id_number = '$idNumber'";
       $stmt = mysqli_prepare($connection, $sql);
       mysqli_stmt_execute($stmt);
       mysqli_stmt_close($stmt);
       header("Location: professor_settings_page.php");
-    }
-  } else if ($confirmEmail && $email !== $professor['email'] && $email === $confirmEmail &&
-    !$password && !$newPassword && !$confirmNewPassword) {
+
+  } else if ($confirmEmail && 
+    $email !== $professor['email'] && 
+    $email === $confirmEmail &&
+    !$password && !$newPassword && 
+    !$confirmNewPassword) {
+
       $sql = "UPDATE professors SET email = '$email' WHERE id_number = '$idNumber'";
       $stmt = mysqli_prepare($connection, $sql);
       mysqli_stmt_execute($stmt);
       mysqli_stmt_close($stmt);
       header("Location: professor_settings_page.php");
-  } else if (!$confirmEmail && password_verify($password, $professor['password']) &&
-    $confirmNewPassword && $newPassword === $confirmNewPassword) {
+
+  } else if (!$confirmEmail && 
+    password_verify($password, $professor['password']) &&
+    $confirmNewPassword && 
+    $newPassword === $confirmNewPassword) {
+      
       $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
       $sql = "UPDATE professors SET password = '$hashedPassword' WHERE id_number = '$idNumber'";
       $stmt = mysqli_prepare($connection, $sql);
