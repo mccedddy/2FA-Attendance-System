@@ -32,7 +32,7 @@ if (isset($_POST['login'])) {
     $professors = mysqli_fetch_assoc($result);
 
     // Check the password
-    if ($professors && $password == $professors['last_name']) {
+    if ($professors && password_verify($password, $professors['password'])) {
       $_SESSION['id_number'] = $idNumber;
       header("Location: professor_homepage.php");
       exit();
