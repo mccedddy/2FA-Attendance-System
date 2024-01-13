@@ -34,7 +34,11 @@ if (isset($_POST['login'])) {
     // Check the password
     if ($professors && password_verify($password, $professors['password'])) {
       $_SESSION['id_number'] = $idNumber;
-      header("Location: professor_homepage.php");
+      if ($idNumber = 'professor_admin') {
+        header("Location: admin_homepage.php");
+      } else {
+        header("Location: professor_homepage.php");
+      }
       exit();
     } else {
       $error_message = 'ID number or password is incorrect!';
