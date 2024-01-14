@@ -220,7 +220,7 @@ html {
     }
   
     .edit-class-button {
-      width: 125px;
+      width: 75px;
       height: 28px;
       margin: 15px 3px 15px 0px;
       flex-shrink: 0;
@@ -235,6 +235,7 @@ html {
       display: flex;
       justify-content: center;
       align-items: center;
+      gap: 5px;
     }
   
     .edit-class-button:hover, .edit-class-button:focus {

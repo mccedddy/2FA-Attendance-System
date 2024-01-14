@@ -99,12 +99,15 @@ if (isset($_POST['logout'])) {
         <div class="edit-and-export">
           <div class="edit-container">
             <button class="edit-class-button">
+                <img src="..\assets\images\icons\plus_white.svg"/>
                 <p>New</p>
             </button>
             <button class="edit-class-button">
+                <img src="..\assets\images\icons\pencil_white.svg"/>
                 <p>Edit</p>
             </button>
             <button class="edit-class-button">
+                <img src="..\assets\images\icons\trash_white.svg"/>
                 <p>Delete</p>
             </button>
           </div>
