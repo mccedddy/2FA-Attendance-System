@@ -2,29 +2,26 @@
 session_start();
 require '../includes/database_connection.php';
 
-// Clear selection
-unset($_SESSION['selected_section']);
-
 // If logged in
-if (isset($_SESSION['student_number'])) {
-  // Redirect to student homepage
-  header("Location: student_homepage.php");
-}
 if (isset($_SESSION['id_number'])) {
-  $idNumber = $_SESSION['id_number'];
+  // Redirect to professor homepage
+  header("Location: professor_homepage.php");
+}
+if (isset($_SESSION['student_number'])) {
+  $studentNumber = $_SESSION['student_number'];
 
   // SQL query
-  $sql = "SELECT * FROM professors WHERE id_number = '$idNumber'";
+  $sql = "SELECT * FROM students WHERE student_number = '$studentNumber'";
   $result = mysqli_query($connection, $sql);
 
   // Check if the query was successful
   if ($result) {
-    $professor = mysqli_fetch_assoc($result);
+    $student = mysqli_fetch_assoc($result);
 
-    // Get professor info
-    if ($professor) {
-      $name = strtoupper($professor['last_name']) . ', ' . strtoupper($professor['first_name']);
-      $idNumber = $professor['id_number'];
+    // Get student info
+    if ($student) {
+      $name = strtoupper($student['last_name']) . ', ' . strtoupper($student['first_name']);
+      $studentNumber = $student['student_number'];
     }
         
     // Free result from memory
@@ -38,12 +35,6 @@ if (isset($_SESSION['id_number'])) {
 } else {
   // Redirect to login
   header("Location: ../index.php");
-}
-
-// Section button
-if (isset($_POST['section-button'])) {
-  $_SESSION['selected_section'] = $_POST['section'];
-  header("Location: attendance_page.php");
 }
 
 // Logout
@@ -83,48 +74,36 @@ if (isset($_SESSION['email']) && isset($_SESSION['password'])) {
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../css/professor_homepage.css" />
+    <link rel="stylesheet" href="../css/student_homepage.css" />
   </head>
   <body>
     <nav class="navbar">
-      <div class="navbar-top">
-        <img src="..\assets\images\icons\arrow_left.svg" id="closeNavbar" class="nav-button" onclick="toggleMobileNavbar()"/>
-        <a onclick="toProfessorHomepage()"><img src="..\assets\images\logos\pup_logo.png" /></a>
-        <a onclick="toProfessorHomepage()"><img src="..\assets\images\icons\notepad.svg" class="nav-button"/></a>
-      </div>
+      <a onclick="toStudentHomepage()"><h1>PUP HDF Attendance System</h1></a>
       <form method="POST" class="logout-form">
-        <a onclick="toSettings()"><img src="..\assets\images\icons\settings.svg"/></a>
-        <button type="submit" name="logout" class="logout-button">
-          <img src="..\assets\images\icons\logout.svg" class="nav-button"/>
-        </button>
-      </form>
+        <button type="submit" name="logout" class="logout-button"><p class="logout-text">LOGOUT</p></button>
+        <img src="../assets/images/icons/settings_black.svg" onclick="toSettings()" class="nav-button" />  
+    </form>
     </nav>
     <section class="main">
-        <div class="header">
-          <div class="mobile-navbar-toggle" onclick="toggleMobileNavbar()">
-            <img src="..\assets\images\icons\hamburger.svg" class="hamburger">
-          </div>
-          <a onclick="toProfessorHomepage()"><h1>PUP HDF Attendance System</h1></a>
-        </div>
         <h1 class="title">Account Settings</h1>
         <center>
-            <div style="border: 1px solid #810000; border-radius: 15px; padding: 0px 40px 0px 40px; display: inline-flex">
+            <div style="border: 1px solid #810000; border-radius: 15px; padding: 0px 40px 0px 40px;">
                 <?php echo $result; ?>
             </div>
         </center>
     </section>
-    <script src="../js/navbar_controller.js"></script>
+    <!-- <script src="../scripts.js"></script> -->
     <script>
-      function toLogin() {
-        window.location.href = "../index.php";
+      function toHDF() {
+        window.location.href = "hdf_page.php";
         return false;
       }
-      function toProfessorHomepage() {
-        window.location.href = "professor_homepage.php";
+      function toStudentHomepage() {
+        window.location.href = "student_homepage.php";
         return false;
       }
       function toSettings() {
-        window.location.href = "professor_settings_page.php";
+        window.location.href = "student_settings_page.php";
         return false;
       }
     </script>
