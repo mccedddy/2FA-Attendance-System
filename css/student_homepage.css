@@ -175,7 +175,7 @@ a:hover {
   margin: 0px;
 }
 
-.settings-input input[type="password"], 
+.settings-input input[type="password"],
 .settings-input input[type="email"] {
   height: 20px;
   width: 60%;
@@ -183,7 +183,7 @@ a:hover {
 }
 
 .settings-textbox {
-  border: 1px solid #810000 !important; 
+  border: 1px solid #810000 !important;
   stroke-width: 1px;
   stroke: #000;
   border-radius: 5px;
@@ -279,8 +279,8 @@ a:hover {
     width: 100%;
   }
 
-  .settings-input input[type="password"], 
-  .settings-input input[type="email"] { 
+  .settings-input input[type="password"],
+  .settings-input input[type="email"] {
     margin-right: 0px;
     width: 55%;
   }

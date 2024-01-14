@@ -1,870 +1,875 @@
 html {
-    height: 100%;
-    width: 100%;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  display: flex;
+}
+
+h1 {
+  color: #000;
+  font-family: "Poppins";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.title {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #000;
+  text-align: center;
+  font-family: "Poppins";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+h2 {
+  width: 80vw;
+  padding: 0px 0px 0px 0px;
+  margin: 0px;
+  color: #810000;
+  text-align: center;
+  font-family: "Poppins";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+h3 {
+  margin: 10px;
+  color: #000;
+  text-align: center;
+  font-family: "Poppins";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+a:hover {
+  cursor: pointer;
+}
+
+.logout-button {
+  border: 0px;
+  background-color: #00000000;
+  padding: 0px;
+}
+
+.logout-button:hover {
+  cursor: pointer;
+}
+
+.navbar {
+  height: 100%;
+  width: 80px;
+  margin: 0px;
+  padding-top: 13px;
+  background-color: #810000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed; /* Add this line to make it fixed */
+  left: 0; /* Adjust the positioning as needed */
+  top: 0; /* Adjust the positioning as needed */
+}
+
+.navbar-top {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.navbar img {
+  height: 40px;
+  width: 40px;
+}
+
+.nav-button {
+  margin: 20px 0px 20px 0px;
+  cursor: pointer;
+}
+
+.logout-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.main {
+  height: 100%;
+  width: 100%;
+  padding: 0px 60px 0px 140px;
+}
+
+.main .header {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.add-section-container {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  margin: 0px 100px 0px 0px;
+}
+
+.add-section-button {
+  border: 0px;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-section-button:hover {
+  cursor: pointer;
+}
+
+.search-container {
+  display: flex;
+  justify-content: end;
+}
+
+.search-textbox {
+  width: 200px;
+  height: 25px;
+  padding-left: 5px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 1px solid #810000;
+  background: #fff;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-textbox:hover,
+.filter-search:focus {
+  outline: 1px solid #810000;
+}
+
+input[type="text"] {
+  border: 0px;
+}
+
+#search {
+  display: inline-flex;
+}
+
+input[type="text"]:focus {
+  outline: none;
+}
+
+#roomFilter {
+  width: 150px;
+  height: 30px;
+  flex-shrink: 0;
+  border-radius: 5px;
+  background: #810000;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  color: #fff;
+  text-align: center;
+  font-family: "Poppins";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+#roomFilter:hover,
+#roomFilter:focus {
+  outline: 1px solid #810000;
+}
+
+#roomFilter option {
+  background-color: white;
+  color: #810000;
+  border: 1px solid #810000;
+}
+
+#roomFilter option:checked {
+  background-color: #810000;
+  color: #fff;
+}
+
+.edit-and-export {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.edit-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.edit-class-button {
+  width: 75px;
+  height: 28px;
+  margin: 15px 3px 15px 0px;
+  flex-shrink: 0;
+  border-radius: 5px;
+  border: 1px solid #810000;
+  font-family: "Poppins";
+  font-size: 12px;
+  color: #fff;
+  background-color: #810000;
+  padding: 0px 12px 0px 12px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.edit-class-button:hover,
+.edit-class-button:focus {
+  outline: 1px solid #810000;
+}
+
+#export {
+  width: 149px;
+  height: 30px;
+  flex-shrink: 0;
+  border-radius: 5px;
+  border: 1px solid #810000;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #fff;
+  color: #810000;
+  font-family: "Poppins";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+#export:hover {
+  outline: 1px solid #810000;
+  cursor: pointer;
+}
+
+.section-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.section-button {
+  width: 200px;
+  height: 95px;
+  margin: 0px 20px 25px 0px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 1px solid #810000;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  background-color: white;
+  color: black;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  color: #000;
+  font-family: "Poppins";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.section-button:hover {
+  background-color: #810000;
+  color: white;
+  outline: 3px solid #810000;
+}
+
+#attendanceTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#attendanceTable th,
+#attendanceTable td {
+  border: 1px solid #000;
+  padding: 8px;
+  text-align: left;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+#attendanceTable th {
+  background-color: #810000;
+  color: #fff;
+}
+
+.mobile-navbar-toggle {
+  display: none;
+}
+
+#closeNavbar {
+  display: none;
+  margin-top: 0px;
+}
+
+/* div {
+border: 1px solid red;
+} */
+
+.settings-container {
+  padding: 5px 20px 20px 20px;
+  margin: 15px 0px 10px 0px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  border: 1px solid #810000;
+}
+
+.div-left-right {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.settings-input {
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.settings-input p {
+  font-size: 12px;
+  margin: 0px;
+}
+
+.settings-input input[type="password"],
+.settings-input input[type="email"] {
+  height: 20px;
+  width: 60%;
+  margin: 10px 20px 10px 0px;
+}
+
+.settings-textbox {
+  border: 1px solid #810000 !important;
+  stroke-width: 1px;
+  stroke: #000;
+  border-radius: 5px;
+}
+
+.save-button-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: end;
+  padding-bottom: 20px;
+}
+
+.save-response {
+  margin: 0px;
+  padding: 0px;
+  font-size: 12px;
+  color: green;
+  display: none;
+}
+
+.save-button {
+  width: 300px;
+  height: 50px;
+  margin-top: 5px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 0px;
+  background: #810000;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  color: #fff;
+  text-align: center;
+  font-family: "Poppins";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.save-button:hover {
+  cursor: pointer;
+}
+
+.modal-blur {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 10% auto;
+  padding: 0px 0px 20px 0px;
+  border: 1px solid #888;
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  border: 1px solid #000;
+  background: #fff;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.modal-content p {
+  font-size: 12px;
+}
+
+.top-modal {
+  width: 100%;
+  height: 50px;
+  background-color: #810000;
+  position: relative;
+  top: 0px;
+  border-radius: 14px 14px 0px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.top-modal h6 {
+  color: #fff;
+  text-align: center;
+  font-family: "Poppins";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.close-modal {
+  position: relative;
+  height: 0px;
+  top: -45px;
+  left: -15px;
+  color: #fff;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  align-self: flex-end;
+  padding-bottom: 0px;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.add-section-form {
+  width: 100%;
+}
+
+.add-student-form {
+  width: 100%;
+}
+
+.year-section-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.year-section-container .textbox-container {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.import-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.add-student-container {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding: 0px 20px 0px 20px;
+  gap: 10px;
+}
+
+.add-section-textbox {
+  width: 30% !important;
+  height: 20px;
+  flex-shrink: 0;
+  border-radius: 50px;
+  border: 1px solid #000 !important;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.add-student-textbox {
+  width: 30%;
+  height: 20px;
+  flex-grow: 1;
+  border-radius: 50px;
+  border: 1px solid #000 !important;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.year-section-textbox {
+  width: 40px;
+  height: 20px;
+  flex-shrink: 0;
+  border-radius: 5px;
+  border: 1px solid #000 !important;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.import-section-textbox {
+  width: 70%;
+  height: 20px;
+  flex-shrink: 0;
+  border-radius: 5px;
+  border: 1px solid #000 !important;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.add-student-textbox {
+  width: 50%;
+  height: 20px;
+  flex-shrink: 0;
+  border-radius: 5px;
+  border: 1px solid #000 !important;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+#addSectionModal .add-button-container {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  margin-right: 40px;
+}
+
+#addSectionModal #addButton {
+  height: 30px;
+  width: 100px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 0px;
+  background: #810000;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  color: #fff;
+  text-align: center;
+  font-family: "Poppins";
+  font-size: 12px;
+  font-style: normal;
+  line-height: normal;
+  margin-right: 20px;
+}
+
+#addSectionModal button:hover {
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 811px) {
+  h1 {
+    font-size: 12px;
   }
-  
-  body {
-    height: 100%;
-    width: 100%;
-    margin: 0px;
-    padding: 0px;
-    font-family: "Poppins", sans-serif;
-    font-weight: 400;
+
+  .main {
+    padding: 10px 10px 0px 10px;
+  }
+
+  .navbar {
+    width: 50px;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+  }
+
+  .hamburger {
+    margin-right: 10px;
+  }
+
+  #closeNavbar {
+    display: block;
+  }
+
+  .mobile-navbar-toggle {
+    margin-right: 20px;
+    display: block;
+    cursor: pointer;
+  }
+
+  .title {
+    font-size: 16px;
+  }
+
+  .add-section-container {
+    margin-right: 20px;
+  }
+
+  .search-container {
+    margin-bottom: 5px;
+  }
+
+  .search-textbox {
+    height: 20px;
+  }
+
+  .edit-and-export {
     display: flex;
+    margin-top: 5px;
+    justify-content: space-between;
+    align-items: end;
+    gap: 5px;
   }
-  
-    h1 {
-      color: #000;
-      font-family: "Poppins";
-      font-size: 20px;
-      font-style: normal;
-      font-weight: 700;
-      line-height: normal;
-    }
-  
-    .title {
-      margin: 10px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      flex-shrink: 0;
-      color: #000;
-      text-align: center;
-      font-family: "Poppins";
-      font-size: 24px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: normal;
-    }
-    
-    h2 {
-      width: 80vw;
-      padding: 0px 0px 0px 0px;
-      margin: 0px;
-      color: #810000;
-      text-align: center;
-      font-family: "Poppins";
-      font-size: 20px;
-      font-style: normal;
-      font-weight: 700;
-      line-height: normal;
-      text-align: right;
-      flex-shrink: 0;
-    }
-    
-    h3 {
-      margin: 10px;
-      color: #000;
-      text-align: center;
-      font-family: "Poppins";
-      font-size: 24px;
-      font-style: normal;
-      font-weight: 500;
-      line-height: normal;
-    }
-  
-    a:hover {
-      cursor: pointer;
-    }
-  
-    .logout-button {
-      border: 0px;
-      background-color: #00000000;
-      padding: 0px;
-    }
-  
-    .logout-button:hover {
-      cursor: pointer;
-    }
-  
-    .navbar {
-      height: 100%;
-      width: 80px;
-      margin: 0px;
-      padding-top: 13px;
-      background-color: #810000;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      position: fixed; /* Add this line to make it fixed */
-      left: 0; /* Adjust the positioning as needed */
-      top: 0; /* Adjust the positioning as needed */
-    }
-  
-    .navbar-top {
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-    }
-  
-    .navbar img {
-      height: 40px;
-      width: 40px;
-    }
-  
-    .nav-button {
-      margin: 20px 0px 20px 0px;
-      cursor: pointer;
-    }
-  
-    .logout-form {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-  
-    .main {
-      height: 100%;
-      width: 100%;
-      padding: 0px 60px 0px 140px;
-    }
-  
-    .main .header {
-      display: flex;
-      justify-content: start;
-      align-items: center;
-    }
 
-    .add-section-container {
-        display: flex;
-        justify-content: end;
-        align-items: center;
-        margin: 0px 100px 0px 0px
-    }
+  .edit-container {
+    display: flex;
+    gap: 5px;
+  }
 
-    .add-section-button {
-        border: 0px;
-        background-color: #FFF;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+  .edit-class-button {
+    width: 80px;
+    font-size: 10px;
+    margin: 0px;
+  }
 
-    .add-section-button:hover {
-        cursor: pointer;
-    }
-  
-    .search-container {
-      display: flex;
-      justify-content: end;
-    }
-  
-    .search-textbox {
-      width: 200px;
-      height: 25px;
-      padding-left: 5px;
-      flex-shrink: 0;
-      border-radius: 10px;
-      border: 1px solid #810000;
-      background: #FFF;
-      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .search-textbox:hover, .filter-search:focus {
-      outline: 1px solid #810000;
-    }
-  
-    input[type="text"] {
-      border: 0px;
-    }
+  #export {
+    width: 106px;
+    font-size: 10px;
+  }
 
-    #search {
-      display: inline-flex;
-    }
-    
-    input[type="text"]:focus {
-      outline: none;
-    }
-  
-    #roomFilter {
-      width: 150px;
-      height: 30px;
-      flex-shrink: 0;
-      border-radius: 5px;
-      background: #810000;
-      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-      color: #FFF;
-      text-align: center;
-      font-family: "Poppins";
-      font-size: 12px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: normal;
-    }
-  
-    #roomFilter:hover, #roomFilter:focus{
-      outline: 1px solid #810000;
-    }
-  
-    #roomFilter option {
-      background-color: white;
-      color: #810000;
-      border: 1px solid #810000;
-    }
-  
-    #roomFilter option:checked {
-      background-color: #810000;
-      color: #FFF;
-    }
-  
-    .edit-and-export {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    
-    .edit-container {
-      display: flex;
-      flex-wrap: wrap;
-    }
-  
-    .edit-class-button {
-      width: 75px;
-      height: 28px;
-      margin: 15px 3px 15px 0px;
-      flex-shrink: 0;
-      border-radius: 5px;
-      border: 1px solid #810000;
-      font-family: "Poppins";
-      font-size: 12px;
-      color: #fff;
-      background-color: #810000;
-      padding: 0px 12px 0px 12px;
-      cursor: pointer;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 5px;
-    }
-  
-    .edit-class-button:hover, .edit-class-button:focus {
-      outline: 1px solid #810000;
-    }
-  
-    #export {
-      width: 149px;
-      height: 30px;
-      flex-shrink: 0;
-      border-radius: 5px;
-      border: 1px solid #810000;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      background-color: #fff;
-      color: #810000;
-      font-family: "Poppins";
-      font-size: 12px;
-      font-style: normal;
-      font-weight: 700;
-      line-height: normal;
-    }
-  
-    #export:hover {
-      outline: 1px solid #810000;
-      cursor: pointer;
-    }
-  
-    .section-button-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-  
-    .section-button {
-      width: 200px;
-      height: 95px;
-      margin: 0px 20px 25px 0px;
-      flex-shrink: 0;
-      border-radius: 10px;
-      border: 1px solid #810000;
-      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-      background-color: white;
-      color: black;
-      padding: 10px;
-      text-align: center;
-      cursor: pointer;
-      color: #000;
-      font-family: "Poppins";
-      font-size: 14px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: normal;
-    }
-  
-    .section-button:hover {
-      background-color: #810000;
-      color: white;
-      outline: 3px solid #810000;
-    }
-  
-    #attendanceTable {
-      width: 100%;
-      border-collapse: collapse;
-    }
-  
-    #attendanceTable th, #attendanceTable td {
-      border: 1px solid #000;
-      padding: 8px;
-      text-align: left;
-      text-align: center;
-      font-family: Poppins;
-      font-size: 14px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: normal;
-    }
-  
-    #attendanceTable th {
-      background-color: #810000;
-      color: #FFF;
-    }
-  
-    .mobile-navbar-toggle {
-      display: none;
-    }
-  
-    #closeNavbar {
-      display: none;
-      margin-top: 0px;
-    }
-  
-    /* div {
-      border: 1px solid red;
-    } */
-  
-    .settings-container {
-      padding: 5px 20px 20px 20px;
-      margin: 15px 0px 10px 0px;
-      display: flex;
-      flex-direction: column;
-      border-radius: 5px;
-      border: 1px solid #810000;
-    }
-  
-    .div-left-right {
-      display: flex;
-      flex-wrap: wrap;
-    }
-  
-    .settings-input {
-      width: 50%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-  
-    .settings-input p {
-      font-size: 12px;
-      margin: 0px;
-    }
-  
-    .settings-input input[type="password"], 
-    .settings-input input[type="email"] {
-      height: 20px;
-      width: 60%;
-      margin: 10px 20px 10px 0px;
-    }
-  
-    .settings-textbox {
-      border: 1px solid #810000 !important; 
-      stroke-width: 1px;
-      stroke: #000;
-      border-radius: 5px;
-    }
-  
-    .save-button-container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: end;
-      padding-bottom: 20px;
-    }
-  
-    .save-response {
-      margin: 0px;
-      padding: 0px;
-      font-size: 12px;
-      color: green;
-      display: none;
-    }
-  
-    .save-button {
-      width: 300px;
-      height: 50px;
-      margin-top: 5px;
-      flex-shrink: 0;
-      border-radius: 10px;
-      border: 0px;
-      background: #810000;
-      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-      color: #fff;
-      text-align: center;
-      font-family: "Poppins";
-      font-size: 12px;
-      font-style: normal;
-      font-weight: 600;
-      line-height: normal;
-    }
-    
-    .save-button:hover {
-      cursor: pointer;
-    }
+  .section-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
 
-    .modal-blur {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.6);
-      }
-      
-      .modal-content {
-        background-color: #fefefe;
-        margin: 10% auto;
-        padding: 0px 0px 20px 0px;
-        border: 1px solid #888;
-        width: 35%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        border-radius: 15px;
-        border: 1px solid #000;
-        background: #FFF;
-        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-      }
+  .section-button {
+    width: 130px;
+    height: 50px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    border: 1px solid #000;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    font-size: 10px;
+    align-items: center;
+    margin: 5px;
+  }
 
-      .modal-content p {
-        font-size: 12px;
-      }
+  #attendanceTable {
+    margin-top: 7px;
+  }
 
-      .top-modal {
-        width: 100%;
-        height: 50px;
-        background-color: #810000;
-        position: relative;
-        top: 0px;
-        border-radius: 14px 14px 0px 0px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
+  #attendanceTable th,
+  #attendanceTable td {
+    font-size: 8px;
+  }
 
-      .top-modal h6 {
-        color: #FFF;
-        text-align: center;
-        font-family: "Poppins";
-        font-size: 14px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: normal;
-      }
-      
-      .close-modal {
-        position: relative;
-        height: 0px;
-        top: -45px;
-        left: -15px;
-        color: #fff;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-        align-self: flex-end;
-        padding-bottom: 0px;
-      }
-      
-      .close-modal:hover,
-      .close-modal:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-      }
+  .settings-container {
+    padding-left: 7px;
+    padding-right: 7px;
+  }
 
-      .add-section-form {
-        width: 100%;
-      }
+  .div-left-right {
+    flex-direction: column;
+  }
 
-      .add-student-form {
-        width: 100%;
-      }
+  .settings-input {
+    width: 100%;
+  }
 
-      .year-section-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
+  .settings-input input[type="password"],
+  .settings-input input[type="email"] {
+    margin-right: 0px;
+    width: 55%;
+  }
 
-      .year-section-container .textbox-container{
-        width: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-      }
+  .settings-input p {
+    font-size: 10px;
+  }
 
-      .import-container{
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-      }
+  .save-button-container {
+    align-items: center;
+  }
 
-      .add-student-container{
-        display: flex;
-        justify-content: start;
-        align-items: center;
-        padding: 0px 20px 0px 20px;
-        gap: 10px;
-      }
+  .save-button {
+    width: 50%;
+  }
 
-      .add-section-textbox {
-        width: 30% !important;
-        height: 20px;
-        flex-shrink: 0;
-        border-radius: 50px;
-        border: 1px solid #000 !important;
-        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-      }
+  .modal-content {
+    width: 80%;
+  }
 
-      .add-student-textbox {
-        width: 30%;
-        height: 20px;
-        flex-grow: 1;
-        border-radius: 50px;
-        border: 1px solid #000 !important;
-        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-      }
+  .modal-content p {
+    font-size: 12px;
+  }
 
-      .year-section-textbox {
-        width: 40px;
-        height: 20px;
-        flex-shrink: 0;
-        border-radius: 5px;
-        border: 1px solid #000 !important;
-        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-      }
+  .top-modal {
+    width: 100%;
+    height: 50px;
+    background-color: #810000;
+    position: relative;
+    top: 0px;
+  }
 
-      .import-section-textbox {
-        width: 70%;
-        height: 20px;
-        flex-shrink: 0;
-        border-radius: 5px;
-        border: 1px solid #000 !important;
-        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-      }
+  .top-modal h6 {
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+  }
 
-      .add-student-textbox {
-        width: 50%;
-        height: 20px;
-        flex-shrink: 0;
-        border-radius: 5px;
-        border: 1px solid #000 !important;
-        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-      }
-      
-      #addSectionModal .add-button-container {
-        width: 100%;
-        display: flex;
-        justify-content: end;
-        margin-right: 40px;
-      }
-      
-      #addSectionModal #addButton {
-        height: 30px;
-        width: 100px;
-        flex-shrink: 0;
-        border-radius: 10px;
-        border: 0px;
-        background: #810000;
-        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-        color: #fff;
-        text-align: center;
-        font-family: "Poppins";
-        font-size: 12px;
-        font-style: normal;
-        line-height: normal;
-        margin-right: 20px;
-      }
-      
-      #addSectionModal button:hover {
-        cursor: pointer;
-      }
+  .close-modal {
+    position: relative;
+    height: 0px;
+    top: -45px;
+    left: -15px;
+    color: #fff;
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+    align-self: flex-end;
+    padding-bottom: 0px;
+  }
 
-    @media only screen and (max-width: 811px) {
-      h1 {
-        font-size: 12px;
-      }
-  
-      .main {
-        padding: 10px 10px 0px 10px;
-      }
-  
-      .navbar {
-        width: 50px;
-        display: none;
-        position: fixed;  
-        top: 0;  
-        left: 0;  
-        z-index: 1000;
-      }
-  
-      .hamburger {
-        margin-right: 10px;
-      }
-  
-      #closeNavbar {
-        display: block;
-      }
-  
-      .mobile-navbar-toggle {
-        margin-right: 20px;
-        display: block;
-        cursor: pointer;
-      }
-  
-      .title {
-        font-size: 16px;
-      }
+  .add-section-form {
+    width: 100%;
+  }
 
-      .add-section-container {
-        margin-right: 20px;
-      }
-  
-      .search-container {
-        margin-bottom: 5px;
-      }
-  
-      .search-textbox {
-        height: 20px;
-      }
-  
-      .edit-and-export {
-        display: flex;
-        margin-top: 5px;
-        justify-content: space-between;
-        align-items: end ;
-        gap: 5px;
-      }
-  
-      .edit-container {
-        display: flex;
-        gap: 5px;
-      }
-  
-      .edit-class-button {
-        width: 80px;
-        font-size: 10px;
-        margin: 0px;
-      }
-  
-      #export {
-        width: 106px;
-        font-size: 10px;
-      }
-  
-      .section-button-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
-      }
-  
-      .section-button {
-        width: 130px;
-        height: 50px;
-        flex-shrink: 0;
-        border-radius: 10px;
-        border: 1px solid #000;
-        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-        font-size: 10px;
-        align-items: center;
-        margin: 5px;
-      }
-  
-      #attendanceTable {
-        margin-top: 7px;
-      }
-  
-      #attendanceTable th, #attendanceTable td {
-        font-size: 8px;
-      }
-  
-      .settings-container {
-        padding-left: 7px;
-        padding-right: 7px;
-      }
-  
-      .div-left-right {
-        flex-direction: column;
-      }
-  
-      .settings-input {
-        width: 100%;
-      }
-  
-      .settings-input input[type="password"], 
-      .settings-input input[type="email"] { 
-        margin-right: 0px;
-        width: 55%;
-      }
-  
-      .settings-input p {
-        font-size: 10px;
-      }
-  
-      .save-button-container {
-        align-items: center;
-      }
-  
-      .save-button {
-        width: 50%;
-      }
+  .add-student-form {
+    width: 100%;
+  }
 
-      .modal-content {
-        width: 80%;
-      }
-  
-      .modal-content p {
-        font-size: 12px;
-      }
-  
-      .top-modal {
-        width: 100%;
-        height: 50px;
-        background-color: #810000;
-        position: relative;
-        top: 0px;
-      }
-  
-      .top-modal h6 {
-        color: #FFF;
-        text-align: center;
-        font-size: 12px;
-      }
-      
-      .close-modal {
-        position: relative;
-        height: 0px;
-        top: -45px;
-        left: -15px;
-        color: #fff;
-        float: right;
-        font-size: 24px;
-        font-weight: bold;
-        align-self: flex-end;
-        padding-bottom: 0px;
-      }
-  
-      .add-section-form {
-        width: 100%;
-      }
-  
-      .add-student-form {
-        width: 100%;
-      }
-  
-      .year-section-container {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-  
-      .year-section-container .textbox-container{
-        width: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-      }
-  
-      .import-container{
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-      }
-  
-      .add-student-container{
-        display: flex;
-        justify-content: start;
-        align-items: center;
-        gap: 10px;
-        padding: 0px 20px 0px 20px;
-      }
-  
-      .add-section-textbox {
-        width: 30%;
-        height: 20px;
-        flex-shrink: 0;
-      }
-  
-      .add-student-textbox {
-        width: 30%;
-        height: 20px;
-        flex-grow: 1;
-      }
-  
-      .import-section-textbox {
-        width: 70%;
-        height: 20px;
-        flex-shrink: 0;
-      }
-  
-      .add-student-textbox {
-        width: 50%;
-        height: 20px;
-        flex-shrink: 0;
-      }
-      
-      #addSectionModal .add-button-container {
-        width: 100%;
-        display: flex;
-        justify-content: end;
-        margin-right: 40px;
-      }
-      
-      #addSectionModal #addButton {
-        height: 30px;
-        width: 100px;
-      }
-    }
-    @media only screen and (max-width: 345px) {
-      .edit-and-export {
-        flex-direction: column;
-        align-items: start;
-      }
-  
-      .edit-container {
-        flex-direction: column;
-      }
-      
-      .search-container {
-        justify-content: start;
-      }
+  .year-section-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-      #attendanceTable th, #attendanceTable td {
-        border: 1px solid #000;
-        padding: 2px;
-        text-align: left;
-        text-align: center;
-        font-family: Poppins;
-        font-size: 6px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
-      }
+  .year-section-container .textbox-container {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
 
-    }
+  .import-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .add-student-container {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+    padding: 0px 20px 0px 20px;
+  }
+
+  .add-section-textbox {
+    width: 30%;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  .add-student-textbox {
+    width: 30%;
+    height: 20px;
+    flex-grow: 1;
+  }
+
+  .import-section-textbox {
+    width: 70%;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  .add-student-textbox {
+    width: 50%;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  #addSectionModal .add-button-container {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    margin-right: 40px;
+  }
+
+  #addSectionModal #addButton {
+    height: 30px;
+    width: 100px;
+  }
+}
+@media only screen and (max-width: 345px) {
+  .edit-and-export {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .edit-container {
+    flex-direction: column;
+  }
+
+  .search-container {
+    justify-content: start;
+  }
+
+  #attendanceTable th,
+  #attendanceTable td {
+    border: 1px solid #000;
+    padding: 2px;
+    text-align: left;
+    text-align: center;
+    font-family: Poppins;
+    font-size: 6px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+}

@@ -154,8 +154,8 @@ if (isset($_POST['logout'])) {
                     <td>cedricmacallan@gmail.com</td>
                 </tr>
                 <tr>
-                    <td><input type="checkbox"></td>
-                    <td>Rebulanan</td>
+                  <td><input type="checkbox"></td>
+                  <td>Rebulanan</td>
                     <td>Brient Neilson</td>
                     <td>2020-08935-MN-0</td>
                     <td>4-6</td>
