@@ -92,7 +92,6 @@ if (isset($_POST['save'])) {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -150,7 +149,6 @@ if (isset($_POST['save'])) {
                 </div>
             </div>
             <div class="save-button-container">
-                <p class="save-response">Saved!</p>
                 <button type="submit" name="save" class="save-button">SAVE</button>
             <div>
         </form>

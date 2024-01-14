@@ -51,9 +51,11 @@ if (isset($_POST['logout'])) {
   require '../includes/logout.php';
 }
 
-// Change email details
+// Change email and password details
 if (isset($_POST['save'])) {
   require '../includes/database_connection.php';
+  unset($_SESSION['email']);
+  unset($_SESSION['password']);
   $email = $_POST['email'];
   $confirmEmail = $_POST['confirm-email'];
   $password = $_POST['password'];
@@ -72,7 +74,8 @@ if (isset($_POST['save'])) {
       $stmt = mysqli_prepare($connection, $sql);
       mysqli_stmt_execute($stmt);
       mysqli_stmt_close($stmt);
-      header("Location: professor_settings_page.php");
+      $_SESSION['email'] = 'true';
+      $_SESSION['password'] = 'true';
 
   } else if ($confirmEmail && 
     $email !== $professor['email'] && 
@@ -84,7 +87,8 @@ if (isset($_POST['save'])) {
       $stmt = mysqli_prepare($connection, $sql);
       mysqli_stmt_execute($stmt);
       mysqli_stmt_close($stmt);
-      header("Location: professor_settings_page.php");
+      $_SESSION['email'] = 'true';
+      $_SESSION['password'] = 'false';
 
   } else if (!$confirmEmail && 
     password_verify($password, $professor['password']) &&
@@ -96,8 +100,22 @@ if (isset($_POST['save'])) {
       $stmt = mysqli_prepare($connection, $sql);
       mysqli_stmt_execute($stmt);
       mysqli_stmt_close($stmt);
-      header("Location: professor_settings_page.php");
-    }
+      $_SESSION['email'] = 'false';
+      $_SESSION['password'] = 'true';
+
+  } else if ($email != $confirmEmail && $confirmEmail) {
+    $_SESSION['email'] = 'invalid';
+    $_SESSION['password'] = 'false';
+  } else {
+    $_SESSION['password'] = 'invalid';
+    $_SESSION['email'] = 'false';
+  }
+
+  if (!$confirmEmail && !$password && !$newPassword && !$confirmNewPassword) {
+    header("Location: professor_settings_page.php");
+  } else {
+    header("Location: professor_settings_result_page.php");
+  }
 }
 ?>
 
@@ -170,7 +188,6 @@ if (isset($_POST['save'])) {
                 </div>
             </div>
             <div class="save-button-container">
-                <p class="save-response">Saved!</p>
                 <button type="submit" name="save" class="save-button">SAVE</button>
             <div>
         </form>
