@@ -52,8 +52,7 @@ if (isset($_POST['logout'])) {
   require '../includes/logout.php';
 }
 
-$section = 'a';
-
+// Add student
 if (isset($_POST['add-student'])) {
   require '../includes/database_connection.php';
   $lastName = $_POST['last_name'];
@@ -77,6 +76,27 @@ if (isset($_POST['add-student'])) {
 
   header("Location: admin_section_page.php");
 }
+
+// Fetch class list
+require '../includes/database_connection.php';
+// SQL query
+$classListSQL = "SELECT * FROM students WHERE section = '$sectionPage'";
+$classListResult = mysqli_query($connection, $classListSQL);
+// Initialize an empty array to store the class list
+$classList = [];
+while ($row = mysqli_fetch_assoc($classListResult)) {
+  $studentInfo = [
+            'lastName'      => $row['last_name'],
+            'firstName'     => $row['first_name'],
+            'studentNumber' => $row['student_number'],
+            'section'       => $row['section'],
+            'nfcUid'        => $row['nfc_uid'],
+            'email'         => $row['email'],
+          ];
+  // Add the student information to the class list array
+  $classList[] = $studentInfo;
+}
+mysqli_free_result($classListResult);
 ?>
 
 <!DOCTYPE html>
@@ -152,42 +172,17 @@ if (isset($_POST['add-student'])) {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td><input type="checkbox"></td>
-            <td>Jacob</td>
-            <td>Kyle Lester</td>
-            <td>2020-12100-MN-0</td>
-            <td>4-6</td>
-            <td>63 A4 BC 23</td>
-            <td>kylelesterjacob17@gmail.com</td>
-          </tr>
-          <tr>
-            <td><input type="checkbox"></td>
-            <td>Libre</td>
-            <td>Maria Angela</td>
-            <td>2020-12329-MN-0</td>
-            <td>4-6</td>
-            <td>63 A1 C2 B7</td>
-            <td>libremaan@gmail.com</td>
-          </tr>
-          <tr>
-            <td><input type="checkbox"></td>
-            <td>Macallan</td>
-            <td>Daniel John Cedric</td>
-            <td>2020-12082-MN-0</td>
-            <td>4-6</td>
-            <td>31 CE 3E 6B</td>
-            <td>cedricmacallan@gmail.com</td>
-          </tr>
-          <tr>
-            <td><input type="checkbox"></td>
-            <td>Rebulanan</td>
-            <td>Brient Neilson</td>
-            <td>2020-08935-MN-0</td>
-            <td>4-6</td>
-            <td>38 A1 3E 43</td>
-            <td>brientneilson@gmail.com</td>
-          </tr>
+          <?php foreach ($classList as $student): ?>
+            <tr>
+              <td><input type="checkbox"></td>
+              <td><?php echo $student['lastName']; ?></td>
+              <td><?php echo $student['firstName']; ?></td>
+              <td><?php echo $student['studentNumber']; ?></td>
+              <td><?php echo $student['section']; ?></td>
+              <td><?php echo $student['nfcUid']; ?></td>
+              <td><?php echo $student['email']; ?></td>
+            </tr>
+          <?php endforeach; ?>
         </tbody>
       </table>
     </section>
