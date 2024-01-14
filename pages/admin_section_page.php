@@ -15,7 +15,6 @@ if (isset($_SESSION['id_number'])) {
     header("Location: professor_homepage.php");
   } else {
     $sectionPage = $_SESSION['selected_section'];
-    unset($_SESSION['selected_section']);
   }
 
   // Professor ID
@@ -51,6 +50,32 @@ if (isset($_SESSION['id_number'])) {
 // Logout
 if (isset($_POST['logout'])) {
   require '../includes/logout.php';
+}
+
+$section = 'a';
+
+if (isset($_POST['add-student'])) {
+  require '../includes/database_connection.php';
+  $lastName = $_POST['last_name'];
+  $firstName = $_POST['first_name'];
+  $studentNumber = $_POST['student_number'];
+  $nfcUid = $_POST['nfc_uid'];
+  $email = $_POST['email'];
+  $section = $_POST['year'] . '-' . $_POST['section'];
+
+  // Hash the password (Default: Last Name)
+  $hashedPassword = password_hash($lastName, PASSWORD_DEFAULT);
+
+  // SQL query to insert data into the students table
+  $sql = "INSERT INTO students (last_name, first_name, student_number, section, nfc_uid, email, password)
+            VALUES ('$lastName', '$firstName', '$studentNumber', '$section', '$nfcUid', '$email', '$hashedPassword')";
+
+  // Execute query
+  $stmt = mysqli_prepare($connection, $sql);
+  mysqli_stmt_execute($stmt);
+  mysqli_stmt_close($stmt);
+
+  header("Location: admin_section_page.php");
 }
 ?>
 
@@ -163,8 +188,8 @@ if (isset($_POST['logout'])) {
             <td>38 A1 3E 43</td>
             <td>brientneilson@gmail.com</td>
           </tr>
-        <td>/tbody>
-      <td>/table>
+        </tbody>
+      </table>
     </section>
 
     <div id="addSectionModal" class="modal-blur">
@@ -173,35 +198,35 @@ if (isset($_POST['logout'])) {
           <h6>ADD STUDENT</h6>
         </div>
         <span class="close-modal" onclick="closeAddStudentModal()">&times;</span>
-        <form class="add-student-form">
+        <form method="POST" class="add-student-form">
           <div class="add-student-container">
             <p>Last Name</p>
-            <input type="text" name="class-list" class="add-student-textbox" required></input>
+            <input type="text" name="last_name" class="add-student-textbox" required></input>
           </div>
           <div class="add-student-container">
             <p>First Name</p>
-            <input type="text" name="class-list" class="add-student-textbox" required></input>
+            <input type="text" name="first_name" class="add-student-textbox" required></input>
           </div>
           <div class="add-student-container">
             <p>Student Number</p>
-            <input type="text" name="class-list" class="add-student-textbox" required></input>
+            <input type="text" name="student_number" class="add-student-textbox" required></input>
           </div>
           <div class="add-student-container">
             <p>NFC UID</p>
-            <input type="text" name="class-list" class="add-student-textbox" required></input>
+            <input type="text" name="nfc_uid" class="add-student-textbox" required></input>
           </div>
           <div class="add-student-container">
             <p>Email</p>
-            <input type="email" name="class-list" class="add-student-textbox" required></input>
+            <input type="email" name="email" class="add-student-textbox" required></input>
           </div>
           <div class="add-student-container">
             <p>Year Number</p>
-            <input type="text" name="class-list" class="year-section-textbox" value="<?php echo $sectionPage[0]; ?>" required readonly></input>
+            <input type="text" name="year" class="year-section-textbox" value="<?php echo $sectionPage[0]; ?>" required readonly></input>
             <p>Section Number</p>
-            <input type="text" name="class-list" class="year-section-textbox" value="<?php echo $sectionPage[2]; ?>" required readonly></input>
+            <input type="text" name="section" class="year-section-textbox" value="<?php echo $sectionPage[2]; ?>" required readonly></input>
           </div>
           <div class="add-button-container">
-            <button type="submit" id="addButton">ADD</button>
+            <button type="submit" name="add-student" id="addButton">ADD</button>
           </div>
         </form>
       </div>
