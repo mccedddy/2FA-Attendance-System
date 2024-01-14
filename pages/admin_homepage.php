@@ -102,26 +102,32 @@ if (isset($_POST['logout'])) {
       </div>
       <div class="section-button-container">
         <form method="POST">
+          <span class="delete-section" onclick="<?php echo 'cinlick'?>">&times;</span>
           <input type="hidden" name="section" value="4-1">
           <button type="submit" name="section-button" class="section-button">SECTION 4-1</button>
         </form>
         <form method="POST">
+          <span class="delete-section" onclick="<?php echo 'cinlick'?>">&times;</span>
           <input type="hidden" name="section" value="4-2">
           <button type="submit" name="section-button" class="section-button">SECTION 4-2</button>
         </form>
         <form method="POST">
+          <span class="delete-section" onclick="<?php echo 'cinlick'?>">&times;</span>
           <input type="hidden" name="section" value="4-3">
           <button type="submit" name="section-button" class="section-button">SECTION 4-3</button>
         </form>
         <form method="POST">
+          <span class="delete-section" onclick="<?php echo 'cinlick'?>">&times;</span>
           <input type="hidden" name="section" value="4-4">
           <button type="submit" name="section-button" class="section-button">SECTION 4-4</button>
         </form>
         <form method="POST">
+          <span class="delete-section" onclick="<?php echo 'cinlick'?>">&times;</span>
           <input type="hidden" name="section" value="4-5">
           <button type="submit" name="section-button" class="section-button">SECTION 4-5</button>
         </form>
         <form method="POST">
+          <span class="delete-section" onclick="<?php echo 'cinlick'?>">&times;</span>
           <input type="hidden" name="section" value="4-6">
           <button type="submit" name="section-button" class="section-button">SECTION 4-6</button>
         </form>

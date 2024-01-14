@@ -494,6 +494,27 @@ border: 1px solid red;
   cursor: pointer;
 }
 
+.delete-section {
+  position: relative;
+  height: 0px;
+  width: 0px;
+  top: 0px;
+  left: -50px;
+  float: right;
+  font-size: 28px;
+  color: #bbbbbb;
+  font-weight: bold;
+  align-self: flex-end;
+  padding-bottom: 0px;
+}
+
+.delete-section:hover,
+.delete-section:focus {
+  color: #810000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 .add-section-form {
   width: 100%;
 }
@@ -689,7 +710,6 @@ border: 1px solid red;
     height: 50px;
     flex-shrink: 0;
     border-radius: 10px;
-    border: 1px solid #000;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     font-size: 10px;
     align-items: center;
@@ -769,6 +789,11 @@ border: 1px solid red;
     font-weight: bold;
     align-self: flex-end;
     padding-bottom: 0px;
+  }
+
+  .delete-section {
+    top: 8px;
+    left: -30px;
   }
 
   .add-section-form {
