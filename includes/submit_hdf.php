@@ -23,11 +23,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Insert to database
     $sql = "INSERT INTO hdf (student_number, q1, q2, q3, q4, q5, q6a, q6b, q7a, q7b, q8a, q8b, q8c, q8d) VALUES ('$studentNumber', '$q1', '$q2', '$q3', '$q4', '$q5', '$q6a', '$q6b', '$q7a', '$q7b', '$q8a', '$q8b', '$q8c', '$q8d')";
-
-    if (mysqli_query($connection, $sql)) {
-        // echo 'shesh na entry';
-    } else {
-        // echo 'awit may error';
-    }
+    mysqli_query($connection, $sql);
 }
 ?>

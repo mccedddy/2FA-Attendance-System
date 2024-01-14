@@ -83,93 +83,93 @@ if (isset($_POST['logout'])) {
       </form>
     </nav>
     <section class="main">
-        <div class="header">
-          <div class="mobile-navbar-toggle" onclick="toggleMobileNavbar()">
-            <img src="..\assets\images\icons\hamburger.svg" class="hamburger">
-          </div>
-          <a onclick="toAdminHomepage()"><h1>PUP HDF Attendance System (Admin)</h1></a>
+      <div class="header">
+        <div class="mobile-navbar-toggle" onclick="toggleMobileNavbar()">
+          <img src="..\assets\images\icons\hamburger.svg" class="hamburger">
         </div>
-        <h1 class="title" id="title">SECTION <?php echo $sectionPage ?></h1>
-        <div class="search-container">
-          <div class="search-textbox">
-            <input type="text" name="search" id="search" value="">
-            <img src="..\assets\images\icons\search.svg"/>
-          </div>
+        <a onclick="toAdminHomepage()"><h1>PUP HDF Attendance System (Admin)</h1></a>
+      </div>
+      <h1 class="title" id="title">SECTION <?php echo $sectionPage ?></h1>
+      <div class="search-container">
+        <div class="search-textbox">
+          <input type="text" name="search" id="search" value="">
+          <img src="..\assets\images\icons\search.svg"/>
         </div>
-        <div class="edit-and-export">
-          <div class="edit-container">
-            <button class="edit-class-button" onclick="openAddStudentModal()">
-                <img src="..\assets\images\icons\plus_white.svg"/>
-                <p>New</p>
-            </button>
-            <button class="edit-class-button">
-                <img src="..\assets\images\icons\pencil_white.svg"/>
-                <p>Edit</p>
-            </button>
-            <button class="edit-class-button">
-                <img src="..\assets\images\icons\trash_white.svg"/>
-                <p>Delete</p>
-            </button>
-          </div>
-          <button id="export"><p>EXPORT DATA</p><img src="..\assets\images\icons\download.svg"/></button>
+      </div>
+      <div class="edit-and-export">
+        <div class="edit-container">
+          <button class="edit-class-button" onclick="openAddStudentModal()">
+            <img src="..\assets\images\icons\plus_white.svg"/>
+            <p>New</p>
+          </button>
+          <button class="edit-class-button">
+            <img src="..\assets\images\icons\pencil_white.svg"/>
+            <p>Edit</p>
+          </button>
+          <button class="edit-class-button">
+            <img src="..\assets\images\icons\trash_white.svg"/>
+            <p>Delete</p>
+          </button>
         </div>
-        <table id="attendanceTable">
-            <thead>
-              <tr>
-                <th></th>
-                <th>LAST NAME</th>
-                <th>FIRST NAME</th>
-                <th>STUDENT NUMBER</th>
-                <th>SECTION</th>
-                <th>NFC UID</th>
-                <th>EMAIL</th>
-              </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>Jacob</td>
-                    <td>Kyle Lester</td>
-                    <td>2020-12100-MN-0</td>
-                    <td>4-6</td>
-                    <td>63 A4 BC 23</td>
-                    <td>kylelesterjacob17@gmail.com</td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>Libre</td>
-                    <td>Maria Angela</td>
-                    <td>2020-12329-MN-0</td>
-                    <td>4-6</td>
-                    <td>63 A1 C2 B7</td>
-                    <td>libremaan@gmail.com</td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>Macallan</td>
-                    <td>Daniel John Cedric</td>
-                    <td>2020-12082-MN-0</td>
-                    <td>4-6</td>
-                    <td>31 CE 3E 6B</td>
-                    <td>cedricmacallan@gmail.com</td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox"></td>
-                  <td>Rebulanan</td>
-                    <td>Brient Neilson</td>
-                    <td>2020-08935-MN-0</td>
-                    <td>4-6</td>
-                    <td>38 A1 3E 43</td>
-                    <td>brientneilson@gmail.com</td>
-                </tr>
-            </tbody>
-          </table>
+        <button id="export"><p>EXPORT DATA</p><img src="..\assets\images\icons\download.svg"/></button>
+      </div>
+      <table id="attendanceTable">
+        <thead>
+          <tr>
+            <th></th>
+            <th>LAST NAME</th>
+            <th>FIRST NAME</th>
+            <th>STUDENT NUMBER</th>
+            <th>SECTION</th>
+            <th>NFC UID</th>
+            <th>EMAIL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="checkbox"></td>
+            <td>Jacob</td>
+            <td>Kyle Lester</td>
+            <td>2020-12100-MN-0</td>
+            <td>4-6</td>
+            <td>63 A4 BC 23</td>
+            <td>kylelesterjacob17@gmail.com</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox"></td>
+            <td>Libre</td>
+            <td>Maria Angela</td>
+            <td>2020-12329-MN-0</td>
+            <td>4-6</td>
+            <td>63 A1 C2 B7</td>
+            <td>libremaan@gmail.com</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox"></td>
+            <td>Macallan</td>
+            <td>Daniel John Cedric</td>
+            <td>2020-12082-MN-0</td>
+            <td>4-6</td>
+            <td>31 CE 3E 6B</td>
+            <td>cedricmacallan@gmail.com</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox"></td>
+            <td>Rebulanan</td>
+            <td>Brient Neilson</td>
+            <td>2020-08935-MN-0</td>
+            <td>4-6</td>
+            <td>38 A1 3E 43</td>
+            <td>brientneilson@gmail.com</td>
+          </tr>
+        <td>/tbody>
+      <td>/table>
     </section>
 
     <div id="addSectionModal" class="modal-blur">
       <div class="modal-content">
         <div class="top-modal">
-            <h6>ADD STUDENT</h6>
+          <h6>ADD STUDENT</h6>
         </div>
         <span class="close-modal" onclick="closeAddStudentModal()">&times;</span>
         <form class="add-student-form">

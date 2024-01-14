@@ -82,39 +82,39 @@ if (isset($_POST['logout'])) {
       </form>
     </nav>
     <section class="main">
-        <div class="header">
-          <div class="mobile-navbar-toggle" onclick="toggleMobileNavbar()">
-            <img src="..\assets\images\icons\hamburger.svg" class="hamburger">
-          </div>
-          <a onclick="toProfessorHomepage()"><h1>PUP HDF Attendance System</h1></a>
+      <div class="header">
+        <div class="mobile-navbar-toggle" onclick="toggleMobileNavbar()">
+          <img src="..\assets\images\icons\hamburger.svg" class="hamburger">
         </div>
-        <h1 class="title">Computer Engineering Department Sections</h1>
-        <div class="section-button-container">
-          <form method="POST">
-            <input type="hidden" name="section" value="4-1">
-            <button type="submit" name="section-button" class="section-button">SECTION 4-1</button>
-          </form>
-          <form method="POST">
-            <input type="hidden" name="section" value="4-2">
-            <button type="submit" name="section-button" class="section-button">SECTION 4-2</button>
-          </form>
-          <form method="POST">
-            <input type="hidden" name="section" value="4-3">
-            <button type="submit" name="section-button" class="section-button">SECTION 4-3</button>
-          </form>
-          <form method="POST">
-            <input type="hidden" name="section" value="4-4">
-            <button type="submit" name="section-button" class="section-button">SECTION 4-4</button>
-          </form>
-          <form method="POST">
-            <input type="hidden" name="section" value="4-5">
-            <button type="submit" name="section-button" class="section-button">SECTION 4-5</button>
-          </form>
-          <form method="POST">
-            <input type="hidden" name="section" value="4-6">
-            <button type="submit" name="section-button" class="section-button">SECTION 4-6</button>
-          </form>
-        </div>
+        <a onclick="toProfessorHomepage()"><h1>PUP HDF Attendance System</h1></a>
+      </div>
+      <h1 class="title">Computer Engineering Department Sections</h1>
+      <div class="section-button-container">
+        <form method="POST">
+          <input type="hidden" name="section" value="4-1">
+          <button type="submit" name="section-button" class="section-button">SECTION 4-1</button>
+        </form>
+        <form method="POST">
+          <input type="hidden" name="section" value="4-2">
+          <button type="submit" name="section-button" class="section-button">SECTION 4-2</button>
+        </form>
+        <form method="POST">
+          <input type="hidden" name="section" value="4-3">
+          <button type="submit" name="section-button" class="section-button">SECTION 4-3</button>
+        </form>
+        <form method="POST">
+          <input type="hidden" name="section" value="4-4">
+          <button type="submit" name="section-button" class="section-button">SECTION 4-4</button>
+        </form>
+        <form method="POST">
+          <input type="hidden" name="section" value="4-5">
+          <button type="submit" name="section-button" class="section-button">SECTION 4-5</button>
+        </form>
+        <form method="POST">
+          <input type="hidden" name="section" value="4-6">
+          <button type="submit" name="section-button" class="section-button">SECTION 4-6</button>
+        </form>
+      </div>
     </section>
     <script src="../js/navbar_controller.js"></script>
     <script>

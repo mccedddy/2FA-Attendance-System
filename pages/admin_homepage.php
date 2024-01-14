@@ -82,62 +82,62 @@ if (isset($_POST['logout'])) {
       </form>
     </nav>
     <section class="main">
-        <div class="header">
-          <div class="mobile-navbar-toggle" onclick="toggleMobileNavbar()">
-            <img src="..\assets\images\icons\hamburger.svg" class="hamburger">
-          </div>
-          <a onclick="toAdminHomepage()"><h1>PUP HDF Attendance System (Admin)</h1></a>
+      <div class="header">
+        <div class="mobile-navbar-toggle" onclick="toggleMobileNavbar()">
+          <img src="..\assets\images\icons\hamburger.svg" class="hamburger">
         </div>
-        <h1 class="title">Computer Engineering Department Sections</h1>
-        <div class="add-section-container">
-            <button class="add-section-button" onclick="openAddSectionModal()">
-                <img src="..\assets\images\icons\plus.svg" class="hamburger">
-                <p>ADD SECTION</p>
-            </button>
-        </div>
-        <div class="section-button-container">
-          <form method="POST">
-            <input type="hidden" name="section" value="4-1">
-            <button type="submit" name="section-button" class="section-button">SECTION 4-1</button>
-          </form>
-          <form method="POST">
-            <input type="hidden" name="section" value="4-2">
-            <button type="submit" name="section-button" class="section-button">SECTION 4-2</button>
-          </form>
-          <form method="POST">
-            <input type="hidden" name="section" value="4-3">
-            <button type="submit" name="section-button" class="section-button">SECTION 4-3</button>
-          </form>
-          <form method="POST">
-            <input type="hidden" name="section" value="4-4">
-            <button type="submit" name="section-button" class="section-button">SECTION 4-4</button>
-          </form>
-          <form method="POST">
-            <input type="hidden" name="section" value="4-5">
-            <button type="submit" name="section-button" class="section-button">SECTION 4-5</button>
-          </form>
-          <form method="POST">
-            <input type="hidden" name="section" value="4-6">
-            <button type="submit" name="section-button" class="section-button">SECTION 4-6</button>
-          </form>
-          <form method="POST">
-            <input type="hidden" name="section" value="professors">
-            <button type="submit" name="section-button" class="section-button">PROFESSORS</button>
-          </form>
-        </div>
+        <a onclick="toAdminHomepage()"><h1>PUP HDF Attendance System (Admin)</h1></a>
+      </div>
+      <h1 class="title">Computer Engineering Department Sections</h1>
+      <div class="add-section-container">
+        <button class="add-section-button" onclick="openAddSectionModal()">
+          <img src="..\assets\images\icons\plus.svg" class="hamburger">
+          <p>ADD SECTION</p>
+        </button>
+      </div>
+      <div class="section-button-container">
+        <form method="POST">
+          <input type="hidden" name="section" value="4-1">
+          <button type="submit" name="section-button" class="section-button">SECTION 4-1</button>
+        </form>
+        <form method="POST">
+          <input type="hidden" name="section" value="4-2">
+          <button type="submit" name="section-button" class="section-button">SECTION 4-2</button>
+        </form>
+        <form method="POST">
+          <input type="hidden" name="section" value="4-3">
+          <button type="submit" name="section-button" class="section-button">SECTION 4-3</button>
+        </form>
+        <form method="POST">
+          <input type="hidden" name="section" value="4-4">
+          <button type="submit" name="section-button" class="section-button">SECTION 4-4</button>
+        </form>
+        <form method="POST">
+          <input type="hidden" name="section" value="4-5">
+          <button type="submit" name="section-button" class="section-button">SECTION 4-5</button>
+        </form>
+        <form method="POST">
+          <input type="hidden" name="section" value="4-6">
+          <button type="submit" name="section-button" class="section-button">SECTION 4-6</button>
+        </form>
+        <form method="POST">
+          <input type="hidden" name="section" value="professors">
+          <button type="submit" name="section-button" class="section-button">PROFESSORS</button>
+        </form>
+      </div>
     </section>
 
     <div id="addSectionModal" class="modal-blur">
       <div class="modal-content">
         <div class="top-modal">
-            <h6>ADD CLASS SECTION</h6>
+          <h6>ADD CLASS SECTION</h6>
         </div>
         <span class="close-modal" onclick="closeAddSectionModal()">&times;</span>
         <form class="add-student-form">
           <div class="add-student-container">
-              <p>Year Number</p>
-              <input type="text" name="class-list" class="year-section-textbox" required></input>
-              <p>Section Number</p>
+            <p>Year Number</p>
+            <input type="text" name="class-list" class="year-section-textbox" required></input>
+            <p>Section Number</p>
             <input type="text" name="class-list" class="year-section-textbox" required></input>
           </div>
           <div class="add-student-container">

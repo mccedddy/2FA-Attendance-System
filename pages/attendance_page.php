@@ -83,54 +83,54 @@ if (isset($_POST['logout'])) {
       </form>
     </nav>
     <section class="main">
-        <div class="header">
-          <div class="mobile-navbar-toggle" onclick="toggleMobileNavbar()">
-            <img src="..\assets\images\icons\hamburger.svg" class="hamburger">
-          </div>
-          <a onclick="toProfessorHomepage()"><h1>PUP HDF Attendance System</h1></a>
+      <div class="header">
+        <div class="mobile-navbar-toggle" onclick="toggleMobileNavbar()">
+          <img src="..\assets\images\icons\hamburger.svg" class="hamburger">
         </div>
-        <h1 class="title" id="title">SECTION <?php echo $sectionPage ?></h1>
-        <div class="search-container">
-          <div class="search-textbox">
-            <input type="text" name="search" id="search" value="">
-            <img src="..\assets\images\icons\search.svg"/>
+        <a onclick="toProfessorHomepage()"><h1>PUP HDF Attendance System</h1></a>
+      </div>
+      <h1 class="title" id="title">SECTION <?php echo $sectionPage ?></h1>
+      <div class="search-container">
+        <div class="search-textbox">
+          <input type="text" name="search" id="search" value="">
+          <img src="..\assets\images\icons\search.svg"/>
+        </div>
+      </div>
+      <select id="roomFilter">
+          <option value="ALL">ALL</option>
+          <option value="300">ROOM 300</option>
+          <option value="310">ROOM 310</option>
+          <option value="311">ROOM 311</option>
+          <option value="312">ROOM 312</option>
+          <option value="313">ROOM 313</option>
+          <option value="314">ROOM 314</option>
+          <option value="315">ROOM 315</option>
+          <option value="316">ROOM 316</option>
+      </select>
+      <div class="filters-and-export">
+        <div class="filters-container">
+          <input type="date" id="date" class="date-time-filter" required value="<?php echo date('Y-m-d'); ?>">
+          <div class="time-container">
+            <input type="time" id="startTime" class="date-time-filter" required value="00:00">
+            <input type="time" id="endTime" class="date-time-filter" required value="23:59">
           </div>
         </div>
-        <select id="roomFilter">
-            <option value="ALL">ALL</option>
-            <option value="300">ROOM 300</option>
-            <option value="310">ROOM 310</option>
-            <option value="311">ROOM 311</option>
-            <option value="312">ROOM 312</option>
-            <option value="313">ROOM 313</option>
-            <option value="314">ROOM 314</option>
-            <option value="315">ROOM 315</option>
-            <option value="316">ROOM 316</option>
-        </select>
-        <div class="filters-and-export">
-          <div class="filters-container">
-            <input type="date" id="date" class="date-time-filter" required value="<?php echo date('Y-m-d'); ?>">
-            <div class="time-container">
-              <input type="time" id="startTime" class="date-time-filter" required value="00:00">
-              <input type="time" id="endTime" class="date-time-filter" required value="23:59">
-            </div>
-          </div>
-          <button id="export"><p>EXPORT DATA</p><img src="..\assets\images\icons\download.svg"/></button>
-        </div>
-        <table id="attendanceTable">
-            <thead>
-              <tr>
-                <th>STUDENT NAME</th>
-                <th>STUDENT NUMBER</th>
-                <th>ROOM</th>
-                <th>TIME</th>
-                <th>DATE</th>
-              </tr>
-            </thead>
-            <tbody>
+        <button id="export"><p>EXPORT DATA</p><img src="..\assets\images\icons\download.svg"/></button>
+      </div>
+      <table id="attendanceTable">
+        <thead>
+          <tr>
+            <th>STUDENT NAME</th>
+            <th>STUDENT NUMBER</th>
+            <th>ROOM</th>
+            <th>TIME</th>
+            <th>DATE</th>
+          </tr>
+        </thead>
+        <tbody>
               
-            </tbody>
-          </table>
+        </tbody>
+      </table>
     </section>
     <script src="../js/table2excel.js"></script>
     <script src="../js/navbar_controller.js"></script>

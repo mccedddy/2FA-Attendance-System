@@ -149,48 +149,48 @@ if (isset($_POST['save'])) {
       </form>
     </nav>
     <section class="main">
-        <div class="header">
-          <div class="mobile-navbar-toggle" onclick="toggleMobileNavbar()">
-            <img src="..\assets\images\icons\hamburger.svg" class="hamburger">
-          </div>
-          <a onclick="toProfessorHomepage()"><h1>PUP HDF Attendance System</h1></a>
+      <div class="header">
+        <div class="mobile-navbar-toggle" onclick="toggleMobileNavbar()">
+          <img src="..\assets\images\icons\hamburger.svg" class="hamburger">
         </div>
-        <h1 class="title">Account Settings</h1>
-        <form method="POST">
-            <div class="settings-container">
-                <h4>RECOVERY E-MAIL</h4>
-                <div class="div-left-right">
-                    <div class="settings-input">
-                        <p>E-mail:</p>
-                        <input type="email" name="email" class="settings-textbox" value='<?php echo $professor['email']; ?>'></input>
-                    </div>
-                    <div class="settings-input">
-                        <p>Confirm E-mail:</p>
-                        <input type="email" name="confirm-email" class="settings-textbox"></input>
-                    </div>
-                </div>
+        <a onclick="toProfessorHomepage()"><h1>PUP HDF Attendance System</h1></a>
+      </div>
+      <h1 class="title">Account Settings</h1>
+      <form method="POST">
+        <div class="settings-container">
+          <h4>RECOVERY E-MAIL</h4>
+          <div class="div-left-right">
+            <div class="settings-input">
+              <p>E-mail:</p>
+              <input type="email" name="email" class="settings-textbox" value='<?php echo $professor['email']; ?>'></input>
             </div>
-            <div class="settings-container">
-                <h4>CHANGE PASSWORD</h4>
-                <div class="settings-input">
-                    <p>Current Password:</p>
-                    <input type="password" name="password" class="settings-textbox"></input>
-                </div>
-                <div class="div-left-right">
-                    <div class="settings-input">
-                        <p>New Password:</p>
-                        <input type="password" name="new-password" class="settings-textbox"></input>
-                    </div>
-                    <div class="settings-input">
-                        <p>Confirm New Password:</p>
-                        <input type="password" name="confirm-new-password" class="settings-textbox"></input>
-                    </div>
-                </div>
+            <div class="settings-input">
+              <p>Confirm E-mail:</p>
+              <input type="email" name="confirm-email" class="settings-textbox"></input>
             </div>
-            <div class="save-button-container">
-                <button type="submit" name="save" class="save-button">SAVE</button>
-            <div>
-        </form>
+          </div>
+        </div>
+        <div class="settings-container">
+          <h4>CHANGE PASSWORD</h4>
+          <div class="settings-input">
+            <p>Current Password:</p>
+            <input type="password" name="password" class="settings-textbox"></input>
+          </div>
+          <div class="div-left-right">
+            <div class="settings-input">
+              <p>New Password:</p>
+              <input type="password" name="new-password" class="settings-textbox"></input>
+            </div>
+            <div class="settings-input">
+              <p>Confirm New Password:</p>
+              <input type="password" name="confirm-new-password" class="settings-textbox"></input>
+            </div>
+          </div>
+        </div>
+        <div class="save-button-container">
+          <button type="submit" name="save" class="save-button">SAVE</button>
+        </div>
+      </form>
     </section>
     <script src="../js/navbar_controller.js"></script>
     <script>

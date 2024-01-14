@@ -100,18 +100,18 @@ if (isset($_SESSION['email']) && isset($_SESSION['password'])) {
       </form>
     </nav>
     <section class="main">
-        <div class="header">
-          <div class="mobile-navbar-toggle" onclick="toggleMobileNavbar()">
-            <img src="..\assets\images\icons\hamburger.svg" class="hamburger">
-          </div>
-          <a onclick="toProfessorHomepage()"><h1>PUP HDF Attendance System</h1></a>
+      <div class="header">
+        <div class="mobile-navbar-toggle" onclick="toggleMobileNavbar()">
+          <img src="..\assets\images\icons\hamburger.svg" class="hamburger">
         </div>
-        <h1 class="title">Account Settings</h1>
-        <center>
-            <div style="border: 1px solid #810000; border-radius: 15px; padding: 0px 40px 0px 40px; display: inline-flex">
-                <?php echo $result; ?>
-            </div>
-        </center>
+        <a onclick="toProfessorHomepage()"><h1>PUP HDF Attendance System</h1></a>
+      </div>
+      <h1 class="title">Account Settings</h1>
+      <center>
+        <div style="border: 1px solid #810000; border-radius: 15px; padding: 0px 40px 0px 40px; display: inline-flex">
+          <?php echo $result; ?>
+        </div>
+      </center>
     </section>
     <script src="../js/navbar_controller.js"></script>
     <script>

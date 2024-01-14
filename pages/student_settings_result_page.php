@@ -85,12 +85,12 @@ if (isset($_SESSION['email']) && isset($_SESSION['password'])) {
     </form>
     </nav>
     <section class="main">
-        <h1 class="title">Account Settings</h1>
-        <center>
-            <div style="border: 1px solid #810000; border-radius: 15px; padding: 0px 40px 0px 40px;">
-                <?php echo $result; ?>
-            </div>
-        </center>
+      <h1 class="title">Account Settings</h1>
+      <center>
+        <div style="border: 1px solid #810000; border-radius: 15px; padding: 0px 40px 0px 40px;">
+          <?php echo $result; ?>
+        </div>
+      </center>
     </section>
     <!-- <script src="../scripts.js"></script> -->
     <script>
