@@ -626,6 +626,26 @@ border: 1px solid red;
   cursor: pointer;
 }
 
+#deleteSectionModal #deleteButton {
+  height: 30px;
+  width: 100px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 0px;
+  background: #810000;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  color: #fff;
+  text-align: center;
+  font-family: "Poppins";
+  font-size: 12px;
+  font-style: normal;
+  line-height: normal;
+}
+
+#deleteSectionModal #deleteButton:hover {
+  cursor: pointer;
+}
+
 @media only screen and (max-width: 811px) {
   h1 {
     font-size: 12px;

@@ -132,7 +132,7 @@ mysqli_free_result($sectionsResult);
       <div class="section-button-container">
         <?php foreach ($sections as $section): ?>
           <form method="POST">
-            <span class="delete-section" onclick="<?php echo 'cinlick'?>">&times;</span>
+            <span class="delete-section" onclick="openDeleteSectionModal()">&times;</span>
             <input type="hidden" name="section" value="<?php echo $section; ?>">
             <button type="submit" name="section-button" class="section-button">SECTION <?php echo $section; ?></button>
           </form>
@@ -147,7 +147,7 @@ mysqli_free_result($sectionsResult);
     <div id="addSectionModal" class="modal-blur">
       <div class="modal-content">
         <div class="top-modal">
-          <h6>ADD CLASS SECTION</h6>
+          <h6>ADD SECTION</h6>
         </div>
         <span class="close-modal" onclick="closeAddSectionModal()">&times;</span>
         <form method="POST" class="add-student-form">
@@ -168,7 +168,25 @@ mysqli_free_result($sectionsResult);
       </div>
     </div>
 
+    <div id="deleteSectionModal" class="modal-blur">
+      <div class="modal-content">
+        <div class="top-modal">
+          <h6>DELETE SECTION</h6>
+        </div>
+          <span class="close-modal" onclick="closeDeleteSectionModal()">&times;</span>
+          <img src="../assets/images/graphics/girl_trash.png" style="height: 40%; width: 40%;" />
+          <h5 style="margin-bottom: 10px;">DELETE SECTION 4-1?</h5>
+          <p style="margin: 0px; text-align: center;">WARNING: All of the student data in this section will be deleted.</p>
+          <p style="margin: 10px; text-align: center;">Are you sure you want to delete this section?</p>
+          <div class="add-button-container">
+            <button type="submit" name="confirm-delete-section" id="deleteButton">DELETE</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
     <script src="../js/navbar_controller.js"></script>
+    <script src="../js/delete_section.js"></script>
     <script>
       function toLogin() {
         window.location.href = "../index.php";
@@ -188,6 +206,14 @@ mysqli_free_result($sectionsResult);
       }
       function closeAddSectionModal() {
         var addSectionModal = document.getElementById("addSectionModal");
+        addSectionModal.style.display = "none";
+      }
+      function openDeleteSectionModal() {
+        var addSectionModal = document.getElementById("deleteSectionModal");
+        addSectionModal.style.display = "block";
+      }
+      function closeDeleteSectionModal() {
+        var addSectionModal = document.getElementById("deleteSectionModal");
         addSectionModal.style.display = "none";
       }
     </script>
