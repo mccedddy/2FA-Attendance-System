@@ -10,20 +10,37 @@ document.addEventListener("DOMContentLoaded", function () {
     deleteSection.addEventListener("click", function () {
       // Get the sibling input element
       var inputElement = deleteSection.nextElementSibling;
-      console.log(inputElement.value);
 
       // Get the value of the hidden input
       selectedSection = inputElement.value;
 
-      // Log the section value to the console
-      console.log(selectedSection);
       deleteSectionMessage.innerHTML = "DELETE SECTION " + selectedSection;
     });
   });
 
   deleteButton.addEventListener("click", () => {
-    deleteSection();
+    deleteSection(selectedSection);
   });
 });
 
-function deleteSection() {}
+function deleteSection(selectedSection) {
+  var url = "../includes/delete_section.php";
+  var formData = new FormData();
+  formData.append("selectedSection", selectedSection);
+
+  fetch(url, {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      // Redirect to homepage
+      if (data["status"] == "success") {
+        window.location.href = "admin_homepage.php";
+        return false;
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}

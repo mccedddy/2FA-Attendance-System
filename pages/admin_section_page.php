@@ -226,7 +226,6 @@ mysqli_free_result($classListResult);
 
     <script src="../js/table2excel.js"></script>
     <script src="../js/navbar_controller.js"></script>
-    <script src="../js/attendance.js"></script>
     <script>
       function toAdminHomepage() {
         window.location.href = "admin_homepage.php";
