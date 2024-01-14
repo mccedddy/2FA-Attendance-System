@@ -175,7 +175,7 @@ mysqli_free_result($sectionsResult);
         </div>
           <span class="close-modal" onclick="closeDeleteSectionModal()">&times;</span>
           <img src="../assets/images/graphics/girl_trash.png" style="height: 40%; width: 40%;" />
-          <h5 style="margin-bottom: 10px;">DELETE SECTION 4-1?</h5>
+          <h5 id="deleteSectionMessage" style="margin-bottom: 10px;"></h5>
           <p style="margin: 0px; text-align: center;">WARNING: All of the student data in this section will be deleted.</p>
           <p style="margin: 10px; text-align: center;">Are you sure you want to delete this section?</p>
           <div class="add-button-container">
