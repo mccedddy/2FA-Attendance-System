@@ -79,10 +79,8 @@ if (isset($_POST['add-student'])) {
 
 // Fetch class list
 require '../includes/database_connection.php';
-// SQL query
 $classListSQL = "SELECT * FROM students WHERE section = '$sectionPage'";
 $classListResult = mysqli_query($connection, $classListSQL);
-// Initialize an empty array to store the class list
 $classList = [];
 while ($row = mysqli_fetch_assoc($classListResult)) {
   $studentInfo = [
@@ -93,7 +91,6 @@ while ($row = mysqli_fetch_assoc($classListResult)) {
             'nfcUid'        => $row['nfc_uid'],
             'email'         => $row['email'],
           ];
-  // Add the student information to the class list array
   $classList[] = $studentInfo;
 }
 mysqli_free_result($classListResult);

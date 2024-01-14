@@ -55,6 +55,35 @@ if (isset($_POST['section-button'])) {
 if (isset($_POST['logout'])) {
   require '../includes/logout.php';
 }
+
+// Add section
+if (isset($_POST['add-section'])) {
+  require '../includes/database_connection.php';
+  $section = $_POST['year'] . '-' . $_POST['section'];
+
+  // SQL query to insert data into the cpe table
+  $sql = "INSERT INTO cpe (section) VALUES ('$section')";
+
+  // Execute query
+  $stmt = mysqli_prepare($connection, $sql);
+  mysqli_stmt_execute($stmt);
+  mysqli_stmt_close($stmt);
+
+  header("Location: admin_homepage.php");
+}
+
+// Fetch section
+require '../includes/database_connection.php';
+$sectionsSQL = "SELECT * FROM cpe";
+$sectionsResult = mysqli_query($connection, $sectionsSQL);
+$sections = [];
+while ($row = mysqli_fetch_assoc($sectionsResult)) {
+  $cpeInfo = [
+            'section'      => $row['section'],
+          ];
+  $sections[] = $cpeInfo['section'];
+}
+mysqli_free_result($sectionsResult);
 ?>
 
 <!DOCTYPE html>
@@ -101,36 +130,13 @@ if (isset($_POST['logout'])) {
         </button>
       </div>
       <div class="section-button-container">
-        <form method="POST">
-          <span class="delete-section" onclick="<?php echo 'cinlick'?>">&times;</span>
-          <input type="hidden" name="section" value="4-1">
-          <button type="submit" name="section-button" class="section-button">SECTION 4-1</button>
-        </form>
-        <form method="POST">
-          <span class="delete-section" onclick="<?php echo 'cinlick'?>">&times;</span>
-          <input type="hidden" name="section" value="4-2">
-          <button type="submit" name="section-button" class="section-button">SECTION 4-2</button>
-        </form>
-        <form method="POST">
-          <span class="delete-section" onclick="<?php echo 'cinlick'?>">&times;</span>
-          <input type="hidden" name="section" value="4-3">
-          <button type="submit" name="section-button" class="section-button">SECTION 4-3</button>
-        </form>
-        <form method="POST">
-          <span class="delete-section" onclick="<?php echo 'cinlick'?>">&times;</span>
-          <input type="hidden" name="section" value="4-4">
-          <button type="submit" name="section-button" class="section-button">SECTION 4-4</button>
-        </form>
-        <form method="POST">
-          <span class="delete-section" onclick="<?php echo 'cinlick'?>">&times;</span>
-          <input type="hidden" name="section" value="4-5">
-          <button type="submit" name="section-button" class="section-button">SECTION 4-5</button>
-        </form>
-        <form method="POST">
-          <span class="delete-section" onclick="<?php echo 'cinlick'?>">&times;</span>
-          <input type="hidden" name="section" value="4-6">
-          <button type="submit" name="section-button" class="section-button">SECTION 4-6</button>
-        </form>
+        <?php foreach ($sections as $section): ?>
+          <form method="POST">
+            <span class="delete-section" onclick="<?php echo 'cinlick'?>">&times;</span>
+            <input type="hidden" name="section" value="<?php echo $section; ?>">
+            <button type="submit" name="section-button" class="section-button">SECTION <?php echo $section; ?></button>
+          </form>
+        <?php endforeach; ?>
         <form method="POST">
           <input type="hidden" name="section" value="professors">
           <button type="submit" name="section-button" class="section-button">PROFESSORS</button>
@@ -144,19 +150,19 @@ if (isset($_POST['logout'])) {
           <h6>ADD CLASS SECTION</h6>
         </div>
         <span class="close-modal" onclick="closeAddSectionModal()">&times;</span>
-        <form class="add-student-form">
+        <form method="POST" class="add-student-form">
           <div class="add-student-container">
             <p>Year Number</p>
-            <input type="text" name="class-list" class="year-section-textbox" required></input>
+            <input type="text" name="year" class="year-section-textbox" required></input>
             <p>Section Number</p>
-            <input type="text" name="class-list" class="year-section-textbox" required></input>
+            <input type="text" name="section" class="year-section-textbox" required></input>
           </div>
           <div class="add-student-container">
             <p>Import Classlist</p>
-            <input type="email" name="class-list" class="add-student-textbox" required></input>
+            <input type="email" name="class-list" class="add-student-textbox"></input>
           </div>
           <div class="add-button-container">
-            <button type="submit" id="addButton">ADD</button>
+            <button type="submit" name="add-section" id="addButton">ADD</button>
           </div>
         </form>
       </div>
