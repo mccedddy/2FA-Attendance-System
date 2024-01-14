@@ -98,7 +98,7 @@ if (isset($_POST['logout'])) {
         </div>
         <div class="edit-and-export">
           <div class="edit-container">
-            <button class="edit-class-button">
+            <button class="edit-class-button" onclick="openAddStudentModal()">
                 <img src="..\assets\images\icons\plus_white.svg"/>
                 <p>New</p>
             </button>
@@ -165,6 +165,47 @@ if (isset($_POST['logout'])) {
             </tbody>
           </table>
     </section>
+
+    <div id="addSectionModal" class="modal-blur">
+      <div class="modal-content">
+        <div class="top-modal">
+            <h6>ADD STUDENT</h6>
+        </div>
+        <span class="close-modal" onclick="closeAddStudentModal()">&times;</span>
+        <form class="add-student-form">
+          <div class="add-student-container">
+            <p>Last Name</p>
+            <input type="text" name="class-list" class="add-student-textbox" required></input>
+          </div>
+          <div class="add-student-container">
+            <p>First Name</p>
+            <input type="text" name="class-list" class="add-student-textbox" required></input>
+          </div>
+          <div class="add-student-container">
+            <p>Student Number</p>
+            <input type="text" name="class-list" class="add-student-textbox" required></input>
+          </div>
+          <div class="add-student-container">
+            <p>NFC UID</p>
+            <input type="text" name="class-list" class="add-student-textbox" required></input>
+          </div>
+          <div class="add-student-container">
+            <p>Email</p>
+            <input type="email" name="class-list" class="add-student-textbox" required></input>
+          </div>
+          <div class="add-student-container">
+            <p>Year Number</p>
+            <input type="text" name="class-list" class="year-section-textbox" value="<?php echo $sectionPage[0]; ?>" required readonly></input>
+            <p>Section Number</p>
+            <input type="text" name="class-list" class="year-section-textbox" value="<?php echo $sectionPage[2]; ?>" required readonly></input>
+          </div>
+          <div class="add-button-container">
+            <button type="submit" id="addButton">ADD</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
     <script src="../js/table2excel.js"></script>
     <script src="../js/navbar_controller.js"></script>
     <script src="../js/attendance.js"></script>
@@ -176,6 +217,14 @@ if (isset($_POST['logout'])) {
       function toSettings() {
         window.location.href = "admin_settings_page.php";
         return false;
+      }
+      function openAddStudentModal() {
+        var addSectionModal = document.getElementById("addSectionModal");
+        addSectionModal.style.display = "block";
+      }
+      function closeAddStudentModal() {
+        var addSectionModal = document.getElementById("addSectionModal");
+        addSectionModal.style.display = "none";
       }
     </script>
   </body>

@@ -133,27 +133,21 @@ if (isset($_POST['logout'])) {
             <h6>ADD CLASS SECTION</h6>
         </div>
         <span class="close-modal" onclick="closeAddSectionModal()">&times;</span>
-        <form class="add-section-form">
-            <div class="year-section-container">
-                <div class="textbox-container">
-                    <p>Year Number</p>
-                    <input type="text" name="year-number" class="add-section-textbox"></input>
-                </div>
-                <div class="textbox-container">
-                    <p>Section Number</p>
-                    <input type="text" name="section-number" class="add-section-textbox"></input>
-                </div>
-            </div>
-            <div class="year-section-container">
-                <div class="import-container">
-                    <p>CLASS LIST</p>
-                    <input type="text" name="class-list" class="import-section-textbox" value="IMPORT .XLSX FILE"></input>
-                </div>
-            </div>
+        <form class="add-student-form">
+          <div class="add-student-container">
+              <p>Year Number</p>
+              <input type="text" name="class-list" class="year-section-textbox" required></input>
+              <p>Section Number</p>
+            <input type="text" name="class-list" class="year-section-textbox" required></input>
+          </div>
+          <div class="add-student-container">
+            <p>Import Classlist</p>
+            <input type="email" name="class-list" class="add-student-textbox" required></input>
+          </div>
+          <div class="add-button-container">
+            <button type="submit" id="addButton">ADD</button>
+          </div>
         </form>
-        <div class="add-button-container">
-          <button id="addButton">ADD</button>
-        </div>
       </div>
     </div>
 

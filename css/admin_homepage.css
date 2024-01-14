@@ -160,7 +160,7 @@ html {
       border: 1px solid #810000;
       background: #FFF;
       box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-      display: flex;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
     }
@@ -171,6 +171,10 @@ html {
   
     input[type="text"] {
       border: 0px;
+    }
+
+    #search {
+      display: inline-flex;
     }
     
     input[type="text"]:focus {
@@ -490,8 +494,11 @@ html {
         width: 100%;
       }
 
-      .year-section-container {
+      .add-student-form {
         width: 100%;
+      }
+
+      .year-section-container {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -513,8 +520,34 @@ html {
         gap: 10px;
       }
 
+      .add-student-container{
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        padding: 0px 20px 0px 20px;
+        gap: 10px;
+      }
+
       .add-section-textbox {
+        width: 30% !important;
+        height: 20px;
+        flex-shrink: 0;
+        border-radius: 50px;
+        border: 1px solid #000 !important;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+      }
+
+      .add-student-textbox {
         width: 30%;
+        height: 20px;
+        flex-grow: 1;
+        border-radius: 50px;
+        border: 1px solid #000 !important;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+      }
+
+      .year-section-textbox {
+        width: 40px;
         height: 20px;
         flex-shrink: 0;
         border-radius: 5px;
@@ -524,6 +557,15 @@ html {
 
       .import-section-textbox {
         width: 70%;
+        height: 20px;
+        flex-shrink: 0;
+        border-radius: 5px;
+        border: 1px solid #000 !important;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+      }
+
+      .add-student-textbox {
+        width: 50%;
         height: 20px;
         flex-shrink: 0;
         border-radius: 5px;
@@ -552,6 +594,7 @@ html {
         font-size: 12px;
         font-style: normal;
         line-height: normal;
+        margin-right: 20px;
       }
       
       #addSectionModal button:hover {
@@ -603,13 +646,7 @@ html {
       }
   
       .search-textbox {
-        width: 150px;
         height: 20px;
-      }
-  
-      input[type="text"] {
-        width: 110px;
-        font-size: 10px;
       }
   
       .edit-and-export {
@@ -693,6 +730,116 @@ html {
       .save-button {
         width: 50%;
       }
+
+      .modal-content {
+        width: 80%;
+      }
+  
+      .modal-content p {
+        font-size: 12px;
+      }
+  
+      .top-modal {
+        width: 100%;
+        height: 50px;
+        background-color: #810000;
+        position: relative;
+        top: 0px;
+      }
+  
+      .top-modal h6 {
+        color: #FFF;
+        text-align: center;
+        font-size: 12px;
+      }
+      
+      .close-modal {
+        position: relative;
+        height: 0px;
+        top: -45px;
+        left: -15px;
+        color: #fff;
+        float: right;
+        font-size: 24px;
+        font-weight: bold;
+        align-self: flex-end;
+        padding-bottom: 0px;
+      }
+  
+      .add-section-form {
+        width: 100%;
+      }
+  
+      .add-student-form {
+        width: 100%;
+      }
+  
+      .year-section-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+  
+      .year-section-container .textbox-container{
+        width: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+      }
+  
+      .import-container{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+      }
+  
+      .add-student-container{
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        gap: 10px;
+        padding: 0px 20px 0px 20px;
+      }
+  
+      .add-section-textbox {
+        width: 30%;
+        height: 20px;
+        flex-shrink: 0;
+      }
+  
+      .add-student-textbox {
+        width: 30%;
+        height: 20px;
+        flex-grow: 1;
+      }
+  
+      .import-section-textbox {
+        width: 70%;
+        height: 20px;
+        flex-shrink: 0;
+      }
+  
+      .add-student-textbox {
+        width: 50%;
+        height: 20px;
+        flex-shrink: 0;
+      }
+      
+      #addSectionModal .add-button-container {
+        width: 100%;
+        display: flex;
+        justify-content: end;
+        margin-right: 40px;
+      }
+      
+      #addSectionModal #addButton {
+        height: 30px;
+        width: 100px;
+      }
     }
     @media only screen and (max-width: 345px) {
       .edit-and-export {
@@ -703,6 +850,21 @@ html {
       .edit-container {
         flex-direction: column;
       }
-  
+      
+      .search-container {
+        justify-content: start;
+      }
+
+      #attendanceTable th, #attendanceTable td {
+        border: 1px solid #000;
+        padding: 2px;
+        text-align: left;
+        text-align: center;
+        font-family: Poppins;
+        font-size: 6px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+      }
 
     }
