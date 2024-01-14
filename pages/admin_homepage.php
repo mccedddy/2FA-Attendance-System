@@ -13,6 +13,11 @@ if (isset($_SESSION['student_number'])) {
 if (isset($_SESSION['id_number'])) {
   $idNumber = $_SESSION['id_number'];
 
+  // Redirect to professor homepage
+  if ($idNumber != 'admin') {
+    header("Location: professor_homepage.php");
+  }
+
   // SQL query
   $sql = "SELECT * FROM professors WHERE id_number = '$idNumber'";
   $result = mysqli_query($connection, $sql);

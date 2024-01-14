@@ -15,6 +15,7 @@ if (isset($_SESSION['id_number'])) {
     header("Location: professor_homepage.php");
   } else {
     $sectionPage = $_SESSION['selected_section'];
+    unset($_SESSION['selected_section']);
   }
 
   // Professor ID
