@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", function () {
   var exportButton = document.getElementById("export");
   var fileInput = document.getElementById("fileInput");
 
+  sortTable();
+
   deleteButton.addEventListener("click", () => {
     deleteSelectedStudents();
   });
@@ -117,4 +119,27 @@ function updateFileName() {
   } else {
     fileNameSpan.textContent = "No file chosen";
   }
+}
+
+function sortTable() {
+  const table = document.getElementById("attendanceTable");
+  const tbody = table.querySelector("tbody");
+  const rows = Array.from(tbody.querySelectorAll("tr"));
+
+  // Sort rows based on the content of the second column
+  rows.sort(compareSecondColumn);
+
+  // Clear and append sorted rows to the tbody
+  tbody.innerHTML = "";
+  rows.forEach((row) => {
+    tbody.appendChild(row);
+  });
+}
+
+function compareSecondColumn(row1, row2) {
+  const cell1 = row1.querySelector("td:nth-child(2)");
+  const cell2 = row2.querySelector("td:nth-child(2)");
+
+  // Use localeCompare for alphabetical sorting
+  return cell1.textContent.localeCompare(cell2.textContent);
 }
