@@ -272,6 +272,29 @@ input[type="text"]:focus {
   cursor: pointer;
 }
 
+input[type="file"] {
+  display: none;
+}
+
+.custom-file-input {
+  background-color: #810000;
+  color: #fff;
+  padding: 0px 10px 0px 10px;
+  cursor: pointer;
+  border: 1px solid #810000;
+  border-radius: 5px;
+  /* display: inline-block; */
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.file-name {
+  margin: 5px;
+  font-size: 12px;
+}
+
 .section-button-container {
   display: flex;
   justify-content: center;
