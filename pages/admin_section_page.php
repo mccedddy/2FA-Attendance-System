@@ -154,7 +154,10 @@ mysqli_free_result($classListResult);
             <p>Delete</p>
           </button>
         </div>
-        <button id="export"><p>EXPORT DATA</p><img src="..\assets\images\icons\download.svg"/></button>
+        <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+          <button class="import-export" id="import"><p>IMPORT DATA</p><img src="..\assets\images\icons\plus.svg"/></button>
+          <button class="import-export" id="export"><p>EXPORT DATA</p><img src="..\assets\images\icons\download.svg"/></button>
+        </div>
       </div>
       <table id="attendanceTable">
         <thead>
@@ -226,6 +229,7 @@ mysqli_free_result($classListResult);
 
     <script src="../js/table2excel.js"></script>
     <script src="../js/navbar_controller.js"></script>
+    <script src="../js/classlist.js"></script>
     <script>
       function toAdminHomepage() {
         window.location.href = "admin_homepage.php";

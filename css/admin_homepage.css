@@ -249,7 +249,7 @@ input[type="text"]:focus {
   outline: 1px solid #810000;
 }
 
-#export {
+.import-export {
   width: 149px;
   height: 30px;
   flex-shrink: 0;
@@ -267,7 +267,7 @@ input[type="text"]:focus {
   line-height: normal;
 }
 
-#export:hover {
+.import-export:hover {
   outline: 1px solid #810000;
   cursor: pointer;
 }
@@ -547,7 +547,7 @@ border: 1px solid red;
 
 .add-student-container {
   display: flex;
-  justify-content: start;
+  justify-content: center;
   align-items: center;
   padding: 0px 20px 0px 20px;
   gap: 10px;
@@ -713,7 +713,7 @@ border: 1px solid red;
     margin: 0px;
   }
 
-  #export {
+  .import-export {
     width: 106px;
     font-size: 10px;
   }
@@ -849,7 +849,7 @@ border: 1px solid red;
 
   .add-student-container {
     display: flex;
-    justify-content: start;
+    justify-content: center;
     align-items: center;
     gap: 10px;
     padding: 0px 20px 0px 20px;

@@ -170,10 +170,6 @@ mysqli_free_result($sectionsResult);
             <p>Section Number</p>
             <input type="text" name="section" class="year-section-textbox" required></input>
           </div>
-          <div class="add-student-container">
-            <p>Import Classlist</p>
-            <input type="email" name="class-list" class="add-student-textbox"></input>
-          </div>
           <div class="add-button-container">
             <button type="submit" name="add-section" id="addButton">ADD</button>
           </div>
