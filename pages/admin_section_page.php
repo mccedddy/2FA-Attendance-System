@@ -145,7 +145,7 @@ mysqli_free_result($classListResult);
             <img src="..\assets\images\icons\pencil_white.svg"/>
             <p>Edit</p>
           </button>
-          <button class="edit-class-button">
+          <button class="edit-class-button" id="deleteStudentsBtn">
             <img src="..\assets\images\icons\trash_white.svg"/>
             <p>Delete</p>
           </button>
@@ -173,7 +173,7 @@ mysqli_free_result($classListResult);
         <tbody>
           <?php foreach ($classList as $student): ?>
             <tr>
-              <td><input type="checkbox"></td>
+              <td><input type="checkbox" name="selectedStudents[]"></td>
               <td><?php echo $student['lastName']; ?></td>
               <td><?php echo $student['firstName']; ?></td>
               <td><?php echo $student['studentNumber']; ?></td>

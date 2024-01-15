@@ -1,9 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
   var table = document.getElementById("attendanceTable");
   var tbody = table.querySelector("tbody");
+  var deleteButton = document.getElementById("deleteStudentsBtn");
   var importButton = document.getElementById("import");
   var exportButton = document.getElementById("export");
   var fileInput = document.getElementById("fileInput");
+
+  deleteButton.addEventListener("click", () => {
+    deleteSelectedStudents();
+  });
 
   importButton.addEventListener("click", () => {
     importClasslist();
@@ -17,6 +22,41 @@ document.addEventListener("DOMContentLoaded", function () {
     updateFileName();
   });
 });
+
+function deleteSelectedStudents() {
+  // Get all checkboxes in the table
+  var checkboxes = document.querySelectorAll(
+    '#attendanceTable tbody input[type="checkbox"]:checked'
+  );
+
+  // Extract student numbers from checked checkboxes
+  var studentNumbers = Array.from(checkboxes).map(function (checkbox) {
+    return checkbox.closest("tr").querySelector("td:nth-child(4)").textContent; // Assuming student number is in the 4th column
+  });
+
+  console.log("Student numbers to be deleted: " + studentNumbers);
+
+  // Send the list of student numbers to the server
+  if (studentNumbers.length > 0) {
+    // Use AJAX to send data to the PHP script
+    $.ajax({
+      url: "../includes/delete_students.php",
+      method: "POST",
+      data: { studentNumbers: studentNumbers },
+      success: function (response) {
+        // Handle success, e.g., refresh the table
+        console.log(response);
+        location.reload();
+      },
+      error: function (error) {
+        console.error("Error:", error);
+      },
+    });
+  } else {
+    // Inform the user that no students are selected
+    alert("No students selected for deletion.");
+  }
+}
 
 function importClasslist() {
   console.log("Clicked import!");
@@ -49,7 +89,7 @@ function importClasslist() {
           console.log(response["status"]);
           console.log(response["message"]);
 
-          window.location.href = "../pages/admin_section_page.php";
+          location.reload();
         },
         error: function (error) {
           console.error("Error:", error);
