@@ -61,13 +61,26 @@ if (isset($_POST['add-section'])) {
   require '../includes/database_connection.php';
   $section = $_POST['year'] . '-' . $_POST['section'];
 
-  // SQL query to insert data into the cpe table
-  $sql = "INSERT INTO cpe (section) VALUES ('$section')";
+  // Check if section exists
+  $checkSectionSQL = "SELECT COUNT(*) as sectionCount FROM cpe WHERE section = '$section'";
 
-  // Execute query
-  $stmt = mysqli_prepare($connection, $sql);
-  mysqli_stmt_execute($stmt);
-  mysqli_stmt_close($stmt);
+  // Prepare and execute query
+  $stmtCheckSection = mysqli_prepare($connection, $checkSectionSQL);
+  mysqli_stmt_execute($stmtCheckSection);
+  mysqli_stmt_bind_result($stmtCheckSection, $sectionCount);
+  mysqli_stmt_fetch($stmtCheckSection);
+  mysqli_stmt_close($stmtCheckSection);
+
+  // Create section
+  if ($sectionCount == 0) {
+    // SQL query to insert data into the cpe table
+    $sql = "INSERT INTO cpe (section) VALUES ('$section')";
+
+    // Execute query
+    $stmt = mysqli_prepare($connection, $sql);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+  }
 
   header("Location: admin_homepage.php");
 }
