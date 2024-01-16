@@ -67,6 +67,7 @@ if (isset($_POST['logout'])) {
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../css/professor_homepage.css" />
+    <script type="text/javascript" src="../js/tableToExcel.js"></script>
   </head>
   <body>
     <nav class="navbar">
@@ -117,7 +118,7 @@ if (isset($_POST['logout'])) {
         </div>
         <button id="export"><p>EXPORT DATA</p><img src="..\assets\images\icons\download.svg"/></button>
       </div>
-      <table id="attendanceTable">
+      <table id="attendanceTable" data-cols-width="20,20,10,10,15">
         <thead>
           <tr>
             <th>STUDENT NAME</th>
@@ -132,7 +133,6 @@ if (isset($_POST['logout'])) {
         </tbody>
       </table>
     </section>
-    <script src="../js/table2excel.js"></script>
     <script src="../js/navbar_controller.js"></script>
     <script src="../js/attendance.js"></script>
     <script>

@@ -160,21 +160,26 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function exportAttendance() {
-    var table2excel = new Table2Excel();
     var table = document.getElementById("attendanceTable");
     var tbody = table.querySelector("tbody");
     var section = document.getElementById("title").innerHTML;
     var date = document.getElementById("date").value;
     var startTime = document.getElementById("startTime").value;
     var endTime = document.getElementById("endTime").value;
-    var fileName = section + " - " + date;
+    var fileName = section + " - " + date + ".xlsx";
 
     if (startTime != "00:00" || endTime != "23:59") {
-      fileName = section + " - " + date + " - " + startTime + "-" + endTime;
+      fileName =
+        section + " - " + date + " - " + startTime + "-" + endTime + ".xlsx";
     }
 
     if (tbody.innerHTML != "") {
-      table2excel.export(document.getElementById("attendanceTable"), fileName);
+      TableToExcel.convert(table, {
+        name: fileName,
+        sheet: {
+          name: "Sheet 1",
+        },
+      });
     }
   }
 });

@@ -147,7 +147,14 @@ function importClasslist() {
 }
 
 function exportClasslist() {
-  console.log("Clicked export!");
+  var section = document.getElementById("title").textContent;
+  var fileName = section + " Classlist.xlsx";
+  TableToExcel.convert(document.getElementById("attendanceTable"), {
+    name: fileName,
+    sheet: {
+      name: "Sheet 1",
+    },
+  });
 }
 
 function updateFileName() {

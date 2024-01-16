@@ -137,6 +137,7 @@ mysqli_free_result($classListResult);
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../css/admin_homepage.css" />
+    <script type="text/javascript" src="../js/tableToExcel.js"></script>
   </head>
   <body>
     <nav class="navbar">
@@ -185,10 +186,10 @@ mysqli_free_result($classListResult);
           <button class="import-export" id="export"><p>EXPORT DATA</p><img src="..\assets\images\icons\download.svg"/></button>
         </div>
       </div>
-      <table id="attendanceTable">
+      <table id="attendanceTable" data-cols-width="15,20,20,10,15,35">
         <thead>
           <tr>
-            <th></th>
+            <th data-exclude="true"></th>
             <th>LAST NAME</th>
             <th>FIRST NAME</th>
             <th>STUDENT NUMBER</th>
@@ -200,7 +201,7 @@ mysqli_free_result($classListResult);
         <tbody>
           <?php foreach ($classList as $student): ?>
             <tr>
-              <td><input type="checkbox" name="selectedStudents[]"></td>
+              <td data-exclude="true"><input type="checkbox" name="selectedStudents[]"></td>
               <td><?php echo $student['lastName']; ?></td>
               <td><?php echo $student['firstName']; ?></td>
               <td><?php echo $student['studentNumber']; ?></td>
@@ -295,7 +296,6 @@ mysqli_free_result($classListResult);
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="../js/table2excel.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
     <script src="../js/navbar_controller.js"></script>
     <script src="../js/classlist.js"></script>
