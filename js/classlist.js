@@ -1,12 +1,19 @@
 document.addEventListener("DOMContentLoaded", function () {
   var table = document.getElementById("attendanceTable");
   var tbody = table.querySelector("tbody");
+  var editButton = document.getElementById("editStudentBtn");
   var deleteButton = document.getElementById("deleteStudentsBtn");
   var importButton = document.getElementById("import");
   var exportButton = document.getElementById("export");
   var fileInput = document.getElementById("fileInput");
 
+  // Initial setup
   sortTable();
+
+  // Event Listeners
+  editButton.addEventListener("click", () => {
+    editSelectedStudent();
+  });
 
   deleteButton.addEventListener("click", () => {
     deleteSelectedStudents();
@@ -25,6 +32,52 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+function editSelectedStudent() {
+  var checkbox = document.querySelector(
+    '#attendanceTable tbody input[type="checkbox"]:checked'
+  );
+
+  var editStudentModal = document.getElementById("editStudentModal");
+  var editStudentTitle = document.getElementById("editStudentTitle");
+  var originalStudentNumber = document.getElementById("originalStudentNumber");
+
+  if (checkbox) {
+    // Get student number
+    var studentNumber = checkbox
+      .closest("tr")
+      .querySelector("td:nth-child(4)").textContent;
+
+    // Setup edit modal
+    editStudentTitle.textContent = "EDIT STUDENT " + studentNumber;
+    editStudentModal.style.display = "block";
+    originalStudentNumber.value = studentNumber;
+
+    // Fetch data for the selected student
+    $.ajax({
+      url: "../includes/fetch_edit_student_data.php",
+      method: "POST",
+      data: { studentNumber: studentNumber },
+      success: function (response) {
+        // Parse the response JSON
+        var studentData = JSON.parse(response);
+
+        // Set the default values for the textboxes
+        document.getElementById("editLastName").value = studentData.last_name;
+        document.getElementById("editFirstName").value = studentData.first_name;
+        document.getElementById("editStudentNumber").value =
+          studentData.student_number;
+        document.getElementById("editNfcUid").value = studentData.nfc_uid;
+        document.getElementById("editEmail").value = studentData.email;
+      },
+      error: function (error) {
+        console.error("Error fetching student data:", error);
+      },
+    });
+  } else {
+    console.log("No checkbox selected.");
+  }
+}
+
 function deleteSelectedStudents() {
   // Get all checkboxes in the table
   var checkboxes = document.querySelectorAll(
@@ -33,21 +86,16 @@ function deleteSelectedStudents() {
 
   // Extract student numbers from checked checkboxes
   var studentNumbers = Array.from(checkboxes).map(function (checkbox) {
-    return checkbox.closest("tr").querySelector("td:nth-child(4)").textContent; // Assuming student number is in the 4th column
+    return checkbox.closest("tr").querySelector("td:nth-child(4)").textContent;
   });
-
-  console.log("Student numbers to be deleted: " + studentNumbers);
 
   // Send the list of student numbers to the server
   if (studentNumbers.length > 0) {
-    // Use AJAX to send data to the PHP script
     $.ajax({
       url: "../includes/delete_students.php",
       method: "POST",
       data: { studentNumbers: studentNumbers },
       success: function (response) {
-        // Handle success, e.g., refresh the table
-        console.log(response);
         location.reload();
       },
       error: function (error) {
@@ -61,7 +109,6 @@ function deleteSelectedStudents() {
 }
 
 function importClasslist() {
-  console.log("Clicked import!");
   var fileInput = document.getElementById("fileInput");
   var file = fileInput.files[0];
 
@@ -79,18 +126,12 @@ function importClasslist() {
       // Convert sheet data to an array of objects starting from the 2nd row
       var dataArray = XLSX.utils.sheet_to_json(sheet, { header: 1, range: 1 });
 
-      console.log(dataArray);
-
       // Send dataArray to the server using a POST request
       $.ajax({
         url: "../includes/import_classlist.php",
         method: "POST",
         data: { dataArray: JSON.stringify(dataArray) },
         success: function (response) {
-          console.log(response);
-          console.log(response["status"]);
-          console.log(response["message"]);
-
           location.reload();
         },
         error: function (error) {

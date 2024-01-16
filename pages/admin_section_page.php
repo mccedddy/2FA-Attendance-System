@@ -77,6 +77,33 @@ if (isset($_POST['add-student'])) {
   header("Location: admin_section_page.php");
 }
 
+// Edit student
+if (isset($_POST['edit-student'])) {
+  require '../includes/database_connection.php';
+  $editLastName = $_POST['last_name'];
+  $editFirstName = $_POST['first_name'];
+  $editStudentNumber = $_POST['student_number'];
+  $editNfcUid = $_POST['nfc_uid'];
+  $editEmail = $_POST['email'];
+  $originalStudentNumber = $_POST['original_student_number'];
+
+  // SQL query to update data in the students table
+  $editSQL = "UPDATE students 
+            SET last_name = '$editLastName', 
+                first_name = '$editFirstName', 
+                student_number = '$editStudentNumber',
+                nfc_uid = '$editNfcUid', 
+                email = '$editEmail' 
+            WHERE student_number = '$originalStudentNumber'";
+
+  // Execute query
+  $stmt = mysqli_prepare($connection, $editSQL);
+  mysqli_stmt_execute($stmt);
+  mysqli_stmt_close($stmt);
+
+  header("Location: admin_section_page.php");
+}
+
 // Fetch class list
 require '../includes/database_connection.php';
 $classListSQL = "SELECT * FROM students WHERE section = '$sectionPage'";
@@ -141,7 +168,7 @@ mysqli_free_result($classListResult);
             <img src="..\assets\images\icons\plus_white.svg"/>
             <p>New</p>
           </button>
-          <button class="edit-class-button">
+          <button class="edit-class-button" id="editStudentBtn">
             <img src="..\assets\images\icons\pencil_white.svg"/>
             <p>Edit</p>
           </button>
@@ -220,7 +247,48 @@ mysqli_free_result($classListResult);
             <input type="text" name="section" class="year-section-textbox" value="<?php echo $sectionPage[2]; ?>" required readonly></input>
           </div>
           <div class="add-button-container">
-            <button type="submit" name="add-student" id="addButton">ADD</button>
+            <button type="submit" name="add-student" id="addButton" class="add-button">ADD</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="editStudentModal" class="modal-blur">
+      <div class="modal-content">
+        <div class="top-modal">
+          <h6 id="editStudentTitle">EDIT STUDENT</h6>
+        </div>
+        <span class="close-modal" onclick="closeEditStudentModal()">&times;</span>
+        <form method="POST" class="add-student-form">
+          <input id="originalStudentNumber" name="original_student_number" type="hidden"></input>
+          <div class="add-student-container">
+            <p>Last Name</p>
+            <input type="text" name="last_name" id="editLastName" class="add-student-textbox" required></input>
+          </div>
+          <div class="add-student-container">
+            <p>First Name</p>
+            <input type="text" name="first_name" id="editFirstName" class="add-student-textbox" required></input>
+          </div>
+          <div class="add-student-container">
+            <p>Student Number</p>
+            <input type="text" name="student_number" id="editStudentNumber" class="add-student-textbox" required></input>
+          </div>
+          <div class="add-student-container">
+            <p>NFC UID</p>
+            <input type="text" name="nfc_uid" id="editNfcUid" class="add-student-textbox" required></input>
+          </div>
+          <div class="add-student-container">
+            <p>Email</p>
+            <input type="email" name="email" id="editEmail" class="add-student-textbox" required></input>
+          </div>
+          <div class="add-student-container">
+            <p>Year Number</p>
+            <input type="text" name="year" class="year-section-textbox" value="<?php echo $sectionPage[0]; ?>" required readonly></input>
+            <p>Section Number</p>
+            <input type="text" name="section" class="year-section-textbox" value="<?php echo $sectionPage[2]; ?>" required readonly></input>
+          </div>
+          <div class="add-button-container">
+            <button type="submit" name="edit-student" id="saveStudentButton" class="add-button">SAVE</button>
           </div>
         </form>
       </div>
@@ -246,6 +314,10 @@ mysqli_free_result($classListResult);
       }
       function closeAddStudentModal() {
         var addSectionModal = document.getElementById("addSectionModal");
+        addSectionModal.style.display = "none";
+      }
+      function closeEditStudentModal() {
+        var addSectionModal = document.getElementById("editStudentModal");
         addSectionModal.style.display = "none";
       }
     </script>
