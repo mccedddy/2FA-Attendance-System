@@ -147,7 +147,6 @@ mysqli_free_result($classListResult);
         <a onclick="toAdminHomepage()"><img src="..\assets\images\icons\notepad.svg" class="nav-button"/></a>
       </div>
       <form method="POST" class="logout-form">
-        <a onclick="toSettings()"><img src="..\assets\images\icons\settings.svg"/></a>
         <button type="submit" name="logout" class="logout-button">
           <img src="..\assets\images\icons\logout.svg" class="nav-button"/>
         </button>
