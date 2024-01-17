@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function editSelectedStudent() {
+  var title = document.getElementById("title").textContent;
   var checkbox = document.querySelector(
     '#attendanceTable tbody input[type="checkbox"]:checked'
   );
@@ -47,14 +48,21 @@ function editSelectedStudent() {
       .closest("tr")
       .querySelector("td:nth-child(4)").textContent;
 
+    if (title != "PROFESSORS") {
+      editStudentTitle.textContent = "EDIT STUDENT " + studentNumber;
+      var url = "../includes/fetch_edit_student_data.php";
+    } else {
+      editStudentTitle.textContent = "EDIT PROFESSOR " + studentNumber;
+      var url = "../includes/fetch_edit_professor_data.php";
+    }
+
     // Setup edit modal
-    editStudentTitle.textContent = "EDIT STUDENT " + studentNumber;
     editStudentModal.style.display = "block";
     originalStudentNumber.value = studentNumber;
 
     // Fetch data for the selected student
     $.ajax({
-      url: "../includes/fetch_edit_student_data.php",
+      url: url,
       method: "POST",
       data: { studentNumber: studentNumber },
       success: function (response) {
@@ -65,8 +73,12 @@ function editSelectedStudent() {
         document.getElementById("editLastName").value = studentData.last_name;
         document.getElementById("editFirstName").value = studentData.first_name;
         document.getElementById("editStudentNumber").value =
-          studentData.student_number;
-        document.getElementById("editNfcUid").value = studentData.nfc_uid;
+          studentData.id_number;
+
+        if (title != "PROFESSORS") {
+          document.getElementById("editNfcUid").value = studentData.nfc_uid;
+        }
+
         document.getElementById("editEmail").value = studentData.email;
       },
       error: function (error) {
@@ -79,6 +91,7 @@ function editSelectedStudent() {
 }
 
 function deleteSelectedStudents() {
+  var title = document.getElementById("title").textContent;
   // Get all checkboxes in the table
   var checkboxes = document.querySelectorAll(
     '#attendanceTable tbody input[type="checkbox"]:checked'
@@ -89,10 +102,16 @@ function deleteSelectedStudents() {
     return checkbox.closest("tr").querySelector("td:nth-child(4)").textContent;
   });
 
+  if (title != "PROFESSORS") {
+    var url = "../includes/delete_students.php";
+  } else {
+    var url = "../includes/delete_professors.php";
+  }
+
   // Send the list of student numbers to the server
   if (studentNumbers.length > 0) {
     $.ajax({
-      url: "../includes/delete_students.php",
+      url: url,
       method: "POST",
       data: { studentNumbers: studentNumbers },
       success: function (response) {
@@ -109,6 +128,7 @@ function deleteSelectedStudents() {
 }
 
 function importClasslist() {
+  var section = document.getElementById("title").textContent;
   var fileInput = document.getElementById("fileInput");
   var file = fileInput.files[0];
 
@@ -126,9 +146,15 @@ function importClasslist() {
       // Convert sheet data to an array of objects starting from the 2nd row
       var dataArray = XLSX.utils.sheet_to_json(sheet, { header: 1, range: 1 });
 
+      if (section != "PROFESSORS") {
+        var url = "../includes/import_classlist.php";
+      } else {
+        var url = "../includes/import_professors.php";
+      }
+
       // Send dataArray to the server using a POST request
       $.ajax({
-        url: "../includes/import_classlist.php",
+        url: url,
         method: "POST",
         data: { dataArray: JSON.stringify(dataArray) },
         success: function (response) {
@@ -148,6 +174,14 @@ function importClasslist() {
 
 function exportClasslist() {
   var section = document.getElementById("title").textContent;
+  var table = document.getElementById("attendanceTable");
+
+  if (section != "PROFESSORS") {
+    table.setAttribute("data-cols-width", "15,20,20,10,15,35");
+  } else {
+    table.setAttribute("data-cols-width", "15,20,20,35");
+  }
+
   var fileName = section + " Classlist.xlsx";
   TableToExcel.convert(document.getElementById("attendanceTable"), {
     name: fileName,
