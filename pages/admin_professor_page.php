@@ -192,7 +192,13 @@ mysqli_free_result($classListResult);
         <tbody>
           <?php foreach ($classList as $student): ?>
             <tr>
-              <td data-exclude="true"><input type="checkbox" name="selectedStudents[]"></td>
+              <?php 
+                if ($student['lastName'] == 'admin') {
+                  echo '<td data-exclude="true"><input type="checkbox" name="selectedStudents[]" disabled></td>';
+                } else {
+                  echo '<td data-exclude="true"><input type="checkbox" name="selectedStudents[]"></td>';
+                }
+              ?>
               <td><?php echo $student['lastName']; ?></td>
               <td><?php echo $student['firstName']; ?></td>
               <td><?php echo $student['idNumber']; ?></td>
