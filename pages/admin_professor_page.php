@@ -240,6 +240,7 @@ mysqli_free_result($classListResult);
           <?php endforeach; ?>
         </tbody>
       </table>
+      <div style="height:50px;"></div>
     </section>
 
     <div id="addSectionModal" class="modal-blur">

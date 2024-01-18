@@ -131,6 +131,7 @@ if (isset($_POST['logout'])) {
               
         </tbody>
       </table>
+      <div style="height:50px;"></div>
     </section>
     <script src="../js/navbar_controller.js"></script>
     <script src="../js/attendance.js"></script>
