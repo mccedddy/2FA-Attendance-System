@@ -97,6 +97,12 @@ if (isset($_POST['logout'])) {
         </div>
       </div>
       <h1 class="title" id="title">SECTION <?php echo $sectionPage ?></h1>
+      <div class="search-container">
+        <div class="search-textbox">
+          <input type="text" name="search" id="search" value="">
+          <img src="..\assets\images\icons\search.svg"/>
+        </div>
+      </div>
       <select id="roomFilter">
           <option value="ALL">ALL</option>
           <option value="300">ROOM 300</option>
