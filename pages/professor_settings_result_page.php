@@ -113,7 +113,7 @@ if (isset($_SESSION['email']) && isset($_SESSION['password'])) {
       </div>
       <h1 class="title">Account Settings</h1>
       <center>
-        <div style="border: 1px solid #810000; border-radius: 15px; padding: 0px 40px 0px 40px; display: inline-flex">
+        <div style="border: 2px solid #810000; border-radius: 15px; padding: 0px 40px 0px 40px; display: inline-flex">
           <?php echo $result; ?>
         </div>
       </center>
