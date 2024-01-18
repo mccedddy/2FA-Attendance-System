@@ -69,10 +69,24 @@ if (isset($_POST['add-student'])) {
 
   // Execute query
   $stmt = mysqli_prepare($connection, $sql);
-  mysqli_stmt_execute($stmt);
-  mysqli_stmt_close($stmt);
 
-  header("Location: admin_professor_page.php");
+  try {
+    // Execute query
+    mysqli_stmt_execute($stmt);
+
+    // Close the statement
+    mysqli_stmt_close($stmt);
+    
+    header("Location: admin_professor_page.php");
+  } catch (mysqli_sql_exception $exception) {
+    // Check if duplicate entry
+    if ($exception->getCode() == 1062) {
+      header("Location: admin_professor_page.php");
+      exit; 
+    } else {
+      throw $exception;
+    }
+  }
 }
 
 // Edit student
@@ -94,10 +108,24 @@ if (isset($_POST['edit-student'])) {
 
   // Execute query
   $stmt = mysqli_prepare($connection, $editSQL);
-  mysqli_stmt_execute($stmt);
-  mysqli_stmt_close($stmt);
+  
+  try {
+    // Execute query
+    mysqli_stmt_execute($stmt);
 
-  header("Location: admin_professor_page.php");
+    // Close the statement
+    mysqli_stmt_close($stmt);
+    
+    header("Location: admin_professor_page.php");
+  } catch (mysqli_sql_exception $exception) {
+    // Check if duplicate entry
+    if ($exception->getCode() == 1062) {
+      header("Location: admin_professor_page.php");
+      exit; 
+    } else {
+      throw $exception;
+    }
+  }
 }
 
 // Fetch class list
