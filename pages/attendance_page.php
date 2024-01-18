@@ -96,6 +96,7 @@ if (isset($_POST['logout'])) {
           <h5><?php echo $idNumber; ?></h5>
         </div>
       </div>
+      <h1 class="title" id="title">SECTION <?php echo $sectionPage ?></h1>
       <select id="roomFilter">
           <option value="ALL">ALL</option>
           <option value="300">ROOM 300</option>

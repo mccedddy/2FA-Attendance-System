@@ -55,6 +55,19 @@ if (isset($_POST['section-button'])) {
 if (isset($_POST['logout'])) {
   require '../includes/logout.php';
 }
+
+// Fetch section
+require '../includes/database_connection.php';
+$sectionsSQL = "SELECT * FROM cpe";
+$sectionsResult = mysqli_query($connection, $sectionsSQL);
+$sections = [];
+while ($row = mysqli_fetch_assoc($sectionsResult)) {
+  $cpeInfo = [
+            'section'      => $row['section'],
+          ];
+  $sections[] = $cpeInfo['section'];
+}
+mysqli_free_result($sectionsResult);
 ?>
 
 <!DOCTYPE html>
@@ -101,30 +114,12 @@ if (isset($_POST['logout'])) {
       </div>
       <h1 class="title">Computer Engineering Department Sections</h1>
       <div class="section-button-container">
-        <form method="POST">
-          <input type="hidden" name="section" value="4-1">
-          <button type="submit" name="section-button" class="section-button">SECTION 4-1</button>
-        </form>
-        <form method="POST">
-          <input type="hidden" name="section" value="4-2">
-          <button type="submit" name="section-button" class="section-button">SECTION 4-2</button>
-        </form>
-        <form method="POST">
-          <input type="hidden" name="section" value="4-3">
-          <button type="submit" name="section-button" class="section-button">SECTION 4-3</button>
-        </form>
-        <form method="POST">
-          <input type="hidden" name="section" value="4-4">
-          <button type="submit" name="section-button" class="section-button">SECTION 4-4</button>
-        </form>
-        <form method="POST">
-          <input type="hidden" name="section" value="4-5">
-          <button type="submit" name="section-button" class="section-button">SECTION 4-5</button>
-        </form>
-        <form method="POST">
-          <input type="hidden" name="section" value="4-6">
-          <button type="submit" name="section-button" class="section-button">SECTION 4-6</button>
-        </form>
+        <?php foreach ($sections as $section): ?>
+          <form method="POST">
+            <input type="hidden" name="section" value="<?php echo $section; ?>">
+            <button type="submit" name="section-button" class="section-button">SECTION <?php echo $section; ?></button>
+          </form>
+        <?php endforeach; ?>
       </div>
     </section>
     <script src="../js/navbar_controller.js"></script>
