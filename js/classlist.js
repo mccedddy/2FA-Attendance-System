@@ -72,11 +72,14 @@ function editSelectedStudent() {
         // Set the default values for the textboxes
         document.getElementById("editLastName").value = studentData.last_name;
         document.getElementById("editFirstName").value = studentData.first_name;
-        document.getElementById("editStudentNumber").value =
-          studentData.id_number;
 
         if (title != "PROFESSORS") {
+          document.getElementById("editStudentNumber").value =
+            studentData.student_number;
           document.getElementById("editNfcUid").value = studentData.nfc_uid;
+        } else {
+          document.getElementById("editStudentNumber").value =
+            studentData.id_number;
         }
 
         document.getElementById("editEmail").value = studentData.email;
