@@ -88,10 +88,16 @@ if (isset($_POST['logout'])) {
     </nav>
     <section class="main">
       <div class="header">
-        <div class="mobile-navbar-toggle" onclick="toggleMobileNavbar()">
-          <img src="..\assets\images\icons\hamburger.svg" class="hamburger">
+        <div class="left">
+          <div class="mobile-navbar-toggle" onclick="toggleMobileNavbar()">
+            <img src="..\assets\images\icons\hamburger.svg" class="hamburger">
+          </div>
+          <a onclick="toProfessorHomepage()"><h1>PUP HDF Attendance System</h1></a>
         </div>
-        <a onclick="toProfessorHomepage()"><h1>PUP HDF Attendance System</h1></a>
+        <div class="right">
+          <h5><?php echo $name; ?></h5>
+          <h5><?php echo $idNumber; ?></h5>
+        </div>
       </div>
       <h1 class="title">Computer Engineering Department Sections</h1>
       <div class="section-button-container">
