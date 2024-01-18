@@ -174,7 +174,7 @@ mysqli_free_result($sectionsResult);
             <input type="text" name="section" class="year-section-textbox" required></input>
           </div>
           <div class="add-button-container">
-            <button type="submit" name="add-section" id="addButton">ADD</button>
+            <button type="submit" name="add-section" id="addButton" class="add-button">ADD</button>
           </div>
         </form>
       </div>
