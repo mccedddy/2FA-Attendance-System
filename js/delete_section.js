@@ -35,9 +35,8 @@ function deleteSection(selectedSection) {
     .then((response) => response.json())
     .then((data) => {
       // Redirect to homepage
-      if (data["status"] == "success" || data["status"] == "exists") {
-        // window.location.href = "admin_homepage.php";
-        // return false;
+      if (data["status"] == "success") {
+        window.location.href = "admin_homepage.php";
         console.log(data["status"]);
       }
     })
