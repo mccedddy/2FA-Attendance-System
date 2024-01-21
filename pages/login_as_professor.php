@@ -60,19 +60,17 @@ if (isset($_POST['login'])) {
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../css/login_as_student.css" />
+    <link rel="stylesheet" href="../css/login_as.css" />
   </head>
   <body>
-    <div class="login-div">
-      <section class="login-div-L">
+    <section class="main">
+      <div class="left">
         <div class="login-div-center">
-          <div class="login-title">
-            <a1>PROFESSOR LOGIN</a1>
-          </div>
-          <form action="" method="POST" class="login-form">
+          <h1>PROFESSOR LOGIN</h1>
+          <form method="POST" class="login-form">
             <div class="login-textbox-container">
               <img
-                src="../assets/images/icons/person.png"
+                src="../assets/images/icons/person.svg"
                 class="textbox-icon"
               />
               <input
@@ -84,7 +82,7 @@ if (isset($_POST['login'])) {
               />
             </div>
             <div class="login-textbox-container">
-                <img src="../assets/images/icons/lock.png" class="textbox-icon" />
+              <img src="../assets/images/icons/lock.svg" class="textbox-icon" />
               <input
                 type="password"
                 class="login-textbox"
@@ -93,26 +91,18 @@ if (isset($_POST['login'])) {
               />
             </div>
             <p class="error-message"><?php echo $error_message ?></p>
-            <div>
+            <center>
               <button type="submit" name="login" class="login-button">LOGIN</button>
-            </div>
+            </center>
           </form>
-          <div>
-            <a href="forgot_password.php"
-              ><p class="forgot-password-text">Forgot your password?</p></a
-            >
-          </div>
+          <a href="forgot_password.php">
+            <p class="forgot-password-text">Forgot your password?</p>
+          </a>
         </div>
-      </section>
-      <section class="login-div-R">
-        <div>
-          <img
-            src="..\assets\images\graphics\professor.png"
-            class="login-graphics"
-          />
-        </div>
-      </section>
-    </div>
-    <!-- <script src="../scripts.js"></script> -->
+      </div>
+      <div class="right">
+        <img src="..\assets\images\graphics\professor.png" />
+      </div>
+    </section>
   </body>
 </html>

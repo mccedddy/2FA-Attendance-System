@@ -33,7 +33,7 @@ if (isset($_POST['reset-password'])) {
         <form method="POST" class="email-form">
           <div class="textbox-container">
             <img
-              src="../assets/images/icons/person.png"
+              src="../assets/images/icons/mail.svg"
               class="textbox-icon"
             />
             <input
