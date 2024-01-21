@@ -53,102 +53,108 @@ if (isset($_POST['logout'])) {
 }
 
 // Add student
-if (isset($_POST['add-student'])) {
-  require '../includes/database_connection.php';
-  $lastName = $_POST['last_name'];
-  $firstName = $_POST['first_name'];
-  $studentNumber = $_POST['student_number'];
-  $nfcUid = $_POST['nfc_uid'];
-  $email = $_POST['email'];
-  $section = $_POST['year'] . '-' . $_POST['section'];
+// if (isset($_POST['add-student'])) {
+//   require '../includes/database_connection.php';
+//   $lastName = $_POST['last_name'];
+//   $firstName = $_POST['first_name'];
+//   $studentNumber = $_POST['student_number'];
+//   $nfcUid = $_POST['nfc_uid'];
+//   $email = $_POST['email'];
+//   $section = $_POST['year'] . '-' . $_POST['section'];
 
-  // Hash the password (Default: Last Name)
-  $hashedPassword = password_hash($lastName, PASSWORD_DEFAULT);
+//   // Hash the password (Default: Last Name)
+//   $hashedPassword = password_hash($lastName, PASSWORD_DEFAULT);
 
-  // SQL query to insert data into the students table
-  $sql = "INSERT INTO students (last_name, first_name, student_number, section, nfc_uid, email, password)
-            VALUES ('$lastName', '$firstName', '$studentNumber', '$section', '$nfcUid', '$email', '$hashedPassword')";
+//   // SQL query to insert data into the students table
+//   $sql = "INSERT INTO students (last_name, first_name, student_number, section, nfc_uid, email, password)
+//             VALUES ('$lastName', '$firstName', '$studentNumber', '$section', '$nfcUid', '$email', '$hashedPassword')";
 
-  // Use prepared statement
-  $stmt = mysqli_prepare($connection, $sql);
+//   // Use prepared statement
+//   $stmt = mysqli_prepare($connection, $sql);
 
-  try {
-    // Execute query
-    mysqli_stmt_execute($stmt);
+//   try {
+//     // Execute query
+//     mysqli_stmt_execute($stmt);
 
-    // Close the statement
-    mysqli_stmt_close($stmt);
+//     // Close the statement
+//     mysqli_stmt_close($stmt);
     
-    header("Location: admin_section_page.php");
-  } catch (mysqli_sql_exception $exception) {
-    // Check if duplicate entry
-    if ($exception->getCode() == 1062) {
-      header("Location: admin_section_page.php");
-      exit; 
-    } else {
-      throw $exception;
-    }
-  }
-}
+//     header("Location: admin_section_page.php");
+//   } catch (mysqli_sql_exception $exception) {
+//     // Check if duplicate entry
+//     if ($exception->getCode() == 1062) {
+//       header("Location: admin_section_page.php");
+//       exit; 
+//     } else {
+//       throw $exception;
+//     }
+//   }
+// }
 
 // Edit student
-if (isset($_POST['edit-student'])) {
-  require '../includes/database_connection.php';
-  $editLastName = $_POST['last_name'];
-  $editFirstName = $_POST['first_name'];
-  $editStudentNumber = $_POST['student_number'];
-  $editNfcUid = $_POST['nfc_uid'];
-  $editEmail = $_POST['email'];
-  $originalStudentNumber = $_POST['original_student_number'];
+// if (isset($_POST['edit-student'])) {
+//   require '../includes/database_connection.php';
+//   $editLastName = $_POST['last_name'];
+//   $editFirstName = $_POST['first_name'];
+//   $editStudentNumber = $_POST['student_number'];
+//   $editNfcUid = $_POST['nfc_uid'];
+//   $editEmail = $_POST['email'];
+//   $originalStudentNumber = $_POST['original_student_number'];
 
-  // SQL query to update data in the students table
-  $editSQL = "UPDATE students 
-            SET last_name = '$editLastName', 
-                first_name = '$editFirstName', 
-                student_number = '$editStudentNumber',
-                nfc_uid = '$editNfcUid', 
-                email = '$editEmail' 
-            WHERE student_number = '$originalStudentNumber'";
+//   // SQL query to update data in the students table
+//   $editSQL = "UPDATE students 
+//             SET last_name = '$editLastName', 
+//                 first_name = '$editFirstName', 
+//                 student_number = '$editStudentNumber',
+//                 nfc_uid = '$editNfcUid', 
+//                 email = '$editEmail' 
+//             WHERE student_number = '$originalStudentNumber'";
 
-  // Execute query
-  $stmt = mysqli_prepare($connection, $editSQL);
+//   // Execute query
+//   $stmt = mysqli_prepare($connection, $editSQL);
 
-  try {
-    // Execute query
-    mysqli_stmt_execute($stmt);
+//   try {
+//     // Execute query
+//     mysqli_stmt_execute($stmt);
 
-    // Close the statement
-    mysqli_stmt_close($stmt);
+//     // Close the statement
+//     mysqli_stmt_close($stmt);
     
-    header("Location: admin_section_page.php");
-  } catch (mysqli_sql_exception $exception) {
-    // Check if duplicate entry
-    if ($exception->getCode() == 1062) {
-      header("Location: admin_section_page.php");
-      exit; 
-    } else {
-      throw $exception;
-    }
-  }
-}
+//     header("Location: admin_section_page.php");
+//   } catch (mysqli_sql_exception $exception) {
+//     // Check if duplicate entry
+//     if ($exception->getCode() == 1062) {
+//       header("Location: admin_section_page.php");
+//       exit; 
+//     } else {
+//       throw $exception;
+//     }
+//   }
+// }
 
 // Fetch class list
 require '../includes/database_connection.php';
-$classListSQL = "SELECT * FROM students WHERE section = '$sectionPage'";
-$classListResult = mysqli_query($connection, $classListSQL);
-$classList = [];
-while ($row = mysqli_fetch_assoc($classListResult)) {
-  $studentInfo = [
-            'lastName'      => $row['last_name'],
-            'firstName'     => $row['first_name'],
-            'studentNumber' => $row['student_number'],
-            'section'       => $row['section'],
-            'nfcUid'        => $row['nfc_uid'],
-            'email'         => $row['email'],
-          ];
-  $classList[] = $studentInfo;
+$scheduleSQL = "SELECT schedule.subject_code, subjects.subject_name, schedule.day, schedule.start_time, schedule.end_time, 
+                       CONCAT(professors.last_name, ', ', professors.first_name) AS professor_name
+               FROM schedule
+               INNER JOIN subjects ON schedule.subject_code = subjects.subject_code
+               INNER JOIN professors ON schedule.professor = professors.id_number
+               WHERE schedule.section = '$sectionPage'";
+$scheduleResult = mysqli_query($connection, $scheduleSQL);
+$schedule = [];
+
+while ($row = mysqli_fetch_assoc($scheduleResult)) {
+    $classInfo = [
+        'subjectCode'   => $row['subject_code'],
+        'subjectName'   => $row['subject_name'],
+        'day'           => $row['day'],
+        'startTime'     => $row['start_time'],
+        'endTime'       => $row['end_time'],
+        'professor'     => $row['professor_name'],
+    ];
+    $schedule[] = $classInfo;
 }
-mysqli_free_result($classListResult);
+mysqli_free_result($scheduleResult);
 ?>
 
 <!DOCTYPE html>
@@ -195,12 +201,12 @@ mysqli_free_result($classListResult);
           <h5>ADMIN</h5>
         </div>
       </div>
-      <h1 class="title" id="title">SECTION <?php echo $sectionPage ?> CLASSLIST</h1>
+      <h1 class="title" id="title">SECTION <?php echo $sectionPage ?> SCHEDULE</h1>
       <div class="search-container">
       </div>
       <div class="edit-and-export">
         <div class="edit-container">
-          <button class="edit-class-button" onclick="openAddStudentModal()">
+          <button class="edit-class-button" onclick="openAddClassModal()">
             <img src="..\assets\images\icons\plus_white.svg"/>
             <p>New</p>
           </button>
@@ -225,24 +231,24 @@ mysqli_free_result($classListResult);
         <thead>
           <tr>
             <th data-exclude="true"></th>
-            <th>LAST NAME</th>
-            <th>FIRST NAME</th>
-            <th>STUDENT NUMBER</th>
-            <th>SECTION</th>
-            <th>NFC UID</th>
-            <th>EMAIL</th>
+            <th>SUBJECT CODE</th>
+            <th>SUBJECT NAME</th>
+            <th>DAY</th>
+            <th>START TIME</th>
+            <th>END TIME</th>
+            <th>PROFESSOR</th>
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($classList as $student): ?>
+          <?php foreach ($schedule as $class): ?>
             <tr>
               <td data-exclude="true"><input type="checkbox" name="selectedStudents[]"></td>
-              <td><?php echo $student['lastName']; ?></td>
-              <td><?php echo $student['firstName']; ?></td>
-              <td><?php echo $student['studentNumber']; ?></td>
-              <td><?php echo $student['section']; ?></td>
-              <td><?php echo $student['nfcUid']; ?></td>
-              <td><?php echo $student['email']; ?></td>
+              <td><?php echo $class['subjectCode']; ?></td>
+              <td><?php echo $class['subjectName']; ?></td>
+              <td><?php echo $class['day']; ?></td>
+              <td><?php echo $class['startTime']; ?></td>
+              <td><?php echo $class['endTime']; ?></td>
+              <td><?php echo $class['professor']; ?></td>
             </tr>
           <?php endforeach; ?>
         </tbody>
@@ -253,9 +259,9 @@ mysqli_free_result($classListResult);
     <div id="addSectionModal" class="modal-blur">
       <div class="modal-content">
         <div class="top-modal">
-          <h6>ADD STUDENT</h6>
+          <h6>ADD CLASS</h6>
         </div>
-        <span class="close-modal" onclick="closeAddStudentModal()">&times;</span>
+        <span class="close-modal" onclick="closeAddClassModal()">&times;</span>
         <form method="POST" class="add-student-form">
           <div class="add-student-container">
             <p>Last Name</p>
@@ -293,9 +299,9 @@ mysqli_free_result($classListResult);
     <div id="editStudentModal" class="modal-blur">
       <div class="modal-content">
         <div class="top-modal">
-          <h6 id="editStudentTitle">EDIT STUDENT</h6>
+          <h6 id="editStudentTitle">EDIT CLASS</h6>
         </div>
-        <span class="close-modal" onclick="closeEditStudentModal()">&times;</span>
+        <span class="close-modal" onclick="closeEditClassModal()">&times;</span>
         <form method="POST" class="add-student-form">
           <input id="originalStudentNumber" name="original_student_number" type="hidden"></input>
           <div class="add-student-container">
@@ -334,7 +340,7 @@ mysqli_free_result($classListResult);
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
     <script src="../js/navbar_controller.js"></script>
-    <script src="../js/classlist.js"></script>
+    <!-- <script src="../js/classlist.js"></script> -->
     <script>
       function toAdminHomepage() {
         window.location.href = "admin_homepage.php";
@@ -356,15 +362,15 @@ mysqli_free_result($classListResult);
         window.location.href = "admin_settings_page.php";
         return false;
       }
-      function openAddStudentModal() {
+      function openAddClassModal() {
         var addSectionModal = document.getElementById("addSectionModal");
         addSectionModal.style.display = "block";
       }
-      function closeAddStudentModal() {
+      function closeAddClassModal() {
         var addSectionModal = document.getElementById("addSectionModal");
         addSectionModal.style.display = "none";
       }
-      function closeEditStudentModal() {
+      function closeEditClassModal() {
         var addSectionModal = document.getElementById("editStudentModal");
         addSectionModal.style.display = "none";
       }

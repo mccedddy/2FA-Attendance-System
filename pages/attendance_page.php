@@ -96,7 +96,7 @@ if (isset($_POST['logout'])) {
           <h5><?php echo $idNumber; ?></h5>
         </div>
       </div>
-      <h1 class="title" id="title">SECTION <?php echo $sectionPage ?></h1>
+      <h1 class="title" id="title">SECTION <?php echo $sectionPage ?> ATTENDANCE</h1>
       <div class="search-container">
         <div class="search-textbox">
           <input type="text" name="search" id="search" value="">

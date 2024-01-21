@@ -49,6 +49,29 @@ if (isset($_SESSION['id_number'])) {
 if (isset($_POST['logout'])) {
   require '../includes/logout.php';
 }
+
+// Section button
+if (isset($_POST['section-button'])) {
+  $_SESSION['selected_section'] = $_POST['section'];
+  if ($_POST['section'] == 'professors') {
+    header("Location: admin_schedule_professor_page.php");
+  } else {
+    header("Location: admin_schedule_section_page.php");
+  }
+}
+
+// Fetch section
+require '../includes/database_connection.php';
+$sectionsSQL = "SELECT * FROM sections";
+$sectionsResult = mysqli_query($connection, $sectionsSQL);
+$sections = [];
+while ($row = mysqli_fetch_assoc($sectionsResult)) {
+  $sectionsInfo = [
+            'section'      => $row['section'],
+          ];
+  $sections[] = $sectionsInfo['section'];
+}
+mysqli_free_result($sectionsResult);
 ?>
 
 <!DOCTYPE html>
@@ -95,44 +118,15 @@ if (isset($_POST['logout'])) {
         </div>
       </div>
       <h1 class="title">Computer Engineering Schedules</h1>
+      <div class="section-button-container">
+        <?php foreach ($sections as $section): ?>
+          <form method="POST">
+            <input type="hidden" name="section" value="<?php echo $section; ?>">
+            <button type="submit" name="section-button" class="section-button">SECTION <?php echo $section; ?></button>
+          </form>
+        <?php endforeach; ?>
+      </div>
     </section>
-
-    <div id="addSectionModal" class="modal-blur">
-      <div class="modal-content">
-        <div class="top-modal">
-          <h6>ADD SECTION</h6>
-        </div>
-        <span class="close-modal" onclick="closeAddSectionModal()">&times;</span>
-        <form method="POST" class="add-student-form">
-          <div class="add-student-container">
-            <p>Year Number</p>
-            <input type="text" name="year" class="year-section-textbox" required></input>
-            <p>Section Number</p>
-            <input type="text" name="section" class="year-section-textbox" required></input>
-          </div>
-          <div class="add-button-container">
-            <button type="submit" name="add-section" id="addButton" class="add-button">ADD</button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <div id="deleteSectionModal" class="modal-blur">
-      <div class="modal-content">
-        <div class="top-modal">
-          <h6>DELETE SECTION</h6>
-        </div>
-          <span class="close-modal" onclick="closeDeleteSectionModal()">&times;</span>
-          <img src="../assets/images/graphics/girl_trash.png" style="height: 40%; width: 40%;" />
-          <h5 id="deleteSectionMessage" style="margin-bottom: 10px;"></h5>
-          <p style="margin: 0px; text-align: center;">WARNING: All of the student data in this section will be deleted.</p>
-          <p style="margin: 10px; text-align: center;">Are you sure you want to delete this section?</p>
-          <div class="add-button-container">
-            <button type="submit" name="confirm-delete-section" id="deleteButton">DELETE</button>
-          </div>
-        </form>
-      </div>
-    </div>
 
     <script src="../js/navbar_controller.js"></script>
     <script src="../js/delete_section.js"></script>
