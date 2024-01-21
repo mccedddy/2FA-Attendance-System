@@ -58,14 +58,14 @@ if (isset($_POST['logout'])) {
 
 // Fetch section
 require '../includes/database_connection.php';
-$sectionsSQL = "SELECT * FROM cpe";
+$sectionsSQL = "SELECT * FROM sections";
 $sectionsResult = mysqli_query($connection, $sectionsSQL);
 $sections = [];
 while ($row = mysqli_fetch_assoc($sectionsResult)) {
-  $cpeInfo = [
+  $sectionsInfo = [
             'section'      => $row['section'],
           ];
-  $sections[] = $cpeInfo['section'];
+  $sections[] = $sectionsInfo['section'];
 }
 mysqli_free_result($sectionsResult);
 ?>

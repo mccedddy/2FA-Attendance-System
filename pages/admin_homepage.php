@@ -66,7 +66,7 @@ if (isset($_POST['add-section'])) {
   $section = $_POST['year'] . '-' . $_POST['section'];
 
   // Check if section exists
-  $checkSectionSQL = "SELECT COUNT(*) as sectionCount FROM cpe WHERE section = '$section'";
+  $checkSectionSQL = "SELECT COUNT(*) as sectionCount FROM sections WHERE section = '$section'";
 
   // Prepare and execute query
   $stmtCheckSection = mysqli_prepare($connection, $checkSectionSQL);
@@ -77,8 +77,8 @@ if (isset($_POST['add-section'])) {
 
   // Create section
   if ($sectionCount == 0) {
-    // SQL query to insert data into the cpe table
-    $sql = "INSERT INTO cpe (section) VALUES ('$section')";
+    // SQL query
+    $sql = "INSERT INTO sections (section) VALUES ('$section')";
 
     // Execute query
     $stmt = mysqli_prepare($connection, $sql);
@@ -91,14 +91,14 @@ if (isset($_POST['add-section'])) {
 
 // Fetch section
 require '../includes/database_connection.php';
-$sectionsSQL = "SELECT * FROM cpe";
+$sectionsSQL = "SELECT * FROM sections";
 $sectionsResult = mysqli_query($connection, $sectionsSQL);
 $sections = [];
 while ($row = mysqli_fetch_assoc($sectionsResult)) {
-  $cpeInfo = [
+  $sectionsInfo = [
             'section'      => $row['section'],
           ];
-  $sections[] = $cpeInfo['section'];
+  $sections[] = $sectionsInfo['section'];
 }
 mysqli_free_result($sectionsResult);
 ?>

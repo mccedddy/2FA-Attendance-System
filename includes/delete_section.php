@@ -8,7 +8,7 @@ if (isset($_POST['selectedSection'])) {
 
     // Use prepared statement to prevent SQL injection
     $deleteStudentsSQL = "DELETE FROM students WHERE section = '$selectedSection'";
-    $deleteSectionSQL = "DELETE FROM cpe WHERE section = '$selectedSection'";
+    $deleteSectionSQL = "DELETE FROM sections WHERE section = '$selectedSection'";
     
     // Prepare and execute the statement
     $stmtStudent = mysqli_prepare($connection, $deleteStudentsSQL);
