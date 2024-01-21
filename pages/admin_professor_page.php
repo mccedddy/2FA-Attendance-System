@@ -165,8 +165,11 @@ mysqli_free_result($classListResult);
     <nav class="navbar">
       <div class="navbar-top">
         <img src="..\assets\images\icons\arrow_left.svg" id="closeNavbar" class="nav-button" onclick="toggleMobileNavbar()"/>
-        <a onclick="toAdminHomepage()"><img src="..\assets\images\logos\pup_logo.png" /></a>
-        <a onclick="toAdminHomepage()"><img src="..\assets\images\icons\notepad.svg" class="nav-button"/></a>
+        <a onclick="toAdminHomepage()"><img src="..\assets\images\logos\pup_logo.png" class="logo"/></a>
+        <a onclick="toAdminHomepage()"><img src="..\assets\images\icons\group.svg" class="nav-button"/></a>
+        <a onclick="toSchedule()"><img src="..\assets\images\icons\table.svg" class="nav-button"/></a>
+        <a onclick="toSubjects()"><img src="..\assets\images\icons\book.svg" class="nav-button"/></a>
+        <a onclick="toAnalytics()"><img src="..\assets\images\icons\graph.svg" class="nav-button"/></a>
       </div>
       <form method="POST" class="logout-form">
         <button type="submit" name="logout" class="logout-button">
@@ -311,6 +314,18 @@ mysqli_free_result($classListResult);
     <script>
       function toAdminHomepage() {
         window.location.href = "admin_homepage.php";
+        return false;
+      }
+      function toSubjects() {
+        window.location.href = "admin_subjects_page.php";
+        return false;
+      }
+      function toAnalytics() {
+        window.location.href = "admin_analytics_page.php";
+        return false;
+      }
+      function toSchedule() {
+        window.location.href = "admin_schedule_page.php";
         return false;
       }
       function toSettings() {

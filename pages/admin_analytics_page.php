@@ -45,62 +45,10 @@ if (isset($_SESSION['id_number'])) {
   header("Location: ../index.php");
 }
 
-// Section button
-if (isset($_POST['section-button'])) {
-  $_SESSION['selected_section'] = $_POST['section'];
-  if ($_POST['section'] == 'professors') {
-    header("Location: admin_professor_page.php");
-  } else {
-    header("Location: admin_section_page.php");
-  }
-}
-
 // Logout
 if (isset($_POST['logout'])) {
   require '../includes/logout.php';
 }
-
-// Add section
-if (isset($_POST['add-section'])) {
-  require '../includes/database_connection.php';
-  $section = $_POST['year'] . '-' . $_POST['section'];
-
-  // Check if section exists
-  $checkSectionSQL = "SELECT COUNT(*) as sectionCount FROM sections WHERE section = '$section'";
-
-  // Prepare and execute query
-  $stmtCheckSection = mysqli_prepare($connection, $checkSectionSQL);
-  mysqli_stmt_execute($stmtCheckSection);
-  mysqli_stmt_bind_result($stmtCheckSection, $sectionCount);
-  mysqli_stmt_fetch($stmtCheckSection);
-  mysqli_stmt_close($stmtCheckSection);
-
-  // Create section
-  if ($sectionCount == 0) {
-    // SQL query
-    $sql = "INSERT INTO sections (section) VALUES ('$section')";
-
-    // Execute query
-    $stmt = mysqli_prepare($connection, $sql);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
-  }
-
-  header("Location: admin_homepage.php");
-}
-
-// Fetch section
-require '../includes/database_connection.php';
-$sectionsSQL = "SELECT * FROM sections";
-$sectionsResult = mysqli_query($connection, $sectionsSQL);
-$sections = [];
-while ($row = mysqli_fetch_assoc($sectionsResult)) {
-  $sectionsInfo = [
-            'section'      => $row['section'],
-          ];
-  $sections[] = $sectionsInfo['section'];
-}
-mysqli_free_result($sectionsResult);
 ?>
 
 <!DOCTYPE html>
@@ -146,26 +94,7 @@ mysqli_free_result($sectionsResult);
           <h5>ADMIN</h5>
         </div>
       </div>
-      <h1 class="title">Computer Engineering Sections</h1>
-      <div class="add-section-container">
-        <button class="add-section-button" onclick="openAddSectionModal()">
-          <img src="..\assets\images\icons\plus.svg" class="hamburger">
-          <p>ADD SECTION</p>
-        </button>
-      </div>
-      <div class="section-button-container">
-        <?php foreach ($sections as $section): ?>
-          <form method="POST">
-            <span class="delete-section" onclick="openDeleteSectionModal()">&times;</span>
-            <input type="hidden" name="section" value="<?php echo $section; ?>">
-            <button type="submit" name="section-button" class="section-button">SECTION <?php echo $section; ?></button>
-          </form>
-        <?php endforeach; ?>
-        <form method="POST">
-          <input type="hidden" name="section" value="professors">
-          <button type="submit" name="section-button" class="section-button">PROFESSORS</button>
-        </form>
-      </div>
+      <h1 class="title">Computer Engineering Attendance Analytics</h1>
     </section>
 
     <div id="addSectionModal" class="modal-blur">
