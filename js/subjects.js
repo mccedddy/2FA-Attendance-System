@@ -112,7 +112,6 @@ function deleteSelectedSubjects() {
 }
 
 function importSubjects() {
-  var section = document.getElementById("title").textContent;
   var fileInput = document.getElementById("fileInput");
   var file = fileInput.files[0];
 
@@ -130,11 +129,7 @@ function importSubjects() {
       // Convert sheet data to an array of objects starting from the 2nd row
       var dataArray = XLSX.utils.sheet_to_json(sheet, { header: 1, range: 1 });
 
-      if (section != "PROFESSORS") {
-        var url = "../includes/import_classlist.php";
-      } else {
-        var url = "../includes/import_professors.php";
-      }
+      var url = "../includes/import_subjects.php";
 
       // Send dataArray to the server using a POST request
       $.ajax({
