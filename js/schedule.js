@@ -117,3 +117,18 @@ function deleteSelectedSchedule() {
     alert("No schedules selected for deletion.");
   }
 }
+
+function exportSchedule() {
+  var section = document.getElementById("title").textContent;
+  var table = document.getElementById("attendanceTable");
+
+  table.setAttribute("data-cols-width", "15,40,15,15,15,25");
+
+  var fileName = section + ".xlsx";
+  TableToExcel.convert(document.getElementById("attendanceTable"), {
+    name: fileName,
+    sheet: {
+      name: "Sheet 1",
+    },
+  });
+}

@@ -146,6 +146,7 @@ mysqli_free_result($subjectsResult);
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../css/admin_section_page.css" />
+    <script type="text/javascript" src="../js/tableToExcel.js"></script>
   </head>
   <body>
     <nav class="navbar">
@@ -269,7 +270,6 @@ mysqli_free_result($subjectsResult);
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
     <script src="../js/subjects.js"></script>
     <script src="../js/navbar_controller.js"></script>
-    <script src="../js/delete_section.js"></script>
     <script>
       function toLogin() {
         window.location.href = "../index.php";

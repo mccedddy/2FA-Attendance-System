@@ -135,7 +135,7 @@ if (isset($_POST['logout'])) {
     </div>
 
     <script src="../js/navbar_controller.js"></script>
-    <script src="../js/delete_section.js"></script>
+    <script src="../js/section.js"></script>
     <script>
       function toLogin() {
         window.location.href = "../index.php";

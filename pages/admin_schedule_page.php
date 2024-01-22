@@ -129,7 +129,7 @@ mysqli_free_result($sectionsResult);
     </section>
 
     <script src="../js/navbar_controller.js"></script>
-    <script src="../js/delete_section.js"></script>
+    <script src="../js/section.js"></script>
     <script>
       function toLogin() {
         window.location.href = "../index.php";

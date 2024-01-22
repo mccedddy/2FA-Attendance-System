@@ -234,7 +234,7 @@ mysqli_free_result($scheduleResult);
             <th>START TIME</th>
             <th>END TIME</th>
             <th>PROFESSOR</th>
-            <th style="display: none;">ID</th>
+            <th style="display: none;" data-exclude="true">ID</th>
           </tr>
         </thead>
         <tbody>
@@ -247,7 +247,7 @@ mysqli_free_result($scheduleResult);
               <td><?php echo $class['startTime']; ?></td>
               <td><?php echo $class['endTime']; ?></td>
               <td><?php echo $class['professor']; ?></td>
-              <td style="display: none;"><?php echo $class['id']; ?></td>
+              <td style="display: none;" data-exclude="true"><?php echo $class['id']; ?></td>
             </tr>
           <?php endforeach; ?>
         </tbody>
