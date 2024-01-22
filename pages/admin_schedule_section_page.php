@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 require '../includes/database_connection.php';
 date_default_timezone_set('Asia/Manila');
@@ -33,13 +33,13 @@ if (isset($_SESSION['id_number'])) {
       $name = strtoupper($professor['last_name']) . ', ' . strtoupper($professor['first_name']);
       $idNumber = $professor['id_number'];
     }
-        
+
     // Free result from memory
     mysqli_free_result($result);
   } else {
     echo 'Error: ' . mysqli_error($connection);
   }
-    
+
   // Close database connection
   mysqli_close($connection);
 } else {
@@ -78,13 +78,13 @@ if (isset($_POST['logout'])) {
 
 //     // Close the statement
 //     mysqli_stmt_close($stmt);
-    
+
 //     header("Location: admin_classlist_page.php");
 //   } catch (mysqli_sql_exception $exception) {
 //     // Check if duplicate entry
 //     if ($exception->getCode() == 1062) {
 //       header("Location: admin_classlist_page.php");
-//       exit; 
+//       exit;
 //     } else {
 //       throw $exception;
 //     }
@@ -102,12 +102,12 @@ if (isset($_POST['logout'])) {
 //   $originalStudentNumber = $_POST['original_student_number'];
 
 //   // SQL query to update data in the students table
-//   $editSQL = "UPDATE students 
-//             SET last_name = '$editLastName', 
-//                 first_name = '$editFirstName', 
+//   $editSQL = "UPDATE students
+//             SET last_name = '$editLastName',
+//                 first_name = '$editFirstName',
 //                 student_number = '$editStudentNumber',
-//                 nfc_uid = '$editNfcUid', 
-//                 email = '$editEmail' 
+//                 nfc_uid = '$editNfcUid',
+//                 email = '$editEmail'
 //             WHERE student_number = '$originalStudentNumber'";
 
 //   // Execute query
@@ -119,13 +119,13 @@ if (isset($_POST['logout'])) {
 
 //     // Close the statement
 //     mysqli_stmt_close($stmt);
-    
+
 //     header("Location: admin_classlist_page.php");
 //   } catch (mysqli_sql_exception $exception) {
 //     // Check if duplicate entry
 //     if ($exception->getCode() == 1062) {
 //       header("Location: admin_classlist_page.php");
-//       exit; 
+//       exit;
 //     } else {
 //       throw $exception;
 //     }
@@ -134,7 +134,7 @@ if (isset($_POST['logout'])) {
 
 // Fetch class list
 require '../includes/database_connection.php';
-$scheduleSQL = "SELECT schedule.subject_code, subjects.subject_name, schedule.day, schedule.start_time, schedule.end_time, 
+$scheduleSQL = "SELECT schedule.subject_code, subjects.subject_name, schedule.day, schedule.start_time, schedule.end_time,
                        CONCAT(professors.last_name, ', ', professors.first_name) AS professor_name
                FROM schedule
                INNER JOIN subjects ON schedule.subject_code = subjects.subject_code
@@ -264,30 +264,24 @@ mysqli_free_result($scheduleResult);
         <span class="close-modal" onclick="closeAddClassModal()">&times;</span>
         <form method="POST" class="add-student-form">
           <div class="add-student-container">
-            <p>Last Name</p>
-            <input type="text" name="last_name" class="add-student-textbox" required></input>
+            <p>Subject</p>
+            <input type="text" name="subject" class="add-student-textbox" required></input>
           </div>
           <div class="add-student-container">
-            <p>First Name</p>
-            <input type="text" name="first_name" class="add-student-textbox" required></input>
+            <p>Day</p>
+            <input type="text" name="day" class="add-student-textbox" required></input>
           </div>
           <div class="add-student-container">
-            <p>Student Number</p>
-            <input type="text" name="student_number" class="add-student-textbox" required></input>
+            <p>Start Time</p>
+            <input type="text" name="start_time" class="add-student-textbox" required></input>
           </div>
           <div class="add-student-container">
-            <p>NFC UID</p>
-            <input type="text" name="nfc_uid" class="add-student-textbox" required></input>
+            <p>End Time</p>
+            <input type="text" name="end_time" class="add-student-textbox" required></input>
           </div>
           <div class="add-student-container">
-            <p>Email</p>
-            <input type="email" name="email" class="add-student-textbox" required></input>
-          </div>
-          <div class="add-student-container">
-            <p>Year Number</p>
-            <input type="text" name="year" class="year-section-textbox" value="<?php echo $sectionPage[0]; ?>" required readonly></input>
-            <p>Section Number</p>
-            <input type="text" name="section" class="year-section-textbox" value="<?php echo $sectionPage[2]; ?>" required readonly></input>
+            <p>Professor</p>
+            <input type="email" name="professor" class="add-student-textbox" required></input>
           </div>
           <div class="add-button-container">
             <button type="submit" name="add-student" id="addButton" class="add-button">ADD</button>
@@ -303,32 +297,25 @@ mysqli_free_result($scheduleResult);
         </div>
         <span class="close-modal" onclick="closeEditClassModal()">&times;</span>
         <form method="POST" class="add-student-form">
-          <input id="originalStudentNumber" name="original_student_number" type="hidden"></input>
           <div class="add-student-container">
-            <p>Last Name</p>
-            <input type="text" name="last_name" id="editLastName" class="add-student-textbox" required></input>
+            <p>Subject</p>
+            <input type="text" name="subject" id="editSubject" class="add-student-textbox" required></input>
           </div>
           <div class="add-student-container">
-            <p>First Name</p>
-            <input type="text" name="first_name" id="editFirstName" class="add-student-textbox" required></input>
+            <p>Day</p>
+            <input type="text" name="day" id="editDay" class="add-student-textbox" required></input>
           </div>
           <div class="add-student-container">
-            <p>Student Number</p>
-            <input type="text" name="student_number" id="editStudentNumber" class="add-student-textbox" required></input>
+            <p>Start Time</p>
+            <input type="text" name="start_time" id="editStartTime" class="add-student-textbox" required></input>
           </div>
           <div class="add-student-container">
-            <p>NFC UID</p>
-            <input type="text" name="nfc_uid" id="editNfcUid" class="add-student-textbox" required></input>
+            <p>End Time</p>
+            <input type="text" name="end_time" id="editEndTime" class="add-student-textbox" required></input>
           </div>
           <div class="add-student-container">
-            <p>Email</p>
-            <input type="email" name="email" id="editEmail" class="add-student-textbox" required></input>
-          </div>
-          <div class="add-student-container">
-            <p>Year Number</p>
-            <input type="text" name="year" class="year-section-textbox" value="<?php echo $sectionPage[0]; ?>" required readonly></input>
-            <p>Section Number</p>
-            <input type="text" name="section" class="year-section-textbox" value="<?php echo $sectionPage[2]; ?>" required readonly></input>
+            <p>Professor</p>
+            <input type="email" name="professor" id="editProfessor" class="add-student-textbox" required></input>
           </div>
           <div class="add-button-container">
             <button type="submit" name="edit-student" id="saveStudentButton" class="add-button">SAVE</button>
@@ -340,7 +327,7 @@ mysqli_free_result($scheduleResult);
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
     <script src="../js/navbar_controller.js"></script>
-    <!-- <script src="../js/classlist.js"></script> -->
+    <script src="../js/schedule.js"></script>
     <script>
       function toAdminHomepage() {
         window.location.href = "admin_section_page.php";
