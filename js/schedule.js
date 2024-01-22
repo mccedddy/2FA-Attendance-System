@@ -32,6 +32,57 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+function editSelectedSchedule() {
+  var checkbox = document.querySelector(
+    '#attendanceTable tbody input[type="checkbox"]:checked'
+  );
+
+  var scheduleId = document.getElementById("scheduleId");
+  var editScheduleModal = document.getElementById("editStudentModal");
+
+  if (checkbox) {
+    // Get subject code
+    var schedule = checkbox
+      .closest("tr")
+      .querySelector("td:nth-child(8)").textContent;
+
+    var url = "../includes/fetch_edit_schedule_data.php";
+    console.log(scheduleId.value);
+    // Setup edit modal
+    editScheduleModal.style.display = "block";
+    scheduleId.value = schedule;
+
+    console.log(scheduleId);
+    console.log(scheduleId.value);
+
+    // Fetch data for the selected student
+    $.ajax({
+      url: url,
+      method: "POST",
+      data: { schedule: schedule },
+      success: function (response) {
+        // Parse the response JSON
+        var scheduleData = JSON.parse(response);
+        console.log(response);
+
+        // Set the default values for the textboxes
+        document.getElementById("editSubject").value =
+          scheduleData.subject_code;
+        document.getElementById("editDay").value = scheduleData.day;
+        document.getElementById("editStartTime").value =
+          scheduleData.start_time;
+        document.getElementById("editEndTime").value = scheduleData.end_time;
+        document.getElementById("editProfessor").value = scheduleData.professor;
+      },
+      error: function (error) {
+        console.error("Error fetching student data:", error);
+      },
+    });
+  } else {
+    console.log("No checkbox selected.");
+  }
+}
+
 function deleteSelectedSchedule() {
   console.log("clicked delete!");
   // Get all checkboxes in the table

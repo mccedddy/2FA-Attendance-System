@@ -87,46 +87,46 @@ if (isset($_POST['add-class'])) {
   }
 }
 
-// Edit student
-// if (isset($_POST['edit-student'])) {
-//   require '../includes/database_connection.php';
-//   $editLastName = $_POST['last_name'];
-//   $editFirstName = $_POST['first_name'];
-//   $editStudentNumber = $_POST['student_number'];
-//   $editNfcUid = $_POST['nfc_uid'];
-//   $editEmail = $_POST['email'];
-//   $originalStudentNumber = $_POST['original_student_number'];
+// Edit class
+if (isset($_POST['edit-schedule'])) {
+  require '../includes/database_connection.php';
+  $editSubject = $_POST['subject'];
+  $editDay = $_POST['day'];
+  $editStartTime = $_POST['start_time'];
+  $editEndTime = $_POST['end_time'];
+  $editProfessor = $_POST['professor'];
+  $scheduleId = $_POST['schedule_id'];
 
-//   // SQL query to update data in the students table
-//   $editSQL = "UPDATE students
-//             SET last_name = '$editLastName',
-//                 first_name = '$editFirstName',
-//                 student_number = '$editStudentNumber',
-//                 nfc_uid = '$editNfcUid',
-//                 email = '$editEmail'
-//             WHERE student_number = '$originalStudentNumber'";
+  // SQL query 
+  $editSQL = "UPDATE schedule 
+            SET subject_code = '$editSubject', 
+                day = '$editDay', 
+                start_time = '$editStartTime', 
+                end_time = '$editEndTime',  
+                professor = '$editProfessor' 
+            WHERE id = '$scheduleId'";
 
-//   // Execute query
-//   $stmt = mysqli_prepare($connection, $editSQL);
+  // Execute query
+  $stmt = mysqli_prepare($connection, $editSQL);
 
-//   try {
-//     // Execute query
-//     mysqli_stmt_execute($stmt);
+  try {
+    // Execute query
+    mysqli_stmt_execute($stmt);
 
-//     // Close the statement
-//     mysqli_stmt_close($stmt);
+    // Close the statement
+    mysqli_stmt_close($stmt);
 
-//     header("Location: admin_classlist_page.php");
-//   } catch (mysqli_sql_exception $exception) {
-//     // Check if duplicate entry
-//     if ($exception->getCode() == 1062) {
-//       header("Location: admin_classlist_page.php");
-//       exit;
-//     } else {
-//       throw $exception;
-//     }
-//   }
-// }
+    // header("Location: admin_schedule_page.php");
+  } catch (mysqli_sql_exception $exception) {
+    // Check if duplicate entry
+    if ($exception->getCode() == 1062) {
+      // header("Location: admin_schedule_page.php");
+      exit; 
+    } else {
+      throw $exception;
+    }
+  }
+}
 
 // Fetch class list
 require '../includes/database_connection.php';
@@ -331,28 +331,61 @@ mysqli_free_result($scheduleResult);
         </div>
         <span class="close-modal" onclick="closeEditClassModal()">&times;</span>
         <form method="POST" class="add-student-form">
+          <input id="scheduleId" name="schedule_id" type="hidden"></input>
           <div class="add-student-container">
             <p>Subject</p>
-            <input type="text" name="subject" id="editSubject" class="add-student-textbox" required></input>
+            <select name="subject" id="editSubject" class="add-student-dropdown" required>
+              <?php
+              // Fetch subjects
+              $subjectsSQL = "SELECT * FROM subjects ORDER BY subject_code ASC";
+              $subjectsResult = mysqli_query($connection, $subjectsSQL);
+              while ($subjectRow = mysqli_fetch_assoc($subjectsResult)) {
+                $subjectName = $subjectRow['subject_name'];
+                $subjectCode = $subjectRow['subject_code'];
+                echo "<option value=\"{$subjectCode}\">{$subjectCode} - {$subjectName}</option>";
+              }
+              mysqli_free_result($subjectsResult);
+              ?>
+            </select>
           </div>
           <div class="add-student-container">
             <p>Day</p>
-            <input type="text" name="day" id="editDay" class="add-student-textbox" required></input>
+            <select name="day" id="editDay" class="add-student-dropdown" required>
+              <option value="Monday">Monday</option>
+              <option value="Tuesday">Tuesday</option>
+              <option value="Wednesday">Wednesday</option>
+              <option value="Thursday">Thursday</option>
+              <option value="Friday">Friday</option>
+              <option value="Saturday">Saturday</option>
+              <option value="Sunday">Sunday</option>
+            </select>
           </div>
           <div class="add-student-container">
             <p>Start Time</p>
-            <input type="text" name="start_time" id="editStartTime" class="add-student-textbox" required></input>
+            <input type="time" name="start_time" id="editStartTime" class="add-student-dropdown" required></input>
           </div>
           <div class="add-student-container">
             <p>End Time</p>
-            <input type="text" name="end_time" id="editEndTime" class="add-student-textbox" required></input>
+            <input type="time" name="end_time" id="editEndTime" class="add-student-dropdown" required></input>
           </div>
           <div class="add-student-container">
             <p>Professor</p>
-            <input type="email" name="professor" id="editProfessor" class="add-student-textbox" required></input>
+            <select name="professor" id="editProfessor" class="add-student-dropdown" required>
+              <?php
+              // Fetch professors
+              $professorsSQL = "SELECT * FROM professors WHERE id_number != 'admin' ORDER BY last_name ASC";
+              $professorsResult = mysqli_query($connection, $professorsSQL);
+              while ($professorRow = mysqli_fetch_assoc($professorsResult)) {
+                $professorName = $professorRow['last_name'] . ', ' . $professorRow['first_name'];
+                $professorID = $professorRow['id_number'];
+                echo "<option value=\"{$professorID}\">{$professorName}</option>";
+              }
+              mysqli_free_result($professorsResult);
+              ?>
+            </select>
           </div>
           <div class="add-button-container">
-            <button type="submit" name="edit-student" id="saveStudentButton" class="add-button">SAVE</button>
+            <button type="submit" name="edit-schedule" id="saveStudentButton" class="add-button">SAVE</button>
           </div>
         </form>
       </div>
