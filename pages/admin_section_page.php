@@ -1,7 +1,9 @@
-<?php 
+<?php
 session_start();
 require '../includes/database_connection.php';
-date_default_timezone_set('Asia/Manila');
+
+// Clear selection
+unset($_SESSION['selected_section']);
 
 // If logged in
 if (isset($_SESSION['student_number'])) {
@@ -9,16 +11,12 @@ if (isset($_SESSION['student_number'])) {
   header("Location: student_homepage.php");
 }
 if (isset($_SESSION['id_number'])) {
-
-  // Redirect to homepage if no section is selected
-  if (!isset($_SESSION['selected_section'])) {
-    header("Location: professor_homepage.php");
-  } else {
-    $sectionPage = $_SESSION['selected_section'];
-  }
-
-  // Professor ID
   $idNumber = $_SESSION['id_number'];
+
+  // Redirect to professor homepage
+  if ($idNumber != 'admin') {
+    header("Location: professor_homepage.php");
+  }
 
   // SQL query
   $sql = "SELECT * FROM professors WHERE id_number = '$idNumber'";
@@ -47,108 +45,62 @@ if (isset($_SESSION['id_number'])) {
   header("Location: ../index.php");
 }
 
+// Section button
+if (isset($_POST['section-button'])) {
+  $_SESSION['selected_section'] = $_POST['section'];
+  if ($_POST['section'] == 'professors') {
+    header("Location: admin_professor_page.php");
+  } else {
+    header("Location: admin_classlist_page.php");
+  }
+}
+
 // Logout
 if (isset($_POST['logout'])) {
   require '../includes/logout.php';
 }
 
-// Add student
-if (isset($_POST['add-student'])) {
+// Add section
+if (isset($_POST['add-section'])) {
   require '../includes/database_connection.php';
-  $lastName = $_POST['last_name'];
-  $firstName = $_POST['first_name'];
-  $studentNumber = $_POST['student_number'];
-  $nfcUid = $_POST['nfc_uid'];
-  $email = $_POST['email'];
   $section = $_POST['year'] . '-' . $_POST['section'];
 
-  // Hash the password (Default: Last Name)
-  $hashedPassword = password_hash($lastName, PASSWORD_DEFAULT);
+  // Check if section exists
+  $checkSectionSQL = "SELECT COUNT(*) as sectionCount FROM sections WHERE section = '$section'";
 
-  // SQL query to insert data into the students table
-  $sql = "INSERT INTO students (last_name, first_name, student_number, section, nfc_uid, email, password)
-            VALUES ('$lastName', '$firstName', '$studentNumber', '$section', '$nfcUid', '$email', '$hashedPassword')";
+  // Prepare and execute query
+  $stmtCheckSection = mysqli_prepare($connection, $checkSectionSQL);
+  mysqli_stmt_execute($stmtCheckSection);
+  mysqli_stmt_bind_result($stmtCheckSection, $sectionCount);
+  mysqli_stmt_fetch($stmtCheckSection);
+  mysqli_stmt_close($stmtCheckSection);
 
-  // Use prepared statement
-  $stmt = mysqli_prepare($connection, $sql);
+  // Create section
+  if ($sectionCount == 0) {
+    // SQL query
+    $sql = "INSERT INTO sections (section) VALUES ('$section')";
 
-  try {
     // Execute query
+    $stmt = mysqli_prepare($connection, $sql);
     mysqli_stmt_execute($stmt);
-
-    // Close the statement
     mysqli_stmt_close($stmt);
-    
-    header("Location: admin_section_page.php");
-  } catch (mysqli_sql_exception $exception) {
-    // Check if duplicate entry
-    if ($exception->getCode() == 1062) {
-      header("Location: admin_section_page.php");
-      exit; 
-    } else {
-      throw $exception;
-    }
   }
+
+  header("Location: admin_section_page.php");
 }
 
-// Edit student
-if (isset($_POST['edit-student'])) {
-  require '../includes/database_connection.php';
-  $editLastName = $_POST['last_name'];
-  $editFirstName = $_POST['first_name'];
-  $editStudentNumber = $_POST['student_number'];
-  $editNfcUid = $_POST['nfc_uid'];
-  $editEmail = $_POST['email'];
-  $originalStudentNumber = $_POST['original_student_number'];
-
-  // SQL query to update data in the students table
-  $editSQL = "UPDATE students 
-            SET last_name = '$editLastName', 
-                first_name = '$editFirstName', 
-                student_number = '$editStudentNumber',
-                nfc_uid = '$editNfcUid', 
-                email = '$editEmail' 
-            WHERE student_number = '$originalStudentNumber'";
-
-  // Execute query
-  $stmt = mysqli_prepare($connection, $editSQL);
-
-  try {
-    // Execute query
-    mysqli_stmt_execute($stmt);
-
-    // Close the statement
-    mysqli_stmt_close($stmt);
-    
-    header("Location: admin_section_page.php");
-  } catch (mysqli_sql_exception $exception) {
-    // Check if duplicate entry
-    if ($exception->getCode() == 1062) {
-      header("Location: admin_section_page.php");
-      exit; 
-    } else {
-      throw $exception;
-    }
-  }
-}
-
-// Fetch class list
+// Fetch section
 require '../includes/database_connection.php';
-$classListSQL = "SELECT * FROM students WHERE section = '$sectionPage'";
-$classListResult = mysqli_query($connection, $classListSQL);
-$classList = [];
-while ($row = mysqli_fetch_assoc($classListResult)) {
-  $studentInfo = [
-            'lastName'      => $row['last_name'],
-            'firstName'     => $row['first_name'],
-            'studentNumber' => $row['student_number'],
-            'section'       => $row['section'],
-            'nfcUid'        => $row['nfc_uid'],
-            'email'         => $row['email'],
+$sectionsSQL = "SELECT * FROM sections";
+$sectionsResult = mysqli_query($connection, $sectionsSQL);
+$sections = [];
+while ($row = mysqli_fetch_assoc($sectionsResult)) {
+  $sectionsInfo = [
+            'section'      => $row['section'],
           ];
-  $classList[] = $studentInfo;
+  $sections[] = $sectionsInfo['section'];
 }
-mysqli_free_result($classListResult);
+mysqli_free_result($sectionsResult);
 ?>
 
 <!DOCTYPE html>
@@ -164,8 +116,7 @@ mysqli_free_result($classListResult);
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../css/admin_homepage.css" />
-    <script type="text/javascript" src="../js/tableToExcel.js"></script>
+    <link rel="stylesheet" href="../css/admin_section_page.css" />
   </head>
   <body>
     <nav class="navbar">
@@ -195,149 +146,74 @@ mysqli_free_result($classListResult);
           <h5>ADMIN</h5>
         </div>
       </div>
-      <h1 class="title" id="title">SECTION <?php echo $sectionPage ?> CLASSLIST</h1>
-      <div class="search-container">
+      <h1 class="title">Computer Engineering Sections</h1>
+      <div class="add-section-container">
+        <button class="add-section-button" onclick="openAddSectionModal()">
+          <img src="..\assets\images\icons\plus.svg" class="hamburger">
+          <p>ADD SECTION</p>
+        </button>
       </div>
-      <div class="edit-and-export">
-        <div class="edit-container">
-          <button class="edit-class-button" onclick="openAddStudentModal()">
-            <img src="..\assets\images\icons\plus_white.svg"/>
-            <p>New</p>
-          </button>
-          <button class="edit-class-button" id="editStudentBtn">
-            <img src="..\assets\images\icons\pencil_white.svg"/>
-            <p>Edit</p>
-          </button>
-          <button class="edit-class-button" id="deleteStudentsBtn">
-            <img src="..\assets\images\icons\trash_white.svg"/>
-            <p>Delete</p>
-          </button>
-        </div>
-        <div style="display: flex; gap: 5px; flex-wrap: wrap;">
-          <label for="fileInput" class="custom-file-input" id="fileInputLabel">Choose File</label>
-          <span class="file-name" id="fileName">No file chosen</span>
-          <input type="file" id="fileInput" accept=".xlsx" />
-          <button class="import-export" id="import"><p>IMPORT DATA</p><img src="..\assets\images\icons\upload.svg"/></button>
-          <button class="import-export" id="export"><p>EXPORT DATA</p><img src="..\assets\images\icons\download.svg"/></button>
-        </div>
+      <div class="section-button-container">
+        <?php foreach ($sections as $section): ?>
+          <form method="POST">
+            <span class="delete-section" onclick="openDeleteSectionModal()">&times;</span>
+            <input type="hidden" name="section" value="<?php echo $section; ?>">
+            <button type="submit" name="section-button" class="section-button">SECTION <?php echo $section; ?></button>
+          </form>
+        <?php endforeach; ?>
+        <form method="POST">
+          <input type="hidden" name="section" value="professors">
+          <button type="submit" name="section-button" class="section-button">PROFESSORS</button>
+        </form>
       </div>
-      <table id="attendanceTable" data-cols-width="15,20,20,10,15,35">
-        <thead>
-          <tr>
-            <th data-exclude="true"></th>
-            <th>LAST NAME</th>
-            <th>FIRST NAME</th>
-            <th>STUDENT NUMBER</th>
-            <th>SECTION</th>
-            <th>NFC UID</th>
-            <th>EMAIL</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php foreach ($classList as $student): ?>
-            <tr>
-              <td data-exclude="true"><input type="checkbox" name="selectedStudents[]"></td>
-              <td><?php echo $student['lastName']; ?></td>
-              <td><?php echo $student['firstName']; ?></td>
-              <td><?php echo $student['studentNumber']; ?></td>
-              <td><?php echo $student['section']; ?></td>
-              <td><?php echo $student['nfcUid']; ?></td>
-              <td><?php echo $student['email']; ?></td>
-            </tr>
-          <?php endforeach; ?>
-        </tbody>
-      </table>
-      <div style="height:50px;"></div>
     </section>
 
     <div id="addSectionModal" class="modal-blur">
       <div class="modal-content">
         <div class="top-modal">
-          <h6>ADD STUDENT</h6>
+          <h6>ADD SECTION</h6>
         </div>
-        <span class="close-modal" onclick="closeAddStudentModal()">&times;</span>
+        <span class="close-modal" onclick="closeAddSectionModal()">&times;</span>
         <form method="POST" class="add-student-form">
           <div class="add-student-container">
-            <p>Last Name</p>
-            <input type="text" name="last_name" class="add-student-textbox" required></input>
-          </div>
-          <div class="add-student-container">
-            <p>First Name</p>
-            <input type="text" name="first_name" class="add-student-textbox" required></input>
-          </div>
-          <div class="add-student-container">
-            <p>Student Number</p>
-            <input type="text" name="student_number" class="add-student-textbox" required></input>
-          </div>
-          <div class="add-student-container">
-            <p>NFC UID</p>
-            <input type="text" name="nfc_uid" class="add-student-textbox" required></input>
-          </div>
-          <div class="add-student-container">
-            <p>Email</p>
-            <input type="email" name="email" class="add-student-textbox" required></input>
-          </div>
-          <div class="add-student-container">
             <p>Year Number</p>
-            <input type="text" name="year" class="year-section-textbox" value="<?php echo $sectionPage[0]; ?>" required readonly></input>
+            <input type="text" name="year" class="year-section-textbox" required></input>
             <p>Section Number</p>
-            <input type="text" name="section" class="year-section-textbox" value="<?php echo $sectionPage[2]; ?>" required readonly></input>
+            <input type="text" name="section" class="year-section-textbox" required></input>
           </div>
           <div class="add-button-container">
-            <button type="submit" name="add-student" id="addButton" class="add-button">ADD</button>
+            <button type="submit" name="add-section" id="addButton" class="add-button">ADD</button>
           </div>
         </form>
       </div>
     </div>
 
-    <div id="editStudentModal" class="modal-blur">
+    <div id="deleteSectionModal" class="modal-blur">
       <div class="modal-content">
         <div class="top-modal">
-          <h6 id="editStudentTitle">EDIT STUDENT</h6>
+          <h6>DELETE SECTION</h6>
         </div>
-        <span class="close-modal" onclick="closeEditStudentModal()">&times;</span>
-        <form method="POST" class="add-student-form">
-          <input id="originalStudentNumber" name="original_student_number" type="hidden"></input>
-          <div class="add-student-container">
-            <p>Last Name</p>
-            <input type="text" name="last_name" id="editLastName" class="add-student-textbox" required></input>
-          </div>
-          <div class="add-student-container">
-            <p>First Name</p>
-            <input type="text" name="first_name" id="editFirstName" class="add-student-textbox" required></input>
-          </div>
-          <div class="add-student-container">
-            <p>Student Number</p>
-            <input type="text" name="student_number" id="editStudentNumber" class="add-student-textbox" required></input>
-          </div>
-          <div class="add-student-container">
-            <p>NFC UID</p>
-            <input type="text" name="nfc_uid" id="editNfcUid" class="add-student-textbox" required></input>
-          </div>
-          <div class="add-student-container">
-            <p>Email</p>
-            <input type="email" name="email" id="editEmail" class="add-student-textbox" required></input>
-          </div>
-          <div class="add-student-container">
-            <p>Year Number</p>
-            <input type="text" name="year" class="year-section-textbox" value="<?php echo $sectionPage[0]; ?>" required readonly></input>
-            <p>Section Number</p>
-            <input type="text" name="section" class="year-section-textbox" value="<?php echo $sectionPage[2]; ?>" required readonly></input>
-          </div>
+          <span class="close-modal" onclick="closeDeleteSectionModal()">&times;</span>
+          <img src="../assets/images/graphics/girl_trash.png" style="height: 40%; width: 40%;" />
+          <h5 id="deleteSectionMessage" style="margin-bottom: 10px;"></h5>
+          <p style="margin: 0px; text-align: center;">WARNING: All of the student data in this section will be deleted.</p>
+          <p style="margin: 10px; text-align: center;">Are you sure you want to delete this section?</p>
           <div class="add-button-container">
-            <button type="submit" name="edit-student" id="saveStudentButton" class="add-button">SAVE</button>
+            <button type="submit" name="confirm-delete-section" id="deleteButton">DELETE</button>
           </div>
         </form>
       </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
     <script src="../js/navbar_controller.js"></script>
-    <script src="../js/classlist.js"></script>
+    <script src="../js/delete_section.js"></script>
     <script>
+      function toLogin() {
+        window.location.href = "../index.php";
+        return false;
+      }
       function toAdminHomepage() {
-        window.location.href = "admin_homepage.php";
+        window.location.href = "admin_section_page.php";
         return false;
       }
       function toSubjects() {
@@ -356,16 +232,20 @@ mysqli_free_result($classListResult);
         window.location.href = "admin_settings_page.php";
         return false;
       }
-      function openAddStudentModal() {
+      function openAddSectionModal() {
         var addSectionModal = document.getElementById("addSectionModal");
         addSectionModal.style.display = "block";
       }
-      function closeAddStudentModal() {
+      function closeAddSectionModal() {
         var addSectionModal = document.getElementById("addSectionModal");
         addSectionModal.style.display = "none";
       }
-      function closeEditStudentModal() {
-        var addSectionModal = document.getElementById("editStudentModal");
+      function openDeleteSectionModal() {
+        var addSectionModal = document.getElementById("deleteSectionModal");
+        addSectionModal.style.display = "block";
+      }
+      function closeDeleteSectionModal() {
+        var addSectionModal = document.getElementById("deleteSectionModal");
         addSectionModal.style.display = "none";
       }
     </script>

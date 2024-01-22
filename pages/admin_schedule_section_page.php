@@ -79,11 +79,11 @@ if (isset($_POST['logout'])) {
 //     // Close the statement
 //     mysqli_stmt_close($stmt);
     
-//     header("Location: admin_section_page.php");
+//     header("Location: admin_classlist_page.php");
 //   } catch (mysqli_sql_exception $exception) {
 //     // Check if duplicate entry
 //     if ($exception->getCode() == 1062) {
-//       header("Location: admin_section_page.php");
+//       header("Location: admin_classlist_page.php");
 //       exit; 
 //     } else {
 //       throw $exception;
@@ -120,11 +120,11 @@ if (isset($_POST['logout'])) {
 //     // Close the statement
 //     mysqli_stmt_close($stmt);
     
-//     header("Location: admin_section_page.php");
+//     header("Location: admin_classlist_page.php");
 //   } catch (mysqli_sql_exception $exception) {
 //     // Check if duplicate entry
 //     if ($exception->getCode() == 1062) {
-//       header("Location: admin_section_page.php");
+//       header("Location: admin_classlist_page.php");
 //       exit; 
 //     } else {
 //       throw $exception;
@@ -170,7 +170,7 @@ mysqli_free_result($scheduleResult);
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../css/admin_homepage.css" />
+    <link rel="stylesheet" href="../css/admin_section_page.css" />
     <script type="text/javascript" src="../js/tableToExcel.js"></script>
   </head>
   <body>
@@ -343,7 +343,7 @@ mysqli_free_result($scheduleResult);
     <!-- <script src="../js/classlist.js"></script> -->
     <script>
       function toAdminHomepage() {
-        window.location.href = "admin_homepage.php";
+        window.location.href = "admin_section_page.php";
         return false;
       }
       function toSubjects() {

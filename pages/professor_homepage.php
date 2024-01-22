@@ -15,7 +15,7 @@ if (isset($_SESSION['id_number'])) {
 
   // Redirect to admin homepage
   if ($idNumber == 'admin') {
-    header("Location: admin_homepage.php");
+    header("Location: admin_section_page.php");
   }
 
   // SQL query

@@ -145,7 +145,7 @@ mysqli_free_result($subjectsResult);
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../css/admin_homepage.css" />
+    <link rel="stylesheet" href="../css/admin_section_page.css" />
   </head>
   <body>
     <nav class="navbar">
@@ -286,7 +286,7 @@ mysqli_free_result($subjectsResult);
         return false;
       }
       function toAdminHomepage() {
-        window.location.href = "admin_homepage.php";
+        window.location.href = "admin_section_page.php";
         return false;
       }
       function toSubjects() {

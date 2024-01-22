@@ -57,17 +57,19 @@ if (isset($_POST['add-student'])) {
   require '../includes/database_connection.php';
   $lastName = $_POST['last_name'];
   $firstName = $_POST['first_name'];
-  $idNumber = $_POST['student_number'];
+  $studentNumber = $_POST['student_number'];
+  $nfcUid = $_POST['nfc_uid'];
   $email = $_POST['email'];
+  $section = $_POST['year'] . '-' . $_POST['section'];
 
   // Hash the password (Default: Last Name)
   $hashedPassword = password_hash($lastName, PASSWORD_DEFAULT);
 
   // SQL query to insert data into the students table
-  $sql = "INSERT INTO professors (last_name, first_name, id_number, email, password)
-            VALUES ('$lastName', '$firstName', '$idNumber', '$email', '$hashedPassword')";
+  $sql = "INSERT INTO students (last_name, first_name, student_number, section, nfc_uid, email, password)
+            VALUES ('$lastName', '$firstName', '$studentNumber', '$section', '$nfcUid', '$email', '$hashedPassword')";
 
-  // Execute query
+  // Use prepared statement
   $stmt = mysqli_prepare($connection, $sql);
 
   try {
@@ -77,11 +79,11 @@ if (isset($_POST['add-student'])) {
     // Close the statement
     mysqli_stmt_close($stmt);
     
-    header("Location: admin_professor_page.php");
+    header("Location: admin_classlist_page.php");
   } catch (mysqli_sql_exception $exception) {
     // Check if duplicate entry
     if ($exception->getCode() == 1062) {
-      header("Location: admin_professor_page.php");
+      header("Location: admin_classlist_page.php");
       exit; 
     } else {
       throw $exception;
@@ -94,21 +96,23 @@ if (isset($_POST['edit-student'])) {
   require '../includes/database_connection.php';
   $editLastName = $_POST['last_name'];
   $editFirstName = $_POST['first_name'];
-  $editIdNumber = $_POST['student_number'];
+  $editStudentNumber = $_POST['student_number'];
+  $editNfcUid = $_POST['nfc_uid'];
   $editEmail = $_POST['email'];
-  $originaIdNumber = $_POST['original_student_number'];
+  $originalStudentNumber = $_POST['original_student_number'];
 
   // SQL query to update data in the students table
-  $editSQL = "UPDATE professors 
+  $editSQL = "UPDATE students 
             SET last_name = '$editLastName', 
                 first_name = '$editFirstName', 
-                id_number = '$editIdNumber',
+                student_number = '$editStudentNumber',
+                nfc_uid = '$editNfcUid', 
                 email = '$editEmail' 
-            WHERE id_number = '$originaIdNumber'";
+            WHERE student_number = '$originalStudentNumber'";
 
   // Execute query
   $stmt = mysqli_prepare($connection, $editSQL);
-  
+
   try {
     // Execute query
     mysqli_stmt_execute($stmt);
@@ -116,11 +120,11 @@ if (isset($_POST['edit-student'])) {
     // Close the statement
     mysqli_stmt_close($stmt);
     
-    header("Location: admin_professor_page.php");
+    header("Location: admin_classlist_page.php");
   } catch (mysqli_sql_exception $exception) {
     // Check if duplicate entry
     if ($exception->getCode() == 1062) {
-      header("Location: admin_professor_page.php");
+      header("Location: admin_classlist_page.php");
       exit; 
     } else {
       throw $exception;
@@ -130,14 +134,16 @@ if (isset($_POST['edit-student'])) {
 
 // Fetch class list
 require '../includes/database_connection.php';
-$classListSQL = "SELECT * FROM professors";
+$classListSQL = "SELECT * FROM students WHERE section = '$sectionPage'";
 $classListResult = mysqli_query($connection, $classListSQL);
 $classList = [];
 while ($row = mysqli_fetch_assoc($classListResult)) {
   $studentInfo = [
             'lastName'      => $row['last_name'],
             'firstName'     => $row['first_name'],
-            'idNumber' => $row['id_number'],
+            'studentNumber' => $row['student_number'],
+            'section'       => $row['section'],
+            'nfcUid'        => $row['nfc_uid'],
             'email'         => $row['email'],
           ];
   $classList[] = $studentInfo;
@@ -189,12 +195,12 @@ mysqli_free_result($classListResult);
           <h5>ADMIN</h5>
         </div>
       </div>
-      <h1 class="title" id="title">PROFESSORS</h1>
+      <h1 class="title" id="title">SECTION <?php echo $sectionPage ?> CLASSLIST</h1>
       <div class="search-container">
       </div>
       <div class="edit-and-export">
         <div class="edit-container">
-          <button class="edit-class-button" onclick="openAddProfessorModal()">
+          <button class="edit-class-button" onclick="openAddStudentModal()">
             <img src="..\assets\images\icons\plus_white.svg"/>
             <p>New</p>
           </button>
@@ -221,23 +227,21 @@ mysqli_free_result($classListResult);
             <th data-exclude="true"></th>
             <th>LAST NAME</th>
             <th>FIRST NAME</th>
-            <th>ID NUMBER</th>
+            <th>STUDENT NUMBER</th>
+            <th>SECTION</th>
+            <th>NFC UID</th>
             <th>EMAIL</th>
           </tr>
         </thead>
         <tbody>
           <?php foreach ($classList as $student): ?>
             <tr>
-              <?php 
-                if ($student['lastName'] == 'admin') {
-                  echo '<td data-exclude="true"><input type="checkbox" name="selectedStudents[]" disabled></td>';
-                } else {
-                  echo '<td data-exclude="true"><input type="checkbox" name="selectedStudents[]"></td>';
-                }
-              ?>
+              <td data-exclude="true"><input type="checkbox" name="selectedStudents[]"></td>
               <td><?php echo $student['lastName']; ?></td>
               <td><?php echo $student['firstName']; ?></td>
-              <td><?php echo $student['idNumber']; ?></td>
+              <td><?php echo $student['studentNumber']; ?></td>
+              <td><?php echo $student['section']; ?></td>
+              <td><?php echo $student['nfcUid']; ?></td>
               <td><?php echo $student['email']; ?></td>
             </tr>
           <?php endforeach; ?>
@@ -249,9 +253,9 @@ mysqli_free_result($classListResult);
     <div id="addSectionModal" class="modal-blur">
       <div class="modal-content">
         <div class="top-modal">
-          <h6>ADD PROFESSOR</h6>
+          <h6>ADD STUDENT</h6>
         </div>
-        <span class="close-modal" onclick="closeAddProfessorModal()">&times;</span>
+        <span class="close-modal" onclick="closeAddStudentModal()">&times;</span>
         <form method="POST" class="add-student-form">
           <div class="add-student-container">
             <p>Last Name</p>
@@ -262,12 +266,22 @@ mysqli_free_result($classListResult);
             <input type="text" name="first_name" class="add-student-textbox" required></input>
           </div>
           <div class="add-student-container">
-            <p>ID Number</p>
+            <p>Student Number</p>
             <input type="text" name="student_number" class="add-student-textbox" required></input>
+          </div>
+          <div class="add-student-container">
+            <p>NFC UID</p>
+            <input type="text" name="nfc_uid" class="add-student-textbox" required></input>
           </div>
           <div class="add-student-container">
             <p>Email</p>
             <input type="email" name="email" class="add-student-textbox" required></input>
+          </div>
+          <div class="add-student-container">
+            <p>Year Number</p>
+            <input type="text" name="year" class="year-section-textbox" value="<?php echo $sectionPage[0]; ?>" required readonly></input>
+            <p>Section Number</p>
+            <input type="text" name="section" class="year-section-textbox" value="<?php echo $sectionPage[2]; ?>" required readonly></input>
           </div>
           <div class="add-button-container">
             <button type="submit" name="add-student" id="addButton" class="add-button">ADD</button>
@@ -279,9 +293,9 @@ mysqli_free_result($classListResult);
     <div id="editStudentModal" class="modal-blur">
       <div class="modal-content">
         <div class="top-modal">
-          <h6 id="editStudentTitle">EDIT PROFESSOR</h6>
+          <h6 id="editStudentTitle">EDIT STUDENT</h6>
         </div>
-        <span class="close-modal" onclick="closeEditProfessorModal()">&times;</span>
+        <span class="close-modal" onclick="closeEditStudentModal()">&times;</span>
         <form method="POST" class="add-student-form">
           <input id="originalStudentNumber" name="original_student_number" type="hidden"></input>
           <div class="add-student-container">
@@ -293,12 +307,22 @@ mysqli_free_result($classListResult);
             <input type="text" name="first_name" id="editFirstName" class="add-student-textbox" required></input>
           </div>
           <div class="add-student-container">
-            <p>ID Number</p>
+            <p>Student Number</p>
             <input type="text" name="student_number" id="editStudentNumber" class="add-student-textbox" required></input>
+          </div>
+          <div class="add-student-container">
+            <p>NFC UID</p>
+            <input type="text" name="nfc_uid" id="editNfcUid" class="add-student-textbox" required></input>
           </div>
           <div class="add-student-container">
             <p>Email</p>
             <input type="email" name="email" id="editEmail" class="add-student-textbox" required></input>
+          </div>
+          <div class="add-student-container">
+            <p>Year Number</p>
+            <input type="text" name="year" class="year-section-textbox" value="<?php echo $sectionPage[0]; ?>" required readonly></input>
+            <p>Section Number</p>
+            <input type="text" name="section" class="year-section-textbox" value="<?php echo $sectionPage[2]; ?>" required readonly></input>
           </div>
           <div class="add-button-container">
             <button type="submit" name="edit-student" id="saveStudentButton" class="add-button">SAVE</button>
@@ -332,15 +356,15 @@ mysqli_free_result($classListResult);
         window.location.href = "admin_settings_page.php";
         return false;
       }
-      function openAddProfessorModal() {
+      function openAddStudentModal() {
         var addSectionModal = document.getElementById("addSectionModal");
         addSectionModal.style.display = "block";
       }
-      function closeAddProfessorModal() {
+      function closeAddStudentModal() {
         var addSectionModal = document.getElementById("addSectionModal");
         addSectionModal.style.display = "none";
       }
-      function closeEditProfessorModal() {
+      function closeEditStudentModal() {
         var addSectionModal = document.getElementById("editStudentModal");
         addSectionModal.style.display = "none";
       }
