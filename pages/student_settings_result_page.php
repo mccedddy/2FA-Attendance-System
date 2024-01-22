@@ -95,7 +95,7 @@ if (isset($_SESSION['email']) && isset($_SESSION['password'])) {
     <!-- <script src="../scripts.js"></script> -->
     <script>
       function toHDF() {
-        window.location.href = "hdf_page.php";
+        window.location.href = "student_hdf_page.php";
         return false;
       }
       function toStudentHomepage() {

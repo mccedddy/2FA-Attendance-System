@@ -643,16 +643,14 @@ border: 1px solid red;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
-#addSectionModal .add-button-container,
-#editStudentModal .add-button-container {
+.add-button-container {
   width: 100%;
   display: flex;
   justify-content: end;
   margin-right: 40px;
 }
 
-#addSectionModal .add-button,
-#editStudentModal .add-button {
+.add-button {
   height: 30px;
   width: 100px;
   flex-shrink: 0;
@@ -931,16 +929,14 @@ border: 1px solid red;
     flex-shrink: 0;
   }
 
-  #addSectionModal .add-button-container,
-  #editStudentModal .add-button-container {
+  .add-button-container {
     width: 100%;
     display: flex;
     justify-content: end;
     margin-right: 40px;
   }
 
-  #addSectionModal .add-button,
-  #editStudentModal .add-button {
+  .add-button {
     height: 30px;
     width: 100px;
   }

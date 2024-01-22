@@ -56,7 +56,7 @@ if (isset($_POST['submit'])) {
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../css/hdf_page.css" />
+    <link rel="stylesheet" href="../css/student_hdf_page.css" />
   </head>
   <body>
     <nav class="navbar">

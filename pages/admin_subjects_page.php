@@ -213,7 +213,7 @@ mysqli_free_result($subjectsResult);
       <div style="height:50px;"></div>
     </section>
 
-    <div id="addSectionModal" class="modal-blur">
+    <div id="addStudentModal" class="modal-blur">
       <div class="modal-content">
         <div class="top-modal">
           <h6>ADD SUBJECT</h6>
@@ -230,23 +230,6 @@ mysqli_free_result($subjectsResult);
           </div>
           <div class="add-button-container">
             <button type="submit" name="add-subject" id="addButton" class="add-button">ADD</button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <div id="deleteSectionModal" class="modal-blur">
-      <div class="modal-content">
-        <div class="top-modal">
-          <h6>DELETE SECTION</h6>
-        </div>
-          <span class="close-modal" onclick="closeDeleteSubjectModal()">&times;</span>
-          <img src="../assets/images/graphics/girl_trash.png" style="height: 40%; width: 40%;" />
-          <h5 id="deleteSectionMessage" style="margin-bottom: 10px;"></h5>
-          <p style="margin: 0px; text-align: center;">WARNING: All of the student data in this section will be deleted.</p>
-          <p style="margin: 10px; text-align: center;">Are you sure you want to delete this section?</p>
-          <div class="add-button-container">
-            <button type="submit" name="confirm-delete-section" id="deleteButton">DELETE</button>
           </div>
         </form>
       </div>
@@ -306,24 +289,16 @@ mysqli_free_result($subjectsResult);
         return false;
       }
       function openAddSubjectModal() {
-        var addSectionModal = document.getElementById("addSectionModal");
-        addSectionModal.style.display = "block";
+        var addStudentModal = document.getElementById("addStudentModal");
+        addStudentModal.style.display = "block";
       }
       function closeAddSubjectModal() {
-        var addSectionModal = document.getElementById("addSectionModal");
-        addSectionModal.style.display = "none";
-      }
-      function openDeleteSubjectModal() {
-        var addSectionModal = document.getElementById("deleteSectionModal");
-        addSectionModal.style.display = "block";
-      }
-      function closeDeleteSubjectModal() {
-        var addSectionModal = document.getElementById("deleteSectionModal");
-        addSectionModal.style.display = "none";
+        var addStudentModal = document.getElementById("addStudentModal");
+        addStudentModal.style.display = "none";
       }
       function closeEditSubjectModal() {
-        var addSectionModal = document.getElementById("editSubjectModal");
-        addSectionModal.style.display = "none";
+        var editStudentModal = document.getElementById("editStudentModal");
+        editStudentModal.style.display = "none";
       }
     </script>
   </body>

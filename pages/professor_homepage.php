@@ -48,7 +48,7 @@ if (isset($_SESSION['id_number'])) {
 // Section button
 if (isset($_POST['section-button'])) {
   $_SESSION['selected_section'] = $_POST['section'];
-  header("Location: attendance_page.php");
+  header("Location: professor_attendance_page.php");
 }
 
 // Logout

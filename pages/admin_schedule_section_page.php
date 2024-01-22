@@ -256,7 +256,7 @@ mysqli_free_result($scheduleResult);
       <div style="height:50px;"></div>
     </section>
 
-    <div id="addSectionModal" class="modal-blur">
+    <div id="addStudentModal" class="modal-blur">
       <div class="modal-content">
         <div class="top-modal">
           <h6>ADD CLASS</h6>
@@ -363,16 +363,16 @@ mysqli_free_result($scheduleResult);
         return false;
       }
       function openAddClassModal() {
-        var addSectionModal = document.getElementById("addSectionModal");
-        addSectionModal.style.display = "block";
+        var addStudentModal = document.getElementById("addStudentModal");
+        addStudentModal.style.display = "block";
       }
       function closeAddClassModal() {
-        var addSectionModal = document.getElementById("addSectionModal");
-        addSectionModal.style.display = "none";
+        var addStudentModal = document.getElementById("addStudentModal");
+        addStudentModal.style.display = "none";
       }
       function closeEditClassModal() {
-        var addSectionModal = document.getElementById("editStudentModal");
-        addSectionModal.style.display = "none";
+        var editStudentModal = document.getElementById("editStudentModal");
+        editStudentModal.style.display = "none";
       }
     </script>
   </body>
