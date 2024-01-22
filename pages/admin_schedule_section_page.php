@@ -53,43 +53,39 @@ if (isset($_POST['logout'])) {
 }
 
 // Add student
-// if (isset($_POST['add-student'])) {
-//   require '../includes/database_connection.php';
-//   $lastName = $_POST['last_name'];
-//   $firstName = $_POST['first_name'];
-//   $studentNumber = $_POST['student_number'];
-//   $nfcUid = $_POST['nfc_uid'];
-//   $email = $_POST['email'];
-//   $section = $_POST['year'] . '-' . $_POST['section'];
+if (isset($_POST['add-class'])) {
+  require '../includes/database_connection.php';
+  $subjectCode = $_POST['subject'];
+  $day = $_POST['day'];
+  $startTime = $_POST['start_time'];
+  $endTime = $_POST['end_time'];
+  $professor = $_POST['professor'];
 
-//   // Hash the password (Default: Last Name)
-//   $hashedPassword = password_hash($lastName, PASSWORD_DEFAULT);
+  // SQL query 
+  $sql = "INSERT INTO schedule (section, subject_code, day, start_time, end_time, professor)
+            VALUES ('$sectionPage', '$subjectCode', '$day', '$startTime', '$endTime', '$professor')";
 
-//   // SQL query to insert data into the students table
-//   $sql = "INSERT INTO students (last_name, first_name, student_number, section, nfc_uid, email, password)
-//             VALUES ('$lastName', '$firstName', '$studentNumber', '$section', '$nfcUid', '$email', '$hashedPassword')";
+  // Use prepared statement
+  $stmt = mysqli_prepare($connection, $sql);
 
-//   // Use prepared statement
-//   $stmt = mysqli_prepare($connection, $sql);
+  try {
+    // Execute query
+    mysqli_stmt_execute($stmt);
 
-//   try {
-//     // Execute query
-//     mysqli_stmt_execute($stmt);
+    // Close the statement
+    mysqli_stmt_close($stmt);
 
-//     // Close the statement
-//     mysqli_stmt_close($stmt);
-
-//     header("Location: admin_classlist_page.php");
-//   } catch (mysqli_sql_exception $exception) {
-//     // Check if duplicate entry
-//     if ($exception->getCode() == 1062) {
-//       header("Location: admin_classlist_page.php");
-//       exit;
-//     } else {
-//       throw $exception;
-//     }
-//   }
-// }
+    header("Location: admin_schedule_section_page.php");
+  } catch (mysqli_sql_exception $exception) {
+    // Check if duplicate entry
+    if ($exception->getCode() == 1062) {
+      header("Location: admin_schedule_section_page.php");
+      exit;
+    } else {
+      throw $exception;
+    }
+  }
+}
 
 // Edit student
 // if (isset($_POST['edit-student'])) {
@@ -265,26 +261,61 @@ mysqli_free_result($scheduleResult);
         <form method="POST" class="add-student-form">
           <div class="add-student-container">
             <p>Subject</p>
-            <input type="text" name="subject" class="add-student-textbox" required></input>
+            <select name="subject" class="add-student-dropdown" required>
+              <option value="" disabled selected>Select Subject</option>
+              <?php
+              // Fetch subjects
+              $subjectsSQL = "SELECT * FROM subjects ORDER BY subject_code ASC";
+              $subjectsResult = mysqli_query($connection, $subjectsSQL);
+              while ($subjectRow = mysqli_fetch_assoc($subjectsResult)) {
+                $subjectName = $subjectRow['subject_name'];
+                $subjectCode = $subjectRow['subject_code'];
+                echo "<option value=\"{$subjectCode}\">{$subjectCode} - {$subjectName}</option>";
+              }
+              mysqli_free_result($subjectsResult);
+              ?>
+            </select>
           </div>
           <div class="add-student-container">
             <p>Day</p>
-            <input type="text" name="day" class="add-student-textbox" required></input>
+            <select name="day" class="add-student-dropdown" required>
+              <option value="" disabled selected>Select Day</option>
+              <option value="Monday">Monday</option>
+              <option value="Tuesday">Tuesday</option>
+              <option value="Wednesday">Wednesday</option>
+              <option value="Thursday">Thursday</option>
+              <option value="Friday">Friday</option>
+              <option value="Saturday">Saturday</option>
+              <option value="Sunday">Sunday</option>
+            </select>
           </div>
           <div class="add-student-container">
             <p>Start Time</p>
-            <input type="text" name="start_time" class="add-student-textbox" required></input>
+            <input type="time" name="start_time" class="add-student-dropdown" required></input>
           </div>
           <div class="add-student-container">
             <p>End Time</p>
-            <input type="text" name="end_time" class="add-student-textbox" required></input>
+            <input type="time" name="end_time" class="add-student-dropdown" required></input>
           </div>
           <div class="add-student-container">
             <p>Professor</p>
-            <input type="email" name="professor" class="add-student-textbox" required></input>
+            <select name="professor" class="add-student-dropdown" required>
+              <option value="" disabled selected>Select Professor</option>
+              <?php
+              // Fetch professors
+              $professorsSQL = "SELECT * FROM professors WHERE id_number != 'admin' ORDER BY last_name ASC";
+              $professorsResult = mysqli_query($connection, $professorsSQL);
+              while ($professorRow = mysqli_fetch_assoc($professorsResult)) {
+                $professorName = $professorRow['last_name'] . ', ' . $professorRow['first_name'];
+                $professorID = $professorRow['id_number'];
+                echo "<option value=\"{$professorID}\">{$professorName}</option>";
+              }
+              mysqli_free_result($professorsResult);
+              ?>
+            </select>
           </div>
           <div class="add-button-container">
-            <button type="submit" name="add-student" id="addButton" class="add-button">ADD</button>
+            <button type="submit" name="add-class" id="addButton" class="add-button">ADD</button>
           </div>
         </form>
       </div>
