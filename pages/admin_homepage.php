@@ -94,48 +94,15 @@ if (isset($_POST['logout'])) {
           <h5>ADMIN</h5>
         </div>
       </div>
-      <h1 class="title">Computer Engineering Attendance Analytics</h1>
+      <h1 class="title">Computer Engineering Department</h1>
+      <div class="section-button-container">
+        <button class="section-button" onclick="toSection()">SECTION</button>
+        <button class="section-button" onclick="toSchedule()">SCHEDULE</button>
+        <button class="section-button" onclick="toSubjects()">SUBJECTS</button>
+        <button class="section-button" onclick="toAnalytics()">ANALYTICS</button>
+      </div>
     </section>
-
-    <div id="addSectionModal" class="modal-blur">
-      <div class="modal-content">
-        <div class="top-modal">
-          <h6>ADD SECTION</h6>
-        </div>
-        <span class="close-modal" onclick="closeAddSectionModal()">&times;</span>
-        <form method="POST" class="add-student-form">
-          <div class="add-student-container">
-            <p>Year Number</p>
-            <input type="text" name="year" class="year-section-textbox" required></input>
-            <p>Section Number</p>
-            <input type="text" name="section" class="year-section-textbox" required></input>
-          </div>
-          <div class="add-button-container">
-            <button type="submit" name="add-section" id="addButton" class="add-button">ADD</button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <div id="deleteSectionModal" class="modal-blur">
-      <div class="modal-content">
-        <div class="top-modal">
-          <h6>DELETE SECTION</h6>
-        </div>
-          <span class="close-modal" onclick="closeDeleteSectionModal()">&times;</span>
-          <img src="../assets/images/graphics/girl_trash.png" style="height: 40%; width: 40%;" />
-          <h5 id="deleteSectionMessage" style="margin-bottom: 10px;"></h5>
-          <p style="margin: 0px; text-align: center;">WARNING: All of the student data in this section will be deleted.</p>
-          <p style="margin: 10px; text-align: center;">Are you sure you want to delete this section?</p>
-          <div class="add-button-container">
-            <button type="submit" name="confirm-delete-section" id="deleteButton">DELETE</button>
-          </div>
-        </form>
-      </div>
-    </div>
-
     <script src="../js/navbar_controller.js"></script>
-    <script src="../js/section.js"></script>
     <script>
       function toLogin() {
         window.location.href = "../index.php";
@@ -164,22 +131,6 @@ if (isset($_POST['logout'])) {
       function toSettings() {
         window.location.href = "admin_settings_page.php";
         return false;
-      }
-      function openAddSectionModal() {
-        var addSectionModal = document.getElementById("addSectionModal");
-        addSectionModal.style.display = "block";
-      }
-      function closeAddSectionModal() {
-        var addSectionModal = document.getElementById("addSectionModal");
-        addSectionModal.style.display = "none";
-      }
-      function openDeleteSectionModal() {
-        var addSectionModal = document.getElementById("deleteSectionModal");
-        addSectionModal.style.display = "block";
-      }
-      function closeDeleteSectionModal() {
-        var addSectionModal = document.getElementById("deleteSectionModal");
-        addSectionModal.style.display = "none";
       }
     </script>
   </body>

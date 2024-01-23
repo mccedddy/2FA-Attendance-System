@@ -399,6 +399,10 @@ mysqli_free_result($scheduleResult);
     <script src="../js/schedule.js"></script>
     <script>
       function toAdminHomepage() {
+        window.location.href = "admin_homepage.php";
+        return false;
+      }
+      function toSection() {
         window.location.href = "admin_section_page.php";
         return false;
       }
