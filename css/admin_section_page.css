@@ -611,7 +611,7 @@ border: 1px solid red;
   width: 30%;
   height: 20px;
   flex-grow: 1;
-  border-radius: 50px;
+  border-radius: 5px;
   border: 1px solid #000 !important;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
@@ -636,15 +636,6 @@ border: 1px solid red;
 
 .import-section-textbox {
   width: 70%;
-  height: 20px;
-  flex-shrink: 0;
-  border-radius: 5px;
-  border: 1px solid #000 !important;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-}
-
-.add-student-textbox {
-  width: 50%;
   height: 20px;
   flex-shrink: 0;
   border-radius: 5px;
@@ -921,7 +912,6 @@ border: 1px solid red;
   }
 
   .add-student-textbox {
-    width: 30%;
     height: 20px;
     flex-grow: 1;
   }
@@ -935,12 +925,6 @@ border: 1px solid red;
 
   .import-section-textbox {
     width: 70%;
-    height: 20px;
-    flex-shrink: 0;
-  }
-
-  .add-student-textbox {
-    width: 50%;
     height: 20px;
     flex-shrink: 0;
   }
