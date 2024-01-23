@@ -118,11 +118,55 @@ function deleteSelectedSchedule() {
   }
 }
 
+function importSchedule() {
+  var fileInput = document.getElementById("fileInput");
+  var file = fileInput.files[0];
+
+  if (file) {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+      var fileContent = e.target.result;
+
+      // Use xlsx library to read the file content
+      var workbook = XLSX.read(fileContent, { type: "binary" });
+      var sheetName = workbook.SheetNames[0];
+      var sheet = workbook.Sheets[sheetName];
+
+      // Convert sheet data to an array of objects starting from the 2nd row
+      var dataArray = XLSX.utils.sheet_to_json(sheet, {
+        header: 1,
+        range: 1,
+      });
+
+      var url = "../includes/import_schedule.php";
+
+      // Send dataArray to the server using a POST request
+      $.ajax({
+        url: url,
+        method: "POST",
+        data: { dataArray: JSON.stringify(dataArray) },
+        success: function (response) {
+          console.log(response);
+          location.reload();
+        },
+        error: function (error) {
+          console.error("Error:", error);
+        },
+      });
+    };
+
+    reader.readAsBinaryString(file);
+  } else {
+    console.error("No file selected.");
+  }
+}
+
 function exportSchedule() {
   var section = document.getElementById("title").textContent;
   var table = document.getElementById("attendanceTable");
 
-  table.setAttribute("data-cols-width", "15,40,15,15,15,25");
+  table.setAttribute("data-cols-width", "15,40,15,15,15,25,15");
 
   var fileName = section + ".xlsx";
   TableToExcel.convert(document.getElementById("attendanceTable"), {
@@ -131,4 +175,16 @@ function exportSchedule() {
       name: "Sheet 1",
     },
   });
+}
+
+function updateFileName() {
+  var fileInput = document.getElementById("fileInput");
+  var fileNameSpan = document.getElementById("fileName");
+  var fileInputLabel = document.getElementById("fileInputLabel");
+
+  if (fileInput.files.length > 0) {
+    fileNameSpan.textContent = fileInput.files[0].name;
+  } else {
+    fileNameSpan.textContent = "No file chosen";
+  }
 }

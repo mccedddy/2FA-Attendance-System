@@ -130,7 +130,7 @@ if (isset($_POST['edit-schedule'])) {
 
 // Fetch class list
 require '../includes/database_connection.php';
-$scheduleSQL = "SELECT schedule.id, schedule.subject_code, subjects.subject_name, schedule.day, schedule.start_time, schedule.end_time,
+$scheduleSQL = "SELECT *,
                        CONCAT(professors.last_name, ', ', professors.first_name) AS professor_name
                FROM schedule
                INNER JOIN subjects ON schedule.subject_code = subjects.subject_code
@@ -147,7 +147,8 @@ while ($row = mysqli_fetch_assoc($scheduleResult)) {
         'startTime'     => $row['start_time'],
         'endTime'       => $row['end_time'],
         'professor'     => $row['professor_name'],
-        'id'            => $row['id']
+        'id'            => $row['id'],
+        'section'       => $row['section']
     ];
     $schedule[] = $classInfo;
 }
@@ -235,6 +236,7 @@ mysqli_free_result($scheduleResult);
             <th>END TIME</th>
             <th>PROFESSOR</th>
             <th style="display: none;" data-exclude="true">ID</th>
+            <th>SECTION</th>
           </tr>
         </thead>
         <tbody>
@@ -248,6 +250,7 @@ mysqli_free_result($scheduleResult);
               <td><?php echo $class['endTime']; ?></td>
               <td><?php echo $class['professor']; ?></td>
               <td style="display: none;" data-exclude="true"><?php echo $class['id']; ?></td>
+              <td><?php echo $class['section']; ?></td>
             </tr>
           <?php endforeach; ?>
         </tbody>
