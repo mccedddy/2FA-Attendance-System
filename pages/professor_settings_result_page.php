@@ -95,7 +95,8 @@ if (isset($_SESSION['email']) && isset($_SESSION['password'])) {
       <div class="navbar-top">
         <img src="..\assets\images\icons\arrow_left.svg" id="closeNavbar" class="nav-button" onclick="toggleMobileNavbar()"/>
         <a onclick="toProfessorHomepage()"><img src="..\assets\images\logos\pup_logo.png" /></a>
-        <a onclick="toProfessorHomepage()"><img src="..\assets\images\icons\notepad.svg" class="nav-button"/></a>
+        <a onclick="toProfessorHomepage()"><img src="..\assets\images\icons\group.svg" class="nav-button"/></a>
+        <a onclick="toProfessorHomepage()"><img src="..\assets\images\icons\graph.svg" class="nav-button"/></a>
       </div>
       <form method="POST" class="logout-form">
         <a onclick="toSettings()"><img src="..\assets\images\icons\settings.svg"/></a>
