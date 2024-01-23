@@ -1,7 +1,9 @@
-<?php 
+<?php
 session_start();
 require '../includes/database_connection.php';
-date_default_timezone_set('Asia/Manila');
+
+// Clear selection
+unset($_SESSION['selected_section']);
 
 // If logged in
 if (isset($_SESSION['student_number'])) {
@@ -9,16 +11,12 @@ if (isset($_SESSION['student_number'])) {
   header("Location: student_homepage.php");
 }
 if (isset($_SESSION['id_number'])) {
-
-  // Redirect to homepage if no section is selected
-  if (!isset($_SESSION['selected_section'])) {
-    header("Location: professor_homepage.php");
-  } else {
-    $sectionPage = $_SESSION['selected_section'];
-  }
-
-  // Professor ID
   $idNumber = $_SESSION['id_number'];
+
+  // Redirect to admin homepage
+  if ($idNumber == 'admin') {
+    header("Location: admin_section_page.php");
+  }
 
   // SQL query
   $sql = "SELECT * FROM professors WHERE id_number = '$idNumber'";
@@ -47,9 +45,33 @@ if (isset($_SESSION['id_number'])) {
   header("Location: ../index.php");
 }
 
+// Section button
+if (isset($_POST['section-button'])) {
+  $_SESSION['selected_section'] = $_POST['section'];
+  header("Location: professor_attendance_page.php");
+}
+
 // Logout
 if (isset($_POST['logout'])) {
   require '../includes/logout.php';
+}
+
+// Result
+$result = '';
+if (isset($_SESSION['email']) && isset($_SESSION['password'])) {
+    if ($_SESSION['email'] === 'true' && $_SESSION['password'] === 'true') {
+        $result = '<h4 style="color: green;">Email and password changed!</h4>';
+    } else if ($_SESSION['email'] === 'true' && $_SESSION['password'] === 'false') {
+        $result = '<h4 style="color: green;">Email changed!</h4>';
+    } else if ($_SESSION['email'] === 'false' && $_SESSION['password'] === 'true') {
+        $result = '<h4 style="color: green;">Password changed!</h4>';
+    } else if ($_SESSION['password'] === 'invalid') {
+        $result = '<h4 style="color: red;">Invalid password!</h4>';
+    } else if ($_SESSION['email'] === 'invalid') {
+        $result = '<h4 style="color: red;">Invalid email!</h4>';
+    } else {
+        $result = '<h4 style="color: red;">An error occured</h4>';
+    }
 }
 ?>
 
@@ -83,58 +105,26 @@ if (isset($_POST['logout'])) {
       </form>
     </nav>
     <section class="main">
-        <div class="header">
+      <div class="header">
+        <div class="left">
           <div class="mobile-navbar-toggle" onclick="toggleMobileNavbar()">
             <img src="..\assets\images\icons\hamburger.svg" class="hamburger">
           </div>
           <a onclick="toProfessorHomepage()"><h1>PUP HDF Attendance System</h1></a>
         </div>
-        <h1 class="title" id="title">SECTION <?php echo $sectionPage ?></h1>
-        <div class="search-container">
-          <div class="search-textbox">
-            <input type="text" name="search" id="search" value="">
-            <img src="..\assets\images\icons\search.svg"/>
-          </div>
+        <div class="right">
+          <h5><?php echo $name; ?></h5>
+          <h5><?php echo $idNumber; ?></h5>
         </div>
-        <select id="roomFilter">
-            <option value="ALL">ALL</option>
-            <option value="300">ROOM 300</option>
-            <option value="310">ROOM 310</option>
-            <option value="311">ROOM 311</option>
-            <option value="312">ROOM 312</option>
-            <option value="313">ROOM 313</option>
-            <option value="314">ROOM 314</option>
-            <option value="315">ROOM 315</option>
-            <option value="316">ROOM 316</option>
-        </select>
-        <div class="filters-and-export">
-          <div class="filters-container">
-            <input type="date" id="date" class="date-time-filter" required value="<?php echo date('Y-m-d'); ?>">
-            <div class="time-container">
-              <input type="time" id="startTime" class="date-time-filter" required value="00:00">
-              <input type="time" id="endTime" class="date-time-filter" required value="23:59">
-            </div>
-          </div>
-          <button id="export"><p>EXPORT DATA</p><img src="..\assets\images\icons\download.svg"/></button>
+      </div>
+      <h1 class="title">Account Settings</h1>
+      <center>
+        <div style="border: 2px solid #810000; border-radius: 15px; padding: 0px 40px 0px 40px; display: inline-flex">
+          <?php echo $result; ?>
         </div>
-        <table id="attendanceTable">
-            <thead>
-              <tr>
-                <th>STUDENT NAME</th>
-                <th>STUDENT NUMBER</th>
-                <th>ROOM</th>
-                <th>TIME</th>
-                <th>DATE</th>
-              </tr>
-            </thead>
-            <tbody>
-              
-            </tbody>
-          </table>
+      </center>
     </section>
-    <script src="../js/table2excel.js"></script>
     <script src="../js/navbar_controller.js"></script>
-    <script src="../js/attendance.js"></script>
     <script>
       function toLogin() {
         window.location.href = "../index.php";

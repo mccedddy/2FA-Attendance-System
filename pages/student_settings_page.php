@@ -42,9 +42,11 @@ if (isset($_POST['logout'])) {
   require '../includes/logout.php';
 }
 
-// Change email details
+// Change email and password details
 if (isset($_POST['save'])) {
   require '../includes/database_connection.php';
+  unset($_SESSION['email']);
+  unset($_SESSION['password']);
   $email = $_POST['email'];
   $confirmEmail = $_POST['confirm-email'];
   $password = $_POST['password'];
@@ -63,7 +65,8 @@ if (isset($_POST['save'])) {
       $stmt = mysqli_prepare($connection, $sql);
       mysqli_stmt_execute($stmt);
       mysqli_stmt_close($stmt);
-      header("Location: student_settings_page.php");
+      $_SESSION['email'] = 'true';
+      $_SESSION['password'] = 'true';
 
   } else if ($confirmEmail && 
     $email !== $student['email'] && 
@@ -75,7 +78,8 @@ if (isset($_POST['save'])) {
       $stmt = mysqli_prepare($connection, $sql);
       mysqli_stmt_execute($stmt);
       mysqli_stmt_close($stmt);
-      header("Location: student_settings_page.php");
+      $_SESSION['email'] = 'true';
+      $_SESSION['password'] = 'false';
 
   } else if (!$confirmEmail && 
     password_verify($password, $student['password']) &&
@@ -87,11 +91,24 @@ if (isset($_POST['save'])) {
       $stmt = mysqli_prepare($connection, $sql);
       mysqli_stmt_execute($stmt);
       mysqli_stmt_close($stmt);
-      header("Location: student_settings_page.php");
-    }
+      $_SESSION['email'] = 'false';
+      $_SESSION['password'] = 'true';
+
+  } else if ($email != $confirmEmail && $confirmEmail) {
+    $_SESSION['email'] = 'invalid';
+    $_SESSION['password'] = 'false';
+  } else {
+    $_SESSION['password'] = 'invalid';
+    $_SESSION['email'] = 'false';
+  }
+
+  if (!$confirmEmail && !$password && !$newPassword && !$confirmNewPassword) {
+    header("Location: student_settings_page.php");
+  } else {
+    header("Location: student_settings_result_page.php");
+  }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -117,48 +134,47 @@ if (isset($_POST['save'])) {
     </form>
     </nav>
     <section class="main">
-        <h1 class="title">Account Settings</h1>
-        <form method="POST">
-            <div class="settings-container">
-                <h4>RECOVERY E-MAIL</h4>
-                <div class="div-left-right">
-                    <div class="settings-input">
-                        <p>E-mail:</p>
-                        <input type="email" name="email" class="settings-textbox" value='<?php echo $student['email']; ?>'></input>
-                    </div>
-                    <div class="settings-input">
-                        <p>Confirm E-mail:</p>
-                        <input type="email" name="confirm-email" class="settings-textbox"></input>
-                    </div>
-                </div>
+      <h1 class="title">Account Settings</h1>
+      <form method="POST">
+        <div class="settings-container">
+          <h4>RECOVERY E-MAIL</h4>
+          <div class="div-left-right">
+            <div class="settings-input">
+              <p>E-mail:</p>
+              <input type="email" name="email" class="settings-textbox" value='<?php echo $student['email']; ?>'></input>
             </div>
-            <div class="settings-container">
-                <h4>CHANGE PASSWORD</h4>
-                <div class="settings-input">
-                    <p>Current Password:</p>
-                    <input type="password" name="password" class="settings-textbox"></input>
-                </div>
-                <div class="div-left-right">
-                    <div class="settings-input">
-                        <p>New Password:</p>
-                        <input type="password" name="new-password" class="settings-textbox"></input>
-                    </div>
-                    <div class="settings-input">
-                        <p>Confirm New Password:</p>
-                        <input type="password" name="confirm-new-password" class="settings-textbox"></input>
-                    </div>
-                </div>
+            <div class="settings-input">
+              <p>Confirm E-mail:</p>
+              <input type="email" name="confirm-email" class="settings-textbox"></input>
             </div>
-            <div class="save-button-container">
-                <p class="save-response">Saved!</p>
-                <button type="submit" name="save" class="save-button">SAVE</button>
-            <div>
-        </form>
+          </div>
+        </div>
+        <div class="settings-container">
+          <h4>CHANGE PASSWORD</h4>
+          <div class="settings-input">
+            <p>Current Password:</p>
+            <input type="password" name="password" class="settings-textbox"></input>
+          </div>
+          <div class="div-left-right">
+            <div class="settings-input">
+              <p>New Password:</p>
+              <input type="password" name="new-password" class="settings-textbox"></input>
+            </div>
+            <div class="settings-input">
+              <p>Confirm New Password:</p>
+              <input type="password" name="confirm-new-password" class="settings-textbox"></input>
+            </div>
+          </div>
+        </div>
+        <div class="save-button-container">
+          <button type="submit" name="save" class="save-button">SAVE</button>
+        <div>
+      </form>
     </section>
     <!-- <script src="../scripts.js"></script> -->
     <script>
       function toHDF() {
-        window.location.href = "hdf_page.php";
+        window.location.href = "student_hdf_page.php";
         return false;
       }
       function toStudentHomepage() {

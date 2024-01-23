@@ -13,9 +13,9 @@ if (isset($_SESSION['student_number'])) {
 if (isset($_SESSION['id_number'])) {
   $idNumber = $_SESSION['id_number'];
 
-  // Redirect to admin homepage
-  if ($idNumber == 'admin') {
-    header("Location: admin_section_page.php");
+  // Redirect to professor homepage
+  if ($idNumber != 'admin') {
+    header("Location: professor_homepage.php");
   }
 
   // SQL query
@@ -45,15 +45,19 @@ if (isset($_SESSION['id_number'])) {
   header("Location: ../index.php");
 }
 
-// Section button
-if (isset($_POST['section-button'])) {
-  $_SESSION['selected_section'] = $_POST['section'];
-  header("Location: professor_attendance_page.php");
-}
-
 // Logout
 if (isset($_POST['logout'])) {
   require '../includes/logout.php';
+}
+
+// Section button
+if (isset($_POST['section-button'])) {
+  $_SESSION['selected_section'] = $_POST['section'];
+  if ($_POST['section'] == 'professors') {
+    header("Location: admin_schedule_professor_page.php");
+  } else {
+    header("Location: admin_schedule_section_page.php");
+  }
 }
 
 // Fetch section
@@ -83,17 +87,19 @@ mysqli_free_result($sectionsResult);
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../css/professor_homepage.css" />
+    <link rel="stylesheet" href="../css/admin_section_page.css" />
   </head>
   <body>
     <nav class="navbar">
       <div class="navbar-top">
         <img src="..\assets\images\icons\arrow_left.svg" id="closeNavbar" class="nav-button" onclick="toggleMobileNavbar()"/>
-        <a onclick="toProfessorHomepage()"><img src="..\assets\images\logos\pup_logo.png" /></a>
-        <a onclick="toProfessorHomepage()"><img src="..\assets\images\icons\notepad.svg" class="nav-button"/></a>
+        <a onclick="toAdminHomepage()"><img src="..\assets\images\logos\pup_logo.png" class="logo"/></a>
+        <a onclick="toAdminHomepage()"><img src="..\assets\images\icons\group.svg" class="nav-button"/></a>
+        <a onclick="toSchedule()"><img src="..\assets\images\icons\table.svg" class="nav-button"/></a>
+        <a onclick="toSubjects()"><img src="..\assets\images\icons\book.svg" class="nav-button"/></a>
+        <a onclick="toAnalytics()"><img src="..\assets\images\icons\graph.svg" class="nav-button"/></a>
       </div>
       <form method="POST" class="logout-form">
-        <a onclick="toSettings()"><img src="..\assets\images\icons\settings.svg"/></a>
         <button type="submit" name="logout" class="logout-button">
           <img src="..\assets\images\icons\logout.svg" class="nav-button"/>
         </button>
@@ -105,14 +111,13 @@ mysqli_free_result($sectionsResult);
           <div class="mobile-navbar-toggle" onclick="toggleMobileNavbar()">
             <img src="..\assets\images\icons\hamburger.svg" class="hamburger">
           </div>
-          <a onclick="toProfessorHomepage()"><h1>PUP HDF Attendance System</h1></a>
+          <a onclick="toAdminHomepage()"><h1>PUP HDF Attendance System</h1></a>
         </div>
         <div class="right">
-          <h5><?php echo $name; ?></h5>
-          <h5><?php echo $idNumber; ?></h5>
+          <h5>ADMIN</h5>
         </div>
       </div>
-      <h1 class="title">Computer Engineering Department Sections</h1>
+      <h1 class="title">Computer Engineering Schedules</h1>
       <div class="section-button-container">
         <?php foreach ($sections as $section): ?>
           <form method="POST">
@@ -122,19 +127,48 @@ mysqli_free_result($sectionsResult);
         <?php endforeach; ?>
       </div>
     </section>
+
     <script src="../js/navbar_controller.js"></script>
     <script>
       function toLogin() {
         window.location.href = "../index.php";
         return false;
       }
-      function toProfessorHomepage() {
-        window.location.href = "professor_homepage.php";
+      function toAdminHomepage() {
+        window.location.href = "admin_section_page.php";
+        return false;
+      }
+      function toSubjects() {
+        window.location.href = "admin_subjects_page.php";
+        return false;
+      }
+      function toAnalytics() {
+        window.location.href = "admin_analytics_page.php";
+        return false;
+      }
+      function toSchedule() {
+        window.location.href = "admin_schedule_page.php";
         return false;
       }
       function toSettings() {
-        window.location.href = "professor_settings_page.php";
+        window.location.href = "admin_settings_page.php";
         return false;
+      }
+      function openAddSectionModal() {
+        var addSectionModal = document.getElementById("addSectionModal");
+        addSectionModal.style.display = "block";
+      }
+      function closeAddSectionModal() {
+        var addSectionModal = document.getElementById("addSectionModal");
+        addSectionModal.style.display = "none";
+      }
+      function openDeleteSectionModal() {
+        var addSectionModal = document.getElementById("deleteSectionModal");
+        addSectionModal.style.display = "block";
+      }
+      function closeDeleteSectionModal() {
+        var addSectionModal = document.getElementById("deleteSectionModal");
+        addSectionModal.style.display = "none";
       }
     </script>
   </body>

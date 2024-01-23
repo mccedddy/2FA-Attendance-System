@@ -1,13 +1,3 @@
-<?php 
-require '../includes/database_connection.php';
-
-// Submit
-if (isset($_POST['reset-password'])) {
-  header('Location: forgot_password_result.php');
-}
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -28,24 +18,8 @@ if (isset($_POST['reset-password'])) {
       <div class="forgot-password-container">
         <span class="close" onclick="toLogin()">&times;</span>
         <img src="..\assets\images\graphics\forgot_password.png" />
-        <h1>FORGOT PASSWORD</h1>
-        <p>Enter your email and we'll send you a link to reset your password.</p>
-        <form method="POST" class="email-form">
-          <div class="textbox-container">
-            <img
-              src="../assets/images/icons/mail.svg"
-              class="textbox-icon"
-            />
-            <input
-              type="email"
-              class="textbox"
-              name="email"
-              placeholder="E-Mail"
-              required
-            />
-          </div>
-          <button type="submit" name="reset-password" class="submit">SUBMIT</button>
-        </form>
+        <h1>EMAIL SUBMITTED</h1>
+        <p>Please check your email for your reset password link.</p>
       </div>
     </div>
     <script>

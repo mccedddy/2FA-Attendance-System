@@ -1,9 +1,7 @@
-<?php
+<?php 
 session_start();
 require '../includes/database_connection.php';
-
-// Clear selection
-unset($_SESSION['selected_section']);
+date_default_timezone_set('Asia/Manila');
 
 // If logged in
 if (isset($_SESSION['student_number'])) {
@@ -11,12 +9,16 @@ if (isset($_SESSION['student_number'])) {
   header("Location: student_homepage.php");
 }
 if (isset($_SESSION['id_number'])) {
-  $idNumber = $_SESSION['id_number'];
 
-  // Redirect to admin homepage
-  if ($idNumber == 'admin') {
-    header("Location: admin_section_page.php");
+  // Redirect to homepage if no section is selected
+  if (!isset($_SESSION['selected_section'])) {
+    header("Location: professor_homepage.php");
+  } else {
+    $sectionPage = $_SESSION['selected_section'];
   }
+
+  // Professor ID
+  $idNumber = $_SESSION['id_number'];
 
   // SQL query
   $sql = "SELECT * FROM professors WHERE id_number = '$idNumber'";
@@ -45,29 +47,10 @@ if (isset($_SESSION['id_number'])) {
   header("Location: ../index.php");
 }
 
-// Section button
-if (isset($_POST['section-button'])) {
-  $_SESSION['selected_section'] = $_POST['section'];
-  header("Location: professor_attendance_page.php");
-}
-
 // Logout
 if (isset($_POST['logout'])) {
   require '../includes/logout.php';
 }
-
-// Fetch section
-require '../includes/database_connection.php';
-$sectionsSQL = "SELECT * FROM sections";
-$sectionsResult = mysqli_query($connection, $sectionsSQL);
-$sections = [];
-while ($row = mysqli_fetch_assoc($sectionsResult)) {
-  $sectionsInfo = [
-            'section'      => $row['section'],
-          ];
-  $sections[] = $sectionsInfo['section'];
-}
-mysqli_free_result($sectionsResult);
 ?>
 
 <!DOCTYPE html>
@@ -84,6 +67,7 @@ mysqli_free_result($sectionsResult);
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../css/professor_homepage.css" />
+    <script type="text/javascript" src="../js/tableToExcel.js"></script>
   </head>
   <body>
     <nav class="navbar">
@@ -112,17 +96,52 @@ mysqli_free_result($sectionsResult);
           <h5><?php echo $idNumber; ?></h5>
         </div>
       </div>
-      <h1 class="title">Computer Engineering Department Sections</h1>
-      <div class="section-button-container">
-        <?php foreach ($sections as $section): ?>
-          <form method="POST">
-            <input type="hidden" name="section" value="<?php echo $section; ?>">
-            <button type="submit" name="section-button" class="section-button">SECTION <?php echo $section; ?></button>
-          </form>
-        <?php endforeach; ?>
+      <h1 class="title" id="title">SECTION <?php echo $sectionPage ?> ATTENDANCE</h1>
+      <div class="search-container">
+        <div class="search-textbox">
+          <input type="text" name="search" id="search" value="">
+          <img src="..\assets\images\icons\search.svg"/>
+        </div>
       </div>
+      <select id="roomFilter">
+          <option value="ALL">ALL</option>
+          <option value="300">ROOM 300</option>
+          <option value="310">ROOM 310</option>
+          <option value="311">ROOM 311</option>
+          <option value="312">ROOM 312</option>
+          <option value="313">ROOM 313</option>
+          <option value="314">ROOM 314</option>
+          <option value="315">ROOM 315</option>
+          <option value="316">ROOM 316</option>
+      </select>
+      <div class="filters-and-export">
+        <div class="filters-container">
+          <input type="date" id="date" class="date-time-filter" required value="<?php echo date('Y-m-d'); ?>">
+          <div class="time-container">
+            <input type="time" id="startTime" class="date-time-filter" required value="00:00">
+            <input type="time" id="endTime" class="date-time-filter" required value="23:59">
+          </div>
+        </div>
+        <button id="export"><p>EXPORT DATA</p><img src="..\assets\images\icons\download.svg"/></button>
+      </div>
+      <table id="attendanceTable" data-cols-width="20,20,10,10,15">
+        <thead>
+          <tr>
+            <th>STUDENT NAME</th>
+            <th>STUDENT NUMBER</th>
+            <th>ROOM</th>
+            <th>TIME</th>
+            <th>DATE</th>
+          </tr>
+        </thead>
+        <tbody>
+              
+        </tbody>
+      </table>
+      <div style="height:50px;"></div>
     </section>
     <script src="../js/navbar_controller.js"></script>
+    <script src="../js/attendance.js"></script>
     <script>
       function toLogin() {
         window.location.href = "../index.php";

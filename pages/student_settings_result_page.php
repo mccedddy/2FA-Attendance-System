@@ -41,8 +41,25 @@ if (isset($_SESSION['student_number'])) {
 if (isset($_POST['logout'])) {
   require '../includes/logout.php';
 }
-?>
 
+// Result
+$result = '';
+if (isset($_SESSION['email']) && isset($_SESSION['password'])) {
+    if ($_SESSION['email'] === 'true' && $_SESSION['password'] === 'true') {
+        $result = '<h4 style="color: green;">Email and password changed!</h4>';
+    } else if ($_SESSION['email'] === 'true' && $_SESSION['password'] === 'false') {
+        $result = '<h4 style="color: green;">Email changed!</h4>';
+    } else if ($_SESSION['email'] === 'false' && $_SESSION['password'] === 'true') {
+        $result = '<h4 style="color: green;">Password changed!</h4>';
+    } else if ($_SESSION['password'] === 'invalid') {
+        $result = '<h4 style="color: red;">Invalid password!</h4>';
+    } else if ($_SESSION['email'] === 'invalid') {
+        $result = '<h4 style="color: red;">Invalid email!</h4>';
+    } else {
+        $result = '<h4 style="color: red;">An error occured</h4>';
+    }
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -64,24 +81,16 @@ if (isset($_POST['logout'])) {
       <a onclick="toStudentHomepage()"><h1>PUP HDF Attendance System</h1></a>
       <form method="POST" class="logout-form">
         <button type="submit" name="logout" class="logout-button"><p class="logout-text">LOGOUT</p></button>
-        <img src="../assets/images/icons/settings_black.svg" onclick="toSettings()" class="nav-button" />
-      </form>
+        <img src="../assets/images/icons/settings_black.svg" onclick="toSettings()" class="nav-button" />  
+    </form>
     </nav>
     <section class="main">
-      <div>
-        <h2><?php echo $name ?></h2>
-        <h2><?php echo $studentNumber ?></h2>
-      </div>
-      <div>
-        <img
-          src="..\assets\images\graphics\scientists.png"
-          class="main-graphics"
-        />
-      </div>
-      <div><h3>HEALTH DECLARATION FORM</h3></div>
-      <div>
-        <button class="answer-button" onclick="toHDF()">ANSWER</button>
-      </div>
+      <h1 class="title">Account Settings</h1>
+      <center>
+        <div style="border: 2px solid #810000; border-radius: 15px; padding: 0px 40px 0px 40px;">
+          <?php echo $result; ?>
+        </div>
+      </center>
     </section>
     <!-- <script src="../scripts.js"></script> -->
     <script>

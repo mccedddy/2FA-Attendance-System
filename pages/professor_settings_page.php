@@ -13,6 +13,11 @@ if (isset($_SESSION['student_number'])) {
 if (isset($_SESSION['id_number'])) {
   $idNumber = $_SESSION['id_number'];
 
+  // Redirect to admin homepage
+  if ($idNumber == 'admin') {
+    header("Location: admin_section_page.php");
+  }
+
   // SQL query
   $sql = "SELECT * FROM professors WHERE id_number = '$idNumber'";
   $result = mysqli_query($connection, $sql);
@@ -43,7 +48,7 @@ if (isset($_SESSION['id_number'])) {
 // Section button
 if (isset($_POST['section-button'])) {
   $_SESSION['selected_section'] = $_POST['section'];
-  header("Location: attendance_page.php");
+  header("Location: professor_attendance_page.php");
 }
 
 // Logout
@@ -51,9 +56,11 @@ if (isset($_POST['logout'])) {
   require '../includes/logout.php';
 }
 
-// Change email details
+// Change email and password details
 if (isset($_POST['save'])) {
   require '../includes/database_connection.php';
+  unset($_SESSION['email']);
+  unset($_SESSION['password']);
   $email = $_POST['email'];
   $confirmEmail = $_POST['confirm-email'];
   $password = $_POST['password'];
@@ -72,7 +79,8 @@ if (isset($_POST['save'])) {
       $stmt = mysqli_prepare($connection, $sql);
       mysqli_stmt_execute($stmt);
       mysqli_stmt_close($stmt);
-      header("Location: professor_settings_page.php");
+      $_SESSION['email'] = 'true';
+      $_SESSION['password'] = 'true';
 
   } else if ($confirmEmail && 
     $email !== $professor['email'] && 
@@ -84,7 +92,8 @@ if (isset($_POST['save'])) {
       $stmt = mysqli_prepare($connection, $sql);
       mysqli_stmt_execute($stmt);
       mysqli_stmt_close($stmt);
-      header("Location: professor_settings_page.php");
+      $_SESSION['email'] = 'true';
+      $_SESSION['password'] = 'false';
 
   } else if (!$confirmEmail && 
     password_verify($password, $professor['password']) &&
@@ -96,8 +105,22 @@ if (isset($_POST['save'])) {
       $stmt = mysqli_prepare($connection, $sql);
       mysqli_stmt_execute($stmt);
       mysqli_stmt_close($stmt);
-      header("Location: professor_settings_page.php");
-    }
+      $_SESSION['email'] = 'false';
+      $_SESSION['password'] = 'true';
+
+  } else if ($email != $confirmEmail && $confirmEmail) {
+    $_SESSION['email'] = 'invalid';
+    $_SESSION['password'] = 'false';
+  } else {
+    $_SESSION['password'] = 'invalid';
+    $_SESSION['email'] = 'false';
+  }
+
+  if (!$confirmEmail && !$password && !$newPassword && !$confirmNewPassword) {
+    header("Location: professor_settings_page.php");
+  } else {
+    header("Location: professor_settings_result_page.php");
+  }
 }
 ?>
 
@@ -131,49 +154,54 @@ if (isset($_POST['save'])) {
       </form>
     </nav>
     <section class="main">
-        <div class="header">
+      <div class="header">
+        <div class="left">
           <div class="mobile-navbar-toggle" onclick="toggleMobileNavbar()">
             <img src="..\assets\images\icons\hamburger.svg" class="hamburger">
           </div>
           <a onclick="toProfessorHomepage()"><h1>PUP HDF Attendance System</h1></a>
         </div>
-        <h1 class="title">Account Settings</h1>
-        <form method="POST">
-            <div class="settings-container">
-                <h4>RECOVERY E-MAIL</h4>
-                <div class="div-left-right">
-                    <div class="settings-input">
-                        <p>E-mail:</p>
-                        <input type="email" name="email" class="settings-textbox" value='<?php echo $professor['email']; ?>'></input>
-                    </div>
-                    <div class="settings-input">
-                        <p>Confirm E-mail:</p>
-                        <input type="email" name="confirm-email" class="settings-textbox"></input>
-                    </div>
-                </div>
+        <div class="right">
+          <h5><?php echo $name; ?></h5>
+          <h5><?php echo $idNumber; ?></h5>
+        </div>
+      </div>
+      <h1 class="title">Account Settings</h1>
+      <form method="POST">
+        <div class="settings-container">
+          <h4>RECOVERY E-MAIL</h4>
+          <div class="div-left-right">
+            <div class="settings-input">
+              <p>E-mail:</p>
+              <input type="email" name="email" class="settings-textbox" value='<?php echo $professor['email']; ?>'></input>
             </div>
-            <div class="settings-container">
-                <h4>CHANGE PASSWORD</h4>
-                <div class="settings-input">
-                    <p>Current Password:</p>
-                    <input type="password" name="password" class="settings-textbox"></input>
-                </div>
-                <div class="div-left-right">
-                    <div class="settings-input">
-                        <p>New Password:</p>
-                        <input type="password" name="new-password" class="settings-textbox"></input>
-                    </div>
-                    <div class="settings-input">
-                        <p>Confirm New Password:</p>
-                        <input type="password" name="confirm-new-password" class="settings-textbox"></input>
-                    </div>
-                </div>
+            <div class="settings-input">
+              <p>Confirm E-mail:</p>
+              <input type="email" name="confirm-email" class="settings-textbox"></input>
             </div>
-            <div class="save-button-container">
-                <p class="save-response">Saved!</p>
-                <button type="submit" name="save" class="save-button">SAVE</button>
-            <div>
-        </form>
+          </div>
+        </div>
+        <div class="settings-container">
+          <h4>CHANGE PASSWORD</h4>
+          <div class="settings-input">
+            <p>Current Password:</p>
+            <input type="password" name="password" class="settings-textbox"></input>
+          </div>
+          <div class="div-left-right">
+            <div class="settings-input">
+              <p>New Password:</p>
+              <input type="password" name="new-password" class="settings-textbox"></input>
+            </div>
+            <div class="settings-input">
+              <p>Confirm New Password:</p>
+              <input type="password" name="confirm-new-password" class="settings-textbox"></input>
+            </div>
+          </div>
+        </div>
+        <div class="save-button-container">
+          <button type="submit" name="save" class="save-button">SAVE</button>
+        </div>
+      </form>
     </section>
     <script src="../js/navbar_controller.js"></script>
     <script>

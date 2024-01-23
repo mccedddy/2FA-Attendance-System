@@ -26,7 +26,7 @@ if (isset($_SESSION['id_number'])) {
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/login_as.css" />
+    <link rel="stylesheet" href="css/login.css" />
   </head>
   <body>
     <div class="login-div">
