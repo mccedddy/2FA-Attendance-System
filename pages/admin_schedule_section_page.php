@@ -130,12 +130,11 @@ if (isset($_POST['edit-schedule'])) {
 
 // Fetch class list
 require '../includes/database_connection.php';
-$scheduleSQL = "SELECT *,
-                       CONCAT(professors.last_name, ', ', professors.first_name) AS professor_name
+$scheduleSQL = "SELECT *, CONCAT(professors.last_name, ', ', professors.first_name) AS professor_name
                FROM schedule
                INNER JOIN subjects ON schedule.subject_code = subjects.subject_code
                INNER JOIN professors ON schedule.professor = professors.id_number
-               WHERE schedule.section = '$sectionPage'";
+               WHERE schedule.section = '$sectionPage' ORDER BY FIELD(schedule.day, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'), schedule.start_time";
 $scheduleResult = mysqli_query($connection, $scheduleSQL);
 $schedule = [];
 
