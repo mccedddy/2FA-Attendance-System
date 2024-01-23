@@ -153,7 +153,7 @@ mysqli_free_result($subjectsResult);
       <div class="navbar-top">
         <img src="..\assets\images\icons\arrow_left.svg" id="closeNavbar" class="nav-button" onclick="toggleMobileNavbar()"/>
         <a onclick="toAdminHomepage()"><img src="..\assets\images\logos\pup_logo.png" class="logo"/></a>
-        <a onclick="toAdminHomepage()"><img src="..\assets\images\icons\group.svg" class="nav-button"/></a>
+        <a onclick="toSection()"><img src="..\assets\images\icons\group.svg" class="nav-button"/></a>
         <a onclick="toSchedule()"><img src="..\assets\images\icons\table.svg" class="nav-button"/></a>
         <a onclick="toSubjects()"><img src="..\assets\images\icons\book.svg" class="nav-button"/></a>
         <a onclick="toAnalytics()"><img src="..\assets\images\icons\graph.svg" class="nav-button"/></a>
@@ -276,6 +276,10 @@ mysqli_free_result($subjectsResult);
         return false;
       }
       function toAdminHomepage() {
+        window.location.href = "admin_homepage.php";
+        return false;
+      }
+      function toSection() {
         window.location.href = "admin_section_page.php";
         return false;
       }

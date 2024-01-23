@@ -35,7 +35,7 @@ if (isset($_POST['login'])) {
     if ($professors && password_verify($password, $professors['password'])) {
       $_SESSION['id_number'] = $idNumber;
       if ($idNumber == 'admin') {
-        header("Location: admin_section_page.php");
+        header("Location: admin_homepage.php");
       } else {
         header("Location: professor_homepage.php");
       }
