@@ -204,36 +204,42 @@ input[type="text"]:focus {
   outline: none;
 }
 
-#roomFilter {
-  width: 150px;
-  height: 30px;
+.filters-and-export {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.filters-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.time-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  align-items: center;
+  gap: 10px;
+}
+
+.date-time-filter {
+  width: 125px;
+  height: 28px;
+  margin: 15px 3px 15px 0px;
   flex-shrink: 0;
   border-radius: 5px;
-  background: #810000;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  color: #fff;
-  text-align: center;
+  border: 1px solid #810000;
   font-family: "Poppins";
   font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
-
-#roomFilter:hover,
-#roomFilter:focus {
-  outline: 1px solid #810000;
-}
-
-#roomFilter option {
-  background-color: white;
   color: #810000;
-  border: 1px solid #810000;
+  padding: 0px 12px 0px 12px;
+  cursor: pointer;
 }
 
-#roomFilter option:checked {
-  background-color: #810000;
-  color: #fff;
+.date-time-filter:hover,
+.date-time-filter:focus {
+  outline: 1px solid #810000;
 }
 
 .edit-and-export {
@@ -703,7 +709,41 @@ border: 1px solid red;
   cursor: pointer;
 }
 
+.charts-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #cccccc;
+  width: 100%;
+}
+
+.chart-container {
+  background-color: #eeeeee;
+  width: 50%;
+  height: 300px;
+  flex-shrink: 0;
+}
+
+.time-container p {
+  color: #000;
+  font-family: "Poppins";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
 @media only screen and (max-width: 811px) {
+  .charts-section {
+    flex-direction: column;
+    gap: 50px
+  }
+
+  .chart-container {
+    width: 100%;
+    height: 250px;
+  }
+
   h1 {
     font-size: 12px;
   }
@@ -753,6 +793,25 @@ border: 1px solid red;
 
   .search-textbox {
     height: 20px;
+  }
+
+  .filters-and-export {
+    display: flex;
+    margin-top: 5px;
+    justify-content: space-between;
+    align-items: end;
+    gap: 5px;
+  }
+
+  .filters-container {
+    display: flex;
+    gap: 5px;
+  }
+
+  .date-time-filter {
+    width: 80px;
+    font-size: 10px;
+    margin: 0px;
   }
 
   .edit-and-export {

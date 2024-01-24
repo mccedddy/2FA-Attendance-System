@@ -95,47 +95,32 @@ if (isset($_POST['logout'])) {
         </div>
       </div>
       <h1 class="title">Computer Engineering Attendance Analytics</h1>
+      <div class="filters-and-export">
+        <div class="filters-container">
+          <div class="time-container">
+            <p>From:</p><input type="date" id="startDate" class="date-time-filter" required>
+            <p>To:</p><input type="date" id="endDate" class="date-time-filter" required>
+          </div>
+        </div>
+      </div>
+      <section style="display:flex;justify-content:space-around;padding:30px">
+        <div style="display:inline-flex;">BOX</div>
+        <div style="display:inline-flex;">BOX</div>
+        <div style="display:inline-flex;">BOX</div>
+      </section>
+      <section class="charts-section">
+        <div class="chart-container">
+          <canvas id="attendanceOverview" class="chart"></canvas>
+        </div>
+        <div class="chart-container">
+          <canvas id="attendanceByClass" class="chart"></canvas>
+        </div>
+      </section>
     </section>
 
-    <div id="addSectionModal" class="modal-blur">
-      <div class="modal-content">
-        <div class="top-modal">
-          <h6>ADD SECTION</h6>
-        </div>
-        <span class="close-modal" onclick="closeAddSectionModal()">&times;</span>
-        <form method="POST" class="add-student-form">
-          <div class="add-student-container">
-            <p>Year Number</p>
-            <input type="text" name="year" class="year-section-textbox" required></input>
-            <p>Section Number</p>
-            <input type="text" name="section" class="year-section-textbox" required></input>
-          </div>
-          <div class="add-button-container">
-            <button type="submit" name="add-section" id="addButton" class="add-button">ADD</button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <div id="deleteSectionModal" class="modal-blur">
-      <div class="modal-content">
-        <div class="top-modal">
-          <h6>DELETE SECTION</h6>
-        </div>
-          <span class="close-modal" onclick="closeDeleteSectionModal()">&times;</span>
-          <img src="../assets/images/graphics/girl_trash.png" style="height: 40%; width: 40%;" />
-          <h5 id="deleteSectionMessage" style="margin-bottom: 10px;"></h5>
-          <p style="margin: 0px; text-align: center;">WARNING: All of the student data in this section will be deleted.</p>
-          <p style="margin: 10px; text-align: center;">Are you sure you want to delete this section?</p>
-          <div class="add-button-container">
-            <button type="submit" name="confirm-delete-section" id="deleteButton">DELETE</button>
-          </div>
-        </form>
-      </div>
-    </div>
-
     <script src="../js/navbar_controller.js"></script>
-    <script src="../js/section.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="../js/analytics.js"></script>
     <script>
       function toLogin() {
         window.location.href = "../index.php";
