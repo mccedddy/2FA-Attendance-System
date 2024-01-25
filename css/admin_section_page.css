@@ -723,13 +723,12 @@ border: 1px solid red;
   display: flex;
   align-items: center;
   justify-content: center;
-  /* background-color: #cccccc; */
   width: 100%;
+  gap: 50px;
 }
 
 .chart-container {
-  /* background-color: #eeeeee; */
-  width: 50%;
+  width: 45%;
   height: 300px;
   flex-shrink: 0;
 }
@@ -743,6 +742,55 @@ border: 1px solid red;
   line-height: normal;
 }
 
+.overview-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 30px;
+}
+
+.overview-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.box {
+  color: #fff;
+  background-color: #810000;
+  height: 75px;
+  width: 75px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.box-text-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 10px;
+}
+
+.box-text-container p {
+  font-size: 12px;
+  margin: 0px;
+  text-align: center;
+  font-style: "Poppins";
+}
+
+.box-text-container h4 {
+  font-size: 40px;
+  font-weight: 500;
+  margin: 0px;
+  text-align: center;
+  font-style: "Poppins";
+  line-height: 1;
+}
+
 @media only screen and (max-width: 811px) {
   .charts-section {
     flex-direction: column;
@@ -752,6 +800,19 @@ border: 1px solid red;
   .chart-container {
     width: 100%;
     height: 250px;
+  }
+
+  .overview-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* .overview-box {
+    width: 300px;
+  } */
+
+  .box-text-container {
+    width: 250px;
   }
 
   h1 {

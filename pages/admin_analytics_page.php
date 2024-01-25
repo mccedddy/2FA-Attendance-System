@@ -103,10 +103,34 @@ if (isset($_POST['logout'])) {
           </div>
         </div>
       </div>
-      <section style="display:flex;justify-content:space-around;padding:30px">
-        <div style="display:inline-flex;">BOX</div>
-        <div style="display:inline-flex;">BOX</div>
-        <div style="display:inline-flex;">BOX</div>
+      <section class="overview-container">
+        <div class="overview-box">
+          <div class="box">
+            <img src="../assets/images/icons/group_fill.svg" />
+          </div>
+          <div class="box-text-container">
+            <p>TOTAL NUMBER OF STUDENTS</p>
+            <h4>100</h4>
+          </div>
+        </div>
+        <div class="overview-box">
+          <div class="box">
+            <img src="../assets/images/icons/check.svg" />
+          </div>
+          <div class="box-text-container">
+            <p>OVERALL ATTENDANCE PERCENTAGE</p>
+            <h4>80%</h4>
+          </div>
+        </div>
+        <div class="overview-box">
+          <div class="box">
+            <img src="../assets/images/icons/clock.svg" />
+          </div>
+          <div class="box-text-container">
+            <p>OVERALL LATE PERCENTAGE</p>
+            <h4>50%</h4>
+          </div>
+        </div>
       </section>
       <section class="charts-section">
         <div class="chart-container">
