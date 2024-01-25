@@ -63,6 +63,16 @@ h3 {
   line-height: normal;
 }
 
+h4 {
+  color: #000;
+  text-align: center;
+  font-family: "Poppins";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
 a:hover {
   cursor: pointer;
 }
@@ -713,12 +723,12 @@ border: 1px solid red;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #cccccc;
+  /* background-color: #cccccc; */
   width: 100%;
 }
 
 .chart-container {
-  background-color: #eeeeee;
+  /* background-color: #eeeeee; */
   width: 50%;
   height: 300px;
   flex-shrink: 0;

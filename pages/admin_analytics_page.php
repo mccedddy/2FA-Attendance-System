@@ -110,9 +110,11 @@ if (isset($_POST['logout'])) {
       </section>
       <section class="charts-section">
         <div class="chart-container">
+          <h4>Attendance Overview</h4>
           <canvas id="attendanceOverview" class="chart"></canvas>
         </div>
         <div class="chart-container">
+          <h4>Attendance By Class</h4>
           <canvas id="attendanceByClass" class="chart"></canvas>
         </div>
       </section>
