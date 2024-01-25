@@ -98,12 +98,6 @@ if (isset($_POST['logout'])) {
         </div>
       </div>
       <h1 class="title" id="title">SECTION <?php echo $sectionPage ?> ATTENDANCE</h1>
-      <div class="search-container">
-        <div class="search-textbox">
-          <input type="text" name="search" id="search" value="">
-          <img src="..\assets\images\icons\search.svg"/>
-        </div>
-      </div>
       <select id="roomFilter">
           <option value="ALL">ALL</option>
           <option value="300">ROOM 300</option>
@@ -118,10 +112,6 @@ if (isset($_POST['logout'])) {
       <div class="filters-and-export">
         <div class="filters-container">
           <input type="date" id="date" class="date-time-filter" required value="<?php echo date('Y-m-d'); ?>">
-          <div class="time-container">
-            <input type="time" id="startTime" class="date-time-filter" required value="00:00">
-            <input type="time" id="endTime" class="date-time-filter" required value="23:59">
-          </div>
         </div>
         <button id="export"><p>EXPORT DATA</p><img src="..\assets\images\icons\download.svg"/></button>
       </div>
@@ -133,6 +123,9 @@ if (isset($_POST['logout'])) {
             <th>ROOM</th>
             <th>TIME</th>
             <th>DATE</th>
+            <th>SUBJECT</th>
+            <th>PROFESSOR</th>
+            <th>STATUS</th>
           </tr>
         </thead>
         <tbody>
