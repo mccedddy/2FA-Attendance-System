@@ -2,9 +2,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const xValues = ["4-1", "4-2", "4-3", "4-4", "4-5", "4-6"];
 
-  const present = [73, 50, 60, 75, 83, 81, 72];
-  const late =    [20, 40, 30, 18, 10, 10, 20];
-  const absent =  [7, 10, 10, 7, 7, 9, 8];
+  const present = [73, 50, 60, 75, 83, 81, 72, 100];
+  const late =    [20, 40, 30, 18, 10, 10, 20, 100];
+  const absent =  [7, 10, 10, 7, 7, 9, 8, 100];
 
   const presentColors = ['#810000', '#810000', '#810000', '#810000', '#810000', '#810000'];
   const lateColors = ['#FFE000', '#FFE000', '#FFE000', '#FFE000', '#FFE000', '#FFE000'];
