@@ -177,8 +177,8 @@ input[type="text"]:focus {
   outline: none;
 }
 
-#roomFilter {
-  width: 150px;
+#subjectFilter {
+  width: 400px;
   height: 30px;
   flex-shrink: 0;
   border-radius: 5px;
@@ -193,18 +193,19 @@ input[type="text"]:focus {
   line-height: normal;
 }
 
-#roomFilter:hover,
-#roomFilter:focus {
+#subjectFilter:hover,
+#subjectFilter:focus {
   outline: 1px solid #810000;
 }
 
-#roomFilter option {
+#subjectFilter .subjectOption {
   background-color: white;
   color: #810000;
   border: 1px solid #810000;
+  text-align: left;
 }
 
-#roomFilter option:checked {
+#subjectFilter option:checked {
   background-color: #810000;
   color: #fff;
 }
@@ -228,7 +229,6 @@ input[type="text"]:focus {
 .date-time-filter {
   width: 125px;
   height: 28px;
-  margin: 15px 3px 15px 0px;
   flex-shrink: 0;
   border-radius: 5px;
   border: 1px solid #810000;
@@ -470,22 +470,19 @@ input[type="text"]:focus {
     font-size: 10px;
   }
 
-  #roomFilter {
-    width: 106px;
+  #subjectFilter {
+    width: 250px;
     font-size: 10px;
   }
 
   .filters-and-export {
     display: flex;
-    margin-top: 5px;
     justify-content: space-between;
     align-items: end;
-    gap: 5px;
   }
 
   .filters-container {
     display: flex;
-    gap: 5px;
   }
 
   .date-time-filter {
@@ -517,10 +514,6 @@ input[type="text"]:focus {
     font-size: 10px;
     align-items: center;
     margin: 5px;
-  }
-
-  #attendanceTable {
-    margin-top: 7px;
   }
 
   #attendanceTable th,

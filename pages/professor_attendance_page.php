@@ -98,23 +98,26 @@ if (isset($_POST['logout'])) {
         </div>
       </div>
       <h1 class="title" id="title">SECTION <?php echo $sectionPage ?> ATTENDANCE</h1>
-      <select id="roomFilter">
+      <input type="date" id="date" class="date-time-filter" required value="<?php echo date('Y-m-d'); ?>">
+      <button id="export"><p>EXPORT DATA</p><img src="..\assets\images\icons\download.svg"/></button>
+      <select id="subjectFilter">
           <option value="ALL">ALL</option>
-          <option value="300">ROOM 300</option>
-          <option value="310">ROOM 310</option>
-          <option value="311">ROOM 311</option>
-          <option value="312">ROOM 312</option>
-          <option value="313">ROOM 313</option>
-          <option value="314">ROOM 314</option>
-          <option value="315">ROOM 315</option>
-          <option value="316">ROOM 316</option>
+          <?php
+            require '../includes/database_connection.php';
+
+            $sql = "SELECT subject_code, subject_name FROM subjects";
+            $result = mysqli_query($connection, $sql); 
+
+            while ($row = mysqli_fetch_assoc($result)) {
+              $optionText = $row['subject_code'] . " - " . $row['subject_name'];
+              $optionValue = $row['subject_code'];
+              echo "<option class='subjectOption' value='$optionValue'>$optionText</option>";
+            }
+
+            mysqli_free_result($result);
+            mysqli_close($connection);
+          ?>
       </select>
-      <div class="filters-and-export">
-        <div class="filters-container">
-          <input type="date" id="date" class="date-time-filter" required value="<?php echo date('Y-m-d'); ?>">
-        </div>
-        <button id="export"><p>EXPORT DATA</p><img src="..\assets\images\icons\download.svg"/></button>
-      </div>
       <table id="attendanceTable" data-cols-width="20,20,10,10,15">
         <thead>
           <tr>
