@@ -49,6 +49,16 @@ if (isset($_SESSION['id_number'])) {
 if (isset($_POST['logout'])) {
   require '../includes/logout.php';
 }
+
+// Get student count
+require '../includes/database_connection.php';
+$checkStudentSQL = "SELECT COUNT(*) as studentCount FROM students";
+$stmtCheckStudent = mysqli_prepare($connection, $checkStudentSQL);
+mysqli_stmt_execute($stmtCheckStudent);
+mysqli_stmt_bind_result($stmtCheckStudent, $studentCount);
+mysqli_stmt_fetch($stmtCheckStudent);
+mysqli_stmt_close($stmtCheckStudent);
+mysqli_close($connection);
 ?>
 
 <!DOCTYPE html>
@@ -110,7 +120,7 @@ if (isset($_POST['logout'])) {
           </div>
           <div class="box-text-container">
             <p>TOTAL NUMBER OF STUDENTS</p>
-            <h4>100</h4>
+            <h4><?php echo $studentCount; ?></h4>
           </div>
         </div>
         <div class="overview-box">
