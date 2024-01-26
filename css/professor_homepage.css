@@ -196,6 +196,7 @@ input[type="text"]:focus {
 #subjectFilter:hover,
 #subjectFilter:focus {
   outline: 1px solid #810000;
+  cursor: pointer;
 }
 
 #subjectFilter .subjectOption {
@@ -244,7 +245,7 @@ input[type="text"]:focus {
   outline: 1px solid #810000;
 }
 
-#export {
+#export, #import {
   width: 149px;
   height: 30px;
   flex-shrink: 0;
@@ -262,9 +263,32 @@ input[type="text"]:focus {
   line-height: normal;
 }
 
-#export:hover {
+#export:hover, #import:hover {
   outline: 1px solid #810000;
   cursor: pointer;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.custom-file-input {
+  background-color: #810000;
+  color: #fff;
+  padding: 0px 10px 0px 10px;
+  cursor: pointer;
+  border: 1px solid #810000;
+  border-radius: 5px;
+  /* display: inline-block; */
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.file-name {
+  margin: 5px;
+  font-size: 12px;
 }
 
 .section-button-container {
@@ -314,7 +338,7 @@ input[type="text"]:focus {
   text-align: left;
   text-align: center;
   font-family: Poppins;
-  font-size: 14px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -323,6 +347,7 @@ input[type="text"]:focus {
 #attendanceTable th {
   background-color: #810000;
   color: #fff;
+  font-size: 12px;
 }
 
 .mobile-navbar-toggle {
@@ -491,7 +516,7 @@ input[type="text"]:focus {
     margin: 0px;
   }
 
-  #export {
+  #export, #import {
     width: 106px;
     font-size: 10px;
   }

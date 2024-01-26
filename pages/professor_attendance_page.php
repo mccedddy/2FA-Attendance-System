@@ -99,25 +99,35 @@ if (isset($_POST['logout'])) {
       </div>
       <h1 class="title" id="title">SECTION <?php echo $sectionPage ?> ATTENDANCE</h1>
       <input type="date" id="date" class="date-time-filter" required value="<?php echo date('Y-m-d'); ?>">
-      <button id="export"><p>EXPORT DATA</p><img src="..\assets\images\icons\download.svg"/></button>
-      <select id="subjectFilter">
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; margin: 5px 0px; gap: 5px;">
+        <select id="subjectFilter">
           <option value="ALL">ALL</option>
-          <?php
-            require '../includes/database_connection.php';
+            <?php
+              require '../includes/database_connection.php';
 
-            $sql = "SELECT subject_code, subject_name FROM subjects";
-            $result = mysqli_query($connection, $sql); 
+              $sql = "SELECT subject_code, subject_name FROM subjects";
+              $result = mysqli_query($connection, $sql); 
 
-            while ($row = mysqli_fetch_assoc($result)) {
-              $optionText = $row['subject_code'] . " - " . $row['subject_name'];
-              $optionValue = $row['subject_code'];
-              echo "<option class='subjectOption' value='$optionValue'>$optionText</option>";
-            }
+              while ($row = mysqli_fetch_assoc($result)) {
+                $optionText = $row['subject_code'] . " - " . $row['subject_name'];
+                $optionValue = $row['subject_code'];
+                echo "<option class='subjectOption' value='$optionValue'>$optionText</option>";
+              }
 
-            mysqli_free_result($result);
-            mysqli_close($connection);
-          ?>
-      </select>
+              mysqli_free_result($result);
+              mysqli_close($connection);
+            ?>
+        </select>
+        <div style="display: flex; flex-wrap: wrap;">
+          <label for="fileInput" class="custom-file-input" id="fileInputLabel">Choose File</label>
+          <span class="file-name" id="fileName">No file chosen</span>
+          <input type="file" id="fileInput" accept=".xlsx" />
+          <div style="display:flex; gap:5px;">
+            <button class="import-export" id="import"><p>IMPORT DATA</p><img src="..\assets\images\icons\upload.svg"/></button>
+            <button class="import-export" id="export"><p>EXPORT DATA</p><img src="..\assets\images\icons\download.svg"/></button>
+          </div>
+        </div>
+      </div>
       <table id="attendanceTable" data-cols-width="20,20,10,10,15">
         <thead>
           <tr>
@@ -132,7 +142,16 @@ if (isset($_POST['logout'])) {
           </tr>
         </thead>
         <tbody>
-              
+          <tr>
+            <td>Abiog, Jade Aubrey</td>
+            <td>2020-11112-MN-0</td>
+            <td>312</td>
+            <td>18:00</td>
+            <td>26/01/2024</td>
+            <td>Computer Architecture and Organization</td>
+            <td>Mahaguay, Rolito</td>
+            <td>Present</td>
+          </tr>
         </tbody>
       </table>
       <div style="height:50px;"></div>
