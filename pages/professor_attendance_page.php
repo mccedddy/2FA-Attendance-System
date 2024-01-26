@@ -97,8 +97,8 @@ if (isset($_POST['logout'])) {
           <h5><?php echo $idNumber; ?></h5>
         </div>
       </div>
-      <h1 class="title" id="title">SECTION <?php echo $sectionPage ?> ATTENDANCE</h1>
-      <input type="date" id="date" class="date-time-filter" required value="<?php echo date('Y-m-d'); ?>">
+      <h1 id="title">SECTION <?php echo $sectionPage ?> ATTENDANCE</h1>
+      <input type="date" id="date" class="date-filter" required value="<?php echo date('Y-m-d'); ?>">
       <div style="display:flex; flex-wrap:wrap; justify-content:space-between; margin: 5px 0px; gap: 5px;">
         <select id="subjectFilter">
           <option value="ALL">ALL</option>
@@ -118,13 +118,13 @@ if (isset($_POST['logout'])) {
               mysqli_close($connection);
             ?>
         </select>
-        <div style="display: flex; flex-wrap: wrap;">
+        <div style="display: flex; flex-wrap: wrap; gap:5px;">
           <label for="fileInput" class="custom-file-input" id="fileInputLabel">Choose File</label>
           <span class="file-name" id="fileName">No file chosen</span>
           <input type="file" id="fileInput" accept=".xlsx" />
           <div style="display:flex; gap:5px;">
-            <button class="import-export" id="import"><p>IMPORT DATA</p><img src="..\assets\images\icons\upload.svg"/></button>
-            <button class="import-export" id="export"><p>EXPORT DATA</p><img src="..\assets\images\icons\download.svg"/></button>
+            <button id="import"><p>IMPORT DATA</p><img src="..\assets\images\icons\upload.svg"/></button>
+            <button id="export"><p>EXPORT DATA</p><img src="..\assets\images\icons\download.svg"/></button>
           </div>
         </div>
       </div>
@@ -142,6 +142,16 @@ if (isset($_POST['logout'])) {
           </tr>
         </thead>
         <tbody>
+          <tr>
+            <td>Abiog, Jade Aubrey</td>
+            <td>2020-11112-MN-0</td>
+            <td>312</td>
+            <td>18:00</td>
+            <td>26/01/2024</td>
+            <td>Computer Architecture and Organization</td>
+            <td>Mahaguay, Rolito</td>
+            <td>Present</td>
+          </tr>
           <tr>
             <td>Abiog, Jade Aubrey</td>
             <td>2020-11112-MN-0</td>

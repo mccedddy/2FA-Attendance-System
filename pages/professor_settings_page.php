@@ -171,7 +171,7 @@ if (isset($_POST['save'])) {
       <form method="POST">
         <div class="settings-container">
           <h4>RECOVERY E-MAIL</h4>
-          <div class="div-left-right">
+          <div class="settings-div-left-right">
             <div class="settings-input">
               <p>E-mail:</p>
               <input type="email" name="email" class="settings-textbox" value='<?php echo $professor['email']; ?>'></input>
@@ -188,7 +188,7 @@ if (isset($_POST['save'])) {
             <p>Current Password:</p>
             <input type="password" name="password" class="settings-textbox"></input>
           </div>
-          <div class="div-left-right">
+          <div class="settings-div-left-right">
             <div class="settings-input">
               <p>New Password:</p>
               <input type="password" name="new-password" class="settings-textbox"></input>
