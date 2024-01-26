@@ -189,6 +189,37 @@ a:hover {
   flex-wrap: wrap;
 }
 
+.time-container {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.time-container p {
+  margin: 0px;
+}
+
+.date-filter {
+  width: 125px;
+  height: 28px;
+  margin: 0px;
+  flex-shrink: 0;
+  border-radius: 5px;
+  border: 1px solid #810000;
+  font-family: "Poppins";
+  font-size: 12px;
+  color: #810000;
+  padding: 0px 12px 0px 12px;
+  cursor: pointer;
+}
+
+.date-filter:hover,
+.date-filter:focus {
+  outline: 1px solid #810000;
+}
+
 .edit-and-export {
   display: flex;
   align-items: end;
@@ -819,6 +850,13 @@ input[type="file"] {
     width: 80px;
     font-size: 10px;
     margin: 0px;
+  }
+
+  .time-container {
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    gap: 5px;
   }
 
   #import, #export {
