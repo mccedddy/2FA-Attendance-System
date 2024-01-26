@@ -390,7 +390,7 @@ input[type="file"] {
   text-align: left;
   text-align: center;
   font-family: Poppins;
-  font-size: 14px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -399,6 +399,7 @@ input[type="file"] {
 #attendanceTable th {
   background-color: #810000;
   color: #fff;
+  font-size: 12px;
 }
 
 .mobile-navbar-toggle {
@@ -887,7 +888,6 @@ border: 1px solid red;
 
   .edit-and-export {
     display: flex;
-    margin-top: 5px;
     justify-content: space-between;
     align-items: end;
     gap: 5px;
@@ -927,10 +927,6 @@ border: 1px solid red;
     margin: 5px;
     flex-direction: row;
     padding: 5px 15px 5px 0px;
-  }
-
-  #attendanceTable {
-    margin-top: 7px;
   }
 
   #attendanceTable th,
