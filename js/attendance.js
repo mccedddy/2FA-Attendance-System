@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const tbody = table.querySelector("tbody");
   const dateFilter = document.getElementById("date");
   const subjectFilter = document.getElementById("subjectFilter");
+  const importButton = document.getElementById("import");
   const exportButton = document.getElementById("export");
   const addAttendanceButton = document.getElementById("addButton");
 
@@ -14,6 +15,9 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   subjectFilter.addEventListener("change", () => {
     fetchAttendance(dateFilter.value, subjectFilter.value);
+  });
+  importButton.addEventListener("click", () => {
+    importAttendance();
   });
   exportButton.addEventListener("click", () => {
     exportAttendance();
@@ -71,6 +75,47 @@ function displayAttendanceData(data) {
     });
     tbody.appendChild(row);
   });
+}
+
+function importAttendance() {
+  var section = document.getElementById("title").textContent;
+  var fileInput = document.getElementById("fileInput");
+  var file = fileInput.files[0];
+
+  if (file) {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+      var fileContent = e.target.result;
+
+      // Use xlsx library to read the file content
+      var workbook = XLSX.read(fileContent, { type: "binary" });
+      var sheetName = workbook.SheetNames[0];
+      var sheet = workbook.Sheets[sheetName];
+
+      // Convert sheet data to an array of objects starting from the 2nd row
+      var dataArray = XLSX.utils.sheet_to_json(sheet, { header: 1, range: 1 });
+
+      // var url = "../includes/import_attendance.php";
+
+      // Send dataArray to the server using a POST request
+      $.ajax({
+        url: url,
+        method: "POST",
+        data: { dataArray: JSON.stringify(dataArray) },
+        success: function (response) {
+          location.reload();
+        },
+        error: function (error) {
+          console.error("Error:", error);
+        },
+      });
+    };
+
+    reader.readAsBinaryString(file);
+  } else {
+    console.error("No file selected.");
+  }
 }
 
 function exportAttendance() {
