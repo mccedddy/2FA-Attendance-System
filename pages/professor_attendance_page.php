@@ -161,7 +161,8 @@ if (isset($_POST['logout'])) {
         <form method="POST" class="add-attendance-form">
           <div class="add-attendance-container">
             <p>Student</p>
-            <select name="student" class="add-attendance-dropdown" required>
+            <input type="hidden" id="attendanceSection" value="<?php echo $sectionPage; ?>" />
+            <select name="student" id="attendanceStudent" class="add-attendance-dropdown" required>
               <option value="" disabled selected>Select Student</option>
               <?php
               // Fetch students
@@ -180,7 +181,7 @@ if (isset($_POST['logout'])) {
           </div>
           <div class="add-attendance-container">
             <p>Status</p>
-            <select name="status" class="add-attendance-dropdown" required>
+            <select name="status" id="attendanceStatus" class="add-attendance-dropdown" required>
               <option value="" disabled selected>Select Status</option>
               <option value="Present">Present</option>
               <option value="Late">Late</option>
@@ -188,19 +189,19 @@ if (isset($_POST['logout'])) {
           </div>
           <div class="add-attendance-container">
             <p>Time</p>
-            <input type="time" name="time" class="add-attendance-dropdown" value="<?php echo date("H:i:s"); ?>" required></input>
+            <input type="time" name="time" id="attendanceTime" class="add-attendance-dropdown" value="<?php echo date("H:i"); ?>" required></input>
           </div>
           <div class="add-attendance-container">
             <p>Date</p>
-            <input type="date" name="time" class="add-attendance-dropdown" value="<?php echo date('Y-m-d'); ?>" required></input>
+            <input type="date" name="time" id="attendanceDate" class="add-attendance-dropdown" value="<?php echo date('Y-m-d'); ?>" required></input>
           </div>
           <div class="add-attendance-container">
             <p>Room</p>
-            <input type="text" class="add-attendance-textbox" required />
+            <input type="text" id="attendanceRoom" class="add-attendance-textbox" required />
           </div>
           <div class="add-attendance-container">
             <p>Subject</p>
-            <select name="subject" class="add-attendance-dropdown" required>
+            <select name="subject" id="attendanceSubject" class="add-attendance-dropdown" required>
               <option value="" disabled selected>Select Subject</option>
               <?php
               // Fetch subjects
@@ -219,7 +220,7 @@ if (isset($_POST['logout'])) {
           </div>
           <div class="add-attendance-container">
             <p>Professor</p>
-            <select name="professor" class="add-attendance-dropdown" required>
+            <select name="professor" id="attendanceProfessor" class="add-attendance-dropdown" required>
               <option value="" disabled selected>Select Professor</option>
               <?php
               // Fetch professors
@@ -237,7 +238,7 @@ if (isset($_POST['logout'])) {
             </select>
           </div>
           <div class="add-button-container">
-            <button type="submit" name="add-attendance" id="addButton" class="add-button">ADD</button>
+            <button name="add-attendance" id="addButton" class="add-button">ADD</button>
           </div>
         </form>
       </div>
@@ -262,7 +263,7 @@ if (isset($_POST['logout'])) {
         var addAttendanceModal = document.getElementById("addAttendanceModal");
         addAttendanceModal.style.display = "block";
       }
-      function closeAddAddAttendanceModal() {
+      function closeAddAttendanceModal() {
         var addAttendanceModal = document.getElementById("addAttendanceModal");
         addAttendanceModal.style.display = "none";
       }
