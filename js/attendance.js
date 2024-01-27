@@ -1,19 +1,22 @@
 document.addEventListener("DOMContentLoaded", function () { 
-  var table = document.getElementById("attendanceTable");
-  var tbody = table.querySelector("tbody");
-  var dateFilter = document.getElementById("date");
+  const table = document.getElementById("attendanceTable");
+  const tbody = table.querySelector("tbody");
+  const dateFilter = document.getElementById("date");
+  const subjectFilter = document.getElementById("subjectFilter");
 
-  fetchAttendance(dateFilter.value);
+  fetchAttendance(dateFilter.value, subjectFilter.value);
   sortTable();
 
-  dateFilter.addEventListener("change", () => {fetchAttendance(dateFilter.value);});
-  
+  dateFilter.addEventListener("change", () => {fetchAttendance(dateFilter.value, subjectFilter.value);});
+  subjectFilter.addEventListener("change", () => {fetchAttendance(dateFilter.value, subjectFilter.value);});
 });
 
-function fetchAttendance(date) {
+function fetchAttendance(date, subject) {
   var url = "../includes/fetch_attendance.php";
   var formData = new FormData();
   formData.append("date", date);
+  formData.append("subject", subject);
+  console.log(date + " - " + subject);
 
   fetch(url, {
     method: "POST",
