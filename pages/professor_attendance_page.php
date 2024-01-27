@@ -133,35 +133,17 @@ if (isset($_POST['logout'])) {
           <tr>
             <th>STUDENT NAME</th>
             <th>STUDENT NUMBER</th>
-            <th>ROOM</th>
+            <th>STATUS</th>
             <th>TIME</th>
             <th>DATE</th>
+            <th>ROOM</th>
             <th>SUBJECT</th>
             <th>PROFESSOR</th>
-            <th>STATUS</th>
+            <!-- <th>SCHEDULE ID</th> -->
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Abiog, Jade Aubrey</td>
-            <td>2020-11112-MN-0</td>
-            <td>312</td>
-            <td>18:00</td>
-            <td>26/01/2024</td>
-            <td>Computer Architecture and Organization</td>
-            <td>Mahaguay, Rolito</td>
-            <td>Present</td>
-          </tr>
-          <tr>
-            <td>Abiog, Jade Aubrey</td>
-            <td>2020-11112-MN-0</td>
-            <td>312</td>
-            <td>18:00</td>
-            <td>26/01/2024</td>
-            <td>Computer Architecture and Organization</td>
-            <td>Mahaguay, Rolito</td>
-            <td>Present</td>
-          </tr>
+          
         </tbody>
       </table>
       <div style="height:50px;"></div>
