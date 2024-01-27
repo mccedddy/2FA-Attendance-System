@@ -27,8 +27,6 @@ if (isset($_POST['date'])) {
           WHERE a.date = '$date' AND s.section = '$selectedSection' AND sub.subject_code = '$subject'";
   }
 
-  
-
   // Prepare and execute the statement
   $stmt = mysqli_prepare($connection, $sql);
   mysqli_stmt_execute($stmt);

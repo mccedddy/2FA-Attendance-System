@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () { 
+document.addEventListener("DOMContentLoaded", function () {
   const table = document.getElementById("attendanceTable");
   const tbody = table.querySelector("tbody");
   const dateFilter = document.getElementById("date");
@@ -8,9 +8,15 @@ document.addEventListener("DOMContentLoaded", function () {
   fetchAttendance(dateFilter.value, subjectFilter.value);
   sortTable();
 
-  dateFilter.addEventListener("change", () => {fetchAttendance(dateFilter.value, subjectFilter.value);});
-  subjectFilter.addEventListener("change", () => {fetchAttendance(dateFilter.value, subjectFilter.value);});
-  exportButton.addEventListener("click", () => {exportAttendance();});
+  dateFilter.addEventListener("change", () => {
+    fetchAttendance(dateFilter.value, subjectFilter.value);
+  });
+  subjectFilter.addEventListener("change", () => {
+    fetchAttendance(dateFilter.value, subjectFilter.value);
+  });
+  exportButton.addEventListener("click", () => {
+    exportAttendance();
+  });
 });
 
 function fetchAttendance(date, subject) {
@@ -24,49 +30,49 @@ function fetchAttendance(date, subject) {
     method: "POST",
     body: formData,
   })
-  .then((response) => response.json())
-  .then((data) => {
-    console.log(data);
-    displayAttendanceData(data);
-    // updateOriginalData(data);
-  })
-  .catch((error) => {
-    console.error("Error:", error);
-  });
-}
-
-function displayAttendanceData(data) {
-    const table = document.getElementById("attendanceTable");
-    const tbody = table.querySelector("tbody");
-    tbody.innerHTML = "";
-
-    data.forEach((rowData) => {
-      let row = document.createElement("tr");
-      // Create and append cells in the desired order
-      let cells = [
-        "student_name",
-        "student_number",
-        "status",
-        "time",
-        "date",
-        "room",
-        "subject_name",
-        "professor_name",
-        // "schedule_id"
-      ].map((key) => {
-        const cell = document.createElement("td");
-        cell.innerText = rowData[key];
-        return cell;
-      });
-      cells.forEach((cell) => {
-        row.appendChild(cell);
-      });
-      tbody.appendChild(row);
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      displayAttendanceData(data);
+      // updateOriginalData(data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
     });
 }
 
+function displayAttendanceData(data) {
+  const table = document.getElementById("attendanceTable");
+  const tbody = table.querySelector("tbody");
+  tbody.innerHTML = "";
+
+  data.forEach((rowData) => {
+    let row = document.createElement("tr");
+    // Create and append cells in the desired order
+    let cells = [
+      "student_name",
+      "student_number",
+      "status",
+      "time",
+      "date",
+      "room",
+      "subject_name",
+      "professor_name",
+      // "schedule_id"
+    ].map((key) => {
+      const cell = document.createElement("td");
+      cell.innerText = rowData[key];
+      return cell;
+    });
+    cells.forEach((cell) => {
+      row.appendChild(cell);
+    });
+    tbody.appendChild(row);
+  });
+}
+
 function exportAttendance() {
-  console.log('clicked export');
+  console.log("clicked export");
   var section = document.getElementById("title").textContent;
   var table = document.getElementById("attendanceTable");
   var date = document.getElementById("date");

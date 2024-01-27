@@ -88,9 +88,9 @@ a:hover {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  position: fixed; 
-  left: 0; 
-  top: 0; 
+  position: fixed;
+  left: 0;
+  top: 0;
 }
 
 .navbar-top {
@@ -161,7 +161,6 @@ a:hover {
   flex-shrink: 0;
   border-radius: 5px;
   background: #810000;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   color: #fff;
   text-align: center;
   font-family: "Poppins";
@@ -207,7 +206,27 @@ a:hover {
   outline: 1px solid #810000;
 }
 
-#export, #import {
+#addSchedule {
+  width: 75px;
+  height: 30px;
+  margin: 0px;
+  flex-shrink: 0;
+  border-radius: 5px;
+  border: 1px solid #810000;
+  font-family: "Poppins";
+  font-size: 12px;
+  color: #fff;
+  background-color: #810000;
+  padding: 0px 12px 0px 12px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+#export,
+#import {
   width: 149px;
   height: 30px;
   flex-shrink: 0;
@@ -225,7 +244,8 @@ a:hover {
   line-height: normal;
 }
 
-#export:hover, #import:hover {
+#export:hover,
+#import:hover {
   outline: 1px solid #810000;
   cursor: pointer;
 }
@@ -389,6 +409,134 @@ input[type="file"] {
   cursor: pointer;
 }
 
+.modal-blur {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 8% auto;
+  padding: 0px 0px 20px 0px;
+  border: 1px solid #888;
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  border: 1px solid #000;
+  background: #fff;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.modal-content p {
+  font-size: 12px;
+}
+
+.top-modal {
+  width: 100%;
+  height: 50px;
+  background-color: #810000;
+  position: relative;
+  top: 0px;
+  border-radius: 14px 14px 0px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.top-modal h6 {
+  color: #fff;
+  text-align: center;
+  font-family: "Poppins";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.close-modal {
+  position: relative;
+  height: 0px;
+  top: -45px;
+  left: -15px;
+  color: #fff;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  align-self: flex-end;
+  padding-bottom: 0px;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.add-attendance-form {
+  width: 100%;
+}
+
+.add-attendance-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 20px 0px 20px;
+  gap: 10px;
+}
+
+.add-attendance-textbox {
+  width: 30%;
+  height: 20px;
+  flex-grow: 1;
+  border-radius: 5px;
+  border: 1px solid #000 !important;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.add-attendance-dropdown {
+  width: 30%;
+  height: 23px;
+  flex-grow: 1;
+  border-radius: 5px;
+  border: 1px solid #000 !important;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.add-button-container {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  margin-right: 40px;
+}
+
+.add-button {
+  height: 30px;
+  width: 100px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 0px;
+  background: #810000;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  color: #fff;
+  text-align: center;
+  font-family: "Poppins";
+  font-size: 12px;
+  font-style: normal;
+  line-height: normal;
+  margin-right: 20px;
+}
+
 @media only screen and (max-width: 811px) {
   h1 {
     font-size: 12px;
@@ -446,7 +594,8 @@ input[type="file"] {
     margin: 0px;
   }
 
-  #export, #import {
+  #export,
+  #import {
     width: 106px;
     font-size: 10px;
   }
