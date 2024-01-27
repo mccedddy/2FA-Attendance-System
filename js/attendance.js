@@ -3,12 +3,14 @@ document.addEventListener("DOMContentLoaded", function () {
   const tbody = table.querySelector("tbody");
   const dateFilter = document.getElementById("date");
   const subjectFilter = document.getElementById("subjectFilter");
+  const exportButton = document.getElementById("export");
 
   fetchAttendance(dateFilter.value, subjectFilter.value);
   sortTable();
 
   dateFilter.addEventListener("change", () => {fetchAttendance(dateFilter.value, subjectFilter.value);});
   subjectFilter.addEventListener("change", () => {fetchAttendance(dateFilter.value, subjectFilter.value);});
+  exportButton.addEventListener("click", () => {exportAttendance();});
 });
 
 function fetchAttendance(date, subject) {
@@ -63,6 +65,22 @@ function displayAttendanceData(data) {
     });
 }
 
+function exportAttendance() {
+  console.log('clicked export');
+  var section = document.getElementById("title").textContent;
+  var table = document.getElementById("attendanceTable");
+  var date = document.getElementById("date");
+
+  table.setAttribute("data-cols-width", "30,20,10,10,15,10,40,30");
+
+  var fileName = section + " - " + date.value + ".xlsx";
+  TableToExcel.convert(document.getElementById("attendanceTable"), {
+    name: fileName,
+    sheet: {
+      name: "Sheet 1",
+    },
+  });
+}
 
 function sortTable() {
   const table = document.getElementById("attendanceTable");
