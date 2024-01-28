@@ -22,21 +22,6 @@ h1 {
   line-height: normal;
 }
 
-.title {
-  margin: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  flex-shrink: 0;
-  color: #000;
-  text-align: center;
-  font-family: "Poppins";
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
-
 h2 {
   width: 80vw;
   padding: 0px 0px 0px 0px;
@@ -77,6 +62,21 @@ a:hover {
   cursor: pointer;
 }
 
+.title {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #000;
+  text-align: center;
+  font-family: "Poppins";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
 .logout-button {
   border: 0px;
   background-color: #00000000;
@@ -97,9 +97,9 @@ a:hover {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  position: fixed; /* Add this line to make it fixed */
-  left: 0; /* Adjust the positioning as needed */
-  top: 0; /* Adjust the positioning as needed */
+  position: fixed;
+  left: 0;
+  top: 0;
 }
 
 .navbar-top {
@@ -178,42 +178,6 @@ a:hover {
   cursor: pointer;
 }
 
-.search-container {
-  display: flex;
-  justify-content: end;
-}
-
-.search-textbox {
-  width: 200px;
-  height: 25px;
-  padding-left: 5px;
-  flex-shrink: 0;
-  border-radius: 10px;
-  border: 1px solid #810000;
-  background: #fff;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.search-textbox:hover,
-.filter-search:focus {
-  outline: 1px solid #810000;
-}
-
-input[type="text"] {
-  border: 0px;
-}
-
-#search {
-  display: inline-flex;
-}
-
-input[type="text"]:focus {
-  outline: none;
-}
-
 .filters-and-export {
   display: flex;
   align-items: center;
@@ -227,16 +191,20 @@ input[type="text"]:focus {
 
 .time-container {
   display: flex;
-  flex-wrap: wrap;
   justify-content: start;
   align-items: center;
   gap: 10px;
+  margin-top: 20px;
 }
 
-.date-time-filter {
+.time-container p {
+  margin: 0px;
+}
+
+.date-filter {
   width: 125px;
   height: 28px;
-  margin: 15px 3px 15px 0px;
+  margin: 0px;
   flex-shrink: 0;
   border-radius: 5px;
   border: 1px solid #810000;
@@ -247,26 +215,28 @@ input[type="text"]:focus {
   cursor: pointer;
 }
 
-.date-time-filter:hover,
-.date-time-filter:focus {
+.date-filter:hover,
+.date-filter:focus {
   outline: 1px solid #810000;
 }
 
 .edit-and-export {
   display: flex;
-  align-items: center;
+  align-items: end;
   justify-content: space-between;
+  gap: 5px;
+  flex-wrap: wrap;
 }
 
 .edit-container {
   display: flex;
-  flex-wrap: wrap;
+  gap: 5px;
 }
 
 .edit-class-button {
   width: 75px;
   height: 28px;
-  margin: 15px 3px 15px 0px;
+  margin: 0px;
   flex-shrink: 0;
   border-radius: 5px;
   border: 1px solid #810000;
@@ -287,7 +257,7 @@ input[type="text"]:focus {
   outline: 1px solid #810000;
 }
 
-.import-export {
+#import, #export {
   width: 149px;
   height: 30px;
   flex-shrink: 0;
@@ -305,7 +275,7 @@ input[type="text"]:focus {
   line-height: normal;
 }
 
-.import-export:hover {
+#import:hover, #export:hover {
   outline: 1px solid #810000;
   cursor: pointer;
 }
@@ -321,7 +291,6 @@ input[type="file"] {
   cursor: pointer;
   border: 1px solid #810000;
   border-radius: 5px;
-  /* display: inline-block; */
   font-size: 12px;
   display: flex;
   justify-content: center;
@@ -374,23 +343,24 @@ input[type="file"] {
 .section-button img {
   width: 100%;
   height: 100%;
-  max-width: 100px; /* Optionally set a maximum width for the image */
-  max-height: 100px; /* Optionally set a maximum height for the image */
+  max-width: 100px; 
+  max-height: 100px;
 }
 
 #attendanceTable {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 5px;
 }
 
 #attendanceTable th,
 #attendanceTable td {
   border: 1px solid #000;
-  padding: 8px;
+  padding: 5px;
   text-align: left;
   text-align: center;
   font-family: Poppins;
-  font-size: 14px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -399,6 +369,7 @@ input[type="file"] {
 #attendanceTable th {
   background-color: #810000;
   color: #fff;
+  font-size: 12px;
 }
 
 .mobile-navbar-toggle {
@@ -409,10 +380,6 @@ input[type="file"] {
   display: none;
   margin-top: 0px;
 }
-
-/* div {
-border: 1px solid red;
-} */
 
 .settings-container {
   padding: 5px 20px 20px 20px;
@@ -733,15 +700,6 @@ border: 1px solid red;
   flex-shrink: 0;
 }
 
-.time-container p {
-  color: #000;
-  font-family: "Poppins";
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
-
 .overview-container {
   display: flex;
   justify-content: space-around;
@@ -791,6 +749,27 @@ border: 1px solid red;
   line-height: 1;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @media only screen and (max-width: 811px) {
   .charts-section {
     flex-direction: column;
@@ -806,10 +785,6 @@ border: 1px solid red;
     flex-direction: column;
     gap: 10px;
   }
-
-  /* .overview-box {
-    width: 300px;
-  } */
 
   .box-text-container {
     width: 250px;
@@ -858,14 +833,6 @@ border: 1px solid red;
     margin-right: 20px;
   }
 
-  .search-container {
-    margin-bottom: 5px;
-  }
-
-  .search-textbox {
-    height: 20px;
-  }
-
   .filters-and-export {
     display: flex;
     margin-top: 5px;
@@ -879,32 +846,20 @@ border: 1px solid red;
     gap: 5px;
   }
 
-  .date-time-filter {
-    width: 80px;
-    font-size: 10px;
-    margin: 0px;
-  }
-
-  .edit-and-export {
-    display: flex;
-    margin-top: 5px;
-    justify-content: space-between;
-    align-items: end;
-    gap: 5px;
-  }
-
-  .edit-container {
-    display: flex;
-    gap: 5px;
-  }
-
   .edit-class-button {
     width: 80px;
     font-size: 10px;
     margin: 0px;
   }
 
-  .import-export {
+  .time-container {
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    gap: 5px;
+  }
+
+  #import, #export {
     width: 106px;
     font-size: 10px;
   }
@@ -927,10 +882,6 @@ border: 1px solid red;
     margin: 5px;
     flex-direction: row;
     padding: 5px 15px 5px 0px;
-  }
-
-  #attendanceTable {
-    margin-top: 7px;
   }
 
   #attendanceTable th,
@@ -1085,29 +1036,9 @@ border: 1px solid red;
   }
 }
 @media only screen and (max-width: 345px) {
-  .edit-and-export {
-    flex-direction: column;
-    align-items: start;
-  }
-
-  .edit-container {
-    flex-direction: column;
-  }
-
-  .search-container {
-    justify-content: start;
-  }
-
   #attendanceTable th,
   #attendanceTable td {
-    border: 1px solid #000;
     padding: 2px;
-    text-align: left;
-    text-align: center;
-    font-family: Poppins;
     font-size: 6px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
   }
 }

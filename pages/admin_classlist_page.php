@@ -217,8 +217,10 @@ mysqli_free_result($classListResult);
           <label for="fileInput" class="custom-file-input" id="fileInputLabel">Choose File</label>
           <span class="file-name" id="fileName">No file chosen</span>
           <input type="file" id="fileInput" accept=".xlsx" />
-          <button class="import-export" id="import"><p>IMPORT DATA</p><img src="..\assets\images\icons\upload.svg"/></button>
-          <button class="import-export" id="export"><p>EXPORT DATA</p><img src="..\assets\images\icons\download.svg"/></button>
+          <div style="display:flex; gap:5px;">
+            <button id="import"><p>IMPORT DATA</p><img src="..\assets\images\icons\upload.svg"/></button>
+            <button id="export"><p>EXPORT DATA</p><img src="..\assets\images\icons\download.svg"/></button>
+          </div>
         </div>
       </div>
       <table id="attendanceTable" data-cols-width="15,20,20,10,15,35">

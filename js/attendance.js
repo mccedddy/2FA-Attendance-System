@@ -1,185 +1,194 @@
 document.addEventListener("DOMContentLoaded", function () {
-  var table = document.getElementById("attendanceTable");
-  var tbody = table.querySelector("tbody");
-  var dateFilter = document.getElementById("date");
-  var roomFilter = document.getElementById("roomFilter");
-  var searchInput = document.getElementById("search");
-  var exportButton = document.getElementById("export");
-  var originalData = [];
+  const table = document.getElementById("attendanceTable");
+  const tbody = table.querySelector("tbody");
+  const dateFilter = document.getElementById("date");
+  const subjectFilter = document.getElementById("subjectFilter");
+  const importButton = document.getElementById("import");
+  const exportButton = document.getElementById("export");
+  const addAttendanceButton = document.getElementById("addButton");
 
-  // Fetch attendance data on page load
-  fetchAttendance(dateFilter.value);
-
-  // Initial sort
+  fetchAttendance(dateFilter.value, subjectFilter.value);
   sortTable();
 
-  // Initial filter
-  filterTable(originalData);
-
-  // Event listeners
-  document.getElementById("roomFilter").addEventListener("change", () => {
-    filterTable(originalData);
-  });
-  searchInput.addEventListener("change", () => {
-    filterTable(originalData);
-  });
-  document.getElementById("startTime").addEventListener("change", () => {
-    filterTable(originalData);
-  });
-  document.getElementById("endTime").addEventListener("change", () => {
-    filterTable(originalData);
-  });
   dateFilter.addEventListener("change", () => {
-    fetchAttendance(dateFilter.value);
+    fetchAttendance(dateFilter.value, subjectFilter.value);
+  });
+  subjectFilter.addEventListener("change", () => {
+    fetchAttendance(dateFilter.value, subjectFilter.value);
+  });
+  importButton.addEventListener("click", () => {
+    importAttendance();
   });
   exportButton.addEventListener("click", () => {
     exportAttendance();
   });
+  addAttendanceButton.addEventListener("click", (event) => {
+    addAttendance(event);
+  });
+});
 
-  console.log("=== END OF STARTUP ===");
+function fetchAttendance(date, subject) {
+  var url = "../includes/fetch_attendance.php";
+  var formData = new FormData();
+  formData.append("date", date);
+  formData.append("subject", subject);
 
-  function updateOriginalData(newData) {
-    originalData = newData;
-
-    // Perform necessary operations after updating originalData
-    sortTable();
-    displayAttendanceData(originalData);
-    filterTable(originalData);
-  }
-
-  // For attendance
-  function fetchAttendance(date) {
-    var url = "../includes/fetch_attendance.php";
-    var formData = new FormData();
-    formData.append("date", date);
-
-    fetch(url, {
-      method: "POST",
-      body: formData,
+  fetch(url, {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      displayAttendanceData(data);
+      // updateOriginalData(data);
     })
-      .then((response) => response.json())
-      .then((data) => {
-        displayAttendanceData(data);
-        updateOriginalData(data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }
-
-  function displayAttendanceData(data) {
-    const table = document.getElementById("attendanceTable");
-    const tbody = table.querySelector("tbody");
-
-    // Clear existing rows from the table
-    tbody.innerHTML = "";
-
-    // Append new rows based on the fetched data
-    data.forEach((rowData) => {
-      let row = document.createElement("tr");
-      let cells = Object.values(rowData).map((value) => {
-        const cell = document.createElement("td");
-        cell.innerText = value;
-        return cell;
-      });
-      cells.forEach((cell) => {
-        row.appendChild(cell);
-      });
-      tbody.appendChild(row);
+    .catch((error) => {
+      console.error("Error:", error);
     });
-  }
+}
 
-  // For table sort
-  function compareDateTime(a, b) {
-    const dateComparison =
-      new Date(b.cells[4].innerText + " " + b.cells[3].innerText) -
-      new Date(a.cells[4].innerText + " " + a.cells[3].innerText);
-    return dateComparison;
-  }
+function displayAttendanceData(data) {
+  const table = document.getElementById("attendanceTable");
+  const tbody = table.querySelector("tbody");
+  tbody.innerHTML = "";
 
-  function sortTable() {
-    const table = document.getElementById("attendanceTable");
-    const tbody = table.querySelector("tbody");
-    const rows = Array.from(tbody.querySelectorAll("tr"));
-
-    rows.sort(compareDateTime);
-    tbody.innerHTML = "";
-
-    rows.forEach((row) => {
-      tbody.appendChild(row);
+  data.forEach((rowData) => {
+    let row = document.createElement("tr");
+    // Create and append cells in the desired order
+    let cells = [
+      "student_name",
+      "student_number",
+      "status",
+      "time",
+      "date",
+      "room",
+      "subject_name",
+      "professor_name",
+      // "schedule_id"
+    ].map((key) => {
+      const cell = document.createElement("td");
+      cell.innerText = rowData[key];
+      return cell;
     });
-  }
-
-  // For table filter
-  function filterTable(originalData) {
-    var startTime = document.getElementById("startTime").value;
-    var endTime = document.getElementById("endTime").value;
-    var selectedRoom = roomFilter.value;
-    var searchValue = searchInput.value.toLowerCase();
-    table = document.getElementById("attendanceTable");
-    tbody = table.querySelector("tbody");
-
-    // Filter original data based on time range, room, and search
-    const filteredData = originalData.filter((row) => {
-      var time = row["TIME_FORMAT(a.time, '%H:%i')"];
-      var room = row.room;
-      var studentName = row["name"].toLowerCase();
-
-      // Check if the search input is present in the student's name
-      const isNameMatch = studentName.includes(searchValue);
-
-      if (
-        (selectedRoom === "ALL" || room === selectedRoom) &&
-        time >= startTime &&
-        time <= endTime &&
-        (searchValue === "" || isNameMatch)
-      ) {
-        return true;
-      }
-      return false;
+    cells.forEach((cell) => {
+      row.appendChild(cell);
     });
+    tbody.appendChild(row);
+  });
+}
 
-    // Clear existing rows from the table
-    tbody.innerHTML = "";
+function importAttendance() {
+  var section = document.getElementById("title").textContent;
+  var fileInput = document.getElementById("fileInput");
+  var file = fileInput.files[0];
 
-    // Append new rows based on the filtered data
-    filteredData.forEach((rowData) => {
-      const row = document.createElement("tr");
-      const cells = Object.values(rowData).map((value) => {
-        const cell = document.createElement("td");
-        cell.innerText = value;
-        return cell;
-      });
+  if (file) {
+    var reader = new FileReader();
 
-      cells.forEach((cell) => {
-        row.appendChild(cell);
-      });
+    reader.onload = function (e) {
+      var fileContent = e.target.result;
 
-      tbody.appendChild(row);
-    });
-  }
+      // Use xlsx library to read the file content
+      var workbook = XLSX.read(fileContent, { type: "binary" });
+      var sheetName = workbook.SheetNames[0];
+      var sheet = workbook.Sheets[sheetName];
 
-  function exportAttendance() {
-    var table = document.getElementById("attendanceTable");
-    var tbody = table.querySelector("tbody");
-    var section = document.getElementById("title").innerHTML;
-    var date = document.getElementById("date").value;
-    var startTime = document.getElementById("startTime").value;
-    var endTime = document.getElementById("endTime").value;
-    var fileName = section + " - " + date + ".xlsx";
+      // Convert sheet data to an array of objects starting from the 2nd row
+      var dataArray = XLSX.utils.sheet_to_json(sheet, { header: 1, range: 1 });
 
-    if (startTime != "00:00" || endTime != "23:59") {
-      fileName =
-        section + " - " + date + " - " + startTime + "-" + endTime + ".xlsx";
-    }
+      // var url = "../includes/import_attendance.php";
 
-    if (tbody.innerHTML != "") {
-      TableToExcel.convert(table, {
-        name: fileName,
-        sheet: {
-          name: "Sheet 1",
+      // Send dataArray to the server using a POST request
+      $.ajax({
+        url: url,
+        method: "POST",
+        data: { dataArray: JSON.stringify(dataArray) },
+        success: function (response) {
+          location.reload();
+        },
+        error: function (error) {
+          console.error("Error:", error);
         },
       });
-    }
+    };
+
+    reader.readAsBinaryString(file);
+  } else {
+    console.error("No file selected.");
   }
-});
+}
+
+function exportAttendance() {
+  console.log("clicked export");
+  var section = document.getElementById("title").textContent;
+  var table = document.getElementById("attendanceTable");
+  var date = document.getElementById("date");
+
+  table.setAttribute("data-cols-width", "30,20,10,10,15,10,40,30");
+
+  var fileName = section + " - " + date.value + ".xlsx";
+  TableToExcel.convert(document.getElementById("attendanceTable"), {
+    name: fileName,
+    sheet: {
+      name: "Sheet 1",
+    },
+  });
+}
+
+function sortTable() {
+  const table = document.getElementById("attendanceTable");
+  const tbody = table.querySelector("tbody");
+  const rows = Array.from(tbody.querySelectorAll("tr"));
+
+  rows.sort(compareDateTime);
+  tbody.innerHTML = "";
+
+  rows.forEach((row) => {
+    tbody.appendChild(row);
+  });
+}
+
+function compareDateTime(a, b) {
+  const dateComparison =
+    new Date(b.cells[4].innerText + " " + b.cells[3].innerText) -
+    new Date(a.cells[4].innerText + " " + a.cells[3].innerText);
+  return dateComparison;
+}
+
+function addAttendance(event) {
+  event.preventDefault();
+  var student = document.getElementById("attendanceStudent").value;
+  var status = document.getElementById("attendanceStatus").value;
+  var time = document.getElementById("attendanceTime").value;
+  var date = document.getElementById("attendanceDate").value;
+  var room = document.getElementById("attendanceRoom").value;
+  var subject = document.getElementById("attendanceSubject").value;
+  var professor = document.getElementById("attendanceProfessor").value;
+  var section = document.getElementById("attendanceSection").value;
+
+  console.log([student, status, time, date, room, subject, professor, section]);
+
+  var formData = new FormData();
+  formData.append("student", student);
+  formData.append("status", status);
+  formData.append("time", time);
+  formData.append("date", date);
+  formData.append("room", room);
+  formData.append("subject", subject);
+  formData.append("professor", professor);
+  formData.append("section", section);
+
+  var url = "../includes/add_attendance.php";
+
+  fetch(url, {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      location.reload();
+    })
+    .catch((error) => {
+      // console.error("Error:", error);
+    });
+}

@@ -108,8 +108,8 @@ mysqli_close($connection);
       <div class="filters-and-export">
         <div class="filters-container">
           <div class="time-container">
-            <p>From:</p><input type="date" id="startDate" class="date-time-filter" required>
-            <p>To:</p><input type="date" id="endDate" class="date-time-filter" required>
+              <p>From:</p><input type="date" id="startDate" class="date-filter" required>
+              <p>To:</p><input type="date" id="endDate" class="date-filter" required>
           </div>
         </div>
       </div>
