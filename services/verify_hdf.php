@@ -12,7 +12,7 @@ if (isset($_POST['UIDresult'])) {
   $timestamp = strtotime($date . ' ' . $time);
 
   // SQL query to fetch student data
-  $studentSQL = "SELECT CONCAT(last_name, ', ', first_name) AS name, student_number, section, nfc_uid FROM students WHERE nfc_uid = '$uid'";
+  $studentSQL = "SELECT last_name, student_number, section, nfc_uid FROM students WHERE nfc_uid = '$uid'";
   $studentStmt = mysqli_prepare($connection, $studentSQL);
   mysqli_stmt_execute($studentStmt);
   $result = mysqli_stmt_get_result($studentStmt);
