@@ -15,6 +15,14 @@ if (isset($_POST['UIDresult'])) {
   $studentStmt = mysqli_prepare($connection, $studentSQL);
   mysqli_stmt_execute($studentStmt);
   $result = mysqli_stmt_get_result($studentStmt);
+
+  // If no student found
+  if ($result == NULL || mysqli_num_rows($result) == 0) {
+    echo json_encode(['studentData' => ['name' => 'none', 'student_number' => 'none', 'nfc_uid' => $uid]]);
+    exit;
+  }
+
+  // Get student data
   $studentData = mysqli_fetch_assoc($result);
   $studentNumber = $studentData['student_number'];
   $section = $studentData['section'];
