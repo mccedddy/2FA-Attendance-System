@@ -20,9 +20,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $q8b = mysqli_real_escape_string($connection, $_POST['q8b']);
     $q8c = mysqli_real_escape_string($connection, $_POST['q8c']);
     $q8d = mysqli_real_escape_string($connection, $_POST['q8d']);
+    $score = 100;
+    $verified = "false";
 
     // Insert to database
-    $sql = "INSERT INTO hdf (student_number, q1, q2, q3, q4, q5, q6a, q6b, q7a, q7b, q8a, q8b, q8c, q8d) VALUES ('$studentNumber', '$q1', '$q2', '$q3', '$q4', '$q5', '$q6a', '$q6b', '$q7a', '$q7b', '$q8a', '$q8b', '$q8c', '$q8d')";
+    $sql = "INSERT INTO hdf (student_number, q1, q2, q3, q4, q5, q6a, q6b, q7a, q7b, q8a, q8b, q8c, q8d, score, verified) VALUES ('$studentNumber', '$q1', '$q2', '$q3', '$q4', '$q5', '$q6a', '$q6b', '$q7a', '$q7b', '$q8a', '$q8b', '$q8c', '$q8d', '$score', '$verified')";
     mysqli_query($connection, $sql);
+    $stmt = mysqli_prepare($connection, $sql);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
 }
 ?>

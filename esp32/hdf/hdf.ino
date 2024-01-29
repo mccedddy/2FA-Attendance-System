@@ -12,7 +12,7 @@ const char* password = "123abc123";
 
 // Server config
 // const String serverIP = "192.168.0.134"; // A7
-const String serverIP = "192.168.166.227"; // McDonald's WiFi
+const String serverIP = "192.168.166.62"; // McDonald's WiFi
 String phpScript = "PUP-HDF-Attendance-System/services/verify_hdf.php";
 String destinationUrl = "http://" + serverIP + "/" + phpScript;
 
