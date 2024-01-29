@@ -223,17 +223,23 @@ void loop() {
 
       // Display status
       lcd.clear();
-      if (status == "No schedule") {
+      if (verified == "false") {
         lcd.setCursor(0, 0);
-        lcd.print("  No schedule   ");
+        lcd.print("      HDF      ");
+        lcd.setCursor(0, 1);
+        lcd.print("  Not Verified  ");
 
         digitalWrite(buzzer, HIGH); delay(500); digitalWrite(buzzer, LOW);
         delay(250);
-
       }
-      
-      if (verified == "true") {
-        if (status == "Present" ) {
+      else if (verified == "true") {
+        if (status == "No schedule") {
+          lcd.setCursor(0, 0);
+          lcd.print("  No schedule   ");
+
+          digitalWrite(buzzer, HIGH); delay(500); digitalWrite(buzzer, LOW);
+          delay(250);
+        } else if (status == "Present" ) {
         lcd.setCursor(0, 0);
         lcd.print("    Recorded    ");
         lcd.setCursor(0, 1);
@@ -265,9 +271,7 @@ void loop() {
         }
       } else {
         lcd.setCursor(0, 0);
-        lcd.print("       HDF      ");
-        lcd.setCursor(0, 0);
-        lcd.print(" Not verified ");
+        lcd.print("No HDF recorded");
 
         digitalWrite(buzzer, HIGH); delay(500); digitalWrite(buzzer, LOW);
         delay(250);

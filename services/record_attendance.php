@@ -47,7 +47,6 @@ if (isset($_POST['UIDresult'])) {
     if ($hdfVerified == "false") {
       // Response: Not Verified
       echo json_encode(['hdf' => $hdfVerified]); 
-      exit;
     } else {
       echo json_encode(['hdf' => $hdfVerified]); 
     }
@@ -73,7 +72,7 @@ if (isset($_POST['UIDresult'])) {
   // Response: Schedule Data
   echo json_encode(['scheduleData' => $scheduleData]);
 
-  if ($result && mysqli_num_rows($result) > 0) {
+  if ($result && mysqli_num_rows($result) > 0 && $hdfVerified == "true") {
     $scheduleId = $scheduleData['id'];
     $startTime = $scheduleData['start_time'];
 
