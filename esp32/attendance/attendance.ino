@@ -12,13 +12,13 @@ const char* password = "123abc123";
 
 // Server config
 // const String serverIP = "192.168.0.134"; // A7
-const String serverIP = "192.168.166.227"; // McDonald's WiFi
+const String serverIP = "192.168.166.62"; // McDonald's WiFi
 const String phpScript = "PUP-HDF-Attendance-System/services/record_attendance.php";
 const String destinationUrl = "http://" + serverIP + "/" + phpScript;
 
 // Device config
 const String room = "312";
-const String title = "Attendance RM" + room;
+const String title = "RM" + room + " Attendance";
 
 // WiFi libraries
 #include <WiFi.h>
@@ -173,6 +173,8 @@ void loop() {
     String studentNumber = doc["studentData"]["student_number"];
     String nfcUid = doc["studentData"]["nfc_uid"];
     String status = "";
+    String verified = "";
+
 
     if (payload.indexOf("\"status\":\"Present\"") != -1) {
       status = "Present";
@@ -182,6 +184,14 @@ void loop() {
       status = "Already recorded"; 
     } else {
       status = "No schedule";
+    }
+
+    if (payload.indexOf("\"hdf\":\"true\"") != -1) {
+      verified = "true";
+    } else if (payload.indexOf("\"hdf\":\"false\"") != -1) {
+      verified = "false"; 
+    } else {
+      verified = "none";
     }
 
     // If no student found
@@ -220,7 +230,10 @@ void loop() {
         digitalWrite(buzzer, HIGH); delay(500); digitalWrite(buzzer, LOW);
         delay(250);
 
-      } else if (status == "Present") {
+      }
+      
+      if (verified == "true") {
+        if (status == "Present" ) {
         lcd.setCursor(0, 0);
         lcd.print("    Recorded    ");
         lcd.setCursor(0, 1);
@@ -229,27 +242,36 @@ void loop() {
         digitalWrite(buzzer, HIGH); delay(100); digitalWrite(buzzer, LOW);
         delay(650);
 
-      } else if (status == "Late") {
-        lcd.setCursor(0, 0);
-        lcd.print("    Recorded    ");
-        lcd.setCursor(0, 1);
-        lcd.print("      Late      ");
+        } else if (status == "Late") {
+          lcd.setCursor(0, 0);
+          lcd.print("    Recorded    ");
+          lcd.setCursor(0, 1);
+          lcd.print("      Late      ");
 
-        digitalWrite(buzzer, HIGH); delay(100); digitalWrite(buzzer, LOW); delay(100);
-        digitalWrite(buzzer, HIGH); delay(100); digitalWrite(buzzer, LOW); delay(100);
-        digitalWrite(buzzer, HIGH); delay(100); digitalWrite(buzzer, LOW);
+          digitalWrite(buzzer, HIGH); delay(100); digitalWrite(buzzer, LOW); delay(100);
+          digitalWrite(buzzer, HIGH); delay(100); digitalWrite(buzzer, LOW); delay(100);
+          digitalWrite(buzzer, HIGH); delay(100); digitalWrite(buzzer, LOW);
+          delay(250);
+
+        } else if (status == "Already recorded") {
+          lcd.setCursor(0, 0);
+          lcd.print("   Attendance   ");
+          lcd.setCursor(0, 1);
+          lcd.print("Already recorded");
+
+          digitalWrite(buzzer, HIGH); delay(100); digitalWrite(buzzer, LOW); delay(100);
+          digitalWrite(buzzer, HIGH); delay(100); digitalWrite(buzzer, LOW);
+          delay(450);
+        }
+      } else {
+        lcd.setCursor(0, 0);
+        lcd.print("       HDF      ");
+        lcd.setCursor(0, 0);
+        lcd.print(" Not verified ");
+
+        digitalWrite(buzzer, HIGH); delay(500); digitalWrite(buzzer, LOW);
         delay(250);
-
-      } else if (status == "Already recorded") {
-        lcd.setCursor(0, 0);
-        lcd.print("   Attendance   ");
-        lcd.setCursor(0, 1);
-        lcd.print("Already recorded");
-
-        digitalWrite(buzzer, HIGH); delay(100); digitalWrite(buzzer, LOW); delay(100);
-        digitalWrite(buzzer, HIGH); delay(100); digitalWrite(buzzer, LOW);
-        delay(450);
-      }
+      }      
     }
     
     // Reset LCD

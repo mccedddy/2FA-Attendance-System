@@ -1,9 +1,9 @@
 <?php
 // Database details
 $db_host = 'localhost';
-$db_user = 'admin';
-$db_password = 'admin';
-$db_name = 'pup_hdf_attendance_system';
+$db_user = 'puphas';
+$db_password = 'Puphas-2024';
+$db_name = 'puphas';
 
 // Connect to database
 $connection = mysqli_connect($db_host, $db_user, $db_password, $db_name);

@@ -22,6 +22,15 @@ if (isset($_POST['UIDresult'])) {
     exit;
   }
 
+  // Get student data
+  $studentData = mysqli_fetch_assoc($result);
+  $studentNumber = $studentData['student_number'];
+  $section = $studentData['section'];
+  mysqli_free_result($result);
+
+  // Response: Student Data
+  echo json_encode(['studentData' => $studentData]);
+
   // Get HDF data
   $hdfSQL = "SELECT * 
              FROM hdf 
@@ -33,26 +42,20 @@ if (isset($_POST['UIDresult'])) {
 
   if ($result && mysqli_num_rows($result) > 0) {
     $hdfData = mysqli_fetch_assoc($result);
+    $hdfVerified = $hdfData["verified"];
 
-    if ($hdfData["verified"] == "false") {
+    if ($hdfVerified == "false") {
       // Response: Not Verified
-      echo json_encode(['status' => ['hdf' => 'not verified']]); 
+      echo json_encode(['hdf' => $hdfVerified]); 
       exit;
+    } else {
+      echo json_encode(['hdf' => $hdfVerified]); 
     }
   } else {
     // Response: No HDF
-    echo json_encode(['status' => ['hdf' => 'no hdf']]); 
+    echo json_encode(['hdf' => 'none']); 
     exit;
   }
-
-  // Get student data
-  $studentData = mysqli_fetch_assoc($result);
-  $studentNumber = $studentData['student_number'];
-  $section = $studentData['section'];
-  mysqli_free_result($result);
-
-  // Response: Student Data
-  echo json_encode(['studentData' => $studentData]);
 
   // SQL query to retrieve schedule data
   $scheduleSQL = "SELECT * 
