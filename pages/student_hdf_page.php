@@ -59,7 +59,7 @@ if (isset($_POST['submit'])) {
     <link rel="stylesheet" href="../css/student_hdf_page.css" />
     <script>
       window.onload = function() {
-        document.getElementById("myForm").addEventListener("keypress", function(event) {
+        document.getElementById("hdf-form").addEventListener("keypress", function(event) {
           // Prevent form submission with enter
           if (event.keyCode === 13) {
             event.preventDefault();
