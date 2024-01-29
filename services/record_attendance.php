@@ -22,6 +22,29 @@ if (isset($_POST['UIDresult'])) {
     exit;
   }
 
+  // Get HDF data
+  $hdfSQL = "SELECT * 
+             FROM hdf 
+             WHERE student_number = '$studentNumber'
+             AND DATE(timestamp) = '$date'";
+  $hdfStmt = mysqli_prepare($connection, $hdfSQL);
+  mysqli_stmt_execute($hdfStmt);
+  $result = mysqli_stmt_get_result($hdfStmt);
+
+  if ($result && mysqli_num_rows($result) > 0) {
+    $hdfData = mysqli_fetch_assoc($result);
+
+    if ($hdfData["verified"] == "false") {
+      // Response: Not Verified
+      echo json_encode(['status' => ['hdf' => 'not verified']]); 
+      exit;
+    }
+  } else {
+    // Response: No HDF
+    echo json_encode(['status' => ['hdf' => 'no hdf']]); 
+    exit;
+  }
+
   // Get student data
   $studentData = mysqli_fetch_assoc($result);
   $studentNumber = $studentData['student_number'];
