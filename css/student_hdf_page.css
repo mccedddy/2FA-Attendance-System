@@ -359,7 +359,7 @@ a:hover {
   align-items: center;
 }
 
-#perfectScoreModal h2 {
+#scoreModal h2 {
   color: #dba61a;
   font-family: "Poppins";
   font-size: 20px;
@@ -368,8 +368,8 @@ a:hover {
   line-height: normal;
 }
 
-#perfectScoreModal p,
-#perfectScoreModal h6,
+#scoreModal p,
+#scoreModal h6,
 #confirmationModal p {
   font-size: 10px;
   text-align: center;
