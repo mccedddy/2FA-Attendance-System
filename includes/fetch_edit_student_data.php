@@ -1,6 +1,8 @@
 <?php
 if (isset($_POST['studentNumber'])) {
   require 'database_connection.php'; 
+  require_once 'encryption.php';
+  $encryptionHelper = new EncryptionHelper($encryptionKey);
 
   $studentNumber = $_POST['studentNumber'];
 
@@ -14,6 +16,8 @@ if (isset($_POST['studentNumber'])) {
 
   // Fetch the student data
   $studentData = mysqli_fetch_assoc($result);
+  $decryptedEmail = $encryptionHelper->decryptData($studentData['email']);
+  $studentData['email'] = $decryptedEmail;
 
   // Close the statement and connection
   mysqli_stmt_close($stmt);

@@ -2,6 +2,9 @@
 require 'database_connection.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  require_once 'encryption.php';
+  $encryptionHelper = new EncryptionHelper($encryptionKey);
+  
   // Check if dataArray is set in the POST data
   if (isset($_POST['dataArray'])) {
     $dataArray = json_decode($_POST['dataArray'], true);
@@ -16,6 +19,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       // Hash the password (Default: Last Name)
       $hashedPassword = password_hash($lastName, PASSWORD_DEFAULT);
 
+      // Encrypt email
+      $encryptedEmail = $encryptionHelper->encryptData($email);
+
       // Check if student with the same student_number already exists
       $checkProfessorSQL = "SELECT COUNT(*) as professorCount FROM professors WHERE id_number = '$idNumber'";
       $stmtCheckProfessor = mysqli_prepare($connection, $checkProfessorSQL);
@@ -27,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       if ($professorCount == 0) {
         // Insert the student into the students table
         if ($lastName && $firstName && $idNumber && $email) {
-          $insertProfessorSQL = "INSERT INTO professors (last_name, first_name, id_number, email, password) VALUES ('$lastName', '$firstName', '$idNumber', '$email', '$hashedPassword')";
+          $insertProfessorSQL = "INSERT INTO professors (last_name, first_name, id_number, email, password) VALUES ('$lastName', '$firstName', '$idNumber', '$encryptedEmail', '$hashedPassword')";
           $stmtInsertProfessor = mysqli_prepare($connection, $insertProfessorSQL);
           mysqli_stmt_execute($stmtInsertProfessor);
           mysqli_stmt_close($stmtInsertProfessor);

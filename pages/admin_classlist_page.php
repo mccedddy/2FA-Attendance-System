@@ -2,6 +2,8 @@
 session_start();
 require '../includes/database_connection.php';
 date_default_timezone_set('Asia/Manila');
+require_once '../includes/encryption.php';
+$encryptionHelper = new EncryptionHelper($encryptionKey);
 
 // If logged in
 if (isset($_SESSION['student_number'])) {
@@ -65,9 +67,12 @@ if (isset($_POST['add-student'])) {
   // Hash the password (Default: Last Name)
   $hashedPassword = password_hash($lastName, PASSWORD_DEFAULT);
 
+  // Encrypt email
+  $encryptedEmail = $encryptionHelper->encryptData($email);
+
   // SQL query to insert data into the students table
   $sql = "INSERT INTO students (last_name, first_name, student_number, section, nfc_uid, email, password)
-            VALUES ('$lastName', '$firstName', '$studentNumber', '$section', '$nfcUid', '$email', '$hashedPassword')";
+            VALUES ('$lastName', '$firstName', '$studentNumber', '$section', '$nfcUid', '$encryptedEmail', '$hashedPassword')";
 
   // Use prepared statement
   $stmt = mysqli_prepare($connection, $sql);
@@ -98,7 +103,7 @@ if (isset($_POST['edit-student'])) {
   $editFirstName = $_POST['first_name'];
   $editStudentNumber = $_POST['student_number'];
   $editNfcUid = $_POST['nfc_uid'];
-  $editEmail = $_POST['email'];
+  $editEmail = $encryptionHelper->encryptData($_POST['email']);
   $originalStudentNumber = $_POST['original_student_number'];
 
   // SQL query to update data in the students table
@@ -144,7 +149,7 @@ while ($row = mysqli_fetch_assoc($classListResult)) {
             'studentNumber' => $row['student_number'],
             'section'       => $row['section'],
             'nfcUid'        => $row['nfc_uid'],
-            'email'         => $row['email'],
+            'email'         => $encryptionHelper->decryptData($row['email']),
           ];
   $classList[] = $studentInfo;
 }

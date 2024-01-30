@@ -2,6 +2,9 @@
 require 'database_connection.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  require_once 'encryption.php';
+  $encryptionHelper = new EncryptionHelper($encryptionKey);
+  
   // Check if dataArray is set in the POST data
   if (isset($_POST['dataArray'])) {
     $dataArray = json_decode($_POST['dataArray'], true);
@@ -18,6 +21,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       // Hash the password (Default: Last Name)
       $hashedPassword = password_hash($lastName, PASSWORD_DEFAULT);
 
+      // Encrypt email
+      $encryptedEmail = $encryptionHelper->encryptData($email);
+
       // Check if student with the same student_number already exists
       $checkStudentSQL = "SELECT COUNT(*) as studentCount FROM students WHERE student_number = '$studentNumber'";
       $stmtCheckStudent = mysqli_prepare($connection, $checkStudentSQL);
@@ -28,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       if ($studentCount == 0) {
         // Insert the student into the students table
-        $insertStudentSQL = "INSERT INTO students (last_name, first_name, student_number, section, nfc_uid, email, password) VALUES ('$lastName', '$firstName', '$studentNumber', '$section', '$nfcUid', '$email', '$hashedPassword')";
+        $insertStudentSQL = "INSERT INTO students (last_name, first_name, student_number, section, nfc_uid, email, password) VALUES ('$lastName', '$firstName', '$studentNumber', '$section', '$nfcUid', '$encryptedEmail', '$hashedPassword')";
         $stmtInsertStudent = mysqli_prepare($connection, $insertStudentSQL);
         mysqli_stmt_execute($stmtInsertStudent);
         mysqli_stmt_close($stmtInsertStudent);
