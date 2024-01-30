@@ -17,7 +17,7 @@ const String phpScript = "PUP-HDF-Attendance-System/services/record_attendance.p
 const String destinationUrl = "http://" + serverIP + "/" + phpScript;
 
 // Device config
-const String room = "312";
+const String room = "300";
 const String title = "RM" + room + " Attendance";
 
 // WiFi libraries
@@ -204,9 +204,16 @@ void loop() {
       lcd.setCursor(0, 1);
       lcd.print(" not registered ");
 
-      digitalWrite(buzzer, HIGH);
-      delay(750);
-      digitalWrite(buzzer, LOW);
+      digitalWrite(buzzer, HIGH); delay(750); digitalWrite(buzzer, LOW);
+      
+      String UIDresultDisplay = "    " + UIDresultSend + "    ";
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("      UID:      ");
+      lcd.setCursor(0, 1);
+      lcd.print(UIDresultDisplay);
+
+      delay(1000);
       
     } else {
       Serial.println(status);
