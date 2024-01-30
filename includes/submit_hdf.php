@@ -1,25 +1,26 @@
 <?php
 date_default_timezone_set('Asia/Manila');
 
+require 'database_connection.php';
+session_start();
+$date = date('Y-m-d');
+$studentNumber = $_SESSION['student_number'];
+
+// SQL query to check if hdf exists
+$hdfSQL = "SELECT * FROM hdf WHERE student_number = '$studentNumber' AND DATE(timestamp) = '$date'";
+$hdfStmt = mysqli_prepare($connection, $hdfSQL);
+mysqli_stmt_execute($hdfStmt);
+$result = mysqli_stmt_get_result($hdfStmt);
+
+if ($result && mysqli_num_rows($result) > 0) {
+    $hdf = mysqli_fetch_assoc($result);
+    $score = $hdf["score"];
+    echo json_encode(['score' => $score]);
+    exit;
+}
+
 // Check if the form was submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    require 'database_connection.php';
-    session_start();
-    $date = date('Y-m-d');
-    $studentNumber = $_SESSION['student_number'];
-
-    // SQL query to check if hdf exists
-    $hdfSQL = "SELECT * FROM hdf WHERE student_number = '$studentNumber' AND DATE(timestamp) = '$date'";
-    $hdfStmt = mysqli_prepare($connection, $hdfSQL);
-    mysqli_stmt_execute($hdfStmt);
-    $result = mysqli_stmt_get_result($hdfStmt);
-
-    // If there is an existing hdf
-    if ($result && mysqli_num_rows($result) > 0) {
-        echo json_encode(['status' => 'existing']);
-        exit;
-    }
-
+if (isset($_POST['score'])) {
     $q1 = mysqli_real_escape_string($connection, $_POST['q1']);
     $q2 = mysqli_real_escape_string($connection, $_POST['q2']);
     $q3 = mysqli_real_escape_string($connection, $_POST['q3']);

@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // Check HDF for today
+  checkHDF();
+
   // Show / Hide Question 6
   var hiddenQuestions = document.querySelector(".hidden-question");
   hiddenQuestions.style.display = "none";
@@ -268,6 +271,24 @@ function submitForm(event) {
       console.log(data);
       closeConfirmationModal();
       openScoreModal(score);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
+
+function checkHDF() {
+  var url = "../includes/submit_hdf.php";
+  fetch(url, {
+    method: "POST",
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      var score = data["score"];
+      if (score) {
+        openScoreModal(score);
+      }
     })
     .catch((error) => {
       console.error("Error:", error);
