@@ -2,6 +2,10 @@
 session_start();
 require '../includes/database_connection.php';
 
+require_once '../includes/encryption.php';
+$encryptionKey = "Puphas-20240201.";
+$encryptionHelper = new EncryptionHelper($encryptionKey);
+
 // If logged in
 if (isset($_SESSION['id_number'])) {
   // Redirect to professor homepage
@@ -37,7 +41,7 @@ if (isset($_POST['logout'])) {
   require '../includes/logout.php';
 }
 
-// Fetch HDF data for the student
+// Fetch latest HDF data for the student
 $sql = "SELECT * FROM hdf WHERE student_number = '$studentNumber' ORDER BY timestamp DESC LIMIT 1";
 
 $result = mysqli_query($connection, $sql);
@@ -52,11 +56,11 @@ if ($result) {
   $q5DefaultValue = isset($hdfData['q5']) ? $hdfData['q5'] : '';
   $q6aDefaultValue = isset($hdfData['q6a']) ? $hdfData['q6a'] : '';
   $q6bDefaultValue = isset($hdfData['q6b']) ? $hdfData['q6b'] : '';
-  $q7aDefaultValue = isset($hdfData['q7a']) ? $hdfData['q7a'] : '';
-  $q7bDefaultValue = isset($hdfData['q7b']) ? $hdfData['q7b'] : '';
-  $q8aDefaultValue = isset($hdfData['q8a']) ? $hdfData['q8a'] : '';
-  $q8bDefaultValue = isset($hdfData['q8b']) ? $hdfData['q8b'] : '';
-  $q8cDefaultValue = isset($hdfData['q8c']) ? $hdfData['q8c'] : '';
+  $q7aDefaultValue = isset($hdfData['q7a']) ? $encryptionHelper->decryptData($hdfData['q7a']) : '';
+  $q7bDefaultValue = isset($hdfData['q7b']) ? $encryptionHelper->decryptData($hdfData['q7b']) : '';
+  $q8aDefaultValue = isset($hdfData['q8a']) ? $encryptionHelper->decryptData($hdfData['q8a']) : '';
+  $q8bDefaultValue = isset($hdfData['q8b']) ? $encryptionHelper->decryptData($hdfData['q8b']) : '';
+  $q8cDefaultValue = isset($hdfData['q8c']) ? $encryptionHelper->decryptData($hdfData['q8c']) : '';
   $q8dDefaultValue = isset($hdfData['q8d']) ? $hdfData['q8d'] : '';
 
   $symptoms = explode(',', $q2DefaultValue);
