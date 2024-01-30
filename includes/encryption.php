@@ -1,4 +1,6 @@
 <?php
+require_once '../includes/encryption_key.php';
+
 class EncryptionHelper {
     private $encryptionKey;
 

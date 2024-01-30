@@ -3,7 +3,6 @@ session_start();
 require '../includes/database_connection.php';
 
 require_once '../includes/encryption.php';
-$encryptionKey = "Puphas-20240201.";
 $encryptionHelper = new EncryptionHelper($encryptionKey);
 
 // If logged in
@@ -85,7 +84,6 @@ if ($result) {
     <script>
       window.onload = function() {
         document.getElementById("hdf-form").addEventListener("keypress", function(event) {
-          // Prevent form submission with enter
           if (event.keyCode === 13) {
             event.preventDefault();
           }

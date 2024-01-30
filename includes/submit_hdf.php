@@ -2,7 +2,6 @@
 date_default_timezone_set('Asia/Manila');
 
 require_once 'encryption.php';
-$encryptionKey = "Puphas-20240201.";
 $encryptionHelper = new EncryptionHelper($encryptionKey);
 
 require 'database_connection.php';
