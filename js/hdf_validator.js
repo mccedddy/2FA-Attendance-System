@@ -96,13 +96,13 @@ function validateForm() {
 }
 
 // Popup Controller
-function openPerfectScoreModal() {
-  var modal = document.getElementById("perfectScoreModal");
+function openscoreModal() {
+  var modal = document.getElementById("scoreModal");
   modal.style.display = "block";
 }
 
-function closePerfectScoreModal() {
-  var modal = document.getElementById("perfectScoreModal");
+function closescoreModal() {
+  var modal = document.getElementById("scoreModal");
   modal.style.display = "none";
 }
 
@@ -116,8 +116,105 @@ function closeConfirmationModal() {
   confirmationModal.style.display = "none";
 }
 
-function submitForm() {
-  document.getElementById("hidden-submit-button").click();
-  closeConfirmationModal();
-  openPerfectScoreModal();
+function submitForm(event) {
+  event.preventDefault();
+
+  // Question 1
+  var q1 = document.getElementsByName("q1");
+  var q1Value = "";
+  for (var i = 0; i < q1.length; i++) {
+    if (q1[i].checked) {
+      q1Value = q1[i].value;
+      break;
+    }
+  }
+
+  // Question 2
+  var q2Value = [];
+  var q2Checkboxes = document.getElementsByName("q2[]");
+  for (var i = 0; i < q2Checkboxes.length; i++) {
+    if (q2Checkboxes[i].checked) {
+      q2Value.push(q2Checkboxes[i].value);
+    }
+  }
+
+  // Question 3
+  var q3 = document.getElementsByName("q3");
+  var q3Value = "";
+  for (var i = 0; i < q3.length; i++) {
+    if (q3[i].checked) {
+      q3Value = q3[i].value;
+      break;
+    }
+  }
+
+  // Question 4
+  var q4 = document.getElementsByName("q4");
+  var q4Value = "";
+  for (var i = 0; i < q4.length; i++) {
+    if (q4[i].checked) {
+      q4Value = q4[i].value;
+      break;
+    }
+  }
+
+  // Question 5
+  var q5 = document.getElementsByName("q5");
+  var q5Value = "";
+  for (var i = 0; i < q5.length; i++) {
+    if (q5[i].checked) {
+      q5Value = q5[i].value;
+      break;
+    }
+  }
+
+  // Question 6
+  var q6aValue = document.getElementsByName("q6a")[0].value;
+  var q6bValue = document.getElementsByName("q6b")[0].value;
+
+  // Question 7
+  var q7aValue = document.getElementsByName("q7a")[0].value;
+  var q7bValue = document.getElementsByName("q7b")[0].value;
+
+  // Question 8
+  var q8aValue = document.getElementsByName("q8a")[0].value;
+  var q8bValue = document.getElementsByName("q8b")[0].value;
+  var q8cValue = document.getElementsByName("q8c")[0].value;
+  var q8dValue = document.getElementsByName("q8d")[0].value;
+
+  console.log([q1Value, q2Value, q3Value, q4Value, q5Value, 
+              q6aValue, q6bValue, 
+              q7aValue, q7bValue, 
+              q8aValue, q8cValue, q8aValue, q8dValue]);
+
+  var formData = new FormData();
+  formData.append("q1", q1Value);
+  formData.append("q2", q2Value);
+  formData.append("q3", q3Value);
+  formData.append("q4", q4Value);
+  formData.append("q5", q5Value);
+  formData.append("q6a", q6aValue);
+  formData.append("q6b", q6bValue);
+  formData.append("q7a", q7aValue);
+  formData.append("q7b", q7bValue);
+  formData.append("q8a", q8aValue);
+  formData.append("q8b", q8bValue);
+  formData.append("q8c", q8cValue);
+  formData.append("q8d", q8dValue);
+
+  var url = "../includes/submit_hdf.php";
+
+  fetch(url, {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      closeConfirmationModal();
+      openscoreModal();
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 }

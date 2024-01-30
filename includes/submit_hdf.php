@@ -1,14 +1,27 @@
 <?php
-require 'database_connection.php';
+date_default_timezone_set('Asia/Manila');
 
 // Check if the form was submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Convert array to string
-    $q2string = implode(", ", $_POST['q2']);
-
+    require 'database_connection.php';
+    session_start();
+    $date = date('Y-m-d');
     $studentNumber = $_SESSION['student_number'];
+
+    // SQL query to check if hdf exists
+    $hdfSQL = "SELECT * FROM hdf WHERE student_number = '$studentNumber' AND DATE(timestamp) = '$date'";
+    $hdfStmt = mysqli_prepare($connection, $hdfSQL);
+    mysqli_stmt_execute($hdfStmt);
+    $result = mysqli_stmt_get_result($hdfStmt);
+
+    // If there is an existing hdf
+    if ($result && mysqli_num_rows($result) > 0) {
+        echo json_encode(['status' => 'existing']);
+        exit;
+    }
+
     $q1 = mysqli_real_escape_string($connection, $_POST['q1']);
-    $q2 = mysqli_real_escape_string($connection, $q2string);
+    $q2 = mysqli_real_escape_string($connection, $_POST['q2']);
     $q3 = mysqli_real_escape_string($connection, $_POST['q3']);
     $q4 = mysqli_real_escape_string($connection, $_POST['q4']);
     $q5 = mysqli_real_escape_string($connection, $_POST['q5']);
@@ -28,5 +41,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt = mysqli_prepare($connection, $sql);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
+    echo json_encode(['status' => 'success']);
 }
 ?>

@@ -333,7 +333,6 @@ if (isset($_POST['submit'])) {
                 </div>
               </div>
             </div>
-            <button type="submit" name="submit" id="hidden-submit-button" style="display: none;"></button>
           </form>
           <div class="button-container">
             <button class="confirm-button" id="confirm-button" onclick="validateForm()">
@@ -351,14 +350,14 @@ if (isset($_POST['submit'])) {
         <p>Kindly make sure that the data submitted is all true.</p>
         <div class="buttons-container">
           <button id="confirmationBackButton" onclick="closeConfirmationModal()">BACK</button>
-          <button id="submitButton" onclick="submitForm()">SUBMIT</button>
+          <button id="submitButton" onclick="submitForm(event)">SUBMIT</button>
         </div>
       </div>
     </div>
 
     <div id="scoreModal" class="modal-blur">
       <div class="modal-content">
-        <span class="close-modal" onclick="closePerfectScoreModal()">&times;</span>
+        <span class="close-modal" onclick="closescoreModal()">&times;</span>
         <div class="score-container">
           <div id="yellow">
             <div id="white">
