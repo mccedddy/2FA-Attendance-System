@@ -46,6 +46,7 @@ if ($result) {
   mysqli_free_result($result);
 
   $q1DefaultValue = isset($hdfData['q1']) ? $hdfData['q1'] : '';
+  $q2DefaultValue = isset($hdfData['q2']) ? $hdfData['q2'] : '';
   $q3DefaultValue = isset($hdfData['q3']) ? $hdfData['q3'] : '';
   $q4DefaultValue = isset($hdfData['q4']) ? $hdfData['q4'] : '';
   $q5DefaultValue = isset($hdfData['q5']) ? $hdfData['q5'] : '';
@@ -57,6 +58,9 @@ if ($result) {
   $q8bDefaultValue = isset($hdfData['q8b']) ? $hdfData['q8b'] : '';
   $q8cDefaultValue = isset($hdfData['q8c']) ? $hdfData['q8c'] : '';
   $q8dDefaultValue = isset($hdfData['q8d']) ? $hdfData['q8d'] : '';
+
+  $symptoms = explode(',', $q2DefaultValue);
+  $symptomStatus = array_fill_keys($symptoms, true);
 }
 ?>
 
@@ -150,15 +154,15 @@ if ($result) {
                   <div class="checkbox-choices">
                     <div class="checkbox-choices-L">
                       <label>
-                        <input type="checkbox" name="q2[]" value="fever" />
+                        <input type="checkbox" name="q2[]" value="fever" <?php if (isset($symptomStatus['fever'])) echo 'checked'; ?> />
                         Fever
                       </label>
                       <label>
-                        <input type="checkbox" name="q2[]" value="cough" />
+                        <input type="checkbox" name="q2[]" value="cough" <?php if (isset($symptomStatus['cough'])) echo 'checked'; ?> />
                         Cough
                       </label>
                       <label>
-                        <input type="checkbox" name="q2[]" value="colds" />
+                        <input type="checkbox" name="q2[]" value="colds" <?php if (isset($symptomStatus['colds'])) echo 'checked'; ?> />
                         Colds
                       </label>
                       <label>
@@ -166,6 +170,7 @@ if ($result) {
                           type="checkbox"
                           name="q2[]"
                           value="muscle-body-pains"
+                          <?php if (isset($symptomStatus['muscle-body-pains'])) echo 'checked'; ?>
                         />
                         Muscle/body pains
                       </label>
@@ -174,17 +179,18 @@ if ($result) {
                           type="checkbox"
                           name="q2[]"
                           value="sore-throat"
+                          <?php if (isset($symptomStatus['sore-throat'])) echo 'checked'; ?>
                         />
                         Sore throat
                       </label>
                       <label>
-                        <input type="checkbox" name="q2[]" value="diarrhea" />
+                        <input type="checkbox" name="q2[]" value="diarrhea" <?php if (isset($symptomStatus['diarrhea'])) echo 'checked'; ?> />
                         Diarrhea
                       </label>
                     </div>
                     <div class="checkbox-choices-L">
                       <label>
-                        <input type="checkbox" name="q2[]" value="headache" />
+                        <input type="checkbox" name="q2[]" value="headache" <?php if (isset($symptomStatus['headache'])) echo 'checked'; ?> />
                         Headache
                       </label>
                       <label>
@@ -192,6 +198,7 @@ if ($result) {
                           type="checkbox"
                           name="q2[]"
                           value="shortness-of-breath"
+                          <?php if (isset($symptomStatus['shortness-of-breath'])) echo 'checked'; ?>
                         />
                         Shortness of breath
                       </label>
@@ -200,6 +207,7 @@ if ($result) {
                           type="checkbox"
                           name="q2[]"
                           value="difficulty-of-breathing"
+                          <?php if (isset($symptomStatus['difficulty-of-breathing'])) echo 'checked'; ?>
                         />
                         Difficulty of breathing
                       </label>
@@ -208,6 +216,7 @@ if ($result) {
                           type="checkbox"
                           name="q2[]"
                           value="loss-of-taste"
+                          <?php if (isset($symptomStatus['loss-of-taste'])) echo 'checked'; ?>
                         />
                         Loss of taste
                       </label>
@@ -216,11 +225,12 @@ if ($result) {
                           type="checkbox"
                           name="q2[]"
                           value="loss-of-smell"
+                          <?php if (isset($symptomStatus['loss-of-smell'])) echo 'checked'; ?>
                         />
                         Loss of smell
                       </label>
                       <label>
-                        <input type="checkbox" name="q2[]" value="none" />
+                        <input type="checkbox" name="q2[]" value="none" <?php if (isset($symptomStatus['none'])) echo 'checked'; ?> />
                         None of the above
                       </label>
                     </div>
