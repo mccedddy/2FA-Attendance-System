@@ -96,14 +96,36 @@ function validateForm() {
 }
 
 // Popup Controller
-function openscoreModal() {
+function openScoreModal(score) {
   var modal = document.getElementById("scoreModal");
+  var scoreDisplay = document.getElementById("score");
+  var result = document.getElementById("result");
+  var message1 = document.getElementById("message1");
+  var message2 = document.getElementById("message2");
+
+  if (score == 100) {
+    result.innerHTML = "PERFECT SCORE";
+    message1.innerHTML = "All are reminded to follow basic health sanitation and health protocols while inside the campus such as washing of hands with soap, using alcohol to sanitize hands and personal belongings, observing social distance, and avoiding mass gatherings among others.";
+    message2.innerHTML = "Your score has been stored in your NFC tag. Tap your NFC tag on the scanner in front of the main gate to be able to enter.";
+  } else {
+    result.innerHTML = "NOT PERFECT SCORE";
+    message1.innerHTML = "If you have flu-like symptoms, please immediately seek medical advice throuh telemedicine or phone consultation to allow health care providers to direct you to the right health facility. PUP MSD will entertain phone consultation to prevent overcrowding and further interaction in waiting areas.";
+    message2.innerHTML = "You are advised not to go the University and should inform your Professors as well as the PUP Medical Services Department(PUP MSD) right away.";
+
+    var yellow = document.getElementById("yellow");
+    scoreDisplay.style.color = "#810000";
+    yellow.style.backgroundColor = "#810000";
+    result.style.color = "#810000";
+  }
+
+  scoreDisplay.innerHTML = score;
   modal.style.display = "block";
 }
 
 function closescoreModal() {
   var modal = document.getElementById("scoreModal");
   modal.style.display = "none";
+  window.location.href = "student_homepage.php";
 }
 
 function openConfirmationModal() {
@@ -118,6 +140,7 @@ function closeConfirmationModal() {
 
 function submitForm(event) {
   event.preventDefault();
+  var score = 0;
 
   // Question 1
   var q1 = document.getElementsByName("q1");
@@ -137,6 +160,13 @@ function submitForm(event) {
       q2Value.push(q2Checkboxes[i].value);
     }
   }
+  var q2score = 22;
+  for (var j = 0; j < q2Value.length; j++) {
+    if (q2Value[j] !== "none") {
+        q2score -= 2;
+    }
+  }
+  score += q2score;
 
   // Question 3
   var q3 = document.getElementsByName("q3");
@@ -146,6 +176,9 @@ function submitForm(event) {
       q3Value = q3[i].value;
       break;
     }
+  }
+  if (q3Value == "no" || q3Value == "uncertain") {
+    score += 25;
   }
 
   // Question 4
@@ -157,6 +190,9 @@ function submitForm(event) {
       break;
     }
   }
+  if (q4Value == "no") {
+    score += 25;
+  }
 
   // Question 5
   var q5 = document.getElementsByName("q5");
@@ -166,6 +202,9 @@ function submitForm(event) {
       q5Value = q5[i].value;
       break;
     }
+  }
+  if (q5Value == "no" || q5Value == "yes-negative") {
+    score += 28;
   }
 
   // Question 6
@@ -182,11 +221,6 @@ function submitForm(event) {
   var q8cValue = document.getElementsByName("q8c")[0].value;
   var q8dValue = document.getElementsByName("q8d")[0].value;
 
-  console.log([q1Value, q2Value, q3Value, q4Value, q5Value, 
-              q6aValue, q6bValue, 
-              q7aValue, q7bValue, 
-              q8aValue, q8cValue, q8aValue, q8dValue]);
-
   var formData = new FormData();
   formData.append("q1", q1Value);
   formData.append("q2", q2Value);
@@ -201,6 +235,7 @@ function submitForm(event) {
   formData.append("q8b", q8bValue);
   formData.append("q8c", q8cValue);
   formData.append("q8d", q8dValue);
+  formData.append("score", score);
 
   var url = "../includes/submit_hdf.php";
 
@@ -212,7 +247,7 @@ function submitForm(event) {
     .then((data) => {
       console.log(data);
       closeConfirmationModal();
-      openscoreModal();
+      openScoreModal(score);
     })
     .catch((error) => {
       console.error("Error:", error);

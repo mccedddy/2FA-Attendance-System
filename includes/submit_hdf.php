@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $q8b = mysqli_real_escape_string($connection, $_POST['q8b']);
     $q8c = mysqli_real_escape_string($connection, $_POST['q8c']);
     $q8d = mysqli_real_escape_string($connection, $_POST['q8d']);
-    $score = 100;
+    $score = mysqli_real_escape_string($connection, $_POST['score']);
     $verified = "false";
 
     // Insert to database

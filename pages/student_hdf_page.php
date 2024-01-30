@@ -361,13 +361,13 @@ if (isset($_POST['submit'])) {
         <div class="score-container">
           <div id="yellow">
             <div id="white">
-              <h2 id="score">100</h2>
+              <h2 id="score">Score</h2>
             </div>
           </div>
         </div>
-        <h2 id="result">PERFECT SCORE</h2>
-        <p id="message">All are reminded to follow basic health sanitation and health protocols while inside the campus such as washing of hands with soap, using alcohol to sanitize hands and personal belongings, observing social distance, and avoiding mass gatherings among others.</p>
-        <h6>Your score has been stored in your NFC tag. Tap your NFC tag on the scanner in front of the main gate to be able to enter.</h6>
+        <h2 id="result">RESULT</h2>
+        <p id="message1">Message 1</p>
+        <h6 id="message2">Message 2</h6>
       </div>
     </div>
 
