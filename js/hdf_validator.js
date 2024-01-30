@@ -27,6 +27,26 @@ document.addEventListener("DOMContentLoaded", function () {
   for (var i = 0; i < radioQ5.length; i++) {
     radioQ5[i].addEventListener("change", handleRadioChange);
   }
+
+  // Checkboxes behavior
+  var noneCheckbox = document.querySelector('input[name="q2[]"][value="none"]');
+  var otherCheckboxes = document.querySelectorAll('input[name="q2[]"]:not([value="none"])');
+
+  noneCheckbox.addEventListener('change', function() {
+    if (this.checked) {
+      otherCheckboxes.forEach(function(checkbox) {
+        checkbox.checked = false;
+      });
+    }
+  });
+
+  otherCheckboxes.forEach(function(checkbox) {
+    checkbox.addEventListener('change', function() {
+      if (this.checked) {
+        noneCheckbox.checked = false;
+      }
+    });
+  });
 });
 
 // Form Validator

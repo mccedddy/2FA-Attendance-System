@@ -37,9 +37,26 @@ if (isset($_POST['logout'])) {
   require '../includes/logout.php';
 }
 
-// Submit HDF
-if (isset($_POST['submit'])) {
-  require '../includes/submit_hdf.php';
+// Fetch HDF data for the student
+$sql = "SELECT * FROM hdf WHERE student_number = '$studentNumber' ORDER BY timestamp DESC LIMIT 1";
+
+$result = mysqli_query($connection, $sql);
+if ($result) {
+  $hdfData = mysqli_fetch_assoc($result);
+  mysqli_free_result($result);
+
+  $q1DefaultValue = isset($hdfData['q1']) ? $hdfData['q1'] : '';
+  $q3DefaultValue = isset($hdfData['q3']) ? $hdfData['q3'] : '';
+  $q4DefaultValue = isset($hdfData['q4']) ? $hdfData['q4'] : '';
+  $q5DefaultValue = isset($hdfData['q5']) ? $hdfData['q5'] : '';
+  $q6aDefaultValue = isset($hdfData['q6a']) ? $hdfData['q6a'] : '';
+  $q6bDefaultValue = isset($hdfData['q6b']) ? $hdfData['q6b'] : '';
+  $q7aDefaultValue = isset($hdfData['q7a']) ? $hdfData['q7a'] : '';
+  $q7bDefaultValue = isset($hdfData['q7b']) ? $hdfData['q7b'] : '';
+  $q8aDefaultValue = isset($hdfData['q8a']) ? $hdfData['q8a'] : '';
+  $q8bDefaultValue = isset($hdfData['q8b']) ? $hdfData['q8b'] : '';
+  $q8cDefaultValue = isset($hdfData['q8c']) ? $hdfData['q8c'] : '';
+  $q8dDefaultValue = isset($hdfData['q8d']) ? $hdfData['q8d'] : '';
 }
 ?>
 
@@ -93,15 +110,15 @@ if (isset($_POST['submit'])) {
                   </h6>
                   <div class="radio-choices">
                     <label>
-                      <input type="radio" name="q1" value="not-yet" />
+                      <input type="radio" name="q1" value="not-yet" <?php if ($q1DefaultValue === 'not-yet') echo 'checked'; ?> />
                       Not Yet
                     </label>
                     <label>
-                      <input type="radio" name="q1" value="1st-dose" />
+                      <input type="radio" name="q1" value="1st-dose" <?php if ($q1DefaultValue === '1st-dose') echo 'checked'; ?>/>
                       1st Dose
                     </label>
                     <label>
-                      <input type="radio" name="q1" value="2nd-dose" />
+                      <input type="radio" name="q1" value="2nd-dose" <?php if ($q1DefaultValue === '2nd-dose') echo 'checked'; ?>/>
                       2nd Dose (Fully Vaccinated)
                     </label>
                     <label>
@@ -109,6 +126,7 @@ if (isset($_POST['submit'])) {
                         type="radio"
                         name="q1"
                         value="1st-booster"
+                        <?php if ($q1DefaultValue === '1st-booster') echo 'checked'; ?>
                       />
                       1st Booster Shot
                     </label>
@@ -117,6 +135,7 @@ if (isset($_POST['submit'])) {
                         type="radio"
                         name="q1"
                         value="2nd-booster"
+                        <?php if ($q1DefaultValue === '2nd-booster') echo 'checked'; ?>
                       />
                       2nd Booster Shot
                     </label>
@@ -215,16 +234,17 @@ if (isset($_POST['submit'])) {
                   </h6>
                   <div class="radio-choices">
                     <label>
-                      <input type="radio" name="q3" value="yes" /> Yes
+                      <input type="radio" name="q3" value="yes" <?php if ($q3DefaultValue === 'yes') echo 'checked'; ?> /> Yes
                     </label>
                     <label>
-                      <input type="radio" name="q3" value="no" /> No
+                      <input type="radio" name="q3" value="no" <?php if ($q3DefaultValue === 'no') echo 'checked'; ?> /> No
                     </label>
                     <label>
                       <input
                         type="radio"
                         name="q3"
                         value="uncertain"
+                        <?php if ($q3DefaultValue === 'uncertain') echo 'checked'; ?>
                       />
                       Uncertain
                     </label>
@@ -240,10 +260,10 @@ if (isset($_POST['submit'])) {
                   </h6>
                   <div class="radio-choices">
                     <label>
-                      <input type="radio" name="q4" value="yes" /> Yes
+                      <input type="radio" name="q4" value="yes" <?php if ($q4DefaultValue === 'yes') echo 'checked'; ?> /> Yes
                     </label>
                     <label>
-                      <input type="radio" name="q4" value="no" /> No
+                      <input type="radio" name="q4" value="no" <?php if ($q4DefaultValue === 'no') echo 'checked'; ?> /> No
                     </label>
                   </div>
                 </div>
@@ -256,13 +276,14 @@ if (isset($_POST['submit'])) {
                   </h6>
                   <div class="radio-choices">
                     <label>
-                      <input type="radio" name="q5" value="no" /> No
+                      <input type="radio" name="q5" value="no" <?php if ($q5DefaultValue === 'no') echo 'checked'; ?> /> No
                     </label>
                     <label>
                       <input
                         type="radio"
                         name="q5"
                         value="yes-positive"
+                        <?php if ($q5DefaultValue === 'yes-positive') echo 'checked'; ?>
                       />
                       Yes-Positive
                     </label>
@@ -271,6 +292,7 @@ if (isset($_POST['submit'])) {
                         type="radio"
                         name="q5"
                         value="yes-negative"
+                        <?php if ($q5DefaultValue === 'yes-negative') echo 'checked'; ?>
                       />
                       Yes-Negative
                     </label>
@@ -279,6 +301,7 @@ if (isset($_POST['submit'])) {
                         type="radio"
                         name="q5"
                         value="yes-pending"
+                        <?php if ($q5DefaultValue === 'yes-pending') echo 'checked'; ?>
                       />
                       Yes-Pending
                     </label>
@@ -288,12 +311,12 @@ if (isset($_POST['submit'])) {
                   <!-- Question 6a -->
                   <h6 class="question">6.a When was your most recent visit to this location?</h6>
                   <div class="q6-textbox-container">
-                    <input type="text" name="q6a" class="textbox" />
+                    <input type="text" name="q6a" class="textbox" value="<?php echo $q6aDefaultValue; ?>" />
                   </div>
                   <!-- Question 6a -->
                   <h6 class="question">6.b Since Then until today, what places have you been? (Besides of your home/lodging area)?</h6>
                   <div class="q6-textbox-container">
-                    <input type="text" name="q6b" class="textbox" />
+                    <input type="text" name="q6b" class="textbox" value="<?php echo $q6bDefaultValue; ?>" />
                   </div>
                 </div>
 
@@ -301,35 +324,35 @@ if (isset($_POST['submit'])) {
                 <!-- Question 7a -->
                 <div class="question-textbox">
                   <h6 class="question">7.a Email Address</h6>
-                  <input type="email" name="q7a" class="textbox" />
+                  <input type="email" name="q7a" class="textbox" value="<?php echo $q7aDefaultValue; ?>" />
                 </div>
                 <!-- Question 7b -->
                 <div class="question-textbox">
                   <h6 class="question">7.b Contact Number</h6>
-                  <input type="tel" name="q7b" class="textbox" />
+                  <input type="tel" name="q7b" class="textbox" value="<?php echo $q7bDefaultValue; ?>" />
                 </div>
                 <h5>Contact Person Details</h5>
                 <!-- Question 8a -->
                 <div class="question-textbox">
                   <h6 class="question">8.a Name</h6>
-                  <input type="text" name="q8a" class="textbox" />
+                  <input type="text" name="q8a" class="textbox" value="<?php echo $q8aDefaultValue; ?>" />
                 </div>
                 <!-- Question 8b -->
                 <div class="question-textbox">
                   <h6 class="question">8.b Contact Number</h6>
-                  <input type="tel" name="q8b" class="textbox" />
+                  <input type="tel" name="q8b" class="textbox" value="<?php echo $q8bDefaultValue; ?>" />
                 </div>
                 <!-- Question 8c -->
                 <div class="question-textbox">
                   <h6 class="question">8.c Email Address</h6>
-                  <input type="email" name="q8c" class="textbox" />
+                  <input type="email" name="q8c" class="textbox" value="<?php echo $q8cDefaultValue; ?>" />
                 </div>
                 <!-- Question 8d -->
                 <div class="question-textbox">
                   <h6 class="question">
                     8.d Relationship to the contact person
                   </h6>
-                  <input type="text" name="q8d" class="textbox" />
+                  <input type="text" name="q8d" class="textbox" value="<?php echo $q8dDefaultValue; ?>" />
                 </div>
               </div>
             </div>
