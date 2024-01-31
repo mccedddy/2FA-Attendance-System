@@ -188,7 +188,7 @@ void loop() {
       lcd.setCursor(0, 1);
       lcd.print(UIDresultDisplay);
 
-      delay(1000);
+      delay(3000);
 
     } else {
       // Extract the score value

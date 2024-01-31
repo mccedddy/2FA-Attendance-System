@@ -89,7 +89,8 @@ if (isset($_POST['UIDresult'])) {
     mysqli_free_result($existingAttendance);
 
     // Determine the status
-    $status = ($time > date('H-i', strtotime("$startTime +30 minutes"))) ? "Late" : "Present";
+    $lateThreshold = strtotime("$startTime +15 minutes");
+    $status = (strtotime($time) > $lateThreshold) ? "Late" : "Present";
 
     // Insert attendance data
     $insertAttendanceSQL = "INSERT INTO attendance (student_number, room, time, date, status, schedule_id)
