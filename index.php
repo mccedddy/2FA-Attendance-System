@@ -13,7 +13,7 @@ if (isset($_SESSION['id_number'])) {
 }
 ?>
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -26,45 +26,35 @@ if (isset($_SESSION['id_number'])) {
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/login.css" />
+    <link rel="stylesheet" href="css/global.css" />
+    <link rel="stylesheet" href="css/index.css" />
   </head>
   <body>
-    <div class="login-div">
-      <section class="login-div-L">
-        <div>
-          <img
-            src="assets\images\graphics\girl_with_phone.png"
-            class="login-graphics"
-          />
-        </div>
-      </section>
-      <section class="login-div-R">
-        <div class="login-div-center">
-          <div>
-            <img src="assets\images\logos\pup_logo.png" class="login-logo" />
-          </div>
-          <div><a1>LOGIN</a1></div>
-          <div>
-            <button class="login-as-button" onclick="toStudentLoginPage()">
-              AS A STUDENT
-            </button>
-          </div>
-          <div>
-            <button class="login-as-button" onclick="toProfessorLoginPage()">
-              AS A PROFESSOR
-            </button>
-          </div>
-        </div>
-      </section>
-    </div>
-    <!-- <script src="scripts.js"></script> -->
+    <section class="graphics">
+      <img
+        src="assets\images\graphics\girl_with_phone.png"
+        alt="girl with phone"
+      />
+    </section>
+    <section class="main">
+      <img src="assets\images\logos\pup_logo.png" alt="puphas logo" />
+      <h1>LOGIN</h1>
+      <div class="button-container">
+        <button class="large-button" onclick="toStudentLogin()">
+          AS A STUDENT
+        </button>
+        <button class="large-button" onclick="toProfessorLogin()">
+          AS A PROFESSOR
+        </button>
+      </div>
+    </section>
     <script>
-      function toStudentLoginPage() {
-        window.location.href = "pages/login_as_student.php";
+      function toStudentLogin() {
+        window.location.href = "student_login.php";
         return false;
       }
-      function toProfessorLoginPage() {
-        window.location.href = "pages/login_as_professor.php";
+      function toProfessorLogin() {
+        window.location.href = "professor_login.php";
         return false;
       }
     </script>
