@@ -47,7 +47,7 @@ if (isset($_POST['login'])) {
 }
 ?>
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -60,49 +60,47 @@ if (isset($_POST['login'])) {
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../css/login_as.css" />
+    <link rel="stylesheet" href="../css/global.css" />
+    <link rel="stylesheet" href="../css/login.css" />
   </head>
   <body>
     <section class="main">
-      <div class="left">
-        <div class="login-div-center">
-          <h1>PROFESSOR LOGIN</h1>
-          <form method="POST" class="login-form">
-            <div class="login-textbox-container">
-              <img
-                src="../assets/images/icons/person.svg"
-                class="textbox-icon"
-              />
-              <input
-                type="text"
-                class="login-textbox"
-                name="id-number"
-                value="<?php echo htmlspecialchars($idNumber); ?>"
-                placeholder="ID Number"
-              />
-            </div>
-            <div class="login-textbox-container">
-              <img src="../assets/images/icons/lock.svg" class="textbox-icon" />
-              <input
-                type="password"
-                class="login-textbox"
-                name="password"
-                placeholder="Password"
-              />
-            </div>
-            <p class="error-message"><?php echo $error_message ?></p>
-            <center>
-              <button type="submit" name="login" class="login-button">LOGIN</button>
-            </center>
-          </form>
-          <a href="forgot_password.php">
-            <p class="forgot-password-text">Forgot your password?</p>
-          </a>
+      <h1>PROFESSOR LOGIN</h1>
+      <form method="POST" class="login-form">
+        <div class="login-textbox-container">
+          <img
+            src="../assets/images/icons/person.svg"
+            class="textbox-icon"
+            alt="person"
+          />
+          <input
+            type="text"
+            class="large-textbox"
+            name="id-number"
+            value="<?php echo htmlspecialchars($idNumber); ?>"
+            placeholder="ID Number"
+          />
         </div>
-      </div>
-      <div class="right">
-        <img src="..\assets\images\graphics\professor.png" />
-      </div>
+        <div class="login-textbox-container">
+          <img
+            src="../assets/images/icons/lock.svg"
+            class="textbox-icon"
+            alt="lock"
+          />
+          <input
+            type="password"
+            class="large-textbox"
+            name="password"
+            placeholder="Password"
+          />
+        </div>
+        <p class="error-message"><?php echo $error_message ?></p>
+        <button type="submit" name="login" class="large-button">LOGIN</button>
+      </form>
+      <a href="forgot_password.php"> Forgot your password? </a>
+    </section>
+    <section class="graphics">
+      <img src="../assets/images/graphics/professor.png" alt="professor" />
     </section>
   </body>
 </html>

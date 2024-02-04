@@ -1,47 +1,43 @@
 <?php
 session_start();
-require 'includes/database_connection.php';
-$idNumber = '';
+require '../includes/database_connection.php';
+$studentNumber = '';
 $error_message = '';
 
 // If logged in
+if (isset($_SESSION['student_number'])) {
+  // Redirect to student homepage
+  header("Location: student_homepage.php");
+}
 if (isset($_SESSION['id_number'])) {
   // Redirect to professor homepage
-  header("Location: pages/professor_homepage.php");
-}
-if (isset($_SESSION['student_number'])) {
-  // Redirect to professor homepage
-  header("Location: pages/student_homepage.php");
+  header("Location: professor_homepage.php");
 }
 
 // Check if the form is submitted
 if (isset($_POST['login'])) {
   // Retrieve the values from the form
-  $idNumber = $_POST['id-number'];
+  $studentNumber = $_POST['student-number'];
   $password = $_POST['password'];
 
   // Connect to database
-  require 'includes/database_connection.php';
+  require '../includes/database_connection.php';
 
   // SQL query
-  $sql = "SELECT * FROM professors WHERE id_number = '$idNumber'";
+  $sql = "SELECT * FROM students WHERE student_number = '$studentNumber'";
   $result = mysqli_query($connection, $sql);
 
   // Check if the query was successful
   if ($result) {
-    $professors = mysqli_fetch_assoc($result);
+    $students = mysqli_fetch_assoc($result);
 
     // Check the password
-    if ($professors && password_verify($password, $professors['password'])) {
-      $_SESSION['id_number'] = $idNumber;
-      if ($idNumber == 'admin') {
-        header("Location: pages/admin_homepage.php");
-      } else {
-        header("Location: pages/professor_homepage.php");
-      }
+    if ($students && password_verify($password, $students['password'])) {
+      $_SESSION['student_number'] = $studentNumber;
+      header("Location: student_homepage.php");
       exit();
     } else {
-      $error_message = 'ID number or password is incorrect!';
+      $error_message = 'Student number or password is incorrect!';
     }
   }
 }
@@ -60,30 +56,30 @@ if (isset($_POST['login'])) {
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/global.css" />
-    <link rel="stylesheet" href="css/login.css" />
+    <link rel="stylesheet" href="../css/global.css" />
+    <link rel="stylesheet" href="../css/login.css" />
   </head>
   <body>
     <section class="main">
-      <h1>PROFESSOR LOGIN</h1>
+      <h1>STUDENT LOGIN</h1>
       <form method="POST" class="login-form">
         <div class="login-textbox-container">
           <img
-            src="assets/images/icons/person.svg"
+            src="../assets/images/icons/person.svg"
             class="textbox-icon"
             alt="person"
           />
           <input
             type="text"
             class="large-textbox"
-            name="id-number"
-            value="<?php echo htmlspecialchars($idNumber); ?>"
-            placeholder="ID Number"
+            name="student-number"
+            value="<?php echo htmlspecialchars($studentNumber); ?>"
+            placeholder="Student Number"
           />
         </div>
         <div class="login-textbox-container">
           <img
-            src="assets/images/icons/lock.svg"
+            src="../assets/images/icons/lock.svg"
             class="textbox-icon"
             alt="lock"
           />
@@ -97,10 +93,10 @@ if (isset($_POST['login'])) {
         <p class="error-message"><?php echo $error_message ?></p>
         <button type="submit" name="login" class="large-button">LOGIN</button>
       </form>
-      <a href="pages/forgot_password.php"> Forgot your password? </a>
+      <a href="forgot_password.php"> Forgot your password? </a>
     </section>
     <section class="graphics">
-      <img src="assets\images\graphics\professor.png" alt="professor" />
+      <img src="../assets/images/graphics/students.png" alt="students" />
     </section>
   </body>
 </html>

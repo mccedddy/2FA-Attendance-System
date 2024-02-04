@@ -32,12 +32,12 @@ if (isset($_SESSION['id_number'])) {
   <body>
     <section class="graphics">
       <img
-        src="assets\images\graphics\girl_with_phone.png"
+        src="assets/images/graphics/girl_with_phone.png"
         alt="girl with phone"
       />
     </section>
     <section class="main">
-      <img src="assets\images\logos\pup_logo.png" alt="puphas logo" />
+      <img src="assets/images/logos/pup_logo.png" alt="puphas logo" />
       <h1>LOGIN</h1>
       <div class="button-container">
         <button class="large-button" onclick="toStudentLogin()">
@@ -50,11 +50,11 @@ if (isset($_SESSION['id_number'])) {
     </section>
     <script>
       function toStudentLogin() {
-        window.location.href = "student_login.php";
+        window.location.href = "pages/student_login.php";
         return false;
       }
       function toProfessorLogin() {
-        window.location.href = "professor_login.php";
+        window.location.href = "pages/professor_login.php";
         return false;
       }
     </script>
