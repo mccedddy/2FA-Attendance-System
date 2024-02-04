@@ -34,6 +34,7 @@ label {
   text-decoration: none;
   color: #000;
 }
+
 h1 {
   font-size: 32px;
 }
@@ -121,4 +122,36 @@ input[type="password"] {
   align-items: center;
   outline: none;
   text-indent: 40px;
+}
+
+@media only screen and (max-width: 768px) {
+  h1 {
+    font-size: 20px;
+  }
+
+  h2 {
+    font-size: 16px;
+  }
+
+  h3 {
+    font-size: 14px;
+  }
+
+  h4 {
+    font-size: 13px;
+  }
+
+  h5 {
+    font-size: 12px;
+  }
+
+  h6 {
+    font-size: 11px;
+  }
+
+  p,
+  a,
+  label {
+    font-size: 10px;
+  }
 }

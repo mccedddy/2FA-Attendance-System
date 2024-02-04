@@ -1,0 +1,111 @@
+.navbar {
+  height: 100%;
+  width: 80px;
+  margin: 0px;
+  padding-top: 13px;
+  background-color: #810000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+
+.navbar .top {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.navbar .close-nav {
+  display: none;
+}
+
+.navbar img {
+  height: 40px;
+  width: 40px;
+}
+
+.navbar .logo {
+  margin-bottom: 10px;
+}
+
+.navbar .button {
+  margin: 10px 0px 10px 0px;
+  padding: 0px;
+  cursor: pointer;
+}
+
+.navbar .bottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar .logout {
+  border: 0px;
+  padding: 0px;
+  margin-bottom: 20px;
+  height: 50px;
+  width: 50px;
+  box-shadow: 0px 0px 0px 0px #000;
+}
+
+.navbar .logout :hover {
+  cursor: pointer;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.header .left {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.header .title {
+  font-weight: 700;
+}
+
+.main {
+  width: calc(100% - 160px);
+  height: 100%;
+  padding: 20px 40px 20px 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main .hamburger {
+  display: none;
+}
+
+@media only screen and (max-width: 768px) {
+  .navbar {
+    width: 50px;
+    display: none;
+  }
+
+  .navbar .close-nav {
+    display: block;
+  }
+
+  .main {
+    width: calc(100% - 20px);
+    padding: 10px 10px 10px 10px;
+  }
+
+  .main .hamburger {
+    display: block;
+  }
+}
