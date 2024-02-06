@@ -132,7 +132,7 @@ if (isset($_SESSION['email']) && isset($_SESSION['password'])) {
         return false;
       }
       function toProfessorHomepage() {
-        window.location.href = "professor_homepage.php";
+        window.location.href = "professor_home.php";
         return false;
       }
       function toSettings() {

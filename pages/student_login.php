@@ -11,7 +11,7 @@ if (isset($_SESSION['student_number'])) {
 }
 if (isset($_SESSION['id_number'])) {
   // Redirect to professor homepage
-  header("Location: professor_homepage.php");
+  header("Location: professor_home.php");
 }
 
 // Check if the form is submitted

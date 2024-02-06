@@ -8,7 +8,7 @@ $encryptionHelper = new EncryptionHelper($encryptionKey);
 // If logged in
 if (isset($_SESSION['id_number'])) {
   // Redirect to professor homepage
-  header("Location: professor_homepage.php");
+  header("Location: professor_home.php");
 }
 if (isset($_SESSION['student_number'])) {
   $studentNumber = $_SESSION['student_number'];

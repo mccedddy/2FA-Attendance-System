@@ -130,7 +130,7 @@ mysqli_free_result($sectionsResult);
         return false;
       }
       function toProfessorHomepage() {
-        window.location.href = "professor_homepage.php";
+        window.location.href = "professor_home.php";
         return false;
       }
       function toSettings() {

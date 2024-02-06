@@ -12,7 +12,7 @@ if (isset($_SESSION['id_number'])) {
 
   // Redirect to homepage if no section is selected
   if (!isset($_SESSION['selected_section'])) {
-    header("Location: professor_homepage.php");
+    header("Location: professor_home.php");
   } else {
     $sectionPage = $_SESSION['selected_section'];
   }
@@ -252,7 +252,7 @@ if (isset($_POST['logout'])) {
         return false;
       }
       function toProfessorHomepage() {
-        window.location.href = "professor_homepage.php";
+        window.location.href = "professor_home.php";
         return false;
       }
       function toSettings() {

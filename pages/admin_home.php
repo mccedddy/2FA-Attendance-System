@@ -15,7 +15,7 @@ if (isset($_SESSION['id_number'])) {
 
   // Redirect to professor homepage
   if ($idNumber != 'admin') {
-    header("Location: professor_homepage.php");
+    header("Location: professor_home.php");
   }
 
   // SQL query
@@ -64,37 +64,80 @@ if (isset($_POST['logout'])) {
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../css/admin_section_page.css" />
+    <link rel="stylesheet" href="../css/global.css" />
+    <link rel="stylesheet" href="../css/dashboard.css" />
+    <link rel="stylesheet" href="../css/home.css" />
   </head>
   <body>
     <nav class="navbar">
-      <div class="navbar-top">
-        <img src="..\assets\images\icons\arrow_left.svg" id="closeNavbar" class="nav-button" onclick="toggleMobileNavbar()"/>
-        <a onclick="toAdminHomepage()"><img src="..\assets\images\logos\pup_logo.png" class="logo"/></a>
-        <a onclick="toSection()"><img src="..\assets\images\icons\group.svg" class="nav-button"/></a>
-        <a onclick="toSchedule()"><img src="..\assets\images\icons\table.svg" class="nav-button"/></a>
-        <a onclick="toSubjects()"><img src="..\assets\images\icons\book.svg" class="nav-button"/></a>
-        <a onclick="toAnalytics()"><img src="..\assets\images\icons\graph.svg" class="nav-button"/></a>
+      <div class="top">
+        <img
+          src="..\assets\images\icons\arrow_left.svg"
+          id="closeNavbar"
+          class="close-nav"
+          onclick="toggleMobileNavbar()"
+          alt="arrow left"
+        />
+        <a onclick="toAdminHomepage()"
+          ><img
+            src="..\assets\images\logos\pup_logo.png"
+            alt="pup logo"
+            class="logo"
+        /></a>
+        <a onclick="toSection()"
+          ><img
+            src="..\assets\images\icons\group.svg"
+            alt="group"
+            class="button"
+        /></a>
+        <a onclick="toSchedule()"
+          ><img
+            src="..\assets\images\icons\table.svg"
+            alt="table"
+            class="button"
+        /></a>
+        <a onclick="toSubjects()"
+          ><img src="..\assets\images\icons\book.svg" alt="book" class="button"
+        /></a>
+        <a onclick="toAnalytics()"
+          ><img
+            src="..\assets\images\icons\graph.svg"
+            alt="graph"
+            class="button"
+        /></a>
+        <a onclick="toSettings()"
+          ><img
+            src="..\assets\images\icons\settings.svg"
+            alt="settings"
+            class="button"
+        /></a>
       </div>
-      <form method="POST" class="logout-form">
-        <button type="submit" name="logout" class="logout-button">
-          <img src="..\assets\images\icons\logout.svg" class="nav-button"/>
+      <form method="POST" class="bottom">
+        <button type="submit" name="logout" class="logout">
+          <img
+            src="..\assets\images\icons\logout.svg"
+            alt="logout"
+            class="button"
+          />
         </button>
       </form>
     </nav>
     <section class="main">
       <div class="header">
         <div class="left">
-          <div class="mobile-navbar-toggle" onclick="toggleMobileNavbar()">
-            <img src="..\assets\images\icons\hamburger.svg" class="hamburger">
-          </div>
-          <a onclick="toAdminHomepage()"><h1>PUP HDF Attendance System</h1></a>
+          <img
+            src="..\assets\images\icons\hamburger.svg"
+            alt="hamburger"
+            class="hamburger"
+            onclick="toggleMobileNavbar()"
+          />
+          <h3 onclick="toAdminHomepage()" class="title">PUPHAS</h3>
         </div>
         <div class="right">
-          <h5>ADMIN</h5>
+          <h6>ADMIN</h6>
         </div>
       </div>
-      <h1 class="title">Computer Engineering Department</h1>
+      <h2 class="page-title">Computer Engineering Department</h2>
       <div class="section-button-container">
         <button class="section-button" onclick="toSection()" onmouseover="changeSectionImage(true)" onmouseout="changeSectionImage(false)">
           <img src="../assets/images/icons/group_large_dark.svg" id="sectionButtonImg" />
@@ -112,6 +155,10 @@ if (isset($_POST['logout'])) {
           <img src="../assets/images/icons/graph_large_dark.svg" id="analyticsButtonImg" />
           ANALYTICS
         </button>
+        <button class="section-button" onclick="toSettings()" onmouseover="changeAnalyticsImage(true)" onmouseout="changeAnalyticsImage(false)">
+          <img src="../assets/images/icons/graph_large_dark.svg" id="analyticsButtonImg" />
+          SETTINGS
+        </button>
       </div>
     </section>
     <script src="../js/navbar_controller.js"></script>
@@ -121,7 +168,7 @@ if (isset($_POST['logout'])) {
         return false;
       }
       function toAdminHomepage() {
-        window.location.href = "admin_homepage.php";
+        window.location.href = "admin_home.php";
         return false;
       }
       function toSection() {
@@ -144,45 +191,45 @@ if (isset($_POST['logout'])) {
         window.location.href = "admin_settings_page.php";
         return false;
       }
-      function changeSectionImage(isHovered) {
-    var imgElement = document.getElementById("sectionButtonImg");
+        function changeSectionImage(isHovered) {
+          var imgElement = document.getElementById("sectionButtonImg");
 
-    if (isHovered) {
-      imgElement.src = "../assets/images/icons/group_large.svg";
-    } else {
-      imgElement.src = "../assets/images/icons/group_large_dark.svg"; 
-    }
-  }
+          if (isHovered) {
+            imgElement.src = "../assets/images/icons/group_large.svg";
+          } else {
+            imgElement.src = "../assets/images/icons/group_large_dark.svg"; 
+          }
+        }
 
-  function changeScheduleImage(isHovered) {
-    var imgElement = document.getElementById("scheduleButtonImg");
+        function changeScheduleImage(isHovered) {
+          var imgElement = document.getElementById("scheduleButtonImg");
 
-    if (isHovered) {
-      imgElement.src = "../assets/images/icons/table_large.svg"; 
-    } else {
-      imgElement.src = "../assets/images/icons/table_large_dark.svg";
-    }
-  }
+          if (isHovered) {
+            imgElement.src = "../assets/images/icons/table_large.svg"; 
+          } else {
+            imgElement.src = "../assets/images/icons/table_large_dark.svg";
+          }
+        }
 
-  function changeSubjectsImage(isHovered) {
-    var imgElement = document.getElementById("subjectsButtonImg");
+        function changeSubjectsImage(isHovered) {
+          var imgElement = document.getElementById("subjectsButtonImg");
 
-    if (isHovered) {
-      imgElement.src = "../assets/images/icons/book_large.svg"; 
-    } else {
-      imgElement.src = "../assets/images/icons/book_large_dark.svg"; 
-    }
-  }
+          if (isHovered) {
+            imgElement.src = "../assets/images/icons/book_large.svg"; 
+          } else {
+            imgElement.src = "../assets/images/icons/book_large_dark.svg"; 
+          }
+        }
 
-  function changeAnalyticsImage(isHovered) {
-    var imgElement = document.getElementById("analyticsButtonImg");
+        function changeAnalyticsImage(isHovered) {
+          var imgElement = document.getElementById("analyticsButtonImg");
 
-    if (isHovered) {
-      imgElement.src = "../assets/images/icons/graph_large.svg";
-    } else {
-      imgElement.src = "../assets/images/icons/graph_large_dark.svg"; 
-    }
-  }
+          if (isHovered) {
+            imgElement.src = "../assets/images/icons/graph_large.svg";
+          } else {
+            imgElement.src = "../assets/images/icons/graph_large_dark.svg"; 
+          }
+        }
     </script>
   </body>
 </html>

@@ -15,7 +15,7 @@ if (isset($_SESSION['id_number'])) {
 
   // Redirect to professor homepage
   if ($idNumber != 'admin') {
-    header("Location: professor_homepage.php");
+    header("Location: professor_home.php");
   }
 
   // SQL query
@@ -163,7 +163,7 @@ mysqli_close($connection);
         return false;
       }
       function toAdminHomepage() {
-        window.location.href = "admin_homepage.php";
+        window.location.href = "admin_home.php";
         return false;
       }
       function toSection() {

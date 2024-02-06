@@ -73,6 +73,17 @@
   gap: 20px;
 }
 
+.header .right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: end;
+}
+
+.header .right h6 {
+  text-align: right;
+}
+
 .header .title {
   font-weight: 700;
 }
@@ -88,6 +99,10 @@
 
 .main .hamburger {
   display: none;
+}
+
+.main .page-title {
+  margin-bottom: 20px;
 }
 
 @media only screen and (max-width: 768px) {

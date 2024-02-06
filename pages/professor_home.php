@@ -1,4 +1,76 @@
-<!doctype html>
+<?php
+session_start();
+require '../includes/database_connection.php';
+
+// Clear selection
+unset($_SESSION['selected_section']);
+
+// If logged in
+if (isset($_SESSION['student_number'])) {
+  // Redirect to student homepage
+  header("Location: student_homepage.php");
+}
+if (isset($_SESSION['id_number'])) {
+  $idNumber = $_SESSION['id_number'];
+
+  // Redirect to admin homepage
+  if ($idNumber == 'admin') {
+    header("Location: admin_section_page.php");
+  }
+
+  // SQL query
+  $sql = "SELECT * FROM professors WHERE id_number = '$idNumber'";
+  $result = mysqli_query($connection, $sql);
+
+  // Check if the query was successful
+  if ($result) {
+    $professor = mysqli_fetch_assoc($result);
+
+    // Get professor info
+    if ($professor) {
+      $name = strtoupper($professor['last_name']) . ', ' . strtoupper($professor['first_name']);
+      $idNumber = $professor['id_number'];
+    }
+        
+    // Free result from memory
+    mysqli_free_result($result);
+  } else {
+    echo 'Error: ' . mysqli_error($connection);
+  }
+    
+  // Close database connection
+  mysqli_close($connection);
+} else {
+  // Redirect to login
+  header("Location: ../index.php");
+}
+
+// Section button
+if (isset($_POST['section-button'])) {
+  $_SESSION['selected_section'] = $_POST['section'];
+  header("Location: professor_attendance_page.php");
+}
+
+// Logout
+if (isset($_POST['logout'])) {
+  require '../includes/logout.php';
+}
+
+// Fetch section
+require '../includes/database_connection.php';
+$sectionsSQL = "SELECT * FROM sections";
+$sectionsResult = mysqli_query($connection, $sectionsSQL);
+$sections = [];
+while ($row = mysqli_fetch_assoc($sectionsResult)) {
+  $sectionsInfo = [
+            'section'      => $row['section'],
+          ];
+  $sections[] = $sectionsInfo['section'];
+}
+mysqli_free_result($sectionsResult);
+?>
+
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -13,6 +85,7 @@
     />
     <link rel="stylesheet" href="../css/global.css" />
     <link rel="stylesheet" href="../css/dashboard.css" />
+    <link rel="stylesheet" href="../css/home.css" />
   </head>
   <body>
     <nav class="navbar">
@@ -80,11 +153,33 @@
           <h3 onclick="toAdminHomepage()" class="title">PUPHAS</h3>
         </div>
         <div class="right">
-          <h6>NAME</h6>
-          <h6>NUMBER</h6>
+          <h6><?php echo $name; ?></h6>
+          <h6><?php echo $idNumber?></h6>
         </div>
       </div>
       <h2 class="page-title">Computer Engineering Department</h2>
+      <div class="section-button-container">
+        <button class="section-button" onclick="toSection()" onmouseover="changeSectionImage(true)" onmouseout="changeSectionImage(false)">
+          <img src="../assets/images/icons/group_large_dark.svg" id="sectionButtonImg" />
+          SECTION
+        </button>
+        <button class="section-button" onclick="toSchedule()" onmouseover="changeScheduleImage(true)" onmouseout="changeScheduleImage(false)">
+          <img src="../assets/images/icons/table_large_dark.svg" id="scheduleButtonImg" />
+          SCHEDULE
+        </button>
+        <button class="section-button" onclick="toSubjects()" onmouseover="changeSubjectsImage(true)" onmouseout="changeSubjectsImage(false)">
+          <img src="../assets/images/icons/book_large_dark.svg" id="subjectsButtonImg" />
+          SUBJECTS
+        </button>
+        <button class="section-button" onclick="toAnalytics()" onmouseover="changeAnalyticsImage(true)" onmouseout="changeAnalyticsImage(false)">
+          <img src="../assets/images/icons/graph_large_dark.svg" id="analyticsButtonImg" />
+          ANALYTICS
+        </button>
+        <button class="section-button" onclick="toSettings()" onmouseover="changeAnalyticsImage(true)" onmouseout="changeAnalyticsImage(false)">
+          <img src="../assets/images/icons/graph_large_dark.svg" id="analyticsButtonImg" />
+          SETTINGS
+        </button>
+      </div>
     </section>
     <script src="../js/navbar_controller.js"></script>
     <script>
@@ -92,28 +187,12 @@
         window.location.href = "../index.php";
         return false;
       }
-      function toAdminHomepage() {
-        window.location.href = "admin_homepage.php";
-        return false;
-      }
-      function toSection() {
-        window.location.href = "admin_section_page.php";
-        return false;
-      }
-      function toSubjects() {
-        window.location.href = "admin_subjects_page.php";
-        return false;
-      }
-      function toAnalytics() {
-        window.location.href = "admin_analytics_page.php";
-        return false;
-      }
-      function toSchedule() {
-        window.location.href = "admin_schedule_page.php";
+      function toProfessorHomepage() {
+        window.location.href = "professor_home.php";
         return false;
       }
       function toSettings() {
-        window.location.href = "admin_settings_page.php";
+        window.location.href = "professor_settings_page.php";
         return false;
       }
       function changeSectionImage(isHovered) {
@@ -122,7 +201,7 @@
         if (isHovered) {
           imgElement.src = "../assets/images/icons/group_large.svg";
         } else {
-          imgElement.src = "../assets/images/icons/group_large_dark.svg";
+          imgElement.src = "../assets/images/icons/group_large_dark.svg"; 
         }
       }
 
@@ -130,7 +209,7 @@
         var imgElement = document.getElementById("scheduleButtonImg");
 
         if (isHovered) {
-          imgElement.src = "../assets/images/icons/table_large.svg";
+          imgElement.src = "../assets/images/icons/table_large.svg"; 
         } else {
           imgElement.src = "../assets/images/icons/table_large_dark.svg";
         }
@@ -140,9 +219,9 @@
         var imgElement = document.getElementById("subjectsButtonImg");
 
         if (isHovered) {
-          imgElement.src = "../assets/images/icons/book_large.svg";
+          imgElement.src = "../assets/images/icons/book_large.svg"; 
         } else {
-          imgElement.src = "../assets/images/icons/book_large_dark.svg";
+          imgElement.src = "../assets/images/icons/book_large_dark.svg"; 
         }
       }
 
@@ -152,7 +231,7 @@
         if (isHovered) {
           imgElement.src = "../assets/images/icons/graph_large.svg";
         } else {
-          imgElement.src = "../assets/images/icons/graph_large_dark.svg";
+          imgElement.src = "../assets/images/icons/graph_large_dark.svg"; 
         }
       }
     </script>
