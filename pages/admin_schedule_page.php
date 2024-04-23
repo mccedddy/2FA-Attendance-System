@@ -87,37 +87,80 @@ mysqli_free_result($sectionsResult);
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../css/admin_section_page.css" />
+    <link rel="stylesheet" href="../css/global.css" />
+    <link rel="stylesheet" href="../css/dashboard.css" />
+    <link rel="stylesheet" href="../css/section.css" />
   </head>
   <body>
     <nav class="navbar">
-      <div class="navbar-top">
-        <img src="..\assets\images\icons\arrow_left.svg" id="closeNavbar" class="nav-button" onclick="toggleMobileNavbar()"/>
-        <a onclick="toAdminHomepage()"><img src="..\assets\images\logos\pup_logo.png" class="logo"/></a>
-        <a onclick="toSection()"><img src="..\assets\images\icons\group.svg" class="nav-button"/></a>
-        <a onclick="toSchedule()"><img src="..\assets\images\icons\table.svg" class="nav-button"/></a>
-        <a onclick="toSubjects()"><img src="..\assets\images\icons\book.svg" class="nav-button"/></a>
-        <a onclick="toAnalytics()"><img src="..\assets\images\icons\graph.svg" class="nav-button"/></a>
+      <div class="top">
+        <img
+          src="..\assets\images\icons\arrow_left.svg"
+          id="closeNavbar"
+          class="close-nav"
+          onclick="toggleMobileNavbar()"
+          alt="arrow left"
+        />
+        <a onclick="toAdminHomepage()"
+          ><img
+            src="..\assets\images\logos\pup_logo.png"
+            alt="pup logo"
+            class="logo"
+        /></a>
+        <a onclick="toSection()"
+          ><img
+            src="..\assets\images\icons\group.svg"
+            alt="group"
+            class="button"
+        /></a>
+        <a onclick="toSchedule()"
+          ><img
+            src="..\assets\images\icons\table.svg"
+            alt="table"
+            class="button"
+        /></a>
+        <a onclick="toSubjects()"
+          ><img src="..\assets\images\icons\book.svg" alt="book" class="button"
+        /></a>
+        <a onclick="toAnalytics()"
+          ><img
+            src="..\assets\images\icons\graph.svg"
+            alt="graph"
+            class="button"
+        /></a>
+        <a onclick="toSettings()"
+          ><img
+            src="..\assets\images\icons\settings.svg"
+            alt="settings"
+            class="button"
+        /></a>
       </div>
-      <form method="POST" class="logout-form">
-        <button type="submit" name="logout" class="logout-button">
-          <img src="..\assets\images\icons\logout.svg" class="nav-button"/>
+      <form method="POST" class="bottom">
+        <button type="submit" name="logout" class="logout">
+          <img
+            src="..\assets\images\icons\logout.svg"
+            alt="logout"
+            class="button"
+          />
         </button>
       </form>
     </nav>
     <section class="main">
       <div class="header">
         <div class="left">
-          <div class="mobile-navbar-toggle" onclick="toggleMobileNavbar()">
-            <img src="..\assets\images\icons\hamburger.svg" class="hamburger">
-          </div>
-          <a onclick="toAdminHomepage()"><h1>PUP HDF Attendance System</h1></a>
+          <img
+            src="..\assets\images\icons\hamburger.svg"
+            alt="hamburger"
+            class="hamburger"
+            onclick="toggleMobileNavbar()"
+          />
+          <h3 onclick="toAdminHomepage()" class="title">PUPHAS</h3>
         </div>
         <div class="right">
-          <h5>ADMIN</h5>
+          <h6>ADMIN</h6>
         </div>
       </div>
-      <h1 class="title">Computer Engineering Schedules</h1>
+      <h2 class="page-title">Computer Engineering Schedules</h2>
       <div class="section-button-container">
         <?php foreach ($sections as $section): ?>
           <form method="POST">
@@ -127,7 +170,6 @@ mysqli_free_result($sectionsResult);
         <?php endforeach; ?>
       </div>
     </section>
-
     <script src="../js/navbar_controller.js"></script>
     <script>
       function toLogin() {
@@ -157,22 +199,6 @@ mysqli_free_result($sectionsResult);
       function toSettings() {
         window.location.href = "admin_settings_page.php";
         return false;
-      }
-      function openAddSectionModal() {
-        var addSectionModal = document.getElementById("addSectionModal");
-        addSectionModal.style.display = "block";
-      }
-      function closeAddSectionModal() {
-        var addSectionModal = document.getElementById("addSectionModal");
-        addSectionModal.style.display = "none";
-      }
-      function openDeleteSectionModal() {
-        var addSectionModal = document.getElementById("deleteSectionModal");
-        addSectionModal.style.display = "block";
-      }
-      function closeDeleteSectionModal() {
-        var addSectionModal = document.getElementById("deleteSectionModal");
-        addSectionModal.style.display = "none";
       }
     </script>
   </body>
