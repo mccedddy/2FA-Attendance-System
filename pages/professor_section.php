@@ -83,37 +83,81 @@ mysqli_free_result($sectionsResult);
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../css/professor_homepage.css" />
+    <link rel="stylesheet" href="../css/global.css" />
+    <link rel="stylesheet" href="../css/dashboard.css" />
+    <link rel="stylesheet" href="../css/section.css" />
   </head>
   <body>
     <nav class="navbar">
-      <div class="navbar-top">
-        <img src="..\assets\images\icons\arrow_left.svg" id="closeNavbar" class="nav-button" onclick="toggleMobileNavbar()"/>
-        <a onclick="toProfessorHomepage()"><img src="..\assets\images\logos\pup_logo.png" /></a>
-        <a onclick="toProfessorHomepage()"><img src="..\assets\images\icons\group.svg" class="nav-button"/></a>
-        <a onclick="toProfessorHomepage()"><img src="..\assets\images\icons\graph.svg" class="nav-button"/></a>
+      <div class="top">
+        <img
+          src="..\assets\images\icons\arrow_left.svg"
+          id="closeNavbar"
+          class="close-nav"
+          onclick="toggleMobileNavbar()"
+          alt="arrow left"
+        />
+        <a onclick="toProfessorHomepage()"
+          ><img
+            src="..\assets\images\logos\pup_logo.png"
+            alt="pup logo"
+            class="logo"
+        /></a>
+        <a onclick="toSection()"
+          ><img
+            src="..\assets\images\icons\group.svg"
+            alt="group"
+            class="button"
+        /></a>
+        <a onclick="toSchedule()"
+          ><img
+            src="..\assets\images\icons\table.svg"
+            alt="table"
+            class="button"
+        /></a>
+        <a onclick="toSubjects()"
+          ><img src="..\assets\images\icons\book.svg" alt="book" class="button"
+        /></a>
+        <a onclick="toAnalytics()"
+          ><img
+            src="..\assets\images\icons\graph.svg"
+            alt="graph"
+            class="button"
+        /></a>
+        <a onclick="toSettings()"
+          ><img
+            src="..\assets\images\icons\settings.svg"
+            alt="settings"
+            class="button"
+        /></a>
       </div>
-      <form method="POST" class="logout-form">
-        <a onclick="toSettings()"><img src="..\assets\images\icons\settings.svg"/></a>
-        <button type="submit" name="logout" class="logout-button">
-          <img src="..\assets\images\icons\logout.svg" class="nav-button"/>
+      <form method="POST" class="bottom">
+        <button type="submit" name="logout" class="logout">
+          <img
+            src="..\assets\images\icons\logout.svg"
+            alt="logout"
+            class="button"
+          />
         </button>
       </form>
     </nav>
     <section class="main">
       <div class="header">
         <div class="left">
-          <div class="mobile-navbar-toggle" onclick="toggleMobileNavbar()">
-            <img src="..\assets\images\icons\hamburger.svg" class="hamburger">
-          </div>
-          <a onclick="toProfessorHomepage()"><h1>PUP HDF Attendance System</h1></a>
+          <img
+            src="..\assets\images\icons\hamburger.svg"
+            alt="hamburger"
+            class="hamburger"
+            onclick="toggleMobileNavbar()"
+          />
+          <h3 onclick="toProfessorHomepage()" class="title">PUPHAS</h3>
         </div>
         <div class="right">
-          <h5><?php echo $name; ?></h5>
-          <h5><?php echo $idNumber; ?></h5>
+          <h6><?php echo $name; ?></h6>
+          <h6><?php echo $idNumber; ?></h6>
         </div>
       </div>
-      <h1 class="title">Computer Engineering Department Sections</h1>
+      <h2 class="page-title">Computer Engineering Department Sections</h2>
       <div class="section-button-container">
         <?php foreach ($sections as $section): ?>
           <form method="POST">
@@ -133,6 +177,22 @@ mysqli_free_result($sectionsResult);
         window.location.href = "professor_home.php";
         return false;
       }
+      function toSection() {
+        window.location.href = "professor_section_page.php";
+        return false;
+      }
+      function toSubjects() {
+        window.location.href = "professor_subjects_page.php";
+        return false;
+      }
+      function toAnalytics() {
+        window.location.href = "professor_analytics_page.php";
+        return false;
+      }
+      function toSchedule() {
+        window.location.href = "professor_schedule_page.php";
+        return false;
+      }
       function toSettings() {
         window.location.href = "professor_settings_page.php";
         return false;
@@ -140,3 +200,4 @@ mysqli_free_result($sectionsResult);
     </script>
   </body>
 </html>
+

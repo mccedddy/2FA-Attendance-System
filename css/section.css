@@ -1,0 +1,33 @@
+.section-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.section-button {
+  width: 200px;
+  height: 95px;
+  margin: 0px 20px 25px 0px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 1px solid #810000;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  background-color: white;
+  color: black;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  color: #000;
+  font-family: "Poppins";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.section-button:hover {
+  background-color: #810000;
+  color: white;
+  outline: 3px solid #810000;
+}

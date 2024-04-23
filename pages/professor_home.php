@@ -195,6 +195,12 @@ mysqli_free_result($sectionsResult);
         window.location.href = "professor_settings_page.php";
         return false;
       }
+      function toSection() {
+        window.location.href = "professor_section.php";
+        return false;
+      }
+
+
       function changeSectionImage(isHovered) {
         var imgElement = document.getElementById("sectionButtonImg");
 
