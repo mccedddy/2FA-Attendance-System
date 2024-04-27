@@ -1,0 +1,113 @@
+.table-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.table-controls .left {
+  display: flex;
+  gap: 5px;
+}
+
+.table-controls .left button {
+  width: 75px;
+  height: 28px;
+  margin: 0px;
+  flex-shrink: 0;
+  border-radius: 5px;
+  border: 1px solid #810000;
+  font-family: "Poppins";
+  font-size: 12px;
+  color: #fff;
+  background-color: #810000;
+  padding: 0px 12px 0px 12px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.table-controls .left button:hover,
+.table-controls .left button:focus {
+  outline: 1px solid #810000;
+}
+
+.table-controls .right {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.file-input {
+  background-color: #810000;
+  color: #fff;
+  padding: 0px 10px 0px 10px;
+  cursor: pointer;
+  border: 1px solid #810000;
+  border-radius: 5px;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.file-name {
+  margin: 5px;
+  font-size: 12px;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.import-export {
+  width: 149px;
+  height: 30px;
+  flex-shrink: 0;
+  border-radius: 5px;
+  border: 1px solid #810000;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #fff;
+  color: #810000;
+  font-family: "Poppins";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.import-export:hover {
+  outline: 1px solid #810000;
+  cursor: pointer;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 5px;
+}
+
+table th,
+table td {
+  border: 1px solid #000;
+  padding: 5px;
+  text-align: left;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+table th {
+  background-color: #810000;
+  color: #fff;
+  font-size: 12px;
+}

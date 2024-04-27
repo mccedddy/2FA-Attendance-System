@@ -87,13 +87,13 @@ if (isset($_POST['edit-subject'])) {
   require '../includes/database_connection.php';
   $editSubjectCode = $_POST['subject_code'];
   $editSubjectName = $_POST['subject_name'];
-  $originalSubjectCode = $_POST['original_subject_code'];
+  $originalStudentNumber = $_POST['original_subject_code'];
 
-  // SQL query to update data in the subjects table
+  // SQL query to update data in the students table
   $editSQL = "UPDATE subjects 
             SET subject_code = '$editSubjectCode', 
                 subject_name = '$editSubjectName' 
-            WHERE subject_code = '$originalSubjectCode'";
+            WHERE subject_code = '$originalStudentNumber'";
 
   // Execute query
   $stmt = mysqli_prepare($connection, $editSQL);
@@ -145,105 +145,62 @@ mysqli_free_result($subjectsResult);
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../css/global.css" />
-    <link rel="stylesheet" href="../css/dashboard.css" />
-    <link rel="stylesheet" href="../css/table.css" />
-    <link rel="stylesheet" href="../css/modal.css" />
+    <link rel="stylesheet" href="../css/admin_section_page.css" />
+    <script type="text/javascript" src="../js/tableToExcel.js"></script>
   </head>
   <body>
     <nav class="navbar">
-      <div class="top">
-        <img
-          src="..\assets\images\icons\arrow_left.svg"
-          id="closeNavbar"
-          class="close-nav"
-          onclick="toggleMobileNavbar()"
-          alt="arrow left"
-        />
-        <a onclick="toAdminHomepage()"
-          ><img
-            src="..\assets\images\logos\pup_logo.png"
-            alt="pup logo"
-            class="logo"
-        /></a>
-        <a onclick="toSection()"
-          ><img
-            src="..\assets\images\icons\group.svg"
-            alt="group"
-            class="button"
-        /></a>
-        <a onclick="toSchedule()"
-          ><img
-            src="..\assets\images\icons\table.svg"
-            alt="table"
-            class="button"
-        /></a>
-        <a onclick="toSubjects()"
-          ><img src="..\assets\images\icons\book.svg" alt="book" class="button"
-        /></a>
-        <a onclick="toAnalytics()"
-          ><img
-            src="..\assets\images\icons\graph.svg"
-            alt="graph"
-            class="button"
-        /></a>
-        <a onclick="toSettings()"
-          ><img
-            src="..\assets\images\icons\settings.svg"
-            alt="settings"
-            class="button"
-        /></a>
+      <div class="navbar-top">
+        <img src="..\assets\images\icons\arrow_left.svg" id="closeNavbar" class="nav-button" onclick="toggleMobileNavbar()"/>
+        <a onclick="toAdminHomepage()"><img src="..\assets\images\logos\pup_logo.png" class="logo"/></a>
+        <a onclick="toSection()"><img src="..\assets\images\icons\group.svg" class="nav-button"/></a>
+        <a onclick="toSchedule()"><img src="..\assets\images\icons\table.svg" class="nav-button"/></a>
+        <a onclick="toSubjects()"><img src="..\assets\images\icons\book.svg" class="nav-button"/></a>
+        <a onclick="toAnalytics()"><img src="..\assets\images\icons\graph.svg" class="nav-button"/></a>
       </div>
-      <form method="POST" class="bottom">
-        <button type="submit" name="logout" class="logout">
-          <img
-            src="..\assets\images\icons\logout.svg"
-            alt="logout"
-            class="button"
-          />
+      <form method="POST" class="logout-form">
+        <button type="submit" name="logout" class="logout-button">
+          <img src="..\assets\images\icons\logout.svg" class="nav-button"/>
         </button>
       </form>
     </nav>
     <section class="main">
       <div class="header">
         <div class="left">
-          <img
-            src="..\assets\images\icons\hamburger.svg"
-            alt="hamburger"
-            class="hamburger"
-            onclick="toggleMobileNavbar()"
-          />
-          <h3 onclick="toAdminHomepage()" class="title">PUPHAS</h3>
+          <div class="mobile-navbar-toggle" onclick="toggleMobileNavbar()">
+            <img src="..\assets\images\icons\hamburger.svg" class="hamburger">
+          </div>
+          <a onclick="toAdminHomepage()"><h1>PUP HDF Attendance System</h1></a>
         </div>
         <div class="right">
-          <h6>ADMIN</h6>
+          <h5>ADMIN</h5>
         </div>
       </div>
-      <h2 class="page-title">Computer Engineering Subjects</h2>
-      <div class="table-controls">
-        <div class="left">
-          <button onclick="openAddSubjectModal()">
+      <h1 class="title">Computer Engineering Subjects</h1>
+      <div class="edit-and-export">
+        <div class="edit-container">
+          <button class="edit-class-button" onclick="openAddSubjectModal()">
             <img src="..\assets\images\icons\plus_white.svg"/>
-            New
+            <p>New</p>
           </button>
-          <button id="editSubjectBtn" onclick="openEditSubjectModal()">
+          <button class="edit-class-button" id="editStudentBtn">
             <img src="..\assets\images\icons\pencil_white.svg"/>
-            Edit
+            <p>Edit</p>
           </button>
-          <button id="deleteSubjectsBtn">
+          <button class="edit-class-button" id="deleteStudentsBtn">
             <img src="..\assets\images\icons\trash_white.svg"/>
-            Delete
+            <p>Delete</p>
           </button>
         </div>
-        <div class="right">
-          <label for="fileInput" class="file-input" id="fileInputLabel">Choose File</label>
+        <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+          <label for="fileInput" class="custom-file-input" id="fileInputLabel">Choose File</label>
           <span class="file-name" id="fileName">No file chosen</span>
           <input type="file" id="fileInput" accept=".xlsx" />
           <button class="import-export" id="import"><p>IMPORT DATA</p><img src="..\assets\images\icons\upload.svg"/></button>
           <button class="import-export" id="export"><p>EXPORT DATA</p><img src="..\assets\images\icons\download.svg"/></button>
         </div>
       </div>
-      <table id="subjectsTable" data-cols-width="15,20,20,10,15,35">
+      <table id="attendanceTable" data-cols-width="15,20,20,10,15,35">
         <thead>
           <tr>
             <th data-exclude="true"></th>
@@ -263,21 +220,21 @@ mysqli_free_result($subjectsResult);
       </table>
       <div style="height:50px;"></div>
     </section>
-    
-    <div id="addModal" class="modal-blur">
+
+    <div id="addStudentModal" class="modal-blur">
       <div class="modal-content">
         <div class="top-modal">
           <h6>ADD SUBJECT</h6>
         </div>
         <span class="close-modal" onclick="closeAddSubjectModal()">&times;</span>
-        <form method="POST">
-          <div>
+        <form method="POST" class="add-student-form">
+          <div class="add-student-container">
             <p>Subject Code</p>
-            <input type="text" name="subject_code" required></input>
+            <input type="text" name="subject_code" class="add-student-textbox" required></input>
           </div>
-          <div>
+          <div class="add-student-container">
             <p>Subject Name</p>
-            <input type="text" name="subject_name" required></input>
+            <input type="text" name="subject_name" class="add-student-textbox" required></input>
           </div>
           <div class="add-button-container">
             <button type="submit" name="add-subject" id="addButton" class="add-button">ADD</button>
@@ -286,24 +243,24 @@ mysqli_free_result($subjectsResult);
       </div>
     </div>
 
-    <div id="editModal" class="modal-blur">
+    <div id="editStudentModal" class="modal-blur">
       <div class="modal-content">
         <div class="top-modal">
-          <h6 id="editSubjectTitle">EDIT SUBJECT</h6>
+          <h6 id="editStudentTitle">EDIT SUBJECT</h6>
         </div>
         <span class="close-modal" onclick="closeEditSubjectModal()">&times;</span>
-        <form method="POST" name="edit-subject">
-          <input id="originalSubjectCode" name="original_subject_code" type="hidden"></input>
-          <div>
+        <form method="POST" class="add-student-form">
+          <input id="originalStudentNumber" name="original_subject_code" type="hidden"></input>
+          <div class="add-student-container">
             <p>Subject Code</p>
-            <input type="text" name="subject_code" id="editSubjectCode" required></input>
+            <input type="text" name="subject_code" id="editSubjectCode" class="add-student-textbox" required></input>
           </div>
-          <div>
+          <div class="add-student-container">
             <p>Subject Name</p>
-            <input type="text" name="subject_name" id="editSubjectName" required></input>
+            <input type="text" name="subject_name" id="editSubjectName" class="add-student-textbox" required></input>
           </div>
           <div class="add-button-container">
-            <button type="submit" name="edit-subject" class="add-button">SAVE</button>
+            <button type="submit" name="edit-subject" id="saveStudentButton" class="add-button">SAVE</button>
           </div>
         </form>
       </div>
@@ -343,20 +300,16 @@ mysqli_free_result($subjectsResult);
         return false;
       }
       function openAddSubjectModal() {
-        var addModal = document.getElementById("addModal");
-        addModal.style.display = "block";
-      }
-      function openEditSubjectModal() {
-        var editModal = document.getElementById("editModal");
-        editModal.style.display = "block";
+        var addStudentModal = document.getElementById("addStudentModal");
+        addStudentModal.style.display = "block";
       }
       function closeAddSubjectModal() {
-        var addModal = document.getElementById("addModal");
-        addModal.style.display = "none";
+        var addStudentModal = document.getElementById("addStudentModal");
+        addStudentModal.style.display = "none";
       }
       function closeEditSubjectModal() {
-        var editModal = document.getElementById("editModal");
-        editModal.style.display = "none";
+        var editStudentModal = document.getElementById("editStudentModal");
+        editStudentModal.style.display = "none";
       }
     </script>
   </body>
