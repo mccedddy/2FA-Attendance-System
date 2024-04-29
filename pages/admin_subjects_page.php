@@ -279,7 +279,7 @@ mysqli_free_result($subjectsResult);
             <p>Subject Name</p>
             <input type="text" name="subject_name" required></input>
           </div>
-          <div class="add-button-container">
+          <div class="submit-button-container">
             <button type="submit" name="add-subject" id="addButton" class="add-button">ADD</button>
           </div>
         </form>
@@ -302,7 +302,7 @@ mysqli_free_result($subjectsResult);
             <p>Subject Name</p>
             <input type="text" name="subject_name" id="editSubjectName" required></input>
           </div>
-          <div class="add-button-container">
+          <div class="submit-button-container">
             <button type="submit" name="edit-subject" class="add-button">SAVE</button>
           </div>
         </form>

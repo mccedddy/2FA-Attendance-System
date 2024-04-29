@@ -71,3 +71,19 @@
   text-decoration: none;
   cursor: pointer;
 }
+
+.modal-content input[type="text"] {
+  width: 96%;
+  padding: 2px;
+}
+
+.modal-content form {
+  margin-top: 10px;
+}
+
+.submit-button-container {
+  margin-top: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
