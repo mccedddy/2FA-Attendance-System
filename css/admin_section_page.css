@@ -160,10 +160,7 @@ a:hover {
 }
 
 .add-section-container {
-  display: flex;
-  justify-content: end;
-  align-items: center;
-  margin: 0px 100px 0px 0px;
+  width: 100%;
 }
 
 .add-section-button {
