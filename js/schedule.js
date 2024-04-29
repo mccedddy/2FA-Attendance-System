@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
-  var table = document.getElementById("attendanceTable");
+  var table = document.getElementById("schedulesTable");
   var tbody = table.querySelector("tbody");
-  var editButton = document.getElementById("editStudentBtn");
-  var deleteButton = document.getElementById("deleteStudentsBtn");
+  var editButton = document.getElementById("editScheduleBtn");
+  var deleteButton = document.getElementById("deleteSchedulesBtn");
   var importButton = document.getElementById("import");
   var exportButton = document.getElementById("export");
   var fileInput = document.getElementById("fileInput");
@@ -34,14 +34,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function editSelectedSchedule() {
   var checkbox = document.querySelector(
-    '#attendanceTable tbody input[type="checkbox"]:checked'
+    '#schedulesTable tbody input[type="checkbox"]:checked'
   );
 
   var scheduleId = document.getElementById("scheduleId");
-  var editScheduleModal = document.getElementById("editStudentModal");
+  var editScheduleModal = document.getElementById("editModal");
 
   if (checkbox) {
-    // Get subject code
+    // Get schedule code
     var schedule = checkbox
       .closest("tr")
       .querySelector("td:nth-child(8)").textContent;
@@ -87,7 +87,7 @@ function deleteSelectedSchedule() {
   console.log("clicked delete!");
   // Get all checkboxes in the table
   var checkboxes = document.querySelectorAll(
-    '#attendanceTable tbody input[type="checkbox"]:checked'
+    '#schedulesTable tbody input[type="checkbox"]:checked'
   );
 
   // Extract student numbers from checked checkboxes
@@ -164,12 +164,12 @@ function importSchedule() {
 
 function exportSchedule() {
   var section = document.getElementById("title").textContent;
-  var table = document.getElementById("attendanceTable");
+  var table = document.getElementById("schedulesTable");
 
   table.setAttribute("data-cols-width", "15,40,15,15,15,25,15");
 
   var fileName = section + ".xlsx";
-  TableToExcel.convert(document.getElementById("attendanceTable"), {
+  TableToExcel.convert(document.getElementById("schedulesTable"), {
     name: fileName,
     sheet: {
       name: "Sheet 1",

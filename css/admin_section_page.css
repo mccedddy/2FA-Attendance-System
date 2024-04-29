@@ -257,7 +257,8 @@ a:hover {
   outline: 1px solid #810000;
 }
 
-#import, #export {
+#import,
+#export {
   width: 149px;
   height: 30px;
   flex-shrink: 0;
@@ -275,7 +276,8 @@ a:hover {
   line-height: normal;
 }
 
-#import:hover, #export:hover {
+#import:hover,
+#export:hover {
   outline: 1px solid #810000;
   cursor: pointer;
 }
@@ -343,7 +345,7 @@ input[type="file"] {
 .section-button img {
   width: 100%;
   height: 100%;
-  max-width: 100px; 
+  max-width: 100px;
   max-height: 100px;
 }
 
@@ -749,31 +751,10 @@ input[type="file"] {
   line-height: 1;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @media only screen and (max-width: 811px) {
   .charts-section {
     flex-direction: column;
-    gap: 50px
+    gap: 50px;
   }
 
   .chart-container {
@@ -859,7 +840,8 @@ input[type="file"] {
     gap: 5px;
   }
 
-  #import, #export {
+  #import,
+  #export {
     width: 106px;
     font-size: 10px;
   }

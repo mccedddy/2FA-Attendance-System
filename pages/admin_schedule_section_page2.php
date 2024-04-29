@@ -167,105 +167,64 @@ mysqli_free_result($scheduleResult);
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../css/global.css" />
-    <link rel="stylesheet" href="../css/dashboard.css" />
-    <link rel="stylesheet" href="../css/table.css" />
-    <link rel="stylesheet" href="../css/modal.css" />
+    <link rel="stylesheet" href="../css/admin_section_page.css" />
+    <script type="text/javascript" src="../js/tableToExcel.js"></script>
   </head>
   <body>
     <nav class="navbar">
-      <div class="top">
-        <img
-          src="..\assets\images\icons\arrow_left.svg"
-          id="closeNavbar"
-          class="close-nav"
-          onclick="toggleMobileNavbar()"
-          alt="arrow left"
-        />
-        <a onclick="toAdminHomepage()"
-          ><img
-            src="..\assets\images\logos\pup_logo.png"
-            alt="pup logo"
-            class="logo"
-        /></a>
-        <a onclick="toSection()"
-          ><img
-            src="..\assets\images\icons\group.svg"
-            alt="group"
-            class="button"
-        /></a>
-        <a onclick="toSchedule()"
-          ><img
-            src="..\assets\images\icons\table.svg"
-            alt="table"
-            class="button"
-        /></a>
-        <a onclick="toSubjects()"
-          ><img src="..\assets\images\icons\book.svg" alt="book" class="button"
-        /></a>
-        <a onclick="toAnalytics()"
-          ><img
-            src="..\assets\images\icons\graph.svg"
-            alt="graph"
-            class="button"
-        /></a>
-        <a onclick="toSettings()"
-          ><img
-            src="..\assets\images\icons\settings.svg"
-            alt="settings"
-            class="button"
-        /></a>
+      <div class="navbar-top">
+        <img src="..\assets\images\icons\arrow_left.svg" id="closeNavbar" class="nav-button" onclick="toggleMobileNavbar()"/>
+        <a onclick="toAdminHomepage()"><img src="..\assets\images\logos\pup_logo.png" class="logo"/></a>
+        <a onclick="toAdminHomepage()"><img src="..\assets\images\icons\group.svg" class="nav-button"/></a>
+        <a onclick="toSchedule()"><img src="..\assets\images\icons\table.svg" class="nav-button"/></a>
+        <a onclick="toSubjects()"><img src="..\assets\images\icons\book.svg" class="nav-button"/></a>
+        <a onclick="toAnalytics()"><img src="..\assets\images\icons\graph.svg" class="nav-button"/></a>
       </div>
-      <form method="POST" class="bottom">
-        <button type="submit" name="logout" class="logout">
-          <img
-            src="..\assets\images\icons\logout.svg"
-            alt="logout"
-            class="button"
-          />
+      <form method="POST" class="logout-form">
+        <button type="submit" name="logout" class="logout-button">
+          <img src="..\assets\images\icons\logout.svg" class="nav-button"/>
         </button>
       </form>
     </nav>
     <section class="main">
       <div class="header">
         <div class="left">
-          <img
-            src="..\assets\images\icons\hamburger.svg"
-            alt="hamburger"
-            class="hamburger"
-            onclick="toggleMobileNavbar()"
-          />
-          <h3 onclick="toAdminHomepage()" class="title">PUPHAS</h3>
+          <div class="mobile-navbar-toggle" onclick="toggleMobileNavbar()">
+            <img src="..\assets\images\icons\hamburger.svg" class="hamburger">
+          </div>
+          <a onclick="toAdminHomepage()"><h1>PUP HDF Attendance System</h1></a>
         </div>
         <div class="right">
-          <h6>ADMIN</h6>
+          <h5>ADMIN</h5>
         </div>
       </div>
-      <h2 class="page-title">SECTION <?php echo $sectionPage ?> SCHEDULE</h2>
-      <div class="table-controls">
-        <div class="left">
-          <button onclick="openAddScheduleModal()">
+      <h1 class="title" id="title">SECTION <?php echo $sectionPage ?> SCHEDULE</h1>
+      <div class="search-container">
+      </div>
+      <div class="edit-and-export">
+        <div class="edit-container">
+          <button class="edit-class-button" onclick="openAddClassModal()">
             <img src="..\assets\images\icons\plus_white.svg"/>
-            New
+            <p>New</p>
           </button>
-          <button id="editScheduleBtn" onclick="openEditScheduleModal()">
+          <button class="edit-class-button" id="editStudentBtn">
             <img src="..\assets\images\icons\pencil_white.svg"/>
-            Edit
+            <p>Edit</p>
           </button>
-          <button id="deleteSchedulesBtn">
+          <button class="edit-class-button" id="deleteStudentsBtn">
             <img src="..\assets\images\icons\trash_white.svg"/>
-            Delete
+            <p>Delete</p>
           </button>
         </div>
-        <div class="right">
-          <label for="fileInput" class="file-input" id="fileInputLabel">Choose File</label>
+        <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+          <label for="fileInput" class="custom-file-input" id="fileInputLabel">Choose File</label>
           <span class="file-name" id="fileName">No file chosen</span>
           <input type="file" id="fileInput" accept=".xlsx" />
           <button class="import-export" id="import"><p>IMPORT DATA</p><img src="..\assets\images\icons\upload.svg"/></button>
           <button class="import-export" id="export"><p>EXPORT DATA</p><img src="..\assets\images\icons\download.svg"/></button>
         </div>
       </div>
-      <table id="schedulesTable" data-cols-width="15,20,20,10,15,35">
+      <table id="attendanceTable" data-cols-width="15,20,20,10,15,35">
         <thead>
           <tr>
             <th data-exclude="true"></th>
@@ -282,7 +241,7 @@ mysqli_free_result($scheduleResult);
         <tbody>
           <?php foreach ($schedule as $class): ?>
             <tr>
-              <td data-exclude="true"><input type="checkbox" name="selectedSchedules[]"></td>
+              <td data-exclude="true"><input type="checkbox" name="selectedStudents[]"></td>
               <td><?php echo $class['subjectCode']; ?></td>
               <td><?php echo $class['subjectName']; ?></td>
               <td><?php echo $class['day']; ?></td>
@@ -298,16 +257,16 @@ mysqli_free_result($scheduleResult);
       <div style="height:50px;"></div>
     </section>
 
-    <div id="addModal" class="modal-blur">
+    <div id="addStudentModal" class="modal-blur">
       <div class="modal-content">
         <div class="top-modal">
-          <h6>ADD SCHEDULE</h6>
+          <h6>ADD CLASS</h6>
         </div>
-        <span class="close-modal" onclick="closeAddScheduleModal()">&times;</span>
-        <form method="POST">
-          <div>
+        <span class="close-modal" onclick="closeAddClassModal()">&times;</span>
+        <form method="POST" class="add-student-form">
+          <div class="add-student-container">
             <p>Subject</p>
-            <select name="subject" class="modal-input" required>
+            <select name="subject" class="add-student-dropdown" required>
               <option value="" disabled selected>Select Subject</option>
               <?php
               // Fetch subjects
@@ -322,9 +281,9 @@ mysqli_free_result($scheduleResult);
               ?>
             </select>
           </div>
-          <div>
+          <div class="add-student-container">
             <p>Day</p>
-            <select name="day" class="modal-input" required>
+            <select name="day" class="add-student-dropdown" required>
               <option value="" disabled selected>Select Day</option>
               <option value="Monday">Monday</option>
               <option value="Tuesday">Tuesday</option>
@@ -335,17 +294,17 @@ mysqli_free_result($scheduleResult);
               <option value="Sunday">Sunday</option>
             </select>
           </div>
-          <div>
+          <div class="add-student-container">
             <p>Start Time</p>
-            <input type="time" name="start_time" class="modal-input" required></input>
+            <input type="time" name="start_time" class="add-student-dropdown" required></input>
           </div>
-          <div>
+          <div class="add-student-container">
             <p>End Time</p>
-            <input type="time" name="end_time" class="modal-input" required></input>
+            <input type="time" name="end_time" class="add-student-dropdown" required></input>
           </div>
-          <div>
+          <div class="add-student-container">
             <p>Professor</p>
-            <select name="professor" class="modal-input" required>
+            <select name="professor" class="add-student-dropdown" required>
               <option value="" disabled selected>Select Professor</option>
               <?php
               // Fetch professors
@@ -360,24 +319,24 @@ mysqli_free_result($scheduleResult);
               ?>
             </select>
           </div>
-          <div class="submit-button-container">
+          <div class="add-button-container">
             <button type="submit" name="add-class" id="addButton" class="add-button">ADD</button>
           </div>
         </form>
       </div>
     </div>
 
-    <div id="editModal" class="modal-blur">
+    <div id="editStudentModal" class="modal-blur">
       <div class="modal-content">
         <div class="top-modal">
-          <h6>EDIT SCHEDULE</h6>
+          <h6 id="editStudentTitle">EDIT CLASS</h6>
         </div>
-        <span class="close-modal" onclick="closeEditScheduleModal()">&times;</span>
-        <form method="POST" name="edit-subject">
+        <span class="close-modal" onclick="closeEditClassModal()">&times;</span>
+        <form method="POST" class="add-student-form">
           <input id="scheduleId" name="schedule_id" type="hidden"></input>
-          <div>
+          <div class="add-student-container">
             <p>Subject</p>
-            <select name="subject" id="editSubject" class="modal-input" required>
+            <select name="subject" id="editSubject" class="add-student-dropdown" required>
               <?php
               // Fetch subjects
               $subjectsSQL = "SELECT * FROM subjects ORDER BY subject_code ASC";
@@ -391,9 +350,9 @@ mysqli_free_result($scheduleResult);
               ?>
             </select>
           </div>
-          <div>
+          <div class="add-student-container">
             <p>Day</p>
-            <select name="day" id="editDay" class="modal-input" required>
+            <select name="day" id="editDay" class="add-student-dropdown" required>
               <option value="Monday">Monday</option>
               <option value="Tuesday">Tuesday</option>
               <option value="Wednesday">Wednesday</option>
@@ -403,17 +362,17 @@ mysqli_free_result($scheduleResult);
               <option value="Sunday">Sunday</option>
             </select>
           </div>
-          <div>
+          <div class="add-student-container">
             <p>Start Time</p>
-            <input type="time" name="start_time" id="editStartTime" class="modal-input" required></input>
+            <input type="time" name="start_time" id="editStartTime" class="add-student-dropdown" required></input>
           </div>
-          <div>
+          <div class="add-student-container">
             <p>End Time</p>
-            <input type="time" name="end_time" id="editEndTime" class="modal-input" required></input>
+            <input type="time" name="end_time" id="editEndTime" class="add-student-dropdown" required></input>
           </div>
-          <div>
+          <div class="add-student-container">
             <p>Professor</p>
-            <select name="professor" id="editProfessor" class="modal-input" required>
+            <select name="professor" id="editProfessor" class="add-student-dropdown" required>
               <?php
               // Fetch professors
               $professorsSQL = "SELECT * FROM professors WHERE id_number != 'admin' ORDER BY last_name ASC";
@@ -427,8 +386,8 @@ mysqli_free_result($scheduleResult);
               ?>
             </select>
           </div>
-          <div class="submit-button-container">
-            <button type="submit" name="edit-schedule" class="add-button">SAVE</button>
+          <div class="add-button-container">
+            <button type="submit" name="edit-schedule" id="saveStudentButton" class="add-button">SAVE</button>
           </div>
         </form>
       </div>
@@ -436,13 +395,9 @@ mysqli_free_result($scheduleResult);
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
-    <script src="../js/schedule.js"></script>
     <script src="../js/navbar_controller.js"></script>
+    <script src="../js/schedule.js"></script>
     <script>
-      function toLogin() {
-        window.location.href = "../index.php";
-        return false;
-      }
       function toAdminHomepage() {
         window.location.href = "admin_home.php";
         return false;
@@ -467,21 +422,17 @@ mysqli_free_result($scheduleResult);
         window.location.href = "admin_settings_page.php";
         return false;
       }
-      function openAddScheduleModal() {
-        var addModal = document.getElementById("addModal");
-        addModal.style.display = "block";
+      function openAddClassModal() {
+        var addStudentModal = document.getElementById("addStudentModal");
+        addStudentModal.style.display = "block";
       }
-      function openEditScheduleModal() {
-        var editModal = document.getElementById("editModal");
-        editModal.style.display = "block";
+      function closeAddClassModal() {
+        var addStudentModal = document.getElementById("addStudentModal");
+        addStudentModal.style.display = "none";
       }
-      function closeAddScheduleModal() {
-        var addModal = document.getElementById("addModal");
-        addModal.style.display = "none";
-      }
-      function closeEditScheduleModal() {
-        var editModal = document.getElementById("editModal");
-        editModal.style.display = "none";
+      function closeEditClassModal() {
+        var editStudentModal = document.getElementById("editStudentModal");
+        editStudentModal.style.display = "none";
       }
     </script>
   </body>

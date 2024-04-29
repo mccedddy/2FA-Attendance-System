@@ -73,12 +73,15 @@
 }
 
 .modal-content input[type="text"] {
-  width: 96%;
+  width: 98%;
   padding: 2px;
+  margin-bottom: 5px;
+  flex-grow: 1;
 }
 
 .modal-content form {
   margin-top: 10px;
+  width: 90%;
 }
 
 .submit-button-container {
@@ -86,4 +89,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.modal-input {
+  height: 23px;
+  width: 100%;
+  flex-grow: 1;
+  border-radius: 5px;
+  border: 1px solid #810000 !important;
+  margin-bottom: 5px;
+}
+
+.modal-input:focus {
+  outline: 0px;
 }
