@@ -308,29 +308,29 @@ mysqli_free_result($classListResult);
         <form method="POST">
           <div>
             <p>Last Name</p>
-            <input type="text" name="last_name" class="modal-input" required></input>
+            <input type="text" name="last_name" required></input>
           </div>
           <div>
             <p>First Name</p>
-            <input type="text" name="first_name" class="modal-input" required></input>
+            <input type="text" name="first_name" required></input>
           </div>
           <div>
             <p>Student Number</p>
-            <input type="text" name="student_number" class="modal-input" required></input>
+            <input type="text" name="student_number" required></input>
           </div>
           <div>
             <p>NFC UID</p>
-            <input type="text" name="nfc_uid" class="modal-input" required></input>
+            <input type="text" name="nfc_uid" required></input>
           </div>
           <div>
             <p>Email</p>
-            <input type="email" name="email" class="modal-input" required></input>
+            <input type="email" name="email" required></input>
           </div>
           <div>
             <p>Year Number</p>
-            <input type="text" name="year" class="modal-input" value="<?php echo $sectionPage[0]; ?>" required readonly></input>
+            <input type="text" name="year" value="<?php echo $sectionPage[0]; ?>" required readonly></input>
             <p>Section Number</p>
-            <input type="text" name="section" class="modal-input" value="<?php echo $sectionPage[2]; ?>" required readonly></input>
+            <input type="text" name="section"  value="<?php echo $sectionPage[2]; ?>" required readonly></input>
           </div>
           <div class="submit-button-container">
             <button type="submit" name="add-student" id="addButton" class="add-button">ADD</button>

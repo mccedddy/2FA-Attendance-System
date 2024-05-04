@@ -72,7 +72,8 @@
   cursor: pointer;
 }
 
-.modal-content input[type="text"] {
+.modal-content input[type="text"],
+.modal-content input[type="email"] {
   width: 98%;
   padding: 2px;
   margin-bottom: 5px;

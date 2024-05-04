@@ -298,19 +298,19 @@ mysqli_free_result($classListResult);
         <form method="POST">
           <div>
             <p>Last Name</p>
-            <input type="text" name="last_name" class="modal-input" required></input>
+            <input type="text" name="last_name" required></input>
           </div>
           <div>
             <p>First Name</p>
-            <input type="text" name="first_name" class="modal-input" required></input>
+            <input type="text" name="first_name" required></input>
           </div>
           <div>
             <p>ID Number</p>
-            <input type="text" name="student_number" class="modal-input" required></input>
+            <input type="text" name="student_number" required></input>
           </div>
           <div>
             <p>Email</p>
-            <input type="email" name="email" class="modal-input" required></input>
+            <input type="email" name="email" required></input>
           </div>
           <div class="submit-button-container">
             <button type="submit" name="add-student" id="addButton" class="add-button">ADD</button>
