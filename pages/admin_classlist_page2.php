@@ -169,106 +169,66 @@ mysqli_free_result($classListResult);
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../css/global.css" />
-    <link rel="stylesheet" href="../css/dashboard.css" />
-    <link rel="stylesheet" href="../css/table.css" />
-    <link rel="stylesheet" href="../css/modal.css" />
+    <link rel="stylesheet" href="../css/admin_section_page.css" />
     <script type="text/javascript" src="../js/tableToExcel.js"></script>
   </head>
   <body>
     <nav class="navbar">
-      <div class="top">
-        <img
-          src="..\assets\images\icons\arrow_left.svg"
-          id="closeNavbar"
-          class="close-nav"
-          onclick="toggleMobileNavbar()"
-          alt="arrow left"
-        />
-        <a onclick="toAdminHomepage()"
-          ><img
-            src="..\assets\images\logos\pup_logo.png"
-            alt="pup logo"
-            class="logo"
-        /></a>
-        <a onclick="toSection()"
-          ><img
-            src="..\assets\images\icons\group.svg"
-            alt="group"
-            class="button"
-        /></a>
-        <a onclick="toSchedule()"
-          ><img
-            src="..\assets\images\icons\table.svg"
-            alt="table"
-            class="button"
-        /></a>
-        <a onclick="toSubjects()"
-          ><img src="..\assets\images\icons\book.svg" alt="book" class="button"
-        /></a>
-        <a onclick="toAnalytics()"
-          ><img
-            src="..\assets\images\icons\graph.svg"
-            alt="graph"
-            class="button"
-        /></a>
-        <a onclick="toSettings()"
-          ><img
-            src="..\assets\images\icons\settings.svg"
-            alt="settings"
-            class="button"
-        /></a>
+      <div class="navbar-top">
+        <img src="..\assets\images\icons\arrow_left.svg" id="closeNavbar" class="nav-button" onclick="toggleMobileNavbar()"/>
+        <a onclick="toAdminHomepage()"><img src="..\assets\images\logos\pup_logo.png" class="logo"/></a>
+        <a onclick="toSection()"><img src="..\assets\images\icons\group.svg" class="nav-button"/></a>
+        <a onclick="toSchedule()"><img src="..\assets\images\icons\table.svg" class="nav-button"/></a>
+        <a onclick="toSubjects()"><img src="..\assets\images\icons\book.svg" class="nav-button"/></a>
+        <a onclick="toAnalytics()"><img src="..\assets\images\icons\graph.svg" class="nav-button"/></a>
       </div>
-      <form method="POST" class="bottom">
-        <button type="submit" name="logout" class="logout">
-          <img
-            src="..\assets\images\icons\logout.svg"
-            alt="logout"
-            class="button"
-          />
+      <form method="POST" class="logout-form">
+        <button type="submit" name="logout" class="logout-button">
+          <img src="..\assets\images\icons\logout.svg" class="nav-button"/>
         </button>
       </form>
     </nav>
     <section class="main">
       <div class="header">
         <div class="left">
-          <img
-            src="..\assets\images\icons\hamburger.svg"
-            alt="hamburger"
-            class="hamburger"
-            onclick="toggleMobileNavbar()"
-          />
-          <h3 onclick="toAdminHomepage()" class="title">PUPHAS</h3>
+          <div class="mobile-navbar-toggle" onclick="toggleMobileNavbar()">
+            <img src="..\assets\images\icons\hamburger.svg" class="hamburger">
+          </div>
+          <a onclick="toAdminHomepage()"><h1>PUP HDF Attendance System</h1></a>
         </div>
         <div class="right">
-          <h6>ADMIN</h6>
+          <h5>ADMIN</h5>
         </div>
       </div>
-      <h2 class="page-title" id="title">SECTION <?php echo $sectionPage ?> CLASSLIST</h2>
-      <div class="table-controls">
-        <div class="left">
-          <button onclick="openAddStudentModal()">
+      <h1 class="title" id="title">SECTION <?php echo $sectionPage ?> CLASSLIST</h1>
+      <div class="search-container">
+      </div>
+      <div class="edit-and-export">
+        <div class="edit-container">
+          <button class="edit-class-button" onclick="openAddStudentModal()">
             <img src="..\assets\images\icons\plus_white.svg"/>
-            New
+            <p>New</p>
           </button>
-          <button id="editStudentBtn" onclick="openEditStudentModal()">
+          <button class="edit-class-button" id="editStudentBtn">
             <img src="..\assets\images\icons\pencil_white.svg"/>
-            Edit
+            <p>Edit</p>
           </button>
-          <button id="deleteStudentsBtn">
+          <button class="edit-class-button" id="deleteStudentsBtn">
             <img src="..\assets\images\icons\trash_white.svg"/>
-            Delete
+            <p>Delete</p>
           </button>
         </div>
-        <div class="right">
-          <label for="fileInput" class="file-input" id="fileInputLabel">Choose File</label>
+        <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+          <label for="fileInput" class="custom-file-input" id="fileInputLabel">Choose File</label>
           <span class="file-name" id="fileName">No file chosen</span>
           <input type="file" id="fileInput" accept=".xlsx" />
-          <button class="import-export" id="import"><p>IMPORT DATA</p><img src="..\assets\images\icons\upload.svg"/></button>
-          <button class="import-export" id="export"><p>EXPORT DATA</p><img src="..\assets\images\icons\download.svg"/></button>
+          <div style="display:flex; gap:5px;">
+            <button id="import"><p>IMPORT DATA</p><img src="..\assets\images\icons\upload.svg"/></button>
+            <button id="export"><p>EXPORT DATA</p><img src="..\assets\images\icons\download.svg"/></button>
+          </div>
         </div>
       </div>
-      <table id="classlistTable" data-cols-width="15,20,20,10,15,35">
+      <table id="attendanceTable" data-cols-width="15,20,20,10,15,35">
         <thead>
           <tr>
             <th data-exclude="true"></th>
@@ -278,7 +238,6 @@ mysqli_free_result($classListResult);
             <th>SECTION</th>
             <th>NFC UID</th>
             <th>EMAIL</th>
-            <th style="display: none;" data-exclude="true">ID</th>
           </tr>
         </thead>
         <tbody>
@@ -291,7 +250,6 @@ mysqli_free_result($classListResult);
               <td><?php echo $student['section']; ?></td>
               <td><?php echo $student['nfcUid']; ?></td>
               <td><?php echo $student['email']; ?></td>
-              <td style="display: none;" data-exclude="true"><?php echo $student['id']; ?></td>
             </tr>
           <?php endforeach; ?>
         </tbody>
@@ -299,82 +257,82 @@ mysqli_free_result($classListResult);
       <div style="height:50px;"></div>
     </section>
 
-    <div id="addModal" class="modal-blur">
+    <div id="addSectionModal" class="modal-blur">
       <div class="modal-content">
         <div class="top-modal">
           <h6>ADD STUDENT</h6>
         </div>
         <span class="close-modal" onclick="closeAddStudentModal()">&times;</span>
-        <form method="POST">
-          <div>
+        <form method="POST" class="add-student-form">
+          <div class="add-student-container">
             <p>Last Name</p>
-            <input type="text" name="last_name" class="modal-input" required></input>
+            <input type="text" name="last_name" class="add-student-textbox" required></input>
           </div>
-          <div>
+          <div class="add-student-container">
             <p>First Name</p>
-            <input type="text" name="first_name" class="modal-input" required></input>
+            <input type="text" name="first_name" class="add-student-textbox" required></input>
           </div>
-          <div>
+          <div class="add-student-container">
             <p>Student Number</p>
-            <input type="text" name="student_number" class="modal-input" required></input>
+            <input type="text" name="student_number" class="add-student-textbox" required></input>
           </div>
-          <div>
+          <div class="add-student-container">
             <p>NFC UID</p>
-            <input type="text" name="nfc_uid" class="modal-input" required></input>
+            <input type="text" name="nfc_uid" class="add-student-textbox" required></input>
           </div>
-          <div>
+          <div class="add-student-container">
             <p>Email</p>
-            <input type="email" name="email" class="modal-input" required></input>
+            <input type="email" name="email" class="add-student-textbox" required></input>
           </div>
-          <div>
+          <div class="add-student-container">
             <p>Year Number</p>
-            <input type="text" name="year" class="modal-input" value="<?php echo $sectionPage[0]; ?>" required readonly></input>
+            <input type="text" name="year" class="year-section-textbox" value="<?php echo $sectionPage[0]; ?>" required readonly></input>
             <p>Section Number</p>
-            <input type="text" name="section" class="modal-input" value="<?php echo $sectionPage[2]; ?>" required readonly></input>
+            <input type="text" name="section" class="year-section-textbox" value="<?php echo $sectionPage[2]; ?>" required readonly></input>
           </div>
-          <div class="submit-button-container">
+          <div class="add-button-container">
             <button type="submit" name="add-student" id="addButton" class="add-button">ADD</button>
           </div>
         </form>
       </div>
     </div>
 
-    <div id="editModal" class="modal-blur">
+    <div id="editStudentModal" class="modal-blur">
       <div class="modal-content">
         <div class="top-modal">
           <h6 id="editStudentTitle">EDIT STUDENT</h6>
         </div>
         <span class="close-modal" onclick="closeEditStudentModal()">&times;</span>
-        <form method="POST">
+        <form method="POST" class="add-student-form">
           <input id="originalStudentNumber" name="original_student_number" type="hidden"></input>
-          <div>
+          <div class="add-student-container">
             <p>Last Name</p>
-            <input type="text" name="last_name" id="editLastName" class="modal-input" required></input>
+            <input type="text" name="last_name" id="editLastName" class="add-student-textbox" required></input>
           </div>
-          <div>
+          <div class="add-student-container">
             <p>First Name</p>
-            <input type="text" name="first_name" id="editFirstName" class="modal-input" required></input>
+            <input type="text" name="first_name" id="editFirstName" class="add-student-textbox" required></input>
           </div>
-          <div>
+          <div class="add-student-container">
             <p>Student Number</p>
-            <input type="text" name="student_number" id="editStudentNumber" class="modal-input" required></input>
+            <input type="text" name="student_number" id="editStudentNumber" class="add-student-textbox" required></input>
           </div>
-          <div>
+          <div class="add-student-container">
             <p>NFC UID</p>
-            <input type="text" name="nfc_uid" id="editNfcUid" class="modal-input" required></input>
+            <input type="text" name="nfc_uid" id="editNfcUid" class="add-student-textbox" required></input>
           </div>
-          <div>
+          <div class="add-student-container">
             <p>Email</p>
-            <input type="email" name="email" id="editEmail" class="modal-input" required></input>
+            <input type="email" name="email" id="editEmail" class="add-student-textbox" required></input>
           </div>
-          <div>
+          <div class="add-student-container">
             <p>Year Number</p>
-            <input type="text" name="year" class="modal-input" value="<?php echo $sectionPage[0]; ?>" required readonly></input>
+            <input type="text" name="year" class="year-section-textbox" value="<?php echo $sectionPage[0]; ?>" required readonly></input>
             <p>Section Number</p>
-            <input type="text" name="section" class="modal-input" value="<?php echo $sectionPage[2]; ?>" required readonly></input>
+            <input type="text" name="section" class="year-section-textbox" value="<?php echo $sectionPage[2]; ?>" required readonly></input>
           </div>
-          <div class="submit-button-container">
-            <button type="submit" name="edit-student" id="addButton" class="add-button">ADD</button>
+          <div class="add-button-container">
+            <button type="submit" name="edit-student" id="saveStudentButton" class="add-button">SAVE</button>
           </div>
         </form>
       </div>
@@ -385,10 +343,6 @@ mysqli_free_result($classListResult);
     <script src="../js/navbar_controller.js"></script>
     <script src="../js/classlist.js"></script>
     <script>
-      function toLogin() {
-        window.location.href = "../index.php";
-        return false;
-      }
       function toAdminHomepage() {
         window.location.href = "admin_home.php";
         return false;
@@ -414,20 +368,16 @@ mysqli_free_result($classListResult);
         return false;
       }
       function openAddStudentModal() {
-        var addModal = document.getElementById("addModal");
-        addModal.style.display = "block";
-      }
-      function openEditStudentModal() {
-        var editModal = document.getElementById("editModal");
-        editModal.style.display = "block";
+        var addSectionModal = document.getElementById("addSectionModal");
+        addSectionModal.style.display = "block";
       }
       function closeAddStudentModal() {
-        var addModal = document.getElementById("addModal");
-        addModal.style.display = "none";
+        var addSectionModal = document.getElementById("addSectionModal");
+        addSectionModal.style.display = "none";
       }
       function closeEditStudentModal() {
-        var editModal = document.getElementById("editModal");
-        editModal.style.display = "none";
+        var addSectionModal = document.getElementById("editStudentModal");
+        addSectionModal.style.display = "none";
       }
     </script>
   </body>

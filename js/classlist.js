@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  var table = document.getElementById("attendanceTable");
+  var table = document.getElementById("classlistTable");
   var tbody = table.querySelector("tbody");
   var editButton = document.getElementById("editStudentBtn");
   var deleteButton = document.getElementById("deleteStudentsBtn");
@@ -35,10 +35,10 @@ document.addEventListener("DOMContentLoaded", function () {
 function editSelectedStudent() {
   var title = document.getElementById("title").textContent;
   var checkbox = document.querySelector(
-    '#attendanceTable tbody input[type="checkbox"]:checked'
+    '#classlistTable tbody input[type="checkbox"]:checked'
   );
 
-  var editStudentModal = document.getElementById("editStudentModal");
+  var editModal = document.getElementById("editModal");
   var editStudentTitle = document.getElementById("editStudentTitle");
   var originalStudentNumber = document.getElementById("originalStudentNumber");
 
@@ -57,7 +57,7 @@ function editSelectedStudent() {
     }
 
     // Setup edit modal
-    editStudentModal.style.display = "block";
+    editModal.style.display = "block";
     originalStudentNumber.value = studentNumber;
 
     // Fetch data for the selected student
@@ -97,7 +97,7 @@ function deleteSelectedStudents() {
   var title = document.getElementById("title").textContent;
   // Get all checkboxes in the table
   var checkboxes = document.querySelectorAll(
-    '#attendanceTable tbody input[type="checkbox"]:checked'
+    '#classlistTable tbody input[type="checkbox"]:checked'
   );
 
   // Extract student numbers from checked checkboxes
@@ -177,7 +177,7 @@ function importClasslist() {
 
 function exportClasslist() {
   var section = document.getElementById("title").textContent;
-  var table = document.getElementById("attendanceTable");
+  var table = document.getElementById("classlistTable");
 
   if (section != "PROFESSORS") {
     table.setAttribute("data-cols-width", "15,20,20,10,15,35");
@@ -186,7 +186,7 @@ function exportClasslist() {
   }
 
   var fileName = section + " Classlist.xlsx";
-  TableToExcel.convert(document.getElementById("attendanceTable"), {
+  TableToExcel.convert(document.getElementById("classlistTable"), {
     name: fileName,
     sheet: {
       name: "Sheet 1",
@@ -207,7 +207,7 @@ function updateFileName() {
 }
 
 function sortTable() {
-  const table = document.getElementById("attendanceTable");
+  const table = document.getElementById("classlistTable");
   const tbody = table.querySelector("tbody");
   const rows = Array.from(tbody.querySelectorAll("tr"));
 
