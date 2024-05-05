@@ -1,6 +1,8 @@
 <?php 
 session_start();
 require '../includes/database_connection.php';
+require '../includes/utils.php';
+redirect('admin');
 date_default_timezone_set('Asia/Manila');
 require_once '../includes/encryption.php';
 $encryptionHelper = new EncryptionHelper($encryptionKey);
@@ -47,11 +49,6 @@ if (isset($_SESSION['id_number'])) {
 } else {
   // Redirect to login
   header("Location: ../index.php");
-}
-
-// Logout
-if (isset($_POST['logout'])) {
-  require '../includes/logout.php';
 }
 
 // Add student

@@ -1,6 +1,8 @@
 <?php
 session_start();
 require '../includes/database_connection.php';
+require '../includes/utils.php';
+redirect('admin');
 
 // Clear selection
 unset($_SESSION['selected_section']);
@@ -43,11 +45,6 @@ if (isset($_SESSION['id_number'])) {
 } else {
   // Redirect to login
   header("Location: ../index.php");
-}
-
-// Logout
-if (isset($_POST['logout'])) {
-  require '../includes/logout.php';
 }
 
 // Get student count
