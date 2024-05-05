@@ -75,11 +75,11 @@ if (isset($_POST['add-class'])) {
     // Close the statement
     mysqli_stmt_close($stmt);
 
-    header("Location: admin_schedule_section_page.php");
+    header("Location: admin_schedule.php");
   } catch (mysqli_sql_exception $exception) {
     // Check if duplicate entry
     if ($exception->getCode() == 1062) {
-      header("Location: admin_schedule_section_page.php");
+      header("Location: admin_schedule.php");
       exit;
     } else {
       throw $exception;
@@ -116,11 +116,11 @@ if (isset($_POST['edit-schedule'])) {
     // Close the statement
     mysqli_stmt_close($stmt);
 
-    // header("Location: admin_schedule_page.php");
+    // header("Location: admin_schedule_menu.php");
   } catch (mysqli_sql_exception $exception) {
     // Check if duplicate entry
     if ($exception->getCode() == 1062) {
-      // header("Location: admin_schedule_page.php");
+      // header("Location: admin_schedule_menu.php");
       exit; 
     } else {
       throw $exception;
@@ -448,19 +448,19 @@ mysqli_free_result($scheduleResult);
         return false;
       }
       function toSection() {
-        window.location.href = "admin_section_page.php";
+        window.location.href = "admin_sections.php";
         return false;
       }
       function toSubjects() {
-        window.location.href = "admin_subjects_page.php";
+        window.location.href = "admin_subjects.php";
         return false;
       }
       function toAnalytics() {
-        window.location.href = "admin_analytics_page.php";
+        window.location.href = "admin_analytics.php";
         return false;
       }
       function toSchedule() {
-        window.location.href = "admin_schedule_page.php";
+        window.location.href = "admin_schedule_menu.php";
         return false;
       }
       function toSettings() {

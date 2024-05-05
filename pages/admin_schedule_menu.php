@@ -45,48 +45,19 @@ if (isset($_SESSION['id_number'])) {
   header("Location: ../index.php");
 }
 
-// Section button
-if (isset($_POST['section-button'])) {
-  $_SESSION['selected_section'] = $_POST['section'];
-  if ($_POST['section'] == 'professors') {
-    header("Location: admin_professor_page.php");
-  } else {
-    header("Location: admin_classlist_page.php");
-  }
-}
-
 // Logout
 if (isset($_POST['logout'])) {
   require '../includes/logout.php';
 }
 
-// Add section
-if (isset($_POST['add-section'])) {
-  require '../includes/database_connection.php';
-  $section = $_POST['year'] . '-' . $_POST['section'];
-
-  // Check if section exists
-  $checkSectionSQL = "SELECT COUNT(*) as sectionCount FROM sections WHERE section = '$section'";
-
-  // Prepare and execute query
-  $stmtCheckSection = mysqli_prepare($connection, $checkSectionSQL);
-  mysqli_stmt_execute($stmtCheckSection);
-  mysqli_stmt_bind_result($stmtCheckSection, $sectionCount);
-  mysqli_stmt_fetch($stmtCheckSection);
-  mysqli_stmt_close($stmtCheckSection);
-
-  // Create section
-  if ($sectionCount == 0) {
-    // SQL query
-    $sql = "INSERT INTO sections (section) VALUES ('$section')";
-
-    // Execute query
-    $stmt = mysqli_prepare($connection, $sql);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
+// Section button
+if (isset($_POST['section-button'])) {
+  $_SESSION['selected_section'] = $_POST['section'];
+  if ($_POST['section'] == 'professors') {
+    header("Location: admin_schedule_professor_page.php");
+  } else {
+    header("Location: admin_schedule.php");
   }
-
-  header("Location: admin_section_page.php");
 }
 
 // Fetch section
@@ -119,7 +90,6 @@ mysqli_free_result($sectionsResult);
     <link rel="stylesheet" href="../css/global.css" />
     <link rel="stylesheet" href="../css/dashboard.css" />
     <link rel="stylesheet" href="../css/section.css" />
-    <link rel="stylesheet" href="../css/modal.css" />
   </head>
   <body>
     <nav class="navbar">
@@ -190,67 +160,16 @@ mysqli_free_result($sectionsResult);
           <h6>ADMIN</h6>
         </div>
       </div>
-      <h2 class="page-title">Computer Engineering Sections</h2>
-      <div class="add-section-container">
-        <button class="add-section-button" onclick="openAddSectionModal()">
-          <img src="..\assets\images\icons\plus.svg">
-          <p>ADD SECTION</p>
-        </button>
-      </div>
+      <h2 class="page-title">Computer Engineering Schedules</h2>
       <div class="section-button-container">
         <?php foreach ($sections as $section): ?>
           <form method="POST">
-            <span class="delete-section" onclick="openDeleteSectionModal()">&times;</span>
             <input type="hidden" name="section" value="<?php echo $section; ?>">
             <button type="submit" name="section-button" class="section-button">SECTION <?php echo $section; ?></button>
           </form>
         <?php endforeach; ?>
-        <form method="POST">
-          <input type="hidden" name="section" value="professors">
-          <button type="submit" name="section-button" class="section-button">PROFESSORS</button>
-        </form>
       </div>
     </section>
-
-    <div id="addModal" class="modal-blur">
-      <div class="modal-content">
-        <div class="top-modal">
-          <h6>ADD SECTION</h6>
-        </div>
-        <span class="close-modal" onclick="closeAddSectionModal()">&times;</span>
-        <form method="POST" class="add-student-form">
-          <div class="add-student-container">
-            <p>Year Number</p>
-            <input type="text" name="year" class="year-section-textbox" required></input>
-            <p>Section Number</p>
-            <input type="text" name="section" class="year-section-textbox" required></input>
-          </div>
-          <div class="submit-button-container">
-            <button type="submit" name="add-section" id="addButton" class="add-button">ADD</button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <div id="deleteModal" class="modal-blur">
-      <div class="modal-content">
-        <div class="top-modal">
-          <h6>DELETE SECTION</h6>
-        </div>
-        <span class="close-modal" onclick="closeDeleteSectionModal()">&times;</span>
-        <img src="../assets/images/graphics/girl_trash.png" style="height: 40%; width: 40%;" />
-        <form method="POST">
-          <h5 id="deleteSectionMessage" style="margin-bottom: 10px; text-align: center;"></h5>
-          <p style="margin: 0px; text-align: center;">WARNING: All of the student data in this section will be deleted.</p>
-          <p style="margin: 10px; text-align: center;">Are you sure you want to delete this section?</p>
-          <div class="submit-button-container">
-            <button type="submit" name="confirm-delete-section" id="deleteButton">DELETE</button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <script src="../js/section.js"></script>
     <script src="../js/navbar_controller.js"></script>
     <script>
       function toLogin() {
@@ -262,42 +181,25 @@ mysqli_free_result($sectionsResult);
         return false;
       }
       function toSection() {
-        window.location.href = "admin_section_page.php";
+        window.location.href = "admin_sections.php";
         return false;
       }
       function toSubjects() {
-        window.location.href = "admin_subjects_page.php";
+        window.location.href = "admin_subjects.php";
         return false;
       }
       function toAnalytics() {
-        window.location.href = "admin_analytics_page.php";
+        window.location.href = "admin_analytics.php";
         return false;
       }
       function toSchedule() {
-        window.location.href = "admin_schedule_page.php";
+        window.location.href = "admin_schedule_menu.php";
         return false;
       }
       function toSettings() {
         window.location.href = "admin_settings_page.php";
         return false;
       }
-      function openAddSectionModal() {
-        var addSectionModal = document.getElementById("addModal");
-        addSectionModal.style.display = "block";
-      }
-      function closeAddSectionModal() {
-        var addSectionModal = document.getElementById("addModal");
-        addSectionModal.style.display = "none";
-      }
-      function openDeleteSectionModal() {
-        var addSectionModal = document.getElementById("deleteModal");
-        addSectionModal.style.display = "block";
-      }
-      function closeDeleteSectionModal() {
-        var addSectionModal = document.getElementById("deleteModal");
-        addSectionModal.style.display = "none";
-      }
     </script>
   </body>
 </html>
-

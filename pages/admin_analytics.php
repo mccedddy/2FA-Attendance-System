@@ -74,7 +74,7 @@ mysqli_close($connection);
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../css/admin_section_page.css" />
+    <link rel="stylesheet" href="../css/admin_sections.css" />
   </head>
   <body>
     <nav class="navbar">
@@ -167,19 +167,19 @@ mysqli_close($connection);
         return false;
       }
       function toSection() {
-        window.location.href = "admin_section_page.php";
+        window.location.href = "admin_sections.php";
         return false;
       }
       function toSubjects() {
-        window.location.href = "admin_subjects_page.php";
+        window.location.href = "admin_subjects.php";
         return false;
       }
       function toAnalytics() {
-        window.location.href = "admin_analytics_page.php";
+        window.location.href = "admin_analytics.php";
         return false;
       }
       function toSchedule() {
-        window.location.href = "admin_schedule_page.php";
+        window.location.href = "admin_schedule_menu.php";
         return false;
       }
       function toSettings() {
