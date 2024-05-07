@@ -1,6 +1,7 @@
 <?php 
 session_start();
 require '../includes/database_connection.php';
+require '../includes/database_operations.php';
 require '../includes/utils.php';
 redirect('admin');
 date_default_timezone_set('Asia/Manila');
