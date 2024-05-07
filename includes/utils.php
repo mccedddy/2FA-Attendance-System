@@ -111,7 +111,12 @@ if (isset($_POST['add-section'])) {
 
 // Logout
 if (isset($_POST['logout'])) {
-  require '../includes/logout.php';
+  unset($_SESSION['idNumber']);
+  unset($_SESSION['name']);
+  unset($_SESSION['section']);
+  unset($_SESSION['selected_section']);
+  session_destroy();
+  header("Location: ../index.php");
+  exit();
 }
-
 ?>
