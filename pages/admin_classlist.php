@@ -7,49 +7,8 @@ date_default_timezone_set('Asia/Manila');
 require_once '../includes/encryption.php';
 $encryptionHelper = new EncryptionHelper($encryptionKey);
 
-// If logged in
-if (isset($_SESSION['student_number'])) {
-  // Redirect to student homepage
-  header("Location: student_homepage.php");
-}
-if (isset($_SESSION['id_number'])) {
-
-  // Redirect to homepage if no section is selected
-  if (!isset($_SESSION['selected_section'])) {
-    header("Location: professor_home.php");
-  } else {
-    $sectionPage = $_SESSION['selected_section'];
-  }
-
-  // Professor ID
-  $idNumber = $_SESSION['id_number'];
-
-  // SQL query
-  $sql = "SELECT * FROM professors WHERE id_number = '$idNumber'";
-  $result = mysqli_query($connection, $sql);
-
-  // Check if the query was successful
-  if ($result) {
-    $professor = mysqli_fetch_assoc($result);
-
-    // Get professor info
-    if ($professor) {
-      $name = strtoupper($professor['last_name']) . ', ' . strtoupper($professor['first_name']);
-      $idNumber = $professor['id_number'];
-    }
-        
-    // Free result from memory
-    mysqli_free_result($result);
-  } else {
-    echo 'Error: ' . mysqli_error($connection);
-  }
-    
-  // Close database connection
-  mysqli_close($connection);
-} else {
-  // Redirect to login
-  header("Location: ../index.php");
-}
+// Check selected section
+$sectionPage = checkSection();
 
 // Add student
 if (isset($_POST['add-student'])) {

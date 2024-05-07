@@ -7,40 +7,10 @@ date_default_timezone_set('Asia/Manila');
 require_once '../includes/encryption.php';
 $encryptionHelper = new EncryptionHelper($encryptionKey);
 
-// Redirect to home if no section is selected
-if (!isset($_SESSION['selected_section'])) {
-  header("Location: admin_home.php");
-} else {
-  $sectionPage = $_SESSION['selected_section'];
-}
+// Check selected section
+$sectionPage = checkSection();
 
-// Professor ID
-$idNumber = $_SESSION['id_number'];
-
-// SQL query
-$sql = "SELECT * FROM professors WHERE id_number = '$idNumber'";
-$result = mysqli_query($connection, $sql);
-
-// Check if the query was successful
-if ($result) {
-  $professor = mysqli_fetch_assoc($result);
-
-  // Get professor info
-  if ($professor) {
-    $name = strtoupper($professor['last_name']) . ', ' . strtoupper($professor['first_name']);
-    $idNumber = $professor['id_number'];
-  }
-        
-  // Free result from memory
-  mysqli_free_result($result);
-} else {
-  echo 'Error: ' . mysqli_error($connection);
-}
-    
-// Close database connection
-mysqli_close($connection);
-
-// Add student
+// Add professor
 if (isset($_POST['add-student'])) {
   require '../includes/database_connection.php';
   $lastName = $_POST['last_name'];
@@ -80,7 +50,7 @@ if (isset($_POST['add-student'])) {
   }
 }
 
-// Edit student
+// Edit professor
 if (isset($_POST['edit-student'])) {
   require '../includes/database_connection.php';
   $editLastName = $_POST['last_name'];

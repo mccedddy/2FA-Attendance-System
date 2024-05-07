@@ -6,31 +6,6 @@ redirect('admin');
 
 // Clear selection
 unset($_SESSION['selected_section']);
-
-$idNumber = $_SESSION['id_number'];
-
-// SQL query
-$sql = "SELECT * FROM professors WHERE id_number = '$idNumber'";
-$result = mysqli_query($connection, $sql);
-
-// Check if the query was successful
-if ($result) {
-  $professor = mysqli_fetch_assoc($result);
-
-  // Get professor info
-  if ($professor) {
-    $name = strtoupper($professor['last_name']) . ', ' . strtoupper($professor['first_name']);
-    $idNumber = $professor['id_number'];
-  }
-        
-  // Free result from memory
-  mysqli_free_result($result);
-} else {
-  echo 'Error: ' . mysqli_error($connection);
-}
-    
-// Close database connection
-mysqli_close($connection);
 ?>
 
 <!DOCTYPE html>
