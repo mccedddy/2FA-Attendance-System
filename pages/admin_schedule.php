@@ -8,41 +8,6 @@ date_default_timezone_set('Asia/Manila');
 // Check selected section
 $sectionPage = checkSection();
 
-// Add student
-if (isset($_POST['add-class'])) {
-  require '../includes/database_connection.php';
-  $subjectCode = $_POST['subject'];
-  $day = $_POST['day'];
-  $startTime = $_POST['start_time'];
-  $endTime = $_POST['end_time'];
-  $professor = $_POST['professor'];
-
-  // SQL query 
-  $sql = "INSERT INTO schedule (section, subject_code, day, start_time, end_time, professor)
-            VALUES ('$sectionPage', '$subjectCode', '$day', '$startTime', '$endTime', '$professor')";
-
-  // Use prepared statement
-  $stmt = mysqli_prepare($connection, $sql);
-
-  try {
-    // Execute query
-    mysqli_stmt_execute($stmt);
-
-    // Close the statement
-    mysqli_stmt_close($stmt);
-
-    header("Location: admin_schedule.php");
-  } catch (mysqli_sql_exception $exception) {
-    // Check if duplicate entry
-    if ($exception->getCode() == 1062) {
-      header("Location: admin_schedule.php");
-      exit;
-    } else {
-      throw $exception;
-    }
-  }
-}
-
 // Edit class
 if (isset($_POST['edit-schedule'])) {
   require '../includes/database_connection.php';

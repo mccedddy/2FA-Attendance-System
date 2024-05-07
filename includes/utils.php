@@ -156,7 +156,6 @@ if (!isset($_SESSION['name'])) {
 
 // Add section
 if (isset($_POST['add-section'])) {
-  require '../includes/database_connection.php';
   $section = $_POST['year'] . '-' . $_POST['section'];
 
   // Check if section exists
@@ -179,8 +178,73 @@ if (isset($_POST['add-section'])) {
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
   }
-
   header("Location: ../pages/admin_sections.php");
+}
+
+// Add schedule
+if (isset($_POST['add-class'])) {
+  $section = $_SESSION['selected_section'];
+  $subjectCode = $_POST['subject'];
+  $day = $_POST['day'];
+  $startTime = $_POST['start_time'];
+  $endTime = $_POST['end_time'];
+  $professor = $_POST['professor'];
+
+  // SQL query 
+  $sql = "INSERT INTO schedule (section, subject_code, day, start_time, end_time, professor)
+            VALUES ('$section', '$subjectCode', '$day', '$startTime', '$endTime', '$professor')";
+
+  // Use prepared statement
+  $stmt = mysqli_prepare($connection, $sql);
+
+  try {
+    // Execute query
+    mysqli_stmt_execute($stmt);
+
+    // Close the statement
+    mysqli_stmt_close($stmt);
+
+    header("Location: ../pages/admin_schedule.php");
+  } catch (mysqli_sql_exception $exception) {
+    // Check if duplicate entry
+    if ($exception->getCode() == 1062) {
+      header("Location: ../pages/admin_schedule.php");
+      exit;
+    } else {
+      throw $exception;
+    }
+  }
+}
+
+// Add subject
+if (isset($_POST['add-subject'])) {
+  $subjectCode = $_POST['subject_code'];
+  $subjectName = $_POST['subject_name'];
+
+  // SQL query
+  $sql = "INSERT INTO subjects (subject_code, subject_name)
+            VALUES ('$subjectCode', '$subjectName')";
+
+  // Use prepared statement
+  $stmt = mysqli_prepare($connection, $sql);
+
+  try {
+    // Execute query
+    mysqli_stmt_execute($stmt);
+
+    // Close the statement
+    mysqli_stmt_close($stmt);
+    
+    header("Location: ../pages/admin_subjects.php");
+  } catch (mysqli_sql_exception $exception) {
+    // Check if duplicate entry
+    if ($exception->getCode() == 1062) {
+      header("Location: ../pages/admin_subjects.php");
+      exit; 
+    } else {
+      throw $exception;
+    }
+  }
 }
 
 // Logout

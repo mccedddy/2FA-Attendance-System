@@ -7,38 +7,6 @@ redirect('admin');
 // Clear selection
 unset($_SESSION['selected_section']);
 
-// Add subject
-if (isset($_POST['add-subject'])) {
-  require '../includes/database_connection.php';
-  $subjectCode = $_POST['subject_code'];
-  $subjectName = $_POST['subject_name'];
-
-  // SQL query
-  $sql = "INSERT INTO subjects (subject_code, subject_name)
-            VALUES ('$subjectCode', '$subjectName')";
-
-  // Use prepared statement
-  $stmt = mysqli_prepare($connection, $sql);
-
-  try {
-    // Execute query
-    mysqli_stmt_execute($stmt);
-
-    // Close the statement
-    mysqli_stmt_close($stmt);
-    
-    header("Location: admin_subjects.php");
-  } catch (mysqli_sql_exception $exception) {
-    // Check if duplicate entry
-    if ($exception->getCode() == 1062) {
-      header("Location: admin_subjects.php");
-      exit; 
-    } else {
-      throw $exception;
-    }
-  }
-}
-
 // Edit subject
 if (isset($_POST['edit-subject'])) {
   require '../includes/database_connection.php';
