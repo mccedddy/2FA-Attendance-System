@@ -1,5 +1,8 @@
 <?php 
 require '../includes/database_connection.php';
+date_default_timezone_set('Asia/Manila');
+require_once '../includes/encryption.php';
+$encryptionHelper = new EncryptionHelper($encryptionKey);
 
 // Set logged in name and id number
 if (!isset($_SESSION['id_number'])) {
@@ -31,7 +34,7 @@ function redirect($currentPage) {
   }
 }
 
-// Fetch Sections
+// Fetch sections
 function fetchSections() {
   global $connection;
   $sectionsSQL = "SELECT * FROM sections";
@@ -45,6 +48,29 @@ function fetchSections() {
   }
   return $sections;
   mysqli_free_result($sectionsResult);
+}
+
+function fetchClasslist($tableName, $condition = '') {
+  global $connection;
+  global $encryptionHelper;
+    
+  $classlistSQL = "SELECT * FROM $tableName $condition";
+  $classlistResult = mysqli_query($connection, $classlistSQL);
+  $classlist = [];
+  
+  while ($row = mysqli_fetch_assoc($classlistResult)) {
+    $profileInfo = [
+          'lastName'      => $row['last_name'],
+          'firstName'     => $row['first_name'],
+          'idNumber'      => isset($row['student_number']) ? $row['student_number'] : $row['id_number'],
+          'section'       => isset($row['section']) ? $row['section'] : '',
+          'nfcUid'        => isset($row['nfc_uid']) ? $row['nfc_uid'] : '',
+          'email'         => $encryptionHelper->decryptData($row['email']),
+      ];
+    $classlist[] = $profileInfo;
+  }
+  mysqli_free_result($classlistResult);   
+  return $classlist;
 }
 
 // Check selected section

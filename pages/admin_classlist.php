@@ -93,23 +93,8 @@ if (isset($_POST['edit-student'])) {
   }
 }
 
-// Fetch class list
-require '../includes/database_connection.php';
-$classListSQL = "SELECT * FROM students WHERE section = '$sectionPage'";
-$classListResult = mysqli_query($connection, $classListSQL);
-$classList = [];
-while ($row = mysqli_fetch_assoc($classListResult)) {
-  $studentInfo = [
-            'lastName'      => $row['last_name'],
-            'firstName'     => $row['first_name'],
-            'studentNumber' => $row['student_number'],
-            'section'       => $row['section'],
-            'nfcUid'        => $row['nfc_uid'],
-            'email'         => $encryptionHelper->decryptData($row['email']),
-          ];
-  $classList[] = $studentInfo;
-}
-mysqli_free_result($classListResult);
+// Fetch classlist
+$classlist = fetchClasslist('students', "WHERE section = '$sectionPage'");
 ?>
 
 <!DOCTYPE html>
@@ -238,12 +223,12 @@ mysqli_free_result($classListResult);
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($classList as $student): ?>
+          <?php foreach ($classlist as $student): ?>
             <tr>
               <td data-exclude="true"><input type="checkbox" name="selectedStudents[]"></td>
               <td><?php echo $student['lastName']; ?></td>
               <td><?php echo $student['firstName']; ?></td>
-              <td><?php echo $student['studentNumber']; ?></td>
+              <td><?php echo $student['idNumber']; ?></td>
               <td><?php echo $student['section']; ?></td>
               <td><?php echo $student['nfcUid']; ?></td>
               <td><?php echo $student['email']; ?></td>
