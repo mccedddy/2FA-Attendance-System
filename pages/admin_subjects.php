@@ -75,18 +75,7 @@ if (isset($_POST['edit-subject'])) {
 }
 
 // Fetch subjects
-require '../includes/database_connection.php';
-$subjectsSQL = "SELECT * FROM subjects";
-$subjectsResult = mysqli_query($connection, $subjectsSQL);
-$subjects = [];
-while ($row = mysqli_fetch_assoc($subjectsResult)) {
-  $subjectInfo = [
-            'subjectCode'       => $row['subject_code'],
-            'subjectName'       => $row['subject_name'],
-          ];
-  $subjects[] = $subjectInfo;
-}
-mysqli_free_result($subjectsResult);
+$subjects = fetchSubjects();
 ?>
 
 <!DOCTYPE html>
