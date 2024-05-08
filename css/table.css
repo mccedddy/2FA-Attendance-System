@@ -111,3 +111,57 @@ table th {
   color: #fff;
   font-size: 12px;
 }
+
+#subjectFilter {
+  width: 400px;
+  height: 28px;
+  flex-shrink: 0;
+  border-radius: 5px;
+  background: #810000;
+  color: #fff;
+  text-align: center;
+  font-family: "Poppins";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+#subjectFilter:hover,
+#subjectFilter:focus {
+  outline: 1px solid #810000;
+  cursor: pointer;
+}
+
+#subjectFilter .subjectOption {
+  background-color: white;
+  color: #810000;
+  border: 1px solid #810000;
+  text-align: left;
+}
+
+#subjectFilter option:checked {
+  background-color: #810000;
+  color: #fff;
+}
+
+
+.date-filter {
+  width: 125px;
+  height: 28px;
+  flex-shrink: 0;
+  border-radius: 5px;
+  border: 1px solid #810000;
+  font-family: "Poppins";
+  font-size: 12px;
+  color: #810000;
+  padding: 0px 12px 0px 12px;
+  cursor: pointer;
+  align-self:flex-start;
+  margin-bottom: 10px;
+}
+
+.date-filter:hover,
+.date-filter:focus {
+  outline: 1px solid #810000;
+}

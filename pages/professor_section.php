@@ -177,24 +177,12 @@ mysqli_free_result($sectionsResult);
         window.location.href = "professor_home.php";
         return false;
       }
-      function toSection() {
-        window.location.href = "professor_section_page.php";
-        return false;
-      }
-      function toSubjects() {
-        window.location.href = "professor_subjects_page.php";
-        return false;
-      }
-      function toAnalytics() {
-        window.location.href = "professor_analytics_page.php";
-        return false;
-      }
-      function toSchedule() {
-        window.location.href = "professor_schedule_page.php";
-        return false;
-      }
       function toSettings() {
         window.location.href = "professor_settings_page.php";
+        return false;
+      }
+      function toSection() {
+        window.location.href = "professor_section.php";
         return false;
       }
     </script>
