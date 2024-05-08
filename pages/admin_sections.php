@@ -1,77 +1,25 @@
 <?php
 session_start();
 require '../includes/database_connection.php';
+require '../includes/database_operations.php';
+require '../includes/utils.php';
+redirect('admin');
 
 // Clear selection
 unset($_SESSION['selected_section']);
 
-// If logged in
-if (isset($_SESSION['student_number'])) {
-  // Redirect to student homepage
-  header("Location: student_homepage.php");
-}
-if (isset($_SESSION['id_number'])) {
-  $idNumber = $_SESSION['id_number'];
-
-  // Redirect to professor homepage
-  if ($idNumber != 'admin') {
-    header("Location: professor_home.php");
-  }
-
-  // SQL query
-  $sql = "SELECT * FROM professors WHERE id_number = '$idNumber'";
-  $result = mysqli_query($connection, $sql);
-
-  // Check if the query was successful
-  if ($result) {
-    $professor = mysqli_fetch_assoc($result);
-
-    // Get professor info
-    if ($professor) {
-      $name = strtoupper($professor['last_name']) . ', ' . strtoupper($professor['first_name']);
-      $idNumber = $professor['id_number'];
-    }
-        
-    // Free result from memory
-    mysqli_free_result($result);
-  } else {
-    echo 'Error: ' . mysqli_error($connection);
-  }
-    
-  // Close database connection
-  mysqli_close($connection);
-} else {
-  // Redirect to login
-  header("Location: ../index.php");
-}
-
-// Logout
-if (isset($_POST['logout'])) {
-  require '../includes/logout.php';
-}
+// Fetch section
+$sections = fetchSections();
 
 // Section button
 if (isset($_POST['section-button'])) {
   $_SESSION['selected_section'] = $_POST['section'];
   if ($_POST['section'] == 'professors') {
-    header("Location: admin_schedule_professor_page.php");
+    header("Location: admin_professors.php");
   } else {
-    header("Location: admin_schedule_section_page.php");
+    header("Location: admin_classlist.php");
   }
 }
-
-// Fetch section
-require '../includes/database_connection.php';
-$sectionsSQL = "SELECT * FROM sections";
-$sectionsResult = mysqli_query($connection, $sectionsSQL);
-$sections = [];
-while ($row = mysqli_fetch_assoc($sectionsResult)) {
-  $sectionsInfo = [
-            'section'      => $row['section'],
-          ];
-  $sections[] = $sectionsInfo['section'];
-}
-mysqli_free_result($sectionsResult);
 ?>
 
 <!DOCTYPE html>
@@ -90,6 +38,7 @@ mysqli_free_result($sectionsResult);
     <link rel="stylesheet" href="../css/global.css" />
     <link rel="stylesheet" href="../css/dashboard.css" />
     <link rel="stylesheet" href="../css/section.css" />
+    <link rel="stylesheet" href="../css/modal.css" />
   </head>
   <body>
     <nav class="navbar">
@@ -160,16 +109,67 @@ mysqli_free_result($sectionsResult);
           <h6>ADMIN</h6>
         </div>
       </div>
-      <h2 class="page-title">Computer Engineering Schedules</h2>
+      <h2 class="page-title">Computer Engineering Sections</h2>
+      <div class="add-section-container">
+        <button class="add-section-button" onclick="openAddSectionModal()">
+          <img src="..\assets\images\icons\plus.svg">
+          <p>ADD SECTION</p>
+        </button>
+      </div>
       <div class="section-button-container">
         <?php foreach ($sections as $section): ?>
           <form method="POST">
+            <span class="delete-section" onclick="openDeleteSectionModal()">&times;</span>
             <input type="hidden" name="section" value="<?php echo $section; ?>">
             <button type="submit" name="section-button" class="section-button">SECTION <?php echo $section; ?></button>
           </form>
         <?php endforeach; ?>
+        <form method="POST">
+          <input type="hidden" name="section" value="professors">
+          <button type="submit" name="section-button" class="section-button">PROFESSORS</button>
+        </form>
       </div>
     </section>
+
+    <div id="addModal" class="modal-blur">
+      <div class="modal-content">
+        <div class="top-modal">
+          <h6>ADD SECTION</h6>
+        </div>
+        <span class="close-modal" onclick="closeAddSectionModal()">&times;</span>
+        <form method="POST" class="add-student-form">
+          <div class="add-student-container">
+            <p>Year Number</p>
+            <input type="text" name="year" class="year-section-textbox" required></input>
+            <p>Section Number</p>
+            <input type="text" name="section" class="year-section-textbox" required></input>
+          </div>
+          <div class="submit-button-container">
+            <button type="submit" name="add-section" id="addButton" class="add-button">ADD</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="deleteModal" class="modal-blur">
+      <div class="modal-content">
+        <div class="top-modal">
+          <h6>DELETE SECTION</h6>
+        </div>
+        <span class="close-modal" onclick="closeDeleteSectionModal()">&times;</span>
+        <img src="../assets/images/graphics/girl_trash.png" style="height: 40%; width: 40%;" />
+        <form method="POST">
+          <h5 id="deleteSectionMessage" style="margin-bottom: 10px; text-align: center;"></h5>
+          <p style="margin: 0px; text-align: center;">WARNING: All of the student data in this section will be deleted.</p>
+          <p style="margin: 10px; text-align: center;">Are you sure you want to delete this section?</p>
+          <div class="submit-button-container">
+            <button type="submit" name="confirm-delete-section" id="deleteButton">DELETE</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="../js/section.js"></script>
     <script src="../js/navbar_controller.js"></script>
     <script>
       function toLogin() {
@@ -181,25 +181,42 @@ mysqli_free_result($sectionsResult);
         return false;
       }
       function toSection() {
-        window.location.href = "admin_section_page.php";
+        window.location.href = "admin_sections.php";
         return false;
       }
       function toSubjects() {
-        window.location.href = "admin_subjects_page.php";
+        window.location.href = "admin_subjects.php";
         return false;
       }
       function toAnalytics() {
-        window.location.href = "admin_analytics_page.php";
+        window.location.href = "admin_analytics.php";
         return false;
       }
       function toSchedule() {
-        window.location.href = "admin_schedule_page.php";
+        window.location.href = "admin_schedule_menu.php";
         return false;
       }
       function toSettings() {
         window.location.href = "admin_settings_page.php";
         return false;
       }
+      function openAddSectionModal() {
+        var addSectionModal = document.getElementById("addModal");
+        addSectionModal.style.display = "block";
+      }
+      function closeAddSectionModal() {
+        var addSectionModal = document.getElementById("addModal");
+        addSectionModal.style.display = "none";
+      }
+      function openDeleteSectionModal() {
+        var addSectionModal = document.getElementById("deleteModal");
+        addSectionModal.style.display = "block";
+      }
+      function closeDeleteSectionModal() {
+        var addSectionModal = document.getElementById("deleteModal");
+        addSectionModal.style.display = "none";
+      }
     </script>
   </body>
 </html>
+

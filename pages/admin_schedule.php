@@ -1,91 +1,13 @@
 <?php
 session_start();
 require '../includes/database_connection.php';
+require '../includes/database_operations.php';
+require '../includes/utils.php';
+redirect('admin');
 date_default_timezone_set('Asia/Manila');
 
-// If logged in
-if (isset($_SESSION['student_number'])) {
-  // Redirect to student homepage
-  header("Location: student_homepage.php");
-}
-if (isset($_SESSION['id_number'])) {
-
-  // Redirect to homepage if no section is selected
-  if (!isset($_SESSION['selected_section'])) {
-    header("Location: professor_home.php");
-  } else {
-    $sectionPage = $_SESSION['selected_section'];
-  }
-
-  // Professor ID
-  $idNumber = $_SESSION['id_number'];
-
-  // SQL query
-  $sql = "SELECT * FROM professors WHERE id_number = '$idNumber'";
-  $result = mysqli_query($connection, $sql);
-
-  // Check if the query was successful
-  if ($result) {
-    $professor = mysqli_fetch_assoc($result);
-
-    // Get professor info
-    if ($professor) {
-      $name = strtoupper($professor['last_name']) . ', ' . strtoupper($professor['first_name']);
-      $idNumber = $professor['id_number'];
-    }
-
-    // Free result from memory
-    mysqli_free_result($result);
-  } else {
-    echo 'Error: ' . mysqli_error($connection);
-  }
-
-  // Close database connection
-  mysqli_close($connection);
-} else {
-  // Redirect to login
-  header("Location: ../index.php");
-}
-
-// Logout
-if (isset($_POST['logout'])) {
-  require '../includes/logout.php';
-}
-
-// Add student
-if (isset($_POST['add-class'])) {
-  require '../includes/database_connection.php';
-  $subjectCode = $_POST['subject'];
-  $day = $_POST['day'];
-  $startTime = $_POST['start_time'];
-  $endTime = $_POST['end_time'];
-  $professor = $_POST['professor'];
-
-  // SQL query 
-  $sql = "INSERT INTO schedule (section, subject_code, day, start_time, end_time, professor)
-            VALUES ('$sectionPage', '$subjectCode', '$day', '$startTime', '$endTime', '$professor')";
-
-  // Use prepared statement
-  $stmt = mysqli_prepare($connection, $sql);
-
-  try {
-    // Execute query
-    mysqli_stmt_execute($stmt);
-
-    // Close the statement
-    mysqli_stmt_close($stmt);
-
-    header("Location: admin_schedule_section_page.php");
-  } catch (mysqli_sql_exception $exception) {
-    // Check if duplicate entry
-    if ($exception->getCode() == 1062) {
-      header("Location: admin_schedule_section_page.php");
-      exit;
-    } else {
-      throw $exception;
-    }
-  }
-}
+// Check selected section
+$sectionPage = checkSection();
 
 // Edit class
 if (isset($_POST['edit-schedule'])) {
@@ -116,11 +38,11 @@ if (isset($_POST['edit-schedule'])) {
     // Close the statement
     mysqli_stmt_close($stmt);
 
-    // header("Location: admin_schedule_page.php");
+    // header("Location: admin_schedule_menu.php");
   } catch (mysqli_sql_exception $exception) {
     // Check if duplicate entry
     if ($exception->getCode() == 1062) {
-      // header("Location: admin_schedule_page.php");
+      // header("Location: admin_schedule_menu.php");
       exit; 
     } else {
       throw $exception;
@@ -128,30 +50,8 @@ if (isset($_POST['edit-schedule'])) {
   }
 }
 
-// Fetch class list
-require '../includes/database_connection.php';
-$scheduleSQL = "SELECT *, CONCAT(professors.last_name, ', ', professors.first_name) AS professor_name
-               FROM schedule
-               INNER JOIN subjects ON schedule.subject_code = subjects.subject_code
-               INNER JOIN professors ON schedule.professor = professors.id_number
-               WHERE schedule.section = '$sectionPage' ORDER BY FIELD(schedule.day, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'), schedule.start_time";
-$scheduleResult = mysqli_query($connection, $scheduleSQL);
-$schedule = [];
-
-while ($row = mysqli_fetch_assoc($scheduleResult)) {
-    $classInfo = [
-        'subjectCode'   => $row['subject_code'],
-        'subjectName'   => $row['subject_name'],
-        'day'           => $row['day'],
-        'startTime'     => $row['start_time'],
-        'endTime'       => $row['end_time'],
-        'professor'     => $row['professor_name'],
-        'id'            => $row['id'],
-        'section'       => $row['section']
-    ];
-    $schedule[] = $classInfo;
-}
-mysqli_free_result($scheduleResult);
+// Fetch schedule
+$schedule = fetchSchedule();
 ?>
 
 <!DOCTYPE html>
@@ -448,19 +348,19 @@ mysqli_free_result($scheduleResult);
         return false;
       }
       function toSection() {
-        window.location.href = "admin_section_page.php";
+        window.location.href = "admin_sections.php";
         return false;
       }
       function toSubjects() {
-        window.location.href = "admin_subjects_page.php";
+        window.location.href = "admin_subjects.php";
         return false;
       }
       function toAnalytics() {
-        window.location.href = "admin_analytics_page.php";
+        window.location.href = "admin_analytics.php";
         return false;
       }
       function toSchedule() {
-        window.location.href = "admin_schedule_page.php";
+        window.location.href = "admin_schedule_menu.php";
         return false;
       }
       function toSettings() {

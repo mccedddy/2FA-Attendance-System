@@ -1,3 +1,23 @@
+<?php
+session_start();
+require '../includes/database_connection.php';
+require '../includes/database_operations.php';
+require '../includes/utils.php';
+redirect('admin');
+
+// Clear selection
+unset($_SESSION['selected_section']);
+
+// Fetch section
+$sections = fetchSections();
+
+// Section button
+if (isset($_POST['section-button'])) {
+  $_SESSION['selected_section'] = $_POST['section'];
+  header("Location: admin_schedule.php");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -13,6 +33,7 @@
     />
     <link rel="stylesheet" href="../css/global.css" />
     <link rel="stylesheet" href="../css/dashboard.css" />
+    <link rel="stylesheet" href="../css/section.css" />
   </head>
   <body>
     <nav class="navbar">
@@ -80,11 +101,18 @@
           <h3 onclick="toAdminHomepage()" class="title">PUPHAS</h3>
         </div>
         <div class="right">
-          <h6>NAME</h6>
-          <h6>NUMBER</h6>
+          <h6>ADMIN</h6>
         </div>
       </div>
-      <h2 class="page-title">Computer Engineering Department</h2>
+      <h2 class="page-title">Computer Engineering Schedules</h2>
+      <div class="section-button-container">
+        <?php foreach ($sections as $section): ?>
+          <form method="POST">
+            <input type="hidden" name="section" value="<?php echo $section; ?>">
+            <button type="submit" name="section-button" class="section-button">SECTION <?php echo $section; ?></button>
+          </form>
+        <?php endforeach; ?>
+      </div>
     </section>
     <script src="../js/navbar_controller.js"></script>
     <script>
@@ -97,7 +125,7 @@
         return false;
       }
       function toSection() {
-        window.location.href = "admin_section.php";
+        window.location.href = "admin_sections.php";
         return false;
       }
       function toSubjects() {
@@ -113,7 +141,7 @@
         return false;
       }
       function toSettings() {
-        window.location.href = "admin_settings.php";
+        window.location.href = "admin_settings_page.php";
         return false;
       }
     </script>
