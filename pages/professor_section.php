@@ -48,7 +48,7 @@ if (isset($_SESSION['id_number'])) {
 // Section button
 if (isset($_POST['section-button'])) {
   $_SESSION['selected_section'] = $_POST['section'];
-  header("Location: professor_attendance_page.php");
+  header("Location: professor_attendance.php");
 }
 
 // Logout
@@ -109,27 +109,12 @@ mysqli_free_result($sectionsResult);
             alt="group"
             class="button"
         /></a>
-        <a onclick="toSchedule()"
-          ><img
-            src="..\assets\images\icons\table.svg"
-            alt="table"
-            class="button"
-        /></a>
-        <a onclick="toSubjects()"
-          ><img src="..\assets\images\icons\book.svg" alt="book" class="button"
-        /></a>
-        <a onclick="toAnalytics()"
-          ><img
-            src="..\assets\images\icons\graph.svg"
-            alt="graph"
-            class="button"
-        /></a>
-        <a onclick="toSettings()"
+        <!-- <a onclick="toSettings()"
           ><img
             src="..\assets\images\icons\settings.svg"
             alt="settings"
             class="button"
-        /></a>
+        /></a> -->
       </div>
       <form method="POST" class="bottom">
         <button type="submit" name="logout" class="logout">

@@ -35,7 +35,7 @@ mysqli_close($connection);
 // Section button
 if (isset($_POST['section-button'])) {
   $_SESSION['selected_section'] = $_POST['section'];
-  header("Location: professor_attendance_page.php");
+  header("Location: professor_attendance.php");
 }
 
 // Logout
@@ -84,7 +84,7 @@ mysqli_free_result($sectionsResult);
           onclick="toggleMobileNavbar()"
           alt="arrow left"
         />
-        <a onclick="toAdminHomepage()"
+        <a onclick="toProfessorHomepage()"
           ><img
             src="..\assets\images\logos\pup_logo.png"
             alt="pup logo"
@@ -96,27 +96,12 @@ mysqli_free_result($sectionsResult);
             alt="group"
             class="button"
         /></a>
-        <a onclick="toSchedule()"
-          ><img
-            src="..\assets\images\icons\table.svg"
-            alt="table"
-            class="button"
-        /></a>
-        <a onclick="toSubjects()"
-          ><img src="..\assets\images\icons\book.svg" alt="book" class="button"
-        /></a>
-        <a onclick="toAnalytics()"
-          ><img
-            src="..\assets\images\icons\graph.svg"
-            alt="graph"
-            class="button"
-        /></a>
-        <a onclick="toSettings()"
+        <!-- <a onclick="toSettings()"
           ><img
             src="..\assets\images\icons\settings.svg"
             alt="settings"
             class="button"
-        /></a>
+        /></a> -->
       </div>
       <form method="POST" class="bottom">
         <button type="submit" name="logout" class="logout">
@@ -137,7 +122,7 @@ mysqli_free_result($sectionsResult);
             class="hamburger"
             onclick="toggleMobileNavbar()"
           />
-          <h3 onclick="toAdminHomepage()" class="title">PUPHAS</h3>
+          <h3 onclick="toProfessorHomepage()" class="title">PUPHAS</h3>
         </div>
         <div class="right">
           <h6><?php echo $name; ?></h6>
@@ -148,24 +133,12 @@ mysqli_free_result($sectionsResult);
       <div class="section-button-container">
         <button class="section-button" onclick="toSection()" onmouseover="changeSectionImage(true)" onmouseout="changeSectionImage(false)">
           <img src="../assets/images/icons/group_large_dark.svg" id="sectionButtonImg" />
-          SECTION
+          CHECK ATTENDANCE
         </button>
-        <button class="section-button" onclick="toSchedule()" onmouseover="changeScheduleImage(true)" onmouseout="changeScheduleImage(false)">
-          <img src="../assets/images/icons/table_large_dark.svg" id="scheduleButtonImg" />
-          SCHEDULE
-        </button>
-        <button class="section-button" onclick="toSubjects()" onmouseover="changeSubjectsImage(true)" onmouseout="changeSubjectsImage(false)">
-          <img src="../assets/images/icons/book_large_dark.svg" id="subjectsButtonImg" />
-          SUBJECTS
-        </button>
-        <button class="section-button" onclick="toAnalytics()" onmouseover="changeAnalyticsImage(true)" onmouseout="changeAnalyticsImage(false)">
-          <img src="../assets/images/icons/graph_large_dark.svg" id="analyticsButtonImg" />
-          ANALYTICS
-        </button>
-        <button class="section-button" onclick="toSettings()" onmouseover="changeAnalyticsImage(true)" onmouseout="changeAnalyticsImage(false)">
+        <!-- <button class="section-button" onclick="toSettings()" onmouseover="changeAnalyticsImage(true)" onmouseout="changeAnalyticsImage(false)">
           <img src="../assets/images/icons/graph_large_dark.svg" id="analyticsButtonImg" />
           SETTINGS
-        </button>
+        </button> -->
       </div>
     </section>
     <script src="../js/navbar_controller.js"></script>
