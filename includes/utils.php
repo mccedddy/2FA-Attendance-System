@@ -38,7 +38,11 @@ function redirect($currentPage) {
 function checkSection() {
   // Redirect to home if no section is selected
   if (!isset($_SESSION['selected_section'])) {
-    header("Location: ../pages/admin_home.php");
+    if ($idNumber != 'admin') {
+      header("Location: ../pages/professor_home.php");
+    } else {
+      header("Location: ../pages/admin_home.php");
+    }
   } else {
     return $sectionPage = $_SESSION['selected_section'];
   }

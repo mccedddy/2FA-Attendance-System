@@ -1,56 +1,25 @@
 <?php 
 session_start();
 require '../includes/database_connection.php';
+require '../includes/database_operations.php';
+require '../includes/utils.php';
+redirect('professor');
 date_default_timezone_set('Asia/Manila');
+require_once '../includes/encryption.php';
+$encryptionHelper = new EncryptionHelper($encryptionKey);
 
-// If logged in
-if (isset($_SESSION['student_number'])) {
-  // Redirect to student homepage
-  header("Location: student_homepage.php");
-}
-if (isset($_SESSION['id_number'])) {
+// Check selected section
+$sectionPage = checkSection();
 
-  // Redirect to homepage if no section is selected
-  if (!isset($_SESSION['selected_section'])) {
-    header("Location: professor_home.php");
-  } else {
-    $sectionPage = $_SESSION['selected_section'];
-  }
+// Fetch students
+$classlist = fetchClasslist('students', "WHERE section = '$sectionPage'");
+// echo $classlist;
 
-  // Professor ID
-  $idNumber = $_SESSION['id_number'];
+// Fetch professors
+$professors = fetchClasslist('professors');
 
-  // SQL query
-  $sql = "SELECT * FROM professors WHERE id_number = '$idNumber'";
-  $result = mysqli_query($connection, $sql);
-
-  // Check if the query was successful
-  if ($result) {
-    $professor = mysqli_fetch_assoc($result);
-
-    // Get professor info
-    if ($professor) {
-      $name = strtoupper($professor['last_name']) . ', ' . strtoupper($professor['first_name']);
-      $idNumber = $professor['id_number'];
-    }
-        
-    // Free result from memory
-    mysqli_free_result($result);
-  } else {
-    echo 'Error: ' . mysqli_error($connection);
-  }
-    
-  // Close database connection
-  mysqli_close($connection);
-} else {
-  // Redirect to login
-  header("Location: ../index.php");
-}
-
-// Logout
-if (isset($_POST['logout'])) {
-  require '../includes/logout.php';
-}
+// Fetch subjects
+$subjects = fetchSubjects();
 ?>
 
 <!DOCTYPE html>
@@ -192,19 +161,13 @@ if (isset($_POST['logout'])) {
             <input type="hidden" id="attendanceSection" value="<?php echo $sectionPage; ?>" />
             <select name="student" id="attendanceStudent" required>
               <option value="" disabled selected>Select Student</option>
-              <?php
-                // Fetch students
-                require '../includes/database_connection.php';
-                $studentsSQL = "SELECT * FROM students WHERE section = '$sectionPage' ORDER BY last_name ASC";
-                $studentsResult = mysqli_query($connection, $studentsSQL);
-                while ($studentRow = mysqli_fetch_assoc($studentsResult)) {
-                  $studentName = $studentRow['last_name'] . ', ' . $studentRow['first_name'];
-                  $studentNumber = $studentRow['student_number'];
-                  echo "<option value=\"{$studentNumber}\">{$studentNumber} - {$studentName}</option>";
-                }
-                mysqli_free_result($studentsResult);
-                mysqli_close($connection);  
-              ?>
+              <?php foreach ($classlist as $student): ?>
+                <?php 
+                  $studentName = $student['lastName'] . ', ' . $student['firstName']; 
+                  $studentNumber = $student['idNumber']; 
+                  echo "<option value=\"{$studentNumber}\">{$studentNumber} - {$studentName}</option>"; 
+                ?>
+              <?php endforeach; ?>
             </select>
           </div>
           <div>
@@ -231,38 +194,21 @@ if (isset($_POST['logout'])) {
             <p>Subject</p>
             <select name="subject" id="attendanceSubject" required>
               <option value="" disabled selected>Select Subject</option>
-              <?php
-                // Fetch subjects
-                require '../includes/database_connection.php';
-                $subjectsSQL = "SELECT * FROM subjects ORDER BY subject_code ASC";
-                $subjectsResult = mysqli_query($connection, $subjectsSQL);
-                while ($subjectRow = mysqli_fetch_assoc($subjectsResult)) {
-                  $subjectName = $subjectRow['subject_name'];
-                  $subjectCode = $subjectRow['subject_code'];
-                  echo "<option value=\"{$subjectCode}\">{$subjectCode} - {$subjectName}</option>";
-                }
-                mysqli_free_result($subjectsResult);
-                mysqli_close($connection);
-              ?>
+              <?php foreach ($subjects as $subject): ?>
+                  <option value="<?php echo $subject['subjectCode']; ?>">
+                      <?php echo $subject['subjectCode'] . ' - ' . $subject['subjectName']; ?>
+                  </option>
+              <?php endforeach; ?>
             </select>   
           </div>
           <div>
             <p>Professor</p>
             <select name="professor" id="attendanceProfessor" required>
               <option value="" disabled selected>Select Professor</option>
-              <?php
-                // Fetch professors
-                require '../includes/database_connection.php';
-                $professorsSQL = "SELECT * FROM professors WHERE id_number != 'admin' ORDER BY last_name ASC";
-                $professorsResult = mysqli_query($connection, $professorsSQL);
-                while ($professorRow = mysqli_fetch_assoc($professorsResult)) {
-                  $professorName = $professorRow['last_name'] . ', ' . $professorRow['first_name'];
-                  $professorID = $professorRow['id_number'];
-                  echo "<option value=\"{$professorID}\">{$professorName}</option>";
-                }
-                mysqli_free_result($professorsResult);
-                mysqli_close($connection);
-              ?>
+              <?php foreach ($professors as $professor): ?>
+                <?php $professorName = $professor['lastName'] . ', ' . $professor['firstName']; ?>
+                <option value="<?php echo $professor['idNumber']; ?>"><?php echo $professorName; ?></option>
+              <?php endforeach; ?>
             </select>
           </div>
           <div class="submit-button-container">

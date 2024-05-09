@@ -1,73 +1,25 @@
 <?php
 session_start();
 require '../includes/database_connection.php';
+require '../includes/database_operations.php';
+require '../includes/utils.php';
+redirect('professor');
 
 // Clear selection
 unset($_SESSION['selected_section']);
 
-// If logged in
-if (isset($_SESSION['student_number'])) {
-  // Redirect to student homepage
-  header("Location: student_homepage.php");
-}
-if (isset($_SESSION['id_number'])) {
-  $idNumber = $_SESSION['id_number'];
-
-  // Redirect to admin homepage
-  if ($idNumber == 'admin') {
-    header("Location: admin_section_page.php");
-  }
-
-  // SQL query
-  $sql = "SELECT * FROM professors WHERE id_number = '$idNumber'";
-  $result = mysqli_query($connection, $sql);
-
-  // Check if the query was successful
-  if ($result) {
-    $professor = mysqli_fetch_assoc($result);
-
-    // Get professor info
-    if ($professor) {
-      $name = strtoupper($professor['last_name']) . ', ' . strtoupper($professor['first_name']);
-      $idNumber = $professor['id_number'];
-    }
-        
-    // Free result from memory
-    mysqli_free_result($result);
-  } else {
-    echo 'Error: ' . mysqli_error($connection);
-  }
-    
-  // Close database connection
-  mysqli_close($connection);
-} else {
-  // Redirect to login
-  header("Location: ../index.php");
-}
+// Fetch section
+$sections = fetchSections();
 
 // Section button
 if (isset($_POST['section-button'])) {
   $_SESSION['selected_section'] = $_POST['section'];
-  header("Location: professor_attendance.php");
+  if ($_POST['section'] == 'professors') {
+    header("Location: admin_professors.php");
+  } else {
+    header("Location: professor_attendance.php");
+  }
 }
-
-// Logout
-if (isset($_POST['logout'])) {
-  require '../includes/logout.php';
-}
-
-// Fetch section
-require '../includes/database_connection.php';
-$sectionsSQL = "SELECT * FROM sections";
-$sectionsResult = mysqli_query($connection, $sectionsSQL);
-$sections = [];
-while ($row = mysqli_fetch_assoc($sectionsResult)) {
-  $sectionsInfo = [
-            'section'      => $row['section'],
-          ];
-  $sections[] = $sectionsInfo['section'];
-}
-mysqli_free_result($sectionsResult);
 ?>
 
 <!DOCTYPE html>
