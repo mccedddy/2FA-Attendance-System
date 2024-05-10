@@ -107,7 +107,7 @@ unset($_SESSION['selected_section']);
         return false;
       }
       function toSection() {
-        window.location.href = "professor_section.php";
+        window.location.href = "professor_sections.php";
         return false;
       }
 

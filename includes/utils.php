@@ -48,6 +48,16 @@ function checkSection() {
   }
 }
 
+// Section header
+function sectionHeader($location) {
+  $_SESSION['selected_section'] = $_POST['section'];
+  if ($_POST['section'] == 'professors') {
+    header("Location: admin_professors.php");
+  } else {
+    header("Location: {$location}");
+  }
+}
+
 // Logout
 if (isset($_POST['logout'])) {
   unset($_SESSION['idNumber']);

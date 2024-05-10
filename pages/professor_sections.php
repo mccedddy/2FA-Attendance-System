@@ -13,12 +13,7 @@ $sections = fetchSections();
 
 // Section button
 if (isset($_POST['section-button'])) {
-  $_SESSION['selected_section'] = $_POST['section'];
-  if ($_POST['section'] == 'professors') {
-    header("Location: admin_professors.php");
-  } else {
-    header("Location: professor_attendance.php");
-  }
+  sectionHeader('professor_attendance.php');
 }
 ?>
 
@@ -119,7 +114,7 @@ if (isset($_POST['section-button'])) {
         return false;
       }
       function toSection() {
-        window.location.href = "professor_section.php";
+        window.location.href = "professor_sections.php";
         return false;
       }
     </script>

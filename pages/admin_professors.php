@@ -13,42 +13,7 @@ $sectionPage = checkSection();
 
 // Add professor
 if (isset($_POST['add-student'])) {
-  require '../includes/database_connection.php';
-  $lastName = $_POST['last_name'];
-  $firstName = $_POST['first_name'];
-  $idNumber = $_POST['student_number'];
-  $email = $_POST['email'];
-
-  // Hash the password (Default: Last Name)
-  $hashedPassword = password_hash($lastName, PASSWORD_DEFAULT);
-
-  // Encrypt email
-  $encryptedEmail = $encryptionHelper->encryptData($email);
-
-  // SQL query to insert data into the students table
-  $sql = "INSERT INTO professors (last_name, first_name, id_number, email, password)
-            VALUES ('$lastName', '$firstName', '$idNumber', '$encryptedEmail', '$hashedPassword')";
-
-  // Execute query
-  $stmt = mysqli_prepare($connection, $sql);
-
-  try {
-    // Execute query
-    mysqli_stmt_execute($stmt);
-
-    // Close the statement
-    mysqli_stmt_close($stmt);
-    
-    header("Location: admin_professors.php");
-  } catch (mysqli_sql_exception $exception) {
-    // Check if duplicate entry
-    if ($exception->getCode() == 1062) {
-      header("Location: admin_professors.php");
-      exit; 
-    } else {
-      throw $exception;
-    }
-  }
+ addProfile('professor');
 }
 
 // Edit professor

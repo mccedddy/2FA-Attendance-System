@@ -13,7 +13,6 @@ $sectionPage = checkSection();
 
 // Fetch students
 $classlist = fetchClasslist('students', "WHERE section = '$sectionPage'");
-// echo $classlist;
 
 // Fetch professors
 $professors = fetchClasslist('professors');
@@ -234,7 +233,7 @@ $subjects = fetchSubjects();
         return false;
       }
       function toSection() {
-        window.location.href = "professor_section.php";
+        window.location.href = "professor_sections.php";
         return false;
       }
 

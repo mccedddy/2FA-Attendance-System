@@ -13,8 +13,7 @@ $sections = fetchSections();
 
 // Section button
 if (isset($_POST['section-button'])) {
-  $_SESSION['selected_section'] = $_POST['section'];
-  header("Location: admin_schedule.php");
+  sectionHeader('admin_schedule.php');
 }
 ?>
 
