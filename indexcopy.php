@@ -7,7 +7,11 @@ $error_message = '';
 // If logged in
 if (isset($_SESSION['id_number'])) {
   // Redirect to professor homepage
-  header("Location: pages/professor_home.php");
+  header("Location: professor_home.php");
+}
+if (isset($_SESSION['student_number'])) {
+  // Redirect to professor homepage
+  header("Location: student_homepage.php");
 }
 
 // Check if the form is submitted
@@ -31,9 +35,9 @@ if (isset($_POST['login'])) {
     if ($professors && password_verify($password, $professors['password'])) {
       $_SESSION['id_number'] = $idNumber;
       if ($idNumber == 'admin') {
-        header("Location: pages/admin_home.php");
+        header("Location: admin_home.php");
       } else {
-        header("Location: pages/professor_home.php");
+        header("Location: professor_home.php");
       }
       exit();
     } else {
