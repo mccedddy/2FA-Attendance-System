@@ -1,0 +1,82 @@
+.section-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.section-button {
+  width: 200px;
+  height: 95px;
+  margin: 0px 20px 25px 0px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 1px solid #810000;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  background-color: white;
+  color: black;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  color: #000;
+  font-family: "Poppins";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.section-button:hover {
+  background-color: #810000;
+  color: white;
+  outline: 3px solid #810000;
+}
+
+.add-section-container {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  align-items: end;
+  margin: 0px 10px 0px 10px;
+}
+
+.add-section-button {
+  margin-right: 30px;
+  width: 120px;
+  border: 0px;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.25);
+}
+
+.add-section-button:hover {
+  cursor: pointer;
+  outline: 0px;
+}
+
+.add-section-button:focus {
+  outline: 0px;
+}
+
+.delete-section {
+  position: relative;
+  height: 0px;
+  width: 0px;
+  top: 0px;
+  left: -50px;
+  float: right;
+  font-size: 28px;
+  color: #bbbbbb;
+  font-weight: bold;
+  align-self: flex-end;
+  padding-bottom: 0px;
+}
+
+.delete-section:hover,
+.delete-section:focus {
+  color: #810000;
+  text-decoration: none;
+  cursor: pointer;
+}

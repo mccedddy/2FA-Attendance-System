@@ -1,91 +1,13 @@
 <?php
 session_start();
 require '../includes/database_connection.php';
+require '../includes/database_operations.php';
+require '../includes/utils.php';
+redirect('admin');
 date_default_timezone_set('Asia/Manila');
 
-// If logged in
-if (isset($_SESSION['student_number'])) {
-  // Redirect to student homepage
-  header("Location: student_homepage.php");
-}
-if (isset($_SESSION['id_number'])) {
-
-  // Redirect to homepage if no section is selected
-  if (!isset($_SESSION['selected_section'])) {
-    header("Location: professor_homepage.php");
-  } else {
-    $sectionPage = $_SESSION['selected_section'];
-  }
-
-  // Professor ID
-  $idNumber = $_SESSION['id_number'];
-
-  // SQL query
-  $sql = "SELECT * FROM professors WHERE id_number = '$idNumber'";
-  $result = mysqli_query($connection, $sql);
-
-  // Check if the query was successful
-  if ($result) {
-    $professor = mysqli_fetch_assoc($result);
-
-    // Get professor info
-    if ($professor) {
-      $name = strtoupper($professor['last_name']) . ', ' . strtoupper($professor['first_name']);
-      $idNumber = $professor['id_number'];
-    }
-
-    // Free result from memory
-    mysqli_free_result($result);
-  } else {
-    echo 'Error: ' . mysqli_error($connection);
-  }
-
-  // Close database connection
-  mysqli_close($connection);
-} else {
-  // Redirect to login
-  header("Location: ../index.php");
-}
-
-// Logout
-if (isset($_POST['logout'])) {
-  require '../includes/logout.php';
-}
-
-// Add student
-if (isset($_POST['add-class'])) {
-  require '../includes/database_connection.php';
-  $subjectCode = $_POST['subject'];
-  $day = $_POST['day'];
-  $startTime = $_POST['start_time'];
-  $endTime = $_POST['end_time'];
-  $professor = $_POST['professor'];
-
-  // SQL query 
-  $sql = "INSERT INTO schedule (section, subject_code, day, start_time, end_time, professor)
-            VALUES ('$sectionPage', '$subjectCode', '$day', '$startTime', '$endTime', '$professor')";
-
-  // Use prepared statement
-  $stmt = mysqli_prepare($connection, $sql);
-
-  try {
-    // Execute query
-    mysqli_stmt_execute($stmt);
-
-    // Close the statement
-    mysqli_stmt_close($stmt);
-
-    header("Location: admin_schedule_section_page.php");
-  } catch (mysqli_sql_exception $exception) {
-    // Check if duplicate entry
-    if ($exception->getCode() == 1062) {
-      header("Location: admin_schedule_section_page.php");
-      exit;
-    } else {
-      throw $exception;
-    }
-  }
-}
+// Check selected section
+$sectionPage = checkSection();
 
 // Edit class
 if (isset($_POST['edit-schedule'])) {
@@ -116,11 +38,11 @@ if (isset($_POST['edit-schedule'])) {
     // Close the statement
     mysqli_stmt_close($stmt);
 
-    // header("Location: admin_schedule_page.php");
+    // header("Location: admin_schedule_menu.php");
   } catch (mysqli_sql_exception $exception) {
     // Check if duplicate entry
     if ($exception->getCode() == 1062) {
-      // header("Location: admin_schedule_page.php");
+      // header("Location: admin_schedule_menu.php");
       exit; 
     } else {
       throw $exception;
@@ -128,30 +50,8 @@ if (isset($_POST['edit-schedule'])) {
   }
 }
 
-// Fetch class list
-require '../includes/database_connection.php';
-$scheduleSQL = "SELECT *, CONCAT(professors.last_name, ', ', professors.first_name) AS professor_name
-               FROM schedule
-               INNER JOIN subjects ON schedule.subject_code = subjects.subject_code
-               INNER JOIN professors ON schedule.professor = professors.id_number
-               WHERE schedule.section = '$sectionPage' ORDER BY FIELD(schedule.day, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'), schedule.start_time";
-$scheduleResult = mysqli_query($connection, $scheduleSQL);
-$schedule = [];
-
-while ($row = mysqli_fetch_assoc($scheduleResult)) {
-    $classInfo = [
-        'subjectCode'   => $row['subject_code'],
-        'subjectName'   => $row['subject_name'],
-        'day'           => $row['day'],
-        'startTime'     => $row['start_time'],
-        'endTime'       => $row['end_time'],
-        'professor'     => $row['professor_name'],
-        'id'            => $row['id'],
-        'section'       => $row['section']
-    ];
-    $schedule[] = $classInfo;
-}
-mysqli_free_result($scheduleResult);
+// Fetch schedule
+$schedule = fetchSchedule();
 ?>
 
 <!DOCTYPE html>
@@ -167,64 +67,105 @@ mysqli_free_result($scheduleResult);
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../css/admin_section_page.css" />
-    <script type="text/javascript" src="../js/tableToExcel.js"></script>
+    <link rel="stylesheet" href="../css/global.css" />
+    <link rel="stylesheet" href="../css/dashboard.css" />
+    <link rel="stylesheet" href="../css/table.css" />
+    <link rel="stylesheet" href="../css/modal.css" />
   </head>
   <body>
     <nav class="navbar">
-      <div class="navbar-top">
-        <img src="..\assets\images\icons\arrow_left.svg" id="closeNavbar" class="nav-button" onclick="toggleMobileNavbar()"/>
-        <a onclick="toAdminHomepage()"><img src="..\assets\images\logos\pup_logo.png" class="logo"/></a>
-        <a onclick="toAdminHomepage()"><img src="..\assets\images\icons\group.svg" class="nav-button"/></a>
-        <a onclick="toSchedule()"><img src="..\assets\images\icons\table.svg" class="nav-button"/></a>
-        <a onclick="toSubjects()"><img src="..\assets\images\icons\book.svg" class="nav-button"/></a>
-        <a onclick="toAnalytics()"><img src="..\assets\images\icons\graph.svg" class="nav-button"/></a>
+      <div class="top">
+        <img
+          src="..\assets\images\icons\arrow_left.svg"
+          id="closeNavbar"
+          class="close-nav"
+          onclick="toggleMobileNavbar()"
+          alt="arrow left"
+        />
+        <a onclick="toAdminHomepage()"
+          ><img
+            src="..\assets\images\logos\pup_logo.png"
+            alt="pup logo"
+            class="logo"
+        /></a>
+        <a onclick="toSection()"
+          ><img
+            src="..\assets\images\icons\group.svg"
+            alt="group"
+            class="button"
+        /></a>
+        <a onclick="toSchedule()"
+          ><img
+            src="..\assets\images\icons\table.svg"
+            alt="table"
+            class="button"
+        /></a>
+        <a onclick="toSubjects()"
+          ><img src="..\assets\images\icons\book.svg" alt="book" class="button"
+        /></a>
+        <a onclick="toAnalytics()"
+          ><img
+            src="..\assets\images\icons\graph.svg"
+            alt="graph"
+            class="button"
+        /></a>
+        <a onclick="toSettings()"
+          ><img
+            src="..\assets\images\icons\settings.svg"
+            alt="settings"
+            class="button"
+        /></a>
       </div>
-      <form method="POST" class="logout-form">
-        <button type="submit" name="logout" class="logout-button">
-          <img src="..\assets\images\icons\logout.svg" class="nav-button"/>
+      <form method="POST" class="bottom">
+        <button type="submit" name="logout" class="logout">
+          <img
+            src="..\assets\images\icons\logout.svg"
+            alt="logout"
+            class="button"
+          />
         </button>
       </form>
     </nav>
     <section class="main">
       <div class="header">
         <div class="left">
-          <div class="mobile-navbar-toggle" onclick="toggleMobileNavbar()">
-            <img src="..\assets\images\icons\hamburger.svg" class="hamburger">
-          </div>
-          <a onclick="toAdminHomepage()"><h1>PUP HDF Attendance System</h1></a>
+          <img
+            src="..\assets\images\icons\hamburger.svg"
+            alt="hamburger"
+            class="hamburger"
+            onclick="toggleMobileNavbar()"
+          />
+          <h3 onclick="toAdminHomepage()" class="title">PUPHAS</h3>
         </div>
         <div class="right">
-          <h5>ADMIN</h5>
+          <h6>ADMIN</h6>
         </div>
       </div>
-      <h1 class="title" id="title">SECTION <?php echo $sectionPage ?> SCHEDULE</h1>
-      <div class="search-container">
-      </div>
-      <div class="edit-and-export">
-        <div class="edit-container">
-          <button class="edit-class-button" onclick="openAddClassModal()">
+      <h2 class="page-title">SECTION <?php echo $sectionPage ?> SCHEDULE</h2>
+      <div class="table-controls">
+        <div class="left">
+          <button onclick="openAddScheduleModal()">
             <img src="..\assets\images\icons\plus_white.svg"/>
-            <p>New</p>
+            New
           </button>
-          <button class="edit-class-button" id="editStudentBtn">
+          <button id="editScheduleBtn" onclick="openEditScheduleModal()">
             <img src="..\assets\images\icons\pencil_white.svg"/>
-            <p>Edit</p>
+            Edit
           </button>
-          <button class="edit-class-button" id="deleteStudentsBtn">
+          <button id="deleteSchedulesBtn">
             <img src="..\assets\images\icons\trash_white.svg"/>
-            <p>Delete</p>
+            Delete
           </button>
         </div>
-        <div style="display: flex; gap: 5px; flex-wrap: wrap;">
-          <label for="fileInput" class="custom-file-input" id="fileInputLabel">Choose File</label>
+        <div class="right">
+          <label for="fileInput" class="file-input" id="fileInputLabel">Choose File</label>
           <span class="file-name" id="fileName">No file chosen</span>
           <input type="file" id="fileInput" accept=".xlsx" />
           <button class="import-export" id="import"><p>IMPORT DATA</p><img src="..\assets\images\icons\upload.svg"/></button>
           <button class="import-export" id="export"><p>EXPORT DATA</p><img src="..\assets\images\icons\download.svg"/></button>
         </div>
       </div>
-      <table id="attendanceTable" data-cols-width="15,20,20,10,15,35">
+      <table id="schedulesTable" data-cols-width="15,20,20,10,15,35">
         <thead>
           <tr>
             <th data-exclude="true"></th>
@@ -241,7 +182,7 @@ mysqli_free_result($scheduleResult);
         <tbody>
           <?php foreach ($schedule as $class): ?>
             <tr>
-              <td data-exclude="true"><input type="checkbox" name="selectedStudents[]"></td>
+              <td data-exclude="true"><input type="checkbox" name="selectedSchedules[]"></td>
               <td><?php echo $class['subjectCode']; ?></td>
               <td><?php echo $class['subjectName']; ?></td>
               <td><?php echo $class['day']; ?></td>
@@ -257,16 +198,16 @@ mysqli_free_result($scheduleResult);
       <div style="height:50px;"></div>
     </section>
 
-    <div id="addStudentModal" class="modal-blur">
+    <div id="addModal" class="modal-blur">
       <div class="modal-content">
         <div class="top-modal">
-          <h6>ADD CLASS</h6>
+          <h6>ADD SCHEDULE</h6>
         </div>
-        <span class="close-modal" onclick="closeAddClassModal()">&times;</span>
-        <form method="POST" class="add-student-form">
-          <div class="add-student-container">
+        <span class="close-modal" onclick="closeAddScheduleModal()">&times;</span>
+        <form method="POST">
+          <div>
             <p>Subject</p>
-            <select name="subject" class="add-student-dropdown" required>
+            <select name="subject" class="modal-input" required>
               <option value="" disabled selected>Select Subject</option>
               <?php
               // Fetch subjects
@@ -281,9 +222,9 @@ mysqli_free_result($scheduleResult);
               ?>
             </select>
           </div>
-          <div class="add-student-container">
+          <div>
             <p>Day</p>
-            <select name="day" class="add-student-dropdown" required>
+            <select name="day" class="modal-input" required>
               <option value="" disabled selected>Select Day</option>
               <option value="Monday">Monday</option>
               <option value="Tuesday">Tuesday</option>
@@ -294,17 +235,17 @@ mysqli_free_result($scheduleResult);
               <option value="Sunday">Sunday</option>
             </select>
           </div>
-          <div class="add-student-container">
+          <div>
             <p>Start Time</p>
-            <input type="time" name="start_time" class="add-student-dropdown" required></input>
+            <input type="time" name="start_time" class="modal-input" required></input>
           </div>
-          <div class="add-student-container">
+          <div>
             <p>End Time</p>
-            <input type="time" name="end_time" class="add-student-dropdown" required></input>
+            <input type="time" name="end_time" class="modal-input" required></input>
           </div>
-          <div class="add-student-container">
+          <div>
             <p>Professor</p>
-            <select name="professor" class="add-student-dropdown" required>
+            <select name="professor" class="modal-input" required>
               <option value="" disabled selected>Select Professor</option>
               <?php
               // Fetch professors
@@ -319,24 +260,24 @@ mysqli_free_result($scheduleResult);
               ?>
             </select>
           </div>
-          <div class="add-button-container">
+          <div class="submit-button-container">
             <button type="submit" name="add-class" id="addButton" class="add-button">ADD</button>
           </div>
         </form>
       </div>
     </div>
 
-    <div id="editStudentModal" class="modal-blur">
+    <div id="editModal" class="modal-blur">
       <div class="modal-content">
         <div class="top-modal">
-          <h6 id="editStudentTitle">EDIT CLASS</h6>
+          <h6>EDIT SCHEDULE</h6>
         </div>
-        <span class="close-modal" onclick="closeEditClassModal()">&times;</span>
-        <form method="POST" class="add-student-form">
+        <span class="close-modal" onclick="closeEditScheduleModal()">&times;</span>
+        <form method="POST" name="edit-subject">
           <input id="scheduleId" name="schedule_id" type="hidden"></input>
-          <div class="add-student-container">
+          <div>
             <p>Subject</p>
-            <select name="subject" id="editSubject" class="add-student-dropdown" required>
+            <select name="subject" id="editSubject" class="modal-input" required>
               <?php
               // Fetch subjects
               $subjectsSQL = "SELECT * FROM subjects ORDER BY subject_code ASC";
@@ -350,9 +291,9 @@ mysqli_free_result($scheduleResult);
               ?>
             </select>
           </div>
-          <div class="add-student-container">
+          <div>
             <p>Day</p>
-            <select name="day" id="editDay" class="add-student-dropdown" required>
+            <select name="day" id="editDay" class="modal-input" required>
               <option value="Monday">Monday</option>
               <option value="Tuesday">Tuesday</option>
               <option value="Wednesday">Wednesday</option>
@@ -362,17 +303,17 @@ mysqli_free_result($scheduleResult);
               <option value="Sunday">Sunday</option>
             </select>
           </div>
-          <div class="add-student-container">
+          <div>
             <p>Start Time</p>
-            <input type="time" name="start_time" id="editStartTime" class="add-student-dropdown" required></input>
+            <input type="time" name="start_time" id="editStartTime" class="modal-input" required></input>
           </div>
-          <div class="add-student-container">
+          <div>
             <p>End Time</p>
-            <input type="time" name="end_time" id="editEndTime" class="add-student-dropdown" required></input>
+            <input type="time" name="end_time" id="editEndTime" class="modal-input" required></input>
           </div>
-          <div class="add-student-container">
+          <div>
             <p>Professor</p>
-            <select name="professor" id="editProfessor" class="add-student-dropdown" required>
+            <select name="professor" id="editProfessor" class="modal-input" required>
               <?php
               // Fetch professors
               $professorsSQL = "SELECT * FROM professors WHERE id_number != 'admin' ORDER BY last_name ASC";
@@ -386,8 +327,8 @@ mysqli_free_result($scheduleResult);
               ?>
             </select>
           </div>
-          <div class="add-button-container">
-            <button type="submit" name="edit-schedule" id="saveStudentButton" class="add-button">SAVE</button>
+          <div class="submit-button-container">
+            <button type="submit" name="edit-schedule" class="add-button">SAVE</button>
           </div>
         </form>
       </div>
@@ -395,44 +336,52 @@ mysqli_free_result($scheduleResult);
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
-    <script src="../js/navbar_controller.js"></script>
     <script src="../js/schedule.js"></script>
+    <script src="../js/navbar_controller.js"></script>
     <script>
+      function toLogin() {
+        window.location.href = "../index.php";
+        return false;
+      }
       function toAdminHomepage() {
-        window.location.href = "admin_homepage.php";
+        window.location.href = "admin_home.php";
         return false;
       }
       function toSection() {
-        window.location.href = "admin_section_page.php";
+        window.location.href = "admin_sections.php";
         return false;
       }
       function toSubjects() {
-        window.location.href = "admin_subjects_page.php";
+        window.location.href = "admin_subjects.php";
         return false;
       }
       function toAnalytics() {
-        window.location.href = "admin_analytics_page.php";
+        window.location.href = "admin_analytics.php";
         return false;
       }
       function toSchedule() {
-        window.location.href = "admin_schedule_page.php";
+        window.location.href = "admin_schedule_menu.php";
         return false;
       }
       function toSettings() {
         window.location.href = "admin_settings_page.php";
         return false;
       }
-      function openAddClassModal() {
-        var addStudentModal = document.getElementById("addStudentModal");
-        addStudentModal.style.display = "block";
+      function openAddScheduleModal() {
+        var addModal = document.getElementById("addModal");
+        addModal.style.display = "block";
       }
-      function closeAddClassModal() {
-        var addStudentModal = document.getElementById("addStudentModal");
-        addStudentModal.style.display = "none";
+      function openEditScheduleModal() {
+        var editModal = document.getElementById("editModal");
+        editModal.style.display = "block";
       }
-      function closeEditClassModal() {
-        var editStudentModal = document.getElementById("editStudentModal");
-        editStudentModal.style.display = "none";
+      function closeAddScheduleModal() {
+        var addModal = document.getElementById("addModal");
+        addModal.style.display = "none";
+      }
+      function closeEditScheduleModal() {
+        var editModal = document.getElementById("editModal");
+        editModal.style.display = "none";
       }
     </script>
   </body>

@@ -1,26 +1,30 @@
 <?php
 session_start();
-require 'includes/database_connection.php';
-$idNumber = '';
+require '../includes/database_connection.php';
+$userId = '';
 $error_message = '';
 
 // If logged in
 if (isset($_SESSION['id_number'])) {
   // Redirect to professor homepage
-  header("Location: pages/professor_home.php");
+  header("Location: professor_home.php");
+}
+if (isset($_SESSION['student_number'])) {
+  // Redirect to professor homepage
+  header("Location: student_homepage.php");
 }
 
 // Check if the form is submitted
 if (isset($_POST['login'])) {
   // Retrieve the values from the form
-  $idNumber = $_POST['id-number'];
+  $userId = $_POST['id-number'];
   $password = $_POST['password'];
 
   // Connect to database
-  require 'includes/database_connection.php';
+  require '../includes/database_connection.php';
 
   // SQL query
-  $sql = "SELECT * FROM professors WHERE id_number = '$idNumber'";
+  $sql = "SELECT * FROM professors WHERE id_number = '$userId'";
   $result = mysqli_query($connection, $sql);
 
   // Check if the query was successful
@@ -29,11 +33,11 @@ if (isset($_POST['login'])) {
 
     // Check the password
     if ($professors && password_verify($password, $professors['password'])) {
-      $_SESSION['id_number'] = $idNumber;
-      if ($idNumber == 'admin') {
-        header("Location: pages/admin_home.php");
+      $_SESSION['id_number'] = $userId;
+      if ($userId == 'admin') {
+        header("Location: admin_home.php");
       } else {
-        header("Location: pages/professor_home.php");
+        header("Location: professor_home.php");
       }
       exit();
     } else {
@@ -56,22 +60,16 @@ if (isset($_POST['login'])) {
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/global.css" />
-    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="../css/global.css" />
+    <link rel="stylesheet" href="../css/login.css" />
   </head>
   <body>
-    <section class="graphics">
-      <img
-        src="assets/images/graphics/girl_with_phone.png"
-        alt="girl with phone"
-      />
-    </section>
     <section class="main">
-      <h1>LOGIN</h1>
+      <h1>PROFESSOR LOGIN</h1>
       <form method="POST" class="login-form">
         <div class="login-textbox-container">
           <img
-            src="assets/images/icons/person.svg"
+            src="../assets/images/icons/person.svg"
             class="textbox-icon"
             alt="person"
           />
@@ -79,13 +77,13 @@ if (isset($_POST['login'])) {
             type="text"
             class="large-textbox"
             name="id-number"
-            value="<?php echo htmlspecialchars($idNumber); ?>"
+            value="<?php echo htmlspecialchars($userId); ?>"
             placeholder="ID Number"
           />
         </div>
         <div class="login-textbox-container">
           <img
-            src="assets/images/icons/lock.svg"
+            src="../assets/images/icons/lock.svg"
             class="textbox-icon"
             alt="lock"
           />
@@ -100,6 +98,9 @@ if (isset($_POST['login'])) {
         <button type="submit" name="login" class="large-button">LOGIN</button>
       </form>
       <a href="forgot_password.php"> Forgot your password? </a>
+    </section>
+    <section class="graphics">
+      <img src="../assets/images/graphics/professor.png" alt="professor" />
     </section>
   </body>
 </html>

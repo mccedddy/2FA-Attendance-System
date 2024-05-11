@@ -1,13 +1,13 @@
 <?php
-if (isset($_POST['studentNumber'])) {
+if (isset($_POST['idNumber'])) {
   require 'database_connection.php'; 
   require_once 'encryption.php';
   $encryptionHelper = new EncryptionHelper($encryptionKey);
 
-  $studentNumber = $_POST['studentNumber'];
+  $idNumber = $_POST['idNumber'];
 
   // Use a prepared statement to prevent SQL injection
-  $sql = "SELECT * FROM students WHERE student_number = '$studentNumber'";
+  $sql = "SELECT * FROM students WHERE id_number = '$idNumber'";
   $stmt = mysqli_prepare($connection, $sql);
   mysqli_stmt_execute($stmt);
 

@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  var table = document.getElementById("attendanceTable");
+  var table = document.getElementById("classlistTable");
   var tbody = table.querySelector("tbody");
   var editButton = document.getElementById("editStudentBtn");
   var deleteButton = document.getElementById("deleteStudentsBtn");
@@ -35,36 +35,36 @@ document.addEventListener("DOMContentLoaded", function () {
 function editSelectedStudent() {
   var title = document.getElementById("title").textContent;
   var checkbox = document.querySelector(
-    '#attendanceTable tbody input[type="checkbox"]:checked'
+    '#classlistTable tbody input[type="checkbox"]:checked'
   );
 
-  var editStudentModal = document.getElementById("editStudentModal");
+  var editModal = document.getElementById("editModal");
   var editStudentTitle = document.getElementById("editStudentTitle");
-  var originalStudentNumber = document.getElementById("originalStudentNumber");
+  var originalIdNumber = document.getElementById("originalIdNumber");
 
   if (checkbox) {
     // Get student number
-    var studentNumber = checkbox
+    var idNumber = checkbox
       .closest("tr")
       .querySelector("td:nth-child(4)").textContent;
 
     if (title != "PROFESSORS") {
-      editStudentTitle.textContent = "EDIT STUDENT " + studentNumber;
+      editStudentTitle.textContent = "EDIT STUDENT " + idNumber;
       var url = "../includes/fetch_edit_student_data.php";
     } else {
-      editStudentTitle.textContent = "EDIT PROFESSOR " + studentNumber;
+      editStudentTitle.textContent = "EDIT PROFESSOR " + idNumber;
       var url = "../includes/fetch_edit_professor_data.php";
     }
 
     // Setup edit modal
-    editStudentModal.style.display = "block";
-    originalStudentNumber.value = studentNumber;
+    editModal.style.display = "block";
+    originalIdNumber.value = idNumber;
 
     // Fetch data for the selected student
     $.ajax({
       url: url,
       method: "POST",
-      data: { studentNumber: studentNumber },
+      data: { idNumber: idNumber },
       success: function (response) {
         // Parse the response JSON
         var studentData = JSON.parse(response);
@@ -74,12 +74,10 @@ function editSelectedStudent() {
         document.getElementById("editFirstName").value = studentData.first_name;
 
         if (title != "PROFESSORS") {
-          document.getElementById("editStudentNumber").value =
-            studentData.student_number;
+          document.getElementById("editIdNumber").value = studentData.id_number;
           document.getElementById("editNfcUid").value = studentData.nfc_uid;
         } else {
-          document.getElementById("editStudentNumber").value =
-            studentData.id_number;
+          document.getElementById("editIdNumber").value = studentData.id_number;
         }
 
         document.getElementById("editEmail").value = studentData.email;
@@ -97,11 +95,11 @@ function deleteSelectedStudents() {
   var title = document.getElementById("title").textContent;
   // Get all checkboxes in the table
   var checkboxes = document.querySelectorAll(
-    '#attendanceTable tbody input[type="checkbox"]:checked'
+    '#classlistTable tbody input[type="checkbox"]:checked'
   );
 
   // Extract student numbers from checked checkboxes
-  var studentNumbers = Array.from(checkboxes).map(function (checkbox) {
+  var idNumbers = Array.from(checkboxes).map(function (checkbox) {
     return checkbox.closest("tr").querySelector("td:nth-child(4)").textContent;
   });
 
@@ -112,11 +110,11 @@ function deleteSelectedStudents() {
   }
 
   // Send the list of student numbers to the server
-  if (studentNumbers.length > 0) {
+  if (idNumbers.length > 0) {
     $.ajax({
       url: url,
       method: "POST",
-      data: { studentNumbers: studentNumbers },
+      data: { idNumbers: idNumbers },
       success: function (response) {
         location.reload();
       },
@@ -177,7 +175,7 @@ function importClasslist() {
 
 function exportClasslist() {
   var section = document.getElementById("title").textContent;
-  var table = document.getElementById("attendanceTable");
+  var table = document.getElementById("classlistTable");
 
   if (section != "PROFESSORS") {
     table.setAttribute("data-cols-width", "15,20,20,10,15,35");
@@ -186,7 +184,7 @@ function exportClasslist() {
   }
 
   var fileName = section + " Classlist.xlsx";
-  TableToExcel.convert(document.getElementById("attendanceTable"), {
+  TableToExcel.convert(document.getElementById("classlistTable"), {
     name: fileName,
     sheet: {
       name: "Sheet 1",
@@ -207,7 +205,7 @@ function updateFileName() {
 }
 
 function sortTable() {
-  const table = document.getElementById("attendanceTable");
+  const table = document.getElementById("classlistTable");
   const tbody = table.querySelector("tbody");
   const rows = Array.from(tbody.querySelectorAll("tr"));
 

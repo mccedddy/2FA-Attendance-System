@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       // Encrypt email
       $encryptedEmail = $encryptionHelper->encryptData($email);
 
-      // Check if student with the same student_number already exists
+      // Check if student with the same id_number already exists
       $checkProfessorSQL = "SELECT COUNT(*) as professorCount FROM professors WHERE id_number = '$idNumber'";
       $stmtCheckProfessor = mysqli_prepare($connection, $checkProfessorSQL);
       mysqli_stmt_execute($stmtCheckProfessor);

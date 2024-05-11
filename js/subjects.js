@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
-  var table = document.getElementById("attendanceTable");
+  var table = document.getElementById("subjectsTable");
   var tbody = table.querySelector("tbody");
-  var editButton = document.getElementById("editStudentBtn");
-  var deleteButton = document.getElementById("deleteStudentsBtn");
+  var editButton = document.getElementById("editSubjectBtn");
+  var deleteButton = document.getElementById("deleteSubjectsBtn");
   var importButton = document.getElementById("import");
   var exportButton = document.getElementById("export");
   var fileInput = document.getElementById("fileInput");
@@ -34,12 +34,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function editSelectedSubject() {
   var checkbox = document.querySelector(
-    '#attendanceTable tbody input[type="checkbox"]:checked'
+    '#subjectsTable tbody input[type="checkbox"]:checked'
   );
 
-  var editSubjectModal = document.getElementById("editStudentModal");
-  var editSubjectTitle = document.getElementById("editStudentTitle");
-  var originalSubjectCode = document.getElementById("originalStudentNumber");
+  var editSubjectModal = document.getElementById("editModal");
+  var editSubjectName = document.getElementById("editSubjectName");
+  var originalSubjectCode = document.getElementById("originalSubjectCode");
 
   if (checkbox) {
     // Get subject code
@@ -47,14 +47,14 @@ function editSelectedSubject() {
       .closest("tr")
       .querySelector("td:nth-child(2)").textContent;
 
-    editSubjectTitle.textContent = "EDIT SUBJECT " + subjectCode;
+    editSubjectName.textContent = "EDIT SUBJECT " + subjectCode;
     var url = "../includes/fetch_edit_subject_data.php";
 
     // Setup edit modal
     editSubjectModal.style.display = "block";
     originalSubjectCode.value = subjectCode;
 
-    // Fetch data for the selected student
+    // Fetch data for the selected subject
     $.ajax({
       url: url,
       method: "POST",
@@ -71,7 +71,7 @@ function editSelectedSubject() {
           subjectData.subject_name;
       },
       error: function (error) {
-        console.error("Error fetching student data:", error);
+        console.error("Error fetching subject data:", error);
       },
     });
   } else {
@@ -82,7 +82,7 @@ function editSelectedSubject() {
 function deleteSelectedSubjects() {
   // Get all checkboxes in the table
   var checkboxes = document.querySelectorAll(
-    '#attendanceTable tbody input[type="checkbox"]:checked'
+    '#subjectsTable tbody input[type="checkbox"]:checked'
   );
 
   // Extract subject codes from checked checkboxes
@@ -152,12 +152,12 @@ function importSubjects() {
 }
 
 function exportSubjects() {
-  var table = document.getElementById("attendanceTable");
+  var table = document.getElementById("subjectsTable");
 
   table.setAttribute("data-cols-width", "15,40");
 
   var fileName = "Subjects.xlsx";
-  TableToExcel.convert(document.getElementById("attendanceTable"), {
+  TableToExcel.convert(document.getElementById("subjectsTable"), {
     name: fileName,
     sheet: {
       name: "Sheet 1",
@@ -178,7 +178,7 @@ function updateFileName() {
 }
 
 function sortTable() {
-  const table = document.getElementById("attendanceTable");
+  const table = document.getElementById("subjectsTable");
   const tbody = table.querySelector("tbody");
   const rows = Array.from(tbody.querySelectorAll("tr"));
 
