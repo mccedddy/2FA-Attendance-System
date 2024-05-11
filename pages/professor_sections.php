@@ -85,8 +85,8 @@ if (isset($_POST['section-button'])) {
           <h3 onclick="toProfessorHomepage()" class="title">PUPHAS</h3>
         </div>
         <div class="right">
-          <h6><?php echo $name; ?></h6>
-          <h6><?php echo $idNumber; ?></h6>
+          <h6><?php echo $userName; ?></h6>
+          <h6><?php echo $userId; ?></h6>
         </div>
       </div>
       <h2 class="page-title">Computer Engineering Department Sections</h2>

@@ -21,19 +21,19 @@ if (isset($_POST['edit-student'])) {
   require '../includes/database_connection.php';
   $editLastName = $_POST['last_name'];
   $editFirstName = $_POST['first_name'];
-  $editStudentNumber = $_POST['student_number'];
+  $editIdNumber = $_POST['id_number'];
   $editNfcUid = $_POST['nfc_uid'];
   $editEmail = $encryptionHelper->encryptData($_POST['email']);
-  $originalStudentNumber = $_POST['original_student_number'];
+  $originalIdNumber = $_POST['original_id_number'];
 
   // SQL query to update data in the students table
   $editSQL = "UPDATE students 
             SET last_name = '$editLastName', 
                 first_name = '$editFirstName', 
-                student_number = '$editStudentNumber',
+                id_number = '$editIdNumber',
                 nfc_uid = '$editNfcUid', 
                 email = '$editEmail' 
-            WHERE student_number = '$originalStudentNumber'";
+            WHERE id_number = '$originalIdNumber'";
 
   // Execute query
   $stmt = mysqli_prepare($connection, $editSQL);
@@ -221,7 +221,7 @@ $classlist = fetchClasslist('students', "WHERE section = '$sectionPage'");
           </div>
           <div>
             <p>Student Number</p>
-            <input type="text" name="student_number" required></input>
+            <input type="text" name="id_number" required></input>
           </div>
           <div>
             <p>NFC UID</p>
@@ -251,7 +251,7 @@ $classlist = fetchClasslist('students', "WHERE section = '$sectionPage'");
         </div>
         <span class="close-modal" onclick="closeEditStudentModal()">&times;</span>
         <form method="POST">
-          <input id="originalStudentNumber" name="original_student_number" type="hidden"></input>
+          <input id="originalIdNumber" name="original_id_number" type="hidden"></input>
           <div>
             <p>Last Name</p>
             <input type="text" name="last_name" id="editLastName" class="modal-input" required></input>
@@ -262,7 +262,7 @@ $classlist = fetchClasslist('students', "WHERE section = '$sectionPage'");
           </div>
           <div>
             <p>Student Number</p>
-            <input type="text" name="student_number" id="editStudentNumber" class="modal-input" required></input>
+            <input type="text" name="id_number" id="editIdNumber" class="modal-input" required></input>
           </div>
           <div>
             <p>NFC UID</p>

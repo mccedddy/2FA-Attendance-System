@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     foreach ($dataArray as $row) {
       $lastName = $row[0];
       $firstName = $row[1];
-      $studentNumber = $row[2];
+      $idNumber = $row[2];
       $section = $row[3];
       $nfcUid = $row[4];
       $email = $row[5];
@@ -24,8 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       // Encrypt email
       $encryptedEmail = $encryptionHelper->encryptData($email);
 
-      // Check if student with the same student_number already exists
-      $checkStudentSQL = "SELECT COUNT(*) as studentCount FROM students WHERE student_number = '$studentNumber'";
+      // Check if student with the same id_number already exists
+      $checkStudentSQL = "SELECT COUNT(*) as studentCount FROM students WHERE id_number = '$idNumber'";
       $stmtCheckStudent = mysqli_prepare($connection, $checkStudentSQL);
       mysqli_stmt_execute($stmtCheckStudent);
       mysqli_stmt_bind_result($stmtCheckStudent, $studentCount);
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       if ($studentCount == 0) {
         // Insert the student into the students table
-        $insertStudentSQL = "INSERT INTO students (last_name, first_name, student_number, section, nfc_uid, email, password) VALUES ('$lastName', '$firstName', '$studentNumber', '$section', '$nfcUid', '$encryptedEmail', '$hashedPassword')";
+        $insertStudentSQL = "INSERT INTO students (last_name, first_name, id_number, section, nfc_uid, email, password) VALUES ('$lastName', '$firstName', '$idNumber', '$section', '$nfcUid', '$encryptedEmail', '$hashedPassword')";
         $stmtInsertStudent = mysqli_prepare($connection, $insertStudentSQL);
         mysqli_stmt_execute($stmtInsertStudent);
         mysqli_stmt_close($stmtInsertStudent);

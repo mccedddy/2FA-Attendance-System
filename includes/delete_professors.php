@@ -1,8 +1,8 @@
 <?php
 
-if (isset($_POST['studentNumbers'])) {
+if (isset($_POST['idNumbers'])) {
    require 'database_connection.php';
-   $idNumbers = $_POST['studentNumbers'];
+   $idNumbers = $_POST['idNumbers'];
 
   //  Use prepared statement to prevent SQL injection
   $placeholders = implode("','", $idNumbers);
