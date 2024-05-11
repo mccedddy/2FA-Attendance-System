@@ -1,7 +1,7 @@
 <?php
 session_start();
 require '../includes/database_connection.php';
-$idNumber = '';
+$userId = '';
 $error_message = '';
 
 // If logged in
@@ -17,14 +17,14 @@ if (isset($_SESSION['student_number'])) {
 // Check if the form is submitted
 if (isset($_POST['login'])) {
   // Retrieve the values from the form
-  $idNumber = $_POST['id-number'];
+  $userId = $_POST['id-number'];
   $password = $_POST['password'];
 
   // Connect to database
   require '../includes/database_connection.php';
 
   // SQL query
-  $sql = "SELECT * FROM professors WHERE id_number = '$idNumber'";
+  $sql = "SELECT * FROM professors WHERE id_number = '$userId'";
   $result = mysqli_query($connection, $sql);
 
   // Check if the query was successful
@@ -33,8 +33,8 @@ if (isset($_POST['login'])) {
 
     // Check the password
     if ($professors && password_verify($password, $professors['password'])) {
-      $_SESSION['id_number'] = $idNumber;
-      if ($idNumber == 'admin') {
+      $_SESSION['id_number'] = $userId;
+      if ($userId == 'admin') {
         header("Location: admin_home.php");
       } else {
         header("Location: professor_home.php");
@@ -77,7 +77,7 @@ if (isset($_POST['login'])) {
             type="text"
             class="large-textbox"
             name="id-number"
-            value="<?php echo htmlspecialchars($idNumber); ?>"
+            value="<?php echo htmlspecialchars($userId); ?>"
             placeholder="ID Number"
           />
         </div>

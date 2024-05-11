@@ -1,14 +1,14 @@
 <?php
 
-if (isset($_POST['studentNumbers'])) {
+if (isset($_POST['idNumbers'])) {
    require 'database_connection.php';
-   $studentNumbers = $_POST['studentNumbers'];
+   $idNumbers = $_POST['idNumbers'];
 
   //  Use prepared statement to prevent SQL injection
-  $placeholders = implode("','", $studentNumbers);
-  $deleteAttendanceSQL = "DELETE FROM attendance WHERE student_number IN ('$placeholders')";
-  $deleteHdfSQL = "DELETE FROM hdf WHERE student_number IN ('$placeholders')";
-  $deleteStudentSQL = "DELETE FROM students WHERE student_number IN ('$placeholders')";
+  $placeholders = implode("','", $idNumbers);
+  $deleteAttendanceSQL = "DELETE FROM attendance WHERE id_number IN ('$placeholders')";
+  $deleteHdfSQL = "DELETE FROM hdf WHERE id_number IN ('$placeholders')";
+  $deleteStudentSQL = "DELETE FROM students WHERE id_number IN ('$placeholders')";
 
   // Prepare and execute the statement
   $stmtAttendance = mysqli_prepare($connection, $deleteAttendanceSQL);

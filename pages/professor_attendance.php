@@ -91,8 +91,8 @@ $subjects = fetchSubjects();
           <h3 onclick="toProfessorHomepage()" class="title">PUPHAS</h3>
         </div>
         <div class="right">
-          <h6><?php echo $name; ?></h6>
-          <h6><?php echo $idNumber; ?></h6>
+          <h6><?php echo $userName; ?></h6>
+          <h6><?php echo $userId; ?></h6>
         </div>
       </div>
       <h2 class="page-title" id="title">SECTION <?php echo $sectionPage ?> ATTENDANCE</h2>
@@ -163,8 +163,8 @@ $subjects = fetchSubjects();
               <?php foreach ($classlist as $student): ?>
                 <?php 
                   $studentName = $student['lastName'] . ', ' . $student['firstName']; 
-                  $studentNumber = $student['idNumber']; 
-                  echo "<option value=\"{$studentNumber}\">{$studentNumber} - {$studentName}</option>"; 
+                  $idNumber = $student['idNumber']; 
+                  echo "<option value=\"{$idNumber}\">{$idNumber} - {$studentName}</option>"; 
                 ?>
               <?php endforeach; ?>
             </select>

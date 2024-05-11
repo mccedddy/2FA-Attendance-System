@@ -6,26 +6,26 @@ $encryptionHelper = new EncryptionHelper($encryptionKey);
 
 // Set logged in name and id number
 if (!isset($_SESSION['id_number'])) {
-  $idNumber = '';
+  $userId = '';
 } else {
-  $idNumber = $_SESSION['id_number'];
+  $userId = $_SESSION['id_number'];
 }
-if (!isset($_SESSION['name'])) {
-  $name = '';
+if (!isset($_SESSION['user_name'])) {
+  $userName = '';
 } else {
-  $name = $_SESSION['name'];
+  $userName = $_SESSION['user_name'];
 }
 
 // Redirect professor and admin pages
 function redirect($currentPage) {
   if(isset($_SESSION['id_number'])) {
-    $idNumber = $_SESSION['id_number'];
+    $userId = $_SESSION['id_number'];
 
-    if ($idNumber == 'admin' && $currentPage == 'professor') {
+    if ($userId == 'admin' && $currentPage == 'professor') {
       header("Location: admin_home.php");
     }
 
-    if ($idNumber != 'admin' && $currentPage == 'admin') {
+    if ($userId != 'admin' && $currentPage == 'admin') {
       header("Location: professor_home.php");
     }
 
@@ -38,7 +38,7 @@ function redirect($currentPage) {
 function checkSection() {
   // Redirect to home if no section is selected
   if (!isset($_SESSION['selected_section'])) {
-    if ($idNumber != 'admin') {
+    if ($userId != 'admin') {
       header("Location: ../pages/professor_home.php");
     } else {
       header("Location: ../pages/admin_home.php");
@@ -60,8 +60,8 @@ function sectionHeader($location) {
 
 // Logout
 if (isset($_POST['logout'])) {
-  unset($_SESSION['idNumber']);
-  unset($_SESSION['name']);
+  unset($_SESSION['userId']);
+  unset($_SESSION['user_name']);
   unset($_SESSION['section']);
   unset($_SESSION['selected_section']);
   session_destroy();

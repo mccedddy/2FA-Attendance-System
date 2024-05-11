@@ -7,9 +7,9 @@ $encryptionHelper = new EncryptionHelper($encryptionKey);
 // FETCH
 
 // Fetch profile data
-if (!isset($_SESSION['name'])) {
-  $idNumber = $_SESSION['id_number'];
-  $sql = "SELECT * FROM professors WHERE id_number = '$idNumber'";
+if (!isset($_SESSION['user_name'])) {
+  $userId = $_SESSION['id_number'];
+  $sql = "SELECT * FROM professors WHERE id_number = '$userId'";
   $result = mysqli_query($connection, $sql);
 
   // Check if the query was successful
@@ -18,8 +18,8 @@ if (!isset($_SESSION['name'])) {
 
     // Get professor info
     if ($professor) {
-      $name = strtoupper($professor['last_name']) . ', ' . strtoupper($professor['first_name']);
-      $_SESSION['name'] = $name;
+      $userName = strtoupper($professor['last_name']) . ', ' . strtoupper($professor['first_name']);
+      $_SESSION['user_name'] = $userName;
     }
           
     // Free result from memory
@@ -58,7 +58,7 @@ function fetchClasslist($tableName, $condition = '') {
     $profileInfo = [
           'lastName'      => $row['last_name'],
           'firstName'     => $row['first_name'],
-          'idNumber'      => isset($row['student_number']) ? $row['student_number'] : $row['id_number'],
+          'idNumber'      => isset($row['id_number']) ? $row['id_number'] : $row['id_number'],
           'section'       => isset($row['section']) ? $row['section'] : '',
           'nfcUid'        => isset($row['nfc_uid']) ? $row['nfc_uid'] : '',
           'email'         => $encryptionHelper->decryptData($row['email']),
@@ -128,11 +128,11 @@ function addProfile($profileType) {
   $lastName = $_POST['last_name'];
   $firstName = $_POST['first_name'];
   $email = $_POST['email'];
-  $idNumber = $_POST['student_number'];
+  $idNumber = $_POST['id_number'];
     
   // Fields specific to students
   if ($profileType === 'student') {
-    $studentNumber = $_POST['student_number'];
+    $idNumber = $_POST['id_number'];
     $section = $_POST['year'] . '-' . $_POST['section'];
     $nfcUid = $_POST['nfc_uid'];
   }
@@ -145,8 +145,8 @@ function addProfile($profileType) {
     
   // SQL query
   if ($profileType === 'student') {
-    $sql = "INSERT INTO students (last_name, first_name, student_number, section, nfc_uid, email, password)
-          VALUES ('$lastName', '$firstName', '$studentNumber', '$section', '$nfcUid', '$encryptedEmail', '$hashedPassword')";
+    $sql = "INSERT INTO students (last_name, first_name, id_number, section, nfc_uid, email, password)
+          VALUES ('$lastName', '$firstName', '$idNumber', '$section', '$nfcUid', '$encryptedEmail', '$hashedPassword')";
   } elseif ($profileType === 'professor') {
       $sql = "INSERT INTO professors (last_name, first_name, id_number, email, password)
           VALUES ('$lastName', '$firstName', '$idNumber', '$encryptedEmail', '$hashedPassword')";
@@ -274,7 +274,7 @@ if (isset($_POST['add-subject'])) {
 
 // Add attendance
 if (isset($_POST['student'])) {
-  $studentNumber = $_POST['student'];
+  $idNumber = $_POST['student'];
   $status = $_POST['status'];
   $time = $_POST['time'];
   $date = $_POST['date'];
@@ -306,8 +306,8 @@ if (isset($_POST['student'])) {
     $scheduleId = $scheduleData['id'];
 
     // SQL query to insert data into the attendance table
-    $sql_insert = "INSERT INTO attendance (student_number, room, time, date, status, schedule_id)
-                   VALUES ('$studentNumber', '$room', '$time', '$date', '$status', '$scheduleId')";
+    $sql_insert = "INSERT INTO attendance (id_number, room, time, date, status, schedule_id)
+                   VALUES ('$idNumber', '$room', '$time', '$date', '$status', '$scheduleId')";
 
     // Execute insert query
     mysqli_query($connection, $sql_insert);

@@ -57,7 +57,7 @@ function displayAttendanceData(data) {
     // Create and append cells in the desired order
     let cells = [
       "student_name",
-      "student_number",
+      "id_number",
       "status",
       "time",
       "date",

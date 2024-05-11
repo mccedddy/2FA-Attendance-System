@@ -21,9 +21,9 @@ if (isset($_POST['edit-student'])) {
   require '../includes/database_connection.php';
   $editLastName = $_POST['last_name'];
   $editFirstName = $_POST['first_name'];
-  $editIdNumber = $_POST['student_number'];
+  $editIdNumber = $_POST['id_number'];
   $editEmail = $encryptionHelper->encryptData($_POST['email']);
-  $originaIdNumber = $_POST['original_student_number'];
+  $originaIdNumber = $_POST['original_id_number'];
 
   // SQL query to update data in the students table
   $editSQL = "UPDATE professors 
@@ -215,7 +215,7 @@ $classlist = fetchClasslist('professors');
           </div>
           <div>
             <p>ID Number</p>
-            <input type="text" name="student_number" required></input>
+            <input type="text" name="id_number" required></input>
           </div>
           <div>
             <p>Email</p>
@@ -235,7 +235,7 @@ $classlist = fetchClasslist('professors');
         </div>
         <span class="close-modal" onclick="closeEditProfessorModal()">&times;</span>
         <form method="POST">
-          <input id="originalStudentNumber" name="original_student_number" type="hidden"></input>
+          <input id="originalIdNumber" name="original_id_number" type="hidden"></input>
           <div>
             <p>Last Name</p>
             <input type="text" name="last_name" id="editLastName" class="modal-input" required></input>
@@ -246,7 +246,7 @@ $classlist = fetchClasslist('professors');
           </div>
           <div>
             <p>ID Number</p>
-            <input type="text" name="student_number" id="editStudentNumber" class="modal-input" required></input>
+            <input type="text" name="id_number" id="editIdNumber" class="modal-input" required></input>
           </div>
           <div>
             <p>Email</p>
