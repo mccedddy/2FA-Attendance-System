@@ -199,7 +199,7 @@ $schedule = fetchSchedule();
           <?php endforeach; ?>
         </tbody>
       </table>
-      <div style="height:50px;"></div>
+      <div style="padding:15px;"></div>
     </section>
 
     <div id="addModal" class="modal-blur">
