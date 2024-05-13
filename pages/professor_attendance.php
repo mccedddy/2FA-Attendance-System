@@ -120,7 +120,10 @@ $subjects = fetchSubjects();
           <button id="addSchedule" onclick="openAddAttendanceModal()">ADD</Button>
         </div>
         <div class="right">
-          <label for="fileInput" class="file-input" id="fileInputLabel">Choose File</label>
+          <button class="download-template" onclick="downloadTemplate()">
+            <img src="..\assets\images\icons\arrow_down.svg"/>
+            <img src="..\assets\images\icons\template.svg"/>
+          </button>
           <span class="file-name" id="fileName">No file chosen</span>
           <input type="file" id="fileInput" accept=".xlsx" />
           <button class="import-export" id="import"><p>IMPORT DATA</p><img src="..\assets\images\icons\upload.svg"/></button>
@@ -244,6 +247,24 @@ $subjects = fetchSubjects();
       function closeAddAttendanceModal() {
         var addModal = document.getElementById("addModal");
         addModal.style.display = "none";
+      }
+
+      function downloadTemplate() {
+          var fileUrl = '../templates/classlist_template.xlsx';
+
+          fetch(fileUrl)
+          .then(response => response.blob())
+          .then(blob => {
+              var url = URL.createObjectURL(blob);
+              var link = document.createElement('a');
+              link.href = url;
+              link.download = 'Attendance Template.xlsx'; 
+
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+          })
+          .catch(error => console.error('Error downloading file:', error));
       }
     </script>
   </body>

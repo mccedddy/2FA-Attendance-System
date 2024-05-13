@@ -145,7 +145,6 @@ table th {
   color: #fff;
 }
 
-
 .date-filter {
   width: 125px;
   height: 28px;
@@ -157,11 +156,26 @@ table th {
   color: #810000;
   padding: 0px 12px 0px 12px;
   cursor: pointer;
-  align-self:flex-start;
+  align-self: flex-start;
   margin-bottom: 10px;
 }
 
 .date-filter:hover,
 .date-filter:focus {
   outline: 1px solid #810000;
+}
+
+.download-template {
+  outline: 0px;
+  background-color: #fff;
+  height: auto;
+  width: auto;
+  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.25);
+  padding-left: 0px;
+}
+
+.download-template:hover,
+.download-template:focus {
+  cursor: pointer;
+  outline: 0px;
 }
