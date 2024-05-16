@@ -99,7 +99,7 @@ $subjects = fetchSubjects();
       <input type="date" id="date" class="date-filter" required value="<?php echo date('Y-m-d'); ?>">
       <div class="table-controls">
         <div class="left">
-          <select id="subjectFilter">
+          <select id="subject">
             <option value="ALL">ALL</option>
               <?php
                 require '../includes/database_connection.php';

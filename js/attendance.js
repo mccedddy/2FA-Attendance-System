@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var table = document.getElementById("attendanceTable");
   var tbody = table.querySelector("tbody");
   var dateFilter = document.getElementById("date");
-  var subjectFilter = document.getElementById("subjectFilter");
+  var subjectFilter = document.getElementById("subject");
   var importButton = document.getElementById("import");
   var exportButton = document.getElementById("export");
   var addAttendanceButton = document.getElementById("addButton");
@@ -55,6 +55,7 @@ function fetchAttendance(date, subject) {
   })
     .then((response) => response.json())
     .then((data) => {
+      console.log(data);
       displayAttendanceData(data);
       // updateOriginalData(data);
     })
@@ -121,8 +122,7 @@ function importAttendance() {
         method: "POST",
         data: { dataArray: JSON.stringify(dataArray) },
         success: function (response) {
-          console.log(response);
-          // location.reload();
+          location.reload();
         },
         error: function (error) {
           console.error("Error:", error);
@@ -196,14 +196,16 @@ function addAttendance(event) {
   formData.append("professor", professor);
   formData.append("section", section);
 
-  var url = "../includes/add_attendance.php";
+  console.log(formData);
 
+  var url = "../includes/database_operations.php";
   fetch(url, {
     method: "POST",
     body: formData,
   })
     .then((response) => response.json())
     .then((data) => {
+      console.log(data);
       location.reload();
     })
     .catch((error) => {

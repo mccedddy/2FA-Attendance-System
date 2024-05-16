@@ -55,30 +55,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $attendanceQuery->execute();
           } else {
             // Respond with an error if no matching schedule is found
-            echo json_encode(['status' => 'error', 'essage' => 'No matching schedule found']);
+            echo json_encode(['status' => 'error', 'message' => 'No matching schedule found']);
             exit;
           }
         } else {
           // Respond with an error if no matching professor is found
-          echo json_encode(['status' => 'error', 'essage' => 'No matching professor found']);
+          echo json_encode(['status' => 'error', 'message' => 'No matching professor found']);
           exit;
         }
       } else {
         // Respond with an error if no matching subject is found
-        echo json_encode(['status' => 'error', 'essage' => 'No matching subject found']);
+        echo json_encode(['status' => 'error', 'message' => 'No matching subject found']);
         exit;
       }
     }
 
     // Respond with a success message
-    echo json_encode(['status' => 'uccess', 'essage' => 'Import successful']);
+    echo json_encode(['status' => 'success', 'message' => 'Import successful']);
   } else {
     // Respond with an error message if dataArray is not set
-    echo json_encode(['status' => 'error', 'essage' => 'dataArray not set in the request']);
+    echo json_encode(['status' => 'error', 'message' => 'dataArray not set in the request']);
   }
 } else {
   // Respond with an error message if the request method is not POST
-  echo json_encode(['status' => 'error', 'essage' => 'Invalid request method']);
+  echo json_encode(['status' => 'error', 'message' => 'Invalid request method']);
 }
 
 // Close the database connection

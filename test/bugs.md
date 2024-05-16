@@ -1,3 +1,3 @@
 // BUGS
 
-1. import export (subjects, schedule, attendance)
+1. Sort attendance
