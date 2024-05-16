@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", function () {
   var fileInput = document.getElementById("fileInput");
 
   fetchAttendance(dateFilter.value, subjectFilter.value);
-  sortTable();
 
   dateFilter.addEventListener("change", () => {
     fetchAttendance(dateFilter.value, subjectFilter.value);
@@ -151,26 +150,6 @@ function exportAttendance() {
       name: "Sheet 1",
     },
   });
-}
-
-function sortTable() {
-  const table = document.getElementById("attendanceTable");
-  const tbody = table.querySelector("tbody");
-  const rows = Array.from(tbody.querySelectorAll("tr"));
-
-  rows.sort(compareDateTime);
-  tbody.innerHTML = "";
-
-  rows.forEach((row) => {
-    tbody.appendChild(row);
-  });
-}
-
-function compareDateTime(a, b) {
-  const dateComparison =
-    new Date(b.cells[4].innerText + " " + b.cells[3].innerText) -
-    new Date(a.cells[4].innerText + " " + a.cells[3].innerText);
-  return dateComparison;
 }
 
 function addAttendance(event) {
