@@ -48,6 +48,12 @@ unset($_SESSION['selected_section']);
             alt="group"
             class="button"
         /></a>
+        <a onclick="toSettings()"
+          ><img
+            src="..\assets\images\icons\settings.svg"
+            alt="settings"
+            class="button"
+        /></a>
         <!-- <a onclick="toSettings()"
           ><img
             src="..\assets\images\icons\settings.svg"

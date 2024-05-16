@@ -56,12 +56,12 @@ if (isset($_POST['section-button'])) {
             alt="group"
             class="button"
         /></a>
-        <!-- <a onclick="toSettings()"
+        <a onclick="toSettings()"
           ><img
             src="..\assets\images\icons\settings.svg"
             alt="settings"
             class="button"
-        /></a> -->
+        /></a>
       </div>
       <form method="POST" class="bottom">
         <button type="submit" name="logout" class="logout">
@@ -99,7 +99,8 @@ if (isset($_POST['section-button'])) {
         <?php endforeach; ?>
       </div>
     </section>
-    <script src="../js/navbar_controller.js"></script>
+    <script src="js/navbar_controller.js"></script>
+    <script src="js/settings.js"></script>
     <script>
       function toLogin() {
         window.location.href = "../index.php";

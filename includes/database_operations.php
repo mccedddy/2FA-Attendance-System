@@ -3,11 +3,14 @@ require 'database_connection.php';
 date_default_timezone_set('Asia/Manila');
 require_once 'encryption.php';
 $encryptionHelper = new EncryptionHelper($encryptionKey);
+$decryptEmail;
 
 // FETCH
 
 // Fetch profile data
 if (!isset($_SESSION['user_name'])) {
+  global $encryptionHelper;
+  global $decryptEmail;
   $userId = $_SESSION['id_number'];
   $sql = "SELECT * FROM professors WHERE id_number = '$userId'";
   $result = mysqli_query($connection, $sql);
@@ -20,8 +23,37 @@ if (!isset($_SESSION['user_name'])) {
     if ($professor) {
       $userName = strtoupper($professor['last_name']) . ', ' . strtoupper($professor['first_name']);
       $_SESSION['user_name'] = $userName;
+      $email = $professor['email'];
+      $decryptEmail = $encryptionHelper->decryptData($email);
     }
           
+    // Free result from memory
+    mysqli_free_result($result);
+  } else {
+    echo 'Error: ' . mysqli_error($connection);
+  }
+}
+
+//working
+if (isset($_SESSION['id_number'])) {
+  $idNumber = $_SESSION['id_number'];
+  
+  // SQL query
+  $sql = "SELECT * FROM professors WHERE id_number = '$idNumber'";
+  $result = mysqli_query($connection, $sql);
+
+  // Check if the query was successful
+  if ($result) {
+    $professor = mysqli_fetch_assoc($result);
+
+    // Get professor info
+    if ($professor) {
+      $name = strtoupper($professor['last_name']) . ', ' . strtoupper($professor['first_name']);
+      $idNumber = $professor['id_number'];
+      $email = $professor['email'];
+      $decryptEmail = $encryptionHelper->decryptData($email);
+    }
+        
     // Free result from memory
     mysqli_free_result($result);
   } else {
