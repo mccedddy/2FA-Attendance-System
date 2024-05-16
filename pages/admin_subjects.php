@@ -141,7 +141,7 @@ $subjects = fetchSubjects();
             <img src="..\assets\images\icons\plus_white.svg"/>
             New
           </button>
-          <button id="editSubjectBtn" onclick="openEditSubjectModal()">
+          <button id="editSubjectBtn">
             <img src="..\assets\images\icons\pencil_white.svg"/>
             Edit
           </button>

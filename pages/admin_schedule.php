@@ -148,7 +148,7 @@ $schedule = fetchSchedule();
             <img src="..\assets\images\icons\plus_white.svg"/>
             New
           </button>
-          <button id="editScheduleBtn" onclick="openEditScheduleModal()">
+          <button id="editScheduleBtn">
             <img src="..\assets\images\icons\pencil_white.svg"/>
             Edit
           </button>

@@ -37,6 +37,10 @@ function editSelectedSubject() {
     '#subjectsTable tbody input[type="checkbox"]:checked'
   );
 
+  if (checkbox == null) {
+    return;
+  }
+
   var editSubjectModal = document.getElementById("editModal");
   var editSubjectName = document.getElementById("editSubjectName");
   var originalSubjectCode = document.getElementById("originalSubjectCode");

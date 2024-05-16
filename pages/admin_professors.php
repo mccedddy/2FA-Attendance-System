@@ -154,7 +154,7 @@ $classlist = fetchClasslist('professors');
             <img src="..\assets\images\icons\plus_white.svg"/>
             New
           </button>
-          <button id="editStudentBtn" onclick="openEditProfessorModal()">
+          <button id="editStudentBtn">
             <img src="..\assets\images\icons\pencil_white.svg"/>
             Edit
           </button>
