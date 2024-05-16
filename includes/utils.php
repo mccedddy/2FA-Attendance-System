@@ -15,6 +15,11 @@ if (!isset($_SESSION['user_name'])) {
 } else {
   $userName = $_SESSION['user_name'];
 }
+if (!isset($_SESSION['user_email'])) {
+  $userEmail = 'none';
+} else {
+  $userEmail = $_SESSION['user_email'];
+}
 
 // Redirect professor and admin pages
 function redirect($currentPage) {

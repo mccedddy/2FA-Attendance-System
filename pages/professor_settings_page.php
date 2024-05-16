@@ -125,7 +125,7 @@ if (isset($_POST['change-email"'])) {
               </tr>
               <tr>
                 <td>Email</td>
-                <td><?php echo $decryptEmail; ?></td>
+                <td><?php echo $userEmail; ?></td>
                 <td>
                 <div class="change-button-container">
                     <button onclick="openChangeEmailModal()" class="change-button" id = "changeEmailBtn">CHANGE</button>
@@ -173,7 +173,7 @@ if (isset($_POST['change-email"'])) {
           <input id="originalIdNumber" name="original_id_number" type="hidden"></input>
           <div>
             <p>Current Email</p>
-            <input type="email" name="current_email" placeholder="<?php echo $decryptEmail; ?>" id="currentEmail" disabled></input>
+            <input type="email" name="current_email" placeholder="<?php echo $userEmail; ?>" id="currentEmail" disabled></input>
           </div>
           <div>
             <p>New Email</p>
