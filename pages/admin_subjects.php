@@ -64,6 +64,7 @@ $subjects = fetchSubjects();
     <link rel="stylesheet" href="../css/dashboard.css" />
     <link rel="stylesheet" href="../css/table.css" />
     <link rel="stylesheet" href="../css/modal.css" />
+    <script type="text/javascript" src="../js/tableToExcel.js"></script>
   </head>
   <body>
     <nav class="navbar">
@@ -279,7 +280,7 @@ $subjects = fetchSubjects();
       }
 
       function downloadTemplate() {
-          var fileUrl = '../templates/classlist_template.xlsx';
+          var fileUrl = '../templates/subjects_template.xlsx';
 
           fetch(fileUrl)
           .then(response => response.blob())

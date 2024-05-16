@@ -71,6 +71,7 @@ $schedule = fetchSchedule();
     <link rel="stylesheet" href="../css/dashboard.css" />
     <link rel="stylesheet" href="../css/table.css" />
     <link rel="stylesheet" href="../css/modal.css" />
+    <script type="text/javascript" src="../js/tableToExcel.js"></script>
   </head>
   <body>
     <nav class="navbar">
@@ -141,7 +142,7 @@ $schedule = fetchSchedule();
           <h6>ADMIN</h6>
         </div>
       </div>
-      <h2 class="page-title">SECTION <?php echo $sectionPage ?> SCHEDULE</h2>
+      <h2 class="page-title" id="title">SECTION <?php echo $sectionPage ?> SCHEDULE</h2>
       <div class="table-controls">
         <div class="left">
           <button onclick="openAddScheduleModal()">
@@ -389,7 +390,7 @@ $schedule = fetchSchedule();
       }
 
       function downloadTemplate() {
-          var fileUrl = '../templates/classlist_template.xlsx';
+          var fileUrl = '../templates/schedule_template.xlsx';
 
           fetch(fileUrl)
           .then(response => response.blob())

@@ -1,11 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const table = document.getElementById("attendanceTable");
-  const tbody = table.querySelector("tbody");
-  const dateFilter = document.getElementById("date");
-  const subjectFilter = document.getElementById("subjectFilter");
-  const importButton = document.getElementById("import");
-  const exportButton = document.getElementById("export");
-  const addAttendanceButton = document.getElementById("addButton");
+  var table = document.getElementById("attendanceTable");
+  var tbody = table.querySelector("tbody");
+  var dateFilter = document.getElementById("date");
+  var subjectFilter = document.getElementById("subjectFilter");
+  var importButton = document.getElementById("import");
+  var exportButton = document.getElementById("export");
+  var addAttendanceButton = document.getElementById("addButton");
+  var fileInput = document.getElementById("fileInput");
 
   fetchAttendance(dateFilter.value, subjectFilter.value);
   sortTable();
@@ -25,7 +26,22 @@ document.addEventListener("DOMContentLoaded", function () {
   addAttendanceButton.addEventListener("click", (event) => {
     addAttendance(event);
   });
+  fileInput.addEventListener("change", () => {
+    updateFileName();
+  });
 });
+
+function updateFileName() {
+  var fileInput = document.getElementById("fileInput");
+  var fileNameSpan = document.getElementById("fileName");
+  var fileInputLabel = document.getElementById("fileInputLabel");
+
+  if (fileInput.files.length > 0) {
+    fileNameSpan.textContent = fileInput.files[0].name;
+  } else {
+    fileNameSpan.textContent = "No file chosen";
+  }
+}
 
 function fetchAttendance(date, subject) {
   var url = "../includes/fetch_attendance.php";
@@ -96,7 +112,8 @@ function importAttendance() {
       // Convert sheet data to an array of objects starting from the 2nd row
       var dataArray = XLSX.utils.sheet_to_json(sheet, { header: 1, range: 1 });
 
-      // var url = "../includes/import_attendance.php";
+      var url = "../includes/import_attendance.php";
+      console.log(dataArray);
 
       // Send dataArray to the server using a POST request
       $.ajax({
@@ -104,7 +121,8 @@ function importAttendance() {
         method: "POST",
         data: { dataArray: JSON.stringify(dataArray) },
         success: function (response) {
-          location.reload();
+          console.log(response);
+          // location.reload();
         },
         error: function (error) {
           console.error("Error:", error);

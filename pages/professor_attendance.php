@@ -124,6 +124,7 @@ $subjects = fetchSubjects();
             <img src="..\assets\images\icons\arrow_down.svg"/>
             <img src="..\assets\images\icons\template.svg"/>
           </button>
+          <label for="fileInput" class="file-input" id="fileInputLabel">Choose File</label>
           <span class="file-name" id="fileName">No file chosen</span>
           <input type="file" id="fileInput" accept=".xlsx" />
           <button class="import-export" id="import"><p>IMPORT DATA</p><img src="..\assets\images\icons\upload.svg"/></button>
@@ -220,6 +221,8 @@ $subjects = fetchSubjects();
       </div>
     </div>
             
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
     <script src="../js/navbar_controller.js"></script>
     <script src="../js/attendance.js"></script>
     <script>
@@ -250,7 +253,7 @@ $subjects = fetchSubjects();
       }
 
       function downloadTemplate() {
-          var fileUrl = '../templates/classlist_template.xlsx';
+          var fileUrl = '../templates/attendance_template.xlsx';
 
           fetch(fileUrl)
           .then(response => response.blob())
