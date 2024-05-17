@@ -6,3 +6,6 @@ package-lock.json
 
 # Ignore package.json (if needed)
 package.json
+
+# Ignore image captures
+/captures/*

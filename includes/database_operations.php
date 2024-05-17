@@ -23,6 +23,10 @@ if (!isset($_SESSION['user_name'])) {
     if ($professor) {
       $userName = strtoupper($professor['last_name']) . ', ' . strtoupper($professor['first_name']);
       $_SESSION['user_name'] = $userName;
+      $userEmail = $encryptionHelper->decryptData($professor['email']);
+      $_SESSION['user_email'] = $userEmail;
+      $userPassword = $professor['password'];
+      $_SESSION['user_password'] = $userPassword;
     }
           
     // Free result from memory

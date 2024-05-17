@@ -2,15 +2,46 @@ document.addEventListener("DOMContentLoaded", function () {
   var table = document.getElementById("classlistTable");
   var tbody = table.querySelector("tbody");
   var editButton = document.getElementById("editStudentBtn");
+  var registerButton = document.getElementById("registerStudentBtn");
   var deleteButton = document.getElementById("deleteStudentsBtn");
   var importButton = document.getElementById("import");
   var exportButton = document.getElementById("export");
   var fileInput = document.getElementById("fileInput");
+  var video = document.getElementById("camera-stream");
+  var captureButton = document.getElementById("capture");
+  var target;
 
   // Initial setup
   sortTable();
 
+  // Request access to the camera
+  navigator.mediaDevices
+    .getUserMedia({ video: true, audio: false })
+    .then((stream) => {
+      // Set the video source to the camera stream
+      video.srcObject = stream;
+      video.play();
+    })
+    .catch((error) => {
+      console.error("Error accessing camera:", error);
+    });
+
   // Event Listeners
+  tbody.addEventListener("click", function (event) {
+    target = event.target;
+    if (
+      target &&
+      target.tagName === "BUTTON" &&
+      target.id === "registerStudentBtn"
+    ) {
+      registerStudent(target);
+    }
+  });
+
+  captureButton.addEventListener("click", (event) => {
+    captureImage(event, video, target);
+  });
+
   editButton.addEventListener("click", () => {
     editSelectedStudent();
   });
@@ -31,6 +62,121 @@ document.addEventListener("DOMContentLoaded", function () {
     updateFileName();
   });
 });
+
+function registerStudent(button) {
+  var registerTitle = document.getElementById("registerStudentTitle");
+  var lastNameElem = document.getElementById("lastName");
+  var firstNameElem = document.getElementById("firstName");
+  var idNumberElem = document.getElementById("idNumber");
+  var registerModal = document.getElementById("registerModal");
+  var row = button.closest("tr");
+  var idNumberCell = row.cells[3];
+  var idNumber = idNumberCell.textContent.trim();
+  var firstNameCell = row.cells[2];
+  var firstName = firstNameCell.textContent.trim();
+  var lastNameCell = row.cells[1];
+  var lastName = lastNameCell.textContent.trim();
+  console.log(lastName);
+
+  registerTitle.innerHTML = "REGISTER STUDENT " + idNumber;
+  lastNameElem.innerHTML = "Last Name: " + lastName;
+  firstNameElem.innerHTML = "First Name: " + firstName;
+  idNumberElem.innerHTML = "ID Number: " + idNumber;
+  registerModal.style.display = "block";
+}
+
+function captureImage(event, video, button) {
+  event.preventDefault();
+  var row = button.closest("tr");
+  var idNumberCell = row.cells[3];
+  var idNumber = idNumberCell.textContent.trim();
+  const canvas = document.getElementById("canvas");
+  const ctx = canvas.getContext("2d");
+
+  // Adjust canvas size to be 248x248
+  const canvasWidth = 248;
+  const canvasHeight = 248;
+  canvas.width = canvasWidth;
+  canvas.height = canvasHeight;
+
+  // Get the dimensions of the video
+  const videoWidth = video.videoWidth;
+  const videoHeight = video.videoHeight;
+
+  // Calculate cropping dimensions
+  const aspectRatio = videoWidth / videoHeight;
+  let cropWidth, cropHeight;
+  if (aspectRatio > 1) {
+    // Video is wider than it is tall
+    cropHeight = videoHeight;
+    cropWidth = videoHeight; // Crop width to match height for 1:1 aspect ratio
+  } else {
+    // Video is taller than it is wide
+    cropWidth = videoWidth;
+    cropHeight = videoWidth; // Crop height to match width for 1:1 aspect ratio
+  }
+
+  const cropX = (videoWidth - cropWidth) / 2;
+  const cropY = (videoHeight - cropHeight) / 2;
+
+  // Draw the cropped image onto the canvas
+  ctx.drawImage(
+    video,
+    cropX,
+    cropY,
+    cropWidth,
+    cropHeight,
+    0,
+    0,
+    canvasWidth,
+    canvasHeight
+  );
+  // Get the image count from the server
+  let xhrCount = new XMLHttpRequest();
+  xhrCount.open("POST", "../includes/upload.php", true);
+  xhrCount.setRequestHeader(
+    "Content-Type",
+    "application/x-www-form-urlencoded"
+  );
+  xhrCount.onload = function () {
+    if (xhrCount.status === 200) {
+      let response = JSON.parse(xhrCount.responseText);
+      if (response.status === "success") {
+        let imgFaceIndex = response.imgCount;
+        let filename = "img_face_" + imgFaceIndex + ".png";
+
+        // Convert the canvas content to a data URL
+        let imageDataURL = canvas.toDataURL("image/png");
+
+        // Send the image data to the server
+        let xhrUpload = new XMLHttpRequest();
+        xhrUpload.open("POST", "../includes/upload.php", true);
+        xhrUpload.setRequestHeader(
+          "Content-Type",
+          "application/x-www-form-urlencoded"
+        );
+        xhrUpload.send(
+          "image=" +
+            encodeURIComponent(imageDataURL) +
+            "&filename=" +
+            filename +
+            "&idNumber=" +
+            idNumber
+        );
+
+        // Display the captured image for 1 second, then clear the canvas
+        setTimeout(() => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }, 1000);
+      } else {
+        console.error("Error getting image count:", response.message);
+      }
+    } else {
+      console.error("Error getting image count:", xhrCount.statusText);
+    }
+  };
+  xhrCount.send("idNumber=" + idNumber);
+}
 
 function editSelectedStudent() {
   var title = document.getElementById("title").textContent;

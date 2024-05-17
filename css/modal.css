@@ -73,7 +73,8 @@
 }
 .modal-content input[type="time"],
 .modal-content input[type="email"],
-.modal-content input[type="text"]
+.modal-content input[type="text"],
+.modal-content input[type="password"]
  {
   width: 99%;
   padding: 2px;
