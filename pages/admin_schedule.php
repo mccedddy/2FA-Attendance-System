@@ -71,6 +71,7 @@ $schedule = fetchSchedule();
     <link rel="stylesheet" href="../css/dashboard.css" />
     <link rel="stylesheet" href="../css/table.css" />
     <link rel="stylesheet" href="../css/modal.css" />
+    <script type="text/javascript" src="../js/tableToExcel.js"></script>
   </head>
   <body>
     <nav class="navbar">
@@ -141,14 +142,14 @@ $schedule = fetchSchedule();
           <h6>ADMIN</h6>
         </div>
       </div>
-      <h2 class="page-title">SECTION <?php echo $sectionPage ?> SCHEDULE</h2>
+      <h2 class="page-title" id="title">SECTION <?php echo $sectionPage ?> SCHEDULE</h2>
       <div class="table-controls">
         <div class="left">
           <button onclick="openAddScheduleModal()">
             <img src="..\assets\images\icons\plus_white.svg"/>
             New
           </button>
-          <button id="editScheduleBtn" onclick="openEditScheduleModal()">
+          <button id="editScheduleBtn">
             <img src="..\assets\images\icons\pencil_white.svg"/>
             Edit
           </button>
@@ -158,6 +159,10 @@ $schedule = fetchSchedule();
           </button>
         </div>
         <div class="right">
+          <button class="download-template" onclick="downloadTemplate()">
+            <img src="..\assets\images\icons\arrow_down.svg"/>
+            <img src="..\assets\images\icons\template.svg"/>
+          </button>
           <label for="fileInput" class="file-input" id="fileInputLabel">Choose File</label>
           <span class="file-name" id="fileName">No file chosen</span>
           <input type="file" id="fileInput" accept=".xlsx" />
@@ -195,7 +200,7 @@ $schedule = fetchSchedule();
           <?php endforeach; ?>
         </tbody>
       </table>
-      <div style="height:50px;"></div>
+      <div style="padding:15px;"></div>
     </section>
 
     <div id="addModal" class="modal-blur">
@@ -382,6 +387,24 @@ $schedule = fetchSchedule();
       function closeEditScheduleModal() {
         var editModal = document.getElementById("editModal");
         editModal.style.display = "none";
+      }
+
+      function downloadTemplate() {
+          var fileUrl = '../templates/schedule_template.xlsx';
+
+          fetch(fileUrl)
+          .then(response => response.blob())
+          .then(blob => {
+              var url = URL.createObjectURL(blob);
+              var link = document.createElement('a');
+              link.href = url;
+              link.download = 'Schedule Template.xlsx'; 
+
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+          })
+          .catch(error => console.error('Error downloading file:', error));
       }
     </script>
   </body>

@@ -3,6 +3,9 @@ require 'database_connection.php';
 date_default_timezone_set('Asia/Manila');
 require_once 'encryption.php';
 $encryptionHelper = new EncryptionHelper($encryptionKey);
+if (!isset($_SESSION)) {
+    session_start();
+}
 
 // FETCH
 
@@ -278,23 +281,25 @@ if (isset($_POST['add-subject'])) {
 
 // Add attendance
 if (isset($_POST['student'])) {
-  $idNumber = $_POST['student'];
+  $studentIdNumber = $_POST['student'];
   $status = $_POST['status'];
   $time = $_POST['time'];
   $date = $_POST['date'];
   $room = $_POST['room'];
   $subjectCode = $_POST['subject'];
-  $idNumber = $_POST['professor'];
+  $professorIdNumber = $_POST['professor'];
   $section = $_POST['section'];
 
   $dayOfWeek = date('l', strtotime($date));
+
+  echo json_encode(['status' => 'debug', 'student' => $studentIdNumber, 'data' => $_POST]);
 
   // SQL query to retrieve the schedule id
   $sql = "SELECT * 
           FROM schedule 
           WHERE subject_code = '$subjectCode' 
           AND section = '$section' 
-          AND professor = '$idNumber'
+          AND professor = '$professorIdNumber'
           AND day = '$dayOfWeek'
           AND '$time' BETWEEN DATE_SUB(start_time, INTERVAL 1 HOUR) AND end_time";
 
@@ -311,7 +316,7 @@ if (isset($_POST['student'])) {
 
     // SQL query to insert data into the attendance table
     $sql_insert = "INSERT INTO attendance (id_number, room, time, date, status, schedule_id)
-                   VALUES ('$idNumber', '$room', '$time', '$date', '$status', '$scheduleId')";
+                   VALUES ('$studentIdNumber', '$room', '$time', '$date', '$status', '$scheduleId')";
 
     // Execute insert query
     mysqli_query($connection, $sql_insert);

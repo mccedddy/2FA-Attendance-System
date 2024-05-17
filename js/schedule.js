@@ -37,6 +37,10 @@ function editSelectedSchedule() {
     '#schedulesTable tbody input[type="checkbox"]:checked'
   );
 
+  if (checkbox == null) {
+    return;
+  }
+
   var scheduleId = document.getElementById("scheduleId");
   var editScheduleModal = document.getElementById("editModal");
 

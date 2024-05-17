@@ -156,7 +156,7 @@ $classlist = fetchClasslist('students', "WHERE section = '$sectionPage'");
             <img src="..\assets\images\icons\plus_white.svg"/>
             New
           </button>
-          <button id="editStudentBtn" onclick="openEditStudentModal()">
+          <button id="editStudentBtn">
             <img src="..\assets\images\icons\pencil_white.svg"/>
             Edit
           </button>
@@ -166,6 +166,10 @@ $classlist = fetchClasslist('students', "WHERE section = '$sectionPage'");
           </button>
         </div>
         <div class="right">
+          <button class="download-template" onclick="downloadTemplate()">
+            <img src="..\assets\images\icons\arrow_down.svg"/>
+            <img src="..\assets\images\icons\template.svg"/>
+          </button>
           <label for="fileInput" class="file-input" id="fileInputLabel">Choose File</label>
           <span class="file-name" id="fileName">No file chosen</span>
           <input type="file" id="fileInput" accept=".xlsx" />
@@ -205,7 +209,7 @@ $classlist = fetchClasslist('students', "WHERE section = '$sectionPage'");
           <?php endforeach; ?>
         </tbody>
       </table>
-      <div style="height:50px;"></div>
+      <div style="padding:15px;"></div>
     </section>
 
     <div id="addModal" class="modal-blur">
@@ -362,9 +366,28 @@ $classlist = fetchClasslist('students', "WHERE section = '$sectionPage'");
         var editModal = document.getElementById("editModal");
         editModal.style.display = "none";
       }
+      
       function closeRegisterStudentModal() {
         var editModal = document.getElementById("registerModal");
         editModal.style.display = "none";
+      }
+
+      function downloadTemplate() {
+          var fileUrl = '../templates/classlist_template.xlsx';
+
+          fetch(fileUrl)
+          .then(response => response.blob())
+          .then(blob => {
+              var url = URL.createObjectURL(blob);
+              var link = document.createElement('a');
+              link.href = url;
+              link.download = 'Classlist Template.xlsx'; 
+
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+          })
+          .catch(error => console.error('Error downloading file:', error));
       }
     </script>
   </body>

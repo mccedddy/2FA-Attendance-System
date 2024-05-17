@@ -99,7 +99,7 @@ $subjects = fetchSubjects();
       <input type="date" id="date" class="date-filter" required value="<?php echo date('Y-m-d'); ?>">
       <div class="table-controls">
         <div class="left">
-          <select id="subjectFilter">
+          <select id="subject">
             <option value="ALL">ALL</option>
               <?php
                 require '../includes/database_connection.php';
@@ -120,6 +120,10 @@ $subjects = fetchSubjects();
           <button id="addSchedule" onclick="openAddAttendanceModal()">ADD</Button>
         </div>
         <div class="right">
+          <button class="download-template" onclick="downloadTemplate()">
+            <img src="..\assets\images\icons\arrow_down.svg"/>
+            <img src="..\assets\images\icons\template.svg"/>
+          </button>
           <label for="fileInput" class="file-input" id="fileInputLabel">Choose File</label>
           <span class="file-name" id="fileName">No file chosen</span>
           <input type="file" id="fileInput" accept=".xlsx" />
@@ -145,7 +149,7 @@ $subjects = fetchSubjects();
           
         </tbody>
       </table>
-      <div style="height:50px;"></div>
+      <div style="padding:15px;"></div>
     </section>
 
      <div id="addModal" class="modal-blur">
@@ -217,6 +221,8 @@ $subjects = fetchSubjects();
       </div>
     </div>
             
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
     <script src="../js/navbar_controller.js"></script>
     <script src="../js/attendance.js"></script>
     <script>
@@ -244,6 +250,24 @@ $subjects = fetchSubjects();
       function closeAddAttendanceModal() {
         var addModal = document.getElementById("addModal");
         addModal.style.display = "none";
+      }
+
+      function downloadTemplate() {
+          var fileUrl = '../templates/attendance_template.xlsx';
+
+          fetch(fileUrl)
+          .then(response => response.blob())
+          .then(blob => {
+              var url = URL.createObjectURL(blob);
+              var link = document.createElement('a');
+              link.href = url;
+              link.download = 'Attendance Template.xlsx'; 
+
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+          })
+          .catch(error => console.error('Error downloading file:', error));
       }
     </script>
   </body>

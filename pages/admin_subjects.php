@@ -64,6 +64,7 @@ $subjects = fetchSubjects();
     <link rel="stylesheet" href="../css/dashboard.css" />
     <link rel="stylesheet" href="../css/table.css" />
     <link rel="stylesheet" href="../css/modal.css" />
+    <script type="text/javascript" src="../js/tableToExcel.js"></script>
   </head>
   <body>
     <nav class="navbar">
@@ -141,7 +142,7 @@ $subjects = fetchSubjects();
             <img src="..\assets\images\icons\plus_white.svg"/>
             New
           </button>
-          <button id="editSubjectBtn" onclick="openEditSubjectModal()">
+          <button id="editSubjectBtn">
             <img src="..\assets\images\icons\pencil_white.svg"/>
             Edit
           </button>
@@ -151,6 +152,10 @@ $subjects = fetchSubjects();
           </button>
         </div>
         <div class="right">
+          <button class="download-template" onclick="downloadTemplate()">
+            <img src="..\assets\images\icons\arrow_down.svg"/>
+            <img src="..\assets\images\icons\template.svg"/>
+          </button>
           <label for="fileInput" class="file-input" id="fileInputLabel">Choose File</label>
           <span class="file-name" id="fileName">No file chosen</span>
           <input type="file" id="fileInput" accept=".xlsx" />
@@ -176,7 +181,7 @@ $subjects = fetchSubjects();
           <?php endforeach; ?>
         </tbody>
       </table>
-      <div style="height:50px;"></div>
+      <div style="padding:15px;"></div>
     </section>
     
     <div id="addModal" class="modal-blur">
@@ -272,6 +277,24 @@ $subjects = fetchSubjects();
       function closeEditSubjectModal() {
         var editModal = document.getElementById("editModal");
         editModal.style.display = "none";
+      }
+
+      function downloadTemplate() {
+          var fileUrl = '../templates/subjects_template.xlsx';
+
+          fetch(fileUrl)
+          .then(response => response.blob())
+          .then(blob => {
+              var url = URL.createObjectURL(blob);
+              var link = document.createElement('a');
+              link.href = url;
+              link.download = 'Subjects Template.xlsx'; 
+
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+          })
+          .catch(error => console.error('Error downloading file:', error));
       }
     </script>
   </body>

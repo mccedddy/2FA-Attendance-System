@@ -184,6 +184,10 @@ function editSelectedStudent() {
     '#classlistTable tbody input[type="checkbox"]:checked'
   );
 
+  if (checkbox == null) {
+    return;
+  }
+
   var editModal = document.getElementById("editModal");
   var editStudentTitle = document.getElementById("editStudentTitle");
   var originalIdNumber = document.getElementById("originalIdNumber");

@@ -1,14 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const table = document.getElementById("attendanceTable");
-  const tbody = table.querySelector("tbody");
-  const dateFilter = document.getElementById("date");
-  const subjectFilter = document.getElementById("subjectFilter");
-  const importButton = document.getElementById("import");
-  const exportButton = document.getElementById("export");
-  const addAttendanceButton = document.getElementById("addButton");
+  var table = document.getElementById("attendanceTable");
+  var tbody = table.querySelector("tbody");
+  var dateFilter = document.getElementById("date");
+  var subjectFilter = document.getElementById("subject");
+  var importButton = document.getElementById("import");
+  var exportButton = document.getElementById("export");
+  var addAttendanceButton = document.getElementById("addButton");
+  var fileInput = document.getElementById("fileInput");
 
   fetchAttendance(dateFilter.value, subjectFilter.value);
-  sortTable();
 
   dateFilter.addEventListener("change", () => {
     fetchAttendance(dateFilter.value, subjectFilter.value);
@@ -25,7 +25,22 @@ document.addEventListener("DOMContentLoaded", function () {
   addAttendanceButton.addEventListener("click", (event) => {
     addAttendance(event);
   });
+  fileInput.addEventListener("change", () => {
+    updateFileName();
+  });
 });
+
+function updateFileName() {
+  var fileInput = document.getElementById("fileInput");
+  var fileNameSpan = document.getElementById("fileName");
+  var fileInputLabel = document.getElementById("fileInputLabel");
+
+  if (fileInput.files.length > 0) {
+    fileNameSpan.textContent = fileInput.files[0].name;
+  } else {
+    fileNameSpan.textContent = "No file chosen";
+  }
+}
 
 function fetchAttendance(date, subject) {
   var url = "../includes/fetch_attendance.php";
@@ -39,6 +54,7 @@ function fetchAttendance(date, subject) {
   })
     .then((response) => response.json())
     .then((data) => {
+      console.log(data);
       displayAttendanceData(data);
       // updateOriginalData(data);
     })
@@ -96,7 +112,8 @@ function importAttendance() {
       // Convert sheet data to an array of objects starting from the 2nd row
       var dataArray = XLSX.utils.sheet_to_json(sheet, { header: 1, range: 1 });
 
-      // var url = "../includes/import_attendance.php";
+      var url = "../includes/import_attendance.php";
+      console.log(dataArray);
 
       // Send dataArray to the server using a POST request
       $.ajax({
@@ -135,26 +152,6 @@ function exportAttendance() {
   });
 }
 
-function sortTable() {
-  const table = document.getElementById("attendanceTable");
-  const tbody = table.querySelector("tbody");
-  const rows = Array.from(tbody.querySelectorAll("tr"));
-
-  rows.sort(compareDateTime);
-  tbody.innerHTML = "";
-
-  rows.forEach((row) => {
-    tbody.appendChild(row);
-  });
-}
-
-function compareDateTime(a, b) {
-  const dateComparison =
-    new Date(b.cells[4].innerText + " " + b.cells[3].innerText) -
-    new Date(a.cells[4].innerText + " " + a.cells[3].innerText);
-  return dateComparison;
-}
-
 function addAttendance(event) {
   event.preventDefault();
   var student = document.getElementById("attendanceStudent").value;
@@ -178,14 +175,16 @@ function addAttendance(event) {
   formData.append("professor", professor);
   formData.append("section", section);
 
-  var url = "../includes/add_attendance.php";
+  console.log(formData);
 
+  var url = "../includes/database_operations.php";
   fetch(url, {
     method: "POST",
     body: formData,
   })
     .then((response) => response.json())
     .then((data) => {
+      console.log(data);
       location.reload();
     })
     .catch((error) => {

@@ -112,7 +112,7 @@ table th {
   font-size: 12px;
 }
 
-#subjectFilter {
+#subject {
   width: 400px;
   height: 28px;
   flex-shrink: 0;
@@ -127,20 +127,20 @@ table th {
   line-height: normal;
 }
 
-#subjectFilter:hover,
-#subjectFilter:focus {
+#subject:hover,
+#subject:focus {
   outline: 1px solid #810000;
   cursor: pointer;
 }
 
-#subjectFilter .subjectOption {
+#subject .subjectOption {
   background-color: white;
   color: #810000;
   border: 1px solid #810000;
   text-align: left;
 }
 
-#subjectFilter option:checked {
+#subject option:checked {
   background-color: #810000;
   color: #fff;
 }
@@ -174,4 +174,18 @@ table th {
 
 #clearData:hover {
   outline: 1px solid #810000;
+
+.download-template {
+  outline: 0px;
+  background-color: #fff;
+  height: auto;
+  width: auto;
+  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.25);
+  padding-left: 0px;
+}
+
+.download-template:hover,
+.download-template:focus {
+  cursor: pointer;
+  outline: 0px;
 }
