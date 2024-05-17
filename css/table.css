@@ -145,7 +145,6 @@ table th {
   color: #fff;
 }
 
-
 .date-filter {
   width: 125px;
   height: 28px;
@@ -157,11 +156,22 @@ table th {
   color: #810000;
   padding: 0px 12px 0px 12px;
   cursor: pointer;
-  align-self:flex-start;
+  align-self: flex-start;
   margin-bottom: 10px;
 }
 
 .date-filter:hover,
 .date-filter:focus {
+  outline: 1px solid #810000;
+}
+
+#clearData {
+  background-color: #fff;
+  border: 1px solid #810000;
+  outline: 0px;
+  color: #810000;
+}
+
+#clearData:hover {
   outline: 1px solid #810000;
 }

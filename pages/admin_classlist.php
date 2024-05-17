@@ -184,6 +184,8 @@ $classlist = fetchClasslist('students', "WHERE section = '$sectionPage'");
             <th>NFC UID</th>
             <th>EMAIL</th>
             <th style="display: none;" data-exclude="true">ID</th>
+            <th data-exclude="true">REGISTERED</th>
+            <th data-exclude="true">REGISTER FACE</th>
           </tr>
         </thead>
         <tbody>
@@ -197,6 +199,8 @@ $classlist = fetchClasslist('students', "WHERE section = '$sectionPage'");
               <td><?php echo $student['nfcUid']; ?></td>
               <td><?php echo $student['email']; ?></td>
               <td style="display: none;" data-exclude="true"><?php echo $student['id']; ?></td>
+              <td data-exclude="true">No</td>
+              <td data-exclude="true"><button id="registerStudentBtn">Register</button></td>
             </tr>
           <?php endforeach; ?>
         </tbody>
@@ -285,6 +289,30 @@ $classlist = fetchClasslist('students', "WHERE section = '$sectionPage'");
       </div>
     </div>
 
+    <div id="registerModal" class="modal-blur">
+      <div class="modal-content">
+        <div class="top-modal">
+          <h6 id="registerStudentTitle">REGISTER STUDENT FACE</h6>
+        </div>
+        <span class="close-modal" onclick="closeRegisterStudentModal()">&times;</span>
+        <form method="POST">
+          <div style="display: flex; justify-content: center; align-items: center; margin: 20px; border: 1px solid green; position: relative;">
+            <video id="camera-stream" width="248" height="248" style="object-fit: cover;"></video>
+            <canvas id="canvas" style="position: absolute; top: 0; left: 200; width: 248px; height: 248px; border: 1px solid blue;"></canvas>
+          </div>
+          <p id="lastName"></p>
+          <p id="firstName"></p>
+          <p id="idNumber"></p>
+          <div class="submit-button-container">
+            <button id="capture" class="add-button">CAPTURE</button>
+          </div>
+          <div class="submit-button-container">
+            <button id="clearData" class="add-button">CLEAR DATA</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
     <script src="../js/navbar_controller.js"></script>
@@ -332,6 +360,10 @@ $classlist = fetchClasslist('students', "WHERE section = '$sectionPage'");
       }
       function closeEditStudentModal() {
         var editModal = document.getElementById("editModal");
+        editModal.style.display = "none";
+      }
+      function closeRegisterStudentModal() {
+        var editModal = document.getElementById("registerModal");
         editModal.style.display = "none";
       }
     </script>
