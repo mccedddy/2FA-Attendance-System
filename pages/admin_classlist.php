@@ -300,9 +300,9 @@ $classlist = fetchClasslist('students', "WHERE section = '$sectionPage'");
         </div>
         <span class="close-modal" onclick="closeRegisterStudentModal()">&times;</span>
         <form method="POST">
-          <div style="display: flex; justify-content: center; align-items: center; margin: 20px; border: 1px solid green; position: relative;">
+          <div style="display: flex; justify-content: center; align-items: center; margin: 20px; position: relative;">
             <video id="camera-stream" width="248" height="248" style="object-fit: cover;"></video>
-            <canvas id="canvas" style="position: absolute; top: 0; left: 200; width: 248px; height: 248px; border: 1px solid blue;"></canvas>
+            <canvas id="canvas" style="position: absolute; top: 0; left: 200; width: 248px; height: 248px;"></canvas>
           </div>
           <p id="lastName"></p>
           <p id="firstName"></p>
