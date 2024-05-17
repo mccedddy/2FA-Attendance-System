@@ -9,25 +9,99 @@ $error_message = '';
 
 
 // Change email and password details
-if (isset($_POST['change-email"'])) {
+if (isset($_POST['change-email'])) {
   require '../includes/database_connection.php';
   $newEmail = $_POST['new_email'];
   $confirmEmail = $_POST['confirm_email'];
   $encryptEmail = $encryptionHelper->encryptData($confirmEmail);
   
-  if ($confirmEmail !== $professor['email'] && 
-    $newEmail !== $professor['email'] && 
-    $newEmail === $confirmEmail) {
+  if ($confirmEmail != $userEmail && 
+    $newEmail != $userEmail && 
+    $newEmail == $confirmEmail) {
       
       $sql = "UPDATE professors SET email = '$encryptEmail' WHERE id_number = '$userId'";
-      $stmt = mysqli_prepare($connection, $sql);
-      mysqli_stmt_execute($stmt);
-      mysqli_stmt_close($stmt);
 
+     // Execute query
+    $stmt = mysqli_prepare($connection, $sql);
+    
+    try {
+      // Execute query
+      mysqli_stmt_execute($stmt);
+
+      // Close the statement
+      mysqli_stmt_close($stmt);
+      $_SESSION['user_email'] = $newEmail;
+      
+      header("Location: professor_settings_page.php");
+    } catch (mysqli_sql_exception $exception) {
+      // Check if duplicate entry
+      if ($exception->getCode() == 1062) {
+        header("Location: professor_settings_page.php");
+        exit; 
+      } else {
+        throw $exception;
+      }
+    }
   } else if ($newEmail != $confirmEmail) {
     echo 'wrong email';
   } else {
     echo 'error';
+  }
+}
+
+/* if (isset($_POST['change-password-btn'])){
+  $currentPassword = $_POST['current_password'];
+
+  if($currentPassword == password_verify($password, $professors['password'])){
+    $error_message = 'Kindly check your password.';
+  }
+} */
+
+
+// Change email and password details
+if (isset($_POST['change-password'])) {
+  require '../includes/database_connection.php';
+  $currentPassword = $_POST['current_password'];
+  $newPassword = $_POST['new_password'];
+  $confirmPassword = $_POST['confirm_password'];
+  $passwordLength = strlen($confirmPassword);
+  $hashedPassword = password_hash($confirmPassword, PASSWORD_DEFAULT);
+
+  if(password_verify($currentPassword, $userPassword)){
+    if($newPassword == $confirmPassword){
+      if($passwordLength>=8){
+        $sql = "UPDATE professors SET password = '$hashedPassword' WHERE id_number = '$userId'";
+
+            // Execute query
+        $stmt = mysqli_prepare($connection, $sql);
+        
+        try {
+          // Execute query
+          mysqli_stmt_execute($stmt);
+
+          // Close the statement
+          mysqli_stmt_close($stmt);
+          $_SESSION['user_password'] = $hashedPassword;
+          
+          header("Location: professor_settings_page.php");
+        } catch (mysqli_sql_exception $exception) {
+          // Check if duplicate entry
+          if ($exception->getCode() == 1062) {
+            header("Location: professor_settings_page.php");
+            exit; 
+          } else {
+            throw $exception;
+          }
+        }
+      }else{
+        header("Location: professor_settings_page.php");
+        $error_message = 'Kindly check the length of the password.';
+      }
+    }else{
+      $userPassword = 'pass diff';
+    }
+  }else{
+    $userPassword = 'wrong password';
   }
 }
 ?>
@@ -150,10 +224,10 @@ if (isset($_POST['change-email"'])) {
               </tr>
               <tr>
                 <td>Password</td>
-                <td>*****</td>
+                <td><?php echo $userPassword;?></td>
                 <td>
                   <div class="change-button-container">
-                    <button onclick="openChangePassModal()" class="change-button" id="changePassBtn">CHANGE</button>
+                    <button onclick="openChangePassModal()" class="change-button" id="changePassBtn" name = change-password-btn>CHANGE</button>
                   </div>
                 </td>
               </tr>
@@ -169,21 +243,20 @@ if (isset($_POST['change-email"'])) {
           <h6>CHANGE EMAIL</h6>
         </div>
         <span class="close-modal" onclick="closeChangeEmailModal()">&times;</span>
-        <form method="POST">
-          <input id="originalIdNumber" name="original_id_number" type="hidden"></input>
+        <form method="POST" id = "emailForm">
           <div>
             <p>Current Email</p>
             <input type="email" name="current_email" placeholder="<?php echo $userEmail; ?>" id="currentEmail" disabled></input>
           </div>
           <div>
             <p>New Email</p>
-            <input type="email" name="new_email" id="newEmail" required></input>
+            <input type="email" name="new_email" id="newEmail"></input>
           </div>
           <div>
             <p>Confirm Email</p>
-            <input type="email" name="confirm_email" id="confirmEmail" required></input>
+            <input type="email" name="confirm_email" id="confirmEmail"></input>
           </div>
-          <p class="error-message"><?php echo $error_message ?></p>
+          <div id = "emailError"></div>
           <div class="submit-button-container">
             <button type="submit" name="change-email" id="changeEmailButton" class="change-email-button">SAVE</button>
           </div>
@@ -204,6 +277,7 @@ if (isset($_POST['change-email"'])) {
             <input type="password" name="current_password" id="currentPassword" required></input>
           </div>
           <div>
+            
             <p>New Password</p>
             <input type="password" name="new_password" id="newPassword" required></input>
           </div>
@@ -211,6 +285,7 @@ if (isset($_POST['change-email"'])) {
             <p>Confirm Password</p>
             <input type="password" name="confirm_password" id="confirmPassword" required></input>
           </div>
+          <p>Password must contain at least 8 characters<p>
           <div class="submit-button-container">
             <button type="submit" name="change-password" id="changePasswordButton" class="change-password-button" onclick="openResultModal()">SAVE</button>
           </div>

@@ -22,6 +22,8 @@ if (!isset($_SESSION['user_name'])) {
       $_SESSION['user_name'] = $userName;
       $userEmail = $encryptionHelper->decryptData($professor['email']);
       $_SESSION['user_email'] = $userEmail;
+      $userPassword = $professor['password'];
+      $_SESSION['user_password'] = $userPassword;
     }
           
     // Free result from memory

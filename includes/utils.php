@@ -16,9 +16,14 @@ if (!isset($_SESSION['user_name'])) {
   $userName = $_SESSION['user_name'];
 }
 if (!isset($_SESSION['user_email'])) {
-  $userEmail = 'none';
+  $userEmail = '';
 } else {
   $userEmail = $_SESSION['user_email'];
+}
+if (!isset($_SESSION['user_password'])) {
+  $userPassword = '';
+} else {
+  $userPassword = $_SESSION['user_password'];
 }
 
 // Redirect professor and admin pages
@@ -65,9 +70,11 @@ function sectionHeader($location) {
 
 // Logout
 if (isset($_POST['logout'])) {
-  unset($_SESSION['userId']);
+  unset($_SESSION['user_id']);
   unset($_SESSION['user_name']);
+  unset($_SESSION['user_email']);
   unset($_SESSION['section']);
+  unset($_SESSION['user_password']);
   unset($_SESSION['selected_section']);
   session_destroy();
   header("Location: ../index.php");
