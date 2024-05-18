@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var fileInput = document.getElementById("fileInput");
   var video = document.getElementById("camera-stream");
   var captureButton = document.getElementById("capture");
+  var processImagesButton = document.getElementById("processImages");
   var target;
 
   // Initial setup
@@ -42,6 +43,10 @@ document.addEventListener("DOMContentLoaded", function () {
     captureImage(event, video, target);
   });
 
+  processImagesButton.addEventListener("click", () => {
+    processImages(event);
+  });
+
   editButton.addEventListener("click", () => {
     editSelectedStudent();
   });
@@ -63,6 +68,32 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+function processImages(event) {
+  event.preventDefault();
+  var idNumber = document.getElementById("idNumber").innerHTML;
+  var url = "../includes/trigger_generate_features.php";
+  var formData = new FormData();
+  formData.append("idNumber", idNumber);
+  console.log(idNumber);
+
+  fetch(url, {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => response.text())
+    .then((data) => {
+      console.log("Response from server:", data);
+      return JSON.parse(data);
+      // location.reload();
+    })
+    .then((parsedData) => {
+      console.log("DONE:", parsedData);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
+
 function registerStudent(button) {
   var registerTitle = document.getElementById("registerStudentTitle");
   var lastNameElem = document.getElementById("lastName");
@@ -79,9 +110,9 @@ function registerStudent(button) {
   console.log(lastName);
 
   registerTitle.innerHTML = "REGISTER STUDENT " + idNumber;
-  lastNameElem.innerHTML = "Last Name: " + lastName;
-  firstNameElem.innerHTML = "First Name: " + firstName;
-  idNumberElem.innerHTML = "ID Number: " + idNumber;
+  lastNameElem.innerHTML = lastName;
+  firstNameElem.innerHTML = firstName;
+  idNumberElem.innerHTML = idNumber;
   registerModal.style.display = "block";
 }
 

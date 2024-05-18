@@ -311,6 +311,9 @@ $classlist = fetchClasslist('students', "WHERE section = '$sectionPage'");
             <button id="capture" class="add-button">CAPTURE</button>
           </div>
           <div class="submit-button-container">
+            <button id="processImages" class="add-button">PROCESS IMAGES</button>
+          </div>
+          <div class="submit-button-container">
             <button id="clearData" class="add-button">CLEAR DATA</button>
           </div>
         </form>
