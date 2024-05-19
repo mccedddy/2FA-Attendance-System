@@ -68,6 +68,19 @@ function sectionHeader($location) {
   }
 }
 
+function readCSV($csvFile) {
+    $file_handle = fopen($csvFile, 'r');
+    $data = [];
+    while (!feof($file_handle)) {
+        $row = fgetcsv($file_handle);
+        if ($row) {
+            $data[] = $row;
+        }
+    }
+    fclose($file_handle);
+    return $data;
+}
+
 // Logout
 if (isset($_POST['logout'])) {
   unset($_SESSION['user_id']);
