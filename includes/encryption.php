@@ -1,5 +1,14 @@
 <?php
-require_once '../includes/encryption_key.php';
+require_once dirname(__DIR__) . '/vendor/autoload.php';
+use Dotenv\Dotenv;
+
+// Load .env variables
+$dotenv = Dotenv::createImmutable(dirname(__DIR__));
+$dotenv->load();
+
+// Use the encryption key from the environment variable
+$encryptionKey = $_ENV['ENCRYPTION_KEY'];
+$encryptionHelper = new EncryptionHelper($encryptionKey);
 
 class EncryptionHelper {
     private $encryptionKey;
