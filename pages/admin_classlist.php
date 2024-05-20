@@ -164,6 +164,12 @@ $classlist = fetchClasslist('students', "WHERE section = '$sectionPage'");
             <img src="..\assets\images\icons\trash_white.svg"/>
             Delete
           </button>
+          <button id="processImages" style="width: 140px;">
+            Process Images
+          </button>
+          <button id="uploadFeatures" style="width: 140px;">
+            Upload Features
+          </button>
         </div>
         <div class="right">
           <button class="download-template" onclick="downloadTemplate()">
@@ -309,9 +315,6 @@ $classlist = fetchClasslist('students', "WHERE section = '$sectionPage'");
           <p id="idNumber"></p>
           <div class="submit-button-container">
             <button id="capture" class="add-button">CAPTURE</button>
-          </div>
-          <div class="submit-button-container">
-            <button id="processImages" class="add-button">PROCESS IMAGES</button>
           </div>
           <div class="submit-button-container">
             <button id="clearData" class="add-button">CLEAR DATA</button>

@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var video = document.getElementById("camera-stream");
   var captureButton = document.getElementById("capture");
   var processImagesButton = document.getElementById("processImages");
+  var uploadFeaturesButton = document.getElementById("uploadFeatures");
   var target;
 
   // Initial setup
@@ -43,8 +44,12 @@ document.addEventListener("DOMContentLoaded", function () {
     captureImage(event, video, target);
   });
 
-  processImagesButton.addEventListener("click", () => {
+  processImagesButton.addEventListener("click", (event) => {
     processImages(event);
+  });
+
+  uploadFeaturesButton.addEventListener("click", (event) => {
+    uploadFeatures(event);
   });
 
   editButton.addEventListener("click", () => {
@@ -68,13 +73,34 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+function uploadFeatures(event) {
+  event.preventDefault();
+  var url = "../includes/upload_features.php";
+
+  fetch(url, {
+    method: "POST",
+  })
+    .then((response) => response.text())
+    .then((data) => {
+      console.log("Response from server:", data);
+      return JSON.parse(data);
+    })
+    .then((parsedData) => {
+      console.log("DONE:", parsedData);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
+
 function processImages(event) {
   event.preventDefault();
   var idNumber = document.getElementById("idNumber").innerHTML;
   var url = "../includes/trigger_generate_features.php";
   var formData = new FormData();
   formData.append("idNumber", idNumber);
-  console.log(idNumber);
+
+  console.log("Processing images...");
 
   fetch(url, {
     method: "POST",
@@ -84,7 +110,6 @@ function processImages(event) {
     .then((data) => {
       console.log("Response from server:", data);
       return JSON.parse(data);
-      // location.reload();
     })
     .then((parsedData) => {
       console.log("DONE:", parsedData);
@@ -107,7 +132,6 @@ function registerStudent(button) {
   var firstName = firstNameCell.textContent.trim();
   var lastNameCell = row.cells[1];
   var lastName = lastNameCell.textContent.trim();
-  console.log(lastName);
 
   registerTitle.innerHTML = "REGISTER STUDENT " + idNumber;
   lastNameElem.innerHTML = lastName;
