@@ -30,32 +30,7 @@ if (isset($_POST['UIDresult'])) {
 
   // Response: Student Data
   echo json_encode(['studentData' => $studentData]);
-
-  // Get HDF data
-  $hdfSQL = "SELECT * 
-             FROM hdf 
-             WHERE id_number = '$studentNumber'
-             AND DATE(timestamp) = '$date'";
-  $hdfStmt = mysqli_prepare($connection, $hdfSQL);
-  mysqli_stmt_execute($hdfStmt);
-  $result = mysqli_stmt_get_result($hdfStmt);
-
-  if ($result && mysqli_num_rows($result) > 0) {
-    $hdfData = mysqli_fetch_assoc($result);
-    $hdfVerified = $hdfData["verified"];
-
-    if ($hdfVerified == "false") {
-      // Response: Not Verified
-      echo json_encode(['hdf' => $hdfVerified]); 
-    } else {
-      echo json_encode(['hdf' => $hdfVerified]); 
-    }
-  } else {
-    // Response: No HDF
-    echo json_encode(['hdf' => 'none']); 
-    exit;
-  }
-
+  
   // SQL query to retrieve schedule data
   $scheduleSQL = "SELECT * 
           FROM schedule 
@@ -72,7 +47,7 @@ if (isset($_POST['UIDresult'])) {
   // Response: Schedule Data
   echo json_encode(['scheduleData' => $scheduleData]);
 
-  if ($result && mysqli_num_rows($result) > 0 && $hdfVerified == "true") {
+  if ($result && mysqli_num_rows($result) > 0) {
     $scheduleId = $scheduleData['id'];
     $startTime = $scheduleData['start_time'];
 
