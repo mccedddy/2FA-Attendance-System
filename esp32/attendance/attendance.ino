@@ -7,12 +7,13 @@
 // const char* password = "66303336";
 // const char* ssid = "JAM";
 // const char* password = "C3dricJ0yce";
-const char* ssid = "McDonald's Wi-Fi";
-const char* password = "123abc123";
+const char *ssid = "home broadband";
+const char *password = "Jacob1234***";
 
 // Server config
 // const String serverIP = "192.168.0.134"; // A7
-const String serverIP = "192.168.166.62"; // McDonald's WiFi
+// const String serverIP = "192.168.166.62"; // McDonald's WiFi
+const String serverIP = "192.168.1.7"; //
 const String phpScript = "PUP-HDF-Attendance-System/services/record_attendance.php";
 const String destinationUrl = "http://" + serverIP + "/" + phpScript;
 
@@ -29,8 +30,8 @@ const String title = "RM" + room + " Attendance";
 #include <MFRC522.h>
 
 // Wire for I2C and LCD libraries
-#include <Wire.h> 
-#include <LiquidCrystal_I2C.h> 
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
 
 // JSON library
 #include <ArduinoJson.h>
@@ -42,10 +43,10 @@ const String title = "RM" + room + " Attendance";
 LiquidCrystal_I2C lcd(LCD_ADDRESS, LCD_COLUMNS, LCD_ROWS);
 
 // RC522 config
-#define SS_PIN 5 
-#define RST_PIN 21 
+#define SS_PIN 5
+#define RST_PIN 21
 MFRC522 mfrc522(SS_PIN, RST_PIN);
-#define ON_Board_LED 2  
+#define ON_Board_LED 2
 
 // Buzzer config
 #define buzzer 16
@@ -57,15 +58,16 @@ char str[32] = "";
 String StrUID;
 
 // Setup
-void setup() {
-  Serial.begin(115200); 
+void setup()
+{
+  Serial.begin(115200);
 
   // Initialize buzzer
   pinMode(buzzer, OUTPUT);
 
   // Initialize SPI and RC522
-  SPI.begin(); 
-  mfrc522.PCD_Init(); 
+  SPI.begin();
+  mfrc522.PCD_Init();
 
   // Initialize LCD
   lcd.init();
@@ -80,14 +82,15 @@ void setup() {
   // Connect to WiFi router
   WiFi.begin(ssid, password);
   Serial.println("");
-  
+
   // Turn on LED until connected to WiFi
-  pinMode(ON_Board_LED,OUTPUT); 
-  digitalWrite(ON_Board_LED, HIGH); 
+  pinMode(ON_Board_LED, OUTPUT);
+  digitalWrite(ON_Board_LED, HIGH);
   Serial.print("Connecting");
 
   // Wait for connection
-  while (WiFi.status() != WL_CONNECTED) {
+  while (WiFi.status() != WL_CONNECTED)
+  {
     Serial.print(".");
     // Blink while connecting to the WiFi
     digitalWrite(ON_Board_LED, LOW);
@@ -128,30 +131,32 @@ void setup() {
 }
 
 // Loop
-void loop() {
+void loop()
+{
   // Read NFC card
   readsuccess = getid();
- 
-  if(readsuccess) {  
+
+  if (readsuccess)
+  {
     digitalWrite(ON_Board_LED, LOW);
 
     // Declare object of class HTTPClient
-    HTTPClient http;    
+    HTTPClient http;
     String UIDresultSend, postData;
     UIDresultSend = StrUID;
-   
+
     // Send UID in post data
     postData = "UIDresult=" + UIDresultSend + "&room=" + room;
-  
+
     // Specify request destination
     http.setTimeout(10000);
     http.begin(destinationUrl);
     http.addHeader("Content-Type", "application/x-www-form-urlencoded");
-   
+
     // Send request and get response
-    int httpCode = http.POST(postData); 
+    int httpCode = http.POST(postData);
     String payload = http.getString();
-  
+
     // Print http details
     Serial.println(UIDresultSend);
     Serial.println(httpCode);
@@ -162,7 +167,8 @@ void loop() {
     DynamicJsonDocument doc(1024);
     DeserializationError error = deserializeJson(doc, payload);
 
-    if (error) {
+    if (error)
+    {
       Serial.print("Failed to parse JSON: ");
       Serial.println(error.c_str());
       return;
@@ -170,42 +176,56 @@ void loop() {
 
     // Extract data from JSON
     String name = doc["studentData"]["last_name"];
-    String studentNumber = doc["studentData"]["student_number"];
+    String studentNumber = doc["studentData"]["id_number"];
     String nfcUid = doc["studentData"]["nfc_uid"];
     String status = "";
     String verified = "";
 
-
-    if (payload.indexOf("\"status\":\"Present\"") != -1) {
+    if (payload.indexOf("\"status\":\"Present\"") != -1)
+    {
       status = "Present";
-    } else if (payload.indexOf("\"status\":\"Late\"") != -1) {
-      status = "Late"; 
-    } else if (payload.indexOf("\"status\":\"Already recorded\"") != -1) {
-      status = "Already recorded"; 
-    } else {
+    }
+    else if (payload.indexOf("\"status\":\"Late\"") != -1)
+    {
+      status = "Late";
+    }
+    else if (payload.indexOf("\"status\":\"Already recorded\"") != -1)
+    {
+      status = "Already recorded";
+    }
+    else
+    {
       status = "No schedule";
     }
 
-    if (payload.indexOf("\"hdf\":\"true\"") != -1) {
+    if (payload.indexOf("\"hdf\":\"true\"") != -1)
+    {
       verified = "true";
-    } else if (payload.indexOf("\"hdf\":\"false\"") != -1) {
-      verified = "false"; 
-    } else {
+    }
+    else if (payload.indexOf("\"hdf\":\"false\"") != -1)
+    {
+      verified = "false";
+    }
+    else
+    {
       verified = "none";
     }
 
     // If no student found
-    if (name == "none" && studentNumber == "none") {
+    if (name == "none" && studentNumber == "none")
+    {
       Serial.println("No student found");
-      
+
       lcd.clear();
       lcd.setCursor(0, 0);
       lcd.print("    NFC card    ");
       lcd.setCursor(0, 1);
       lcd.print(" not registered ");
 
-      digitalWrite(buzzer, HIGH); delay(750); digitalWrite(buzzer, LOW);
-      
+      digitalWrite(buzzer, HIGH);
+      delay(750);
+      digitalWrite(buzzer, LOW);
+
       String UIDresultDisplay = "    " + UIDresultSend + "    ";
       lcd.clear();
       lcd.setCursor(0, 0);
@@ -214,8 +234,9 @@ void loop() {
       lcd.print(UIDresultDisplay);
 
       delay(3000);
-      
-    } else {
+    }
+    else
+    {
       Serial.println(status);
 
       // Display student info
@@ -225,73 +246,105 @@ void loop() {
       lcd.setCursor(0, 1);
       lcd.print(studentNumber);
 
-      digitalWrite(buzzer, HIGH); delay(100); digitalWrite(buzzer, LOW);
+      digitalWrite(buzzer, HIGH);
+      delay(100);
+      digitalWrite(buzzer, LOW);
       delay(650);
 
       // Display status
       lcd.clear();
-      if (verified == "false") {
+      if (verified == "false")
+      {
         lcd.setCursor(0, 0);
         lcd.print("      HDF      ");
         lcd.setCursor(0, 1);
         lcd.print("  Not Verified  ");
 
-        digitalWrite(buzzer, HIGH); delay(500); digitalWrite(buzzer, LOW);
+        digitalWrite(buzzer, HIGH);
+        delay(500);
+        digitalWrite(buzzer, LOW);
         delay(250);
       }
-      else if (verified == "true") {
-        if (status == "No schedule") {
+      else if (verified == "true")
+      {
+        if (status == "No schedule")
+        {
           lcd.setCursor(0, 0);
           lcd.print("  No schedule   ");
 
-          digitalWrite(buzzer, HIGH); delay(500); digitalWrite(buzzer, LOW);
+          digitalWrite(buzzer, HIGH);
+          delay(500);
+          digitalWrite(buzzer, LOW);
           delay(250);
-        } else if (status == "Present" ) {
-        lcd.setCursor(0, 0);
-        lcd.print("    Recorded    ");
-        lcd.setCursor(0, 1);
-        lcd.print("    Present    ");
+        }
+        else if (status == "Present")
+        {
+          lcd.setCursor(0, 0);
+          lcd.print("    Recorded    ");
+          lcd.setCursor(0, 1);
+          lcd.print("    Present    ");
 
-        digitalWrite(buzzer, HIGH); delay(100); digitalWrite(buzzer, LOW);
-        delay(650);
-
-        } else if (status == "Late") {
+          digitalWrite(buzzer, HIGH);
+          delay(100);
+          digitalWrite(buzzer, LOW);
+          delay(650);
+        }
+        else if (status == "Late")
+        {
           lcd.setCursor(0, 0);
           lcd.print("    Recorded    ");
           lcd.setCursor(0, 1);
           lcd.print("      Late      ");
 
-          digitalWrite(buzzer, HIGH); delay(100); digitalWrite(buzzer, LOW); delay(100);
-          digitalWrite(buzzer, HIGH); delay(100); digitalWrite(buzzer, LOW); delay(100);
-          digitalWrite(buzzer, HIGH); delay(100); digitalWrite(buzzer, LOW);
+          digitalWrite(buzzer, HIGH);
+          delay(100);
+          digitalWrite(buzzer, LOW);
+          delay(100);
+          digitalWrite(buzzer, HIGH);
+          delay(100);
+          digitalWrite(buzzer, LOW);
+          delay(100);
+          digitalWrite(buzzer, HIGH);
+          delay(100);
+          digitalWrite(buzzer, LOW);
           delay(250);
-
-        } else if (status == "Already recorded") {
+        }
+        else if (status == "Already recorded")
+        {
           lcd.setCursor(0, 0);
           lcd.print("   Attendance   ");
           lcd.setCursor(0, 1);
           lcd.print("Already recorded");
 
-          digitalWrite(buzzer, HIGH); delay(100); digitalWrite(buzzer, LOW); delay(100);
-          digitalWrite(buzzer, HIGH); delay(100); digitalWrite(buzzer, LOW);
+          digitalWrite(buzzer, HIGH);
+          delay(100);
+          digitalWrite(buzzer, LOW);
+          delay(100);
+          digitalWrite(buzzer, HIGH);
+          delay(100);
+          digitalWrite(buzzer, LOW);
           delay(450);
         }
-      } else {
+      }
+      else
+      {
         lcd.setCursor(0, 0);
         lcd.print("No HDF recorded");
 
-        digitalWrite(buzzer, HIGH); delay(500); digitalWrite(buzzer, LOW);
+        digitalWrite(buzzer, HIGH);
+        delay(500);
+        digitalWrite(buzzer, LOW);
         delay(250);
-      }      
+      }
     }
-    
+
     // Reset LCD
     lcd.clear();
     lcd.setCursor(0, 0);
     lcd.print(title);
     lcd.setCursor(0, 1);
     lcd.print("Tap NFC card...");
-    
+
     // Close http connection
     http.end();
     delay(1000);
@@ -299,30 +352,37 @@ void loop() {
   }
 }
 
-void scrollText(int row, String message, int delayTime) {
-  for (int i=0; i < LCD_COLUMNS; i++) {
-    message = " " + message;  
-  } 
-  message = message + " "; 
-  for (int pos = 0; pos < message.length(); pos++) {
+void scrollText(int row, String message, int delayTime)
+{
+  for (int i = 0; i < LCD_COLUMNS; i++)
+  {
+    message = " " + message;
+  }
+  message = message + " ";
+  for (int pos = 0; pos < message.length(); pos++)
+  {
     lcd.setCursor(0, row);
     lcd.print(message.substring(pos, pos + LCD_COLUMNS));
     delay(delayTime);
   }
 }
 
-int getid() {  
-  if(!mfrc522.PICC_IsNewCardPresent()) {
+int getid()
+{
+  if (!mfrc522.PICC_IsNewCardPresent())
+  {
     return 0;
   }
-  if(!mfrc522.PICC_ReadCardSerial()) {
+  if (!mfrc522.PICC_ReadCardSerial())
+  {
     return 0;
   }
-  
+
   Serial.print("THE UID OF THE SCANNED CARD IS : ");
-  
-  for(int i=0;i<4;i++){
-    readcard[i]=mfrc522.uid.uidByte[i]; 
+
+  for (int i = 0; i < 4; i++)
+  {
+    readcard[i] = mfrc522.uid.uidByte[i];
     array_to_string(readcard, 4, str);
     StrUID = str;
   }
@@ -330,13 +390,14 @@ int getid() {
   return 1;
 }
 
-void array_to_string(byte array[], unsigned int len, char buffer[]) {
-    for (unsigned int i = 0; i < len; i++)
-    {
-        byte nib1 = (array[i] >> 4) & 0x0F;
-        byte nib2 = (array[i] >> 0) & 0x0F;
-        buffer[i*2+0] = nib1  < 0xA ? '0' + nib1  : 'A' + nib1  - 0xA;
-        buffer[i*2+1] = nib2  < 0xA ? '0' + nib2  : 'A' + nib2  - 0xA;
-    }
-    buffer[len*2] = '\0';
+void array_to_string(byte array[], unsigned int len, char buffer[])
+{
+  for (unsigned int i = 0; i < len; i++)
+  {
+    byte nib1 = (array[i] >> 4) & 0x0F;
+    byte nib2 = (array[i] >> 0) & 0x0F;
+    buffer[i * 2 + 0] = nib1 < 0xA ? '0' + nib1 : 'A' + nib1 - 0xA;
+    buffer[i * 2 + 1] = nib2 < 0xA ? '0' + nib2 : 'A' + nib2 - 0xA;
+  }
+  buffer[len * 2] = '\0';
 }
