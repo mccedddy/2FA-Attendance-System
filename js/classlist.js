@@ -100,6 +100,8 @@ function processImages(event) {
   var formData = new FormData();
   formData.append("idNumber", idNumber);
 
+  console.log("Processing images...");
+
   fetch(url, {
     method: "POST",
     body: formData,
