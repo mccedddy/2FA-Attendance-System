@@ -9,20 +9,20 @@ if (isset($_POST['UIDresult'])) {
   $date = date('Y-m-d');
 
   // SQL query to fetch student data
-  $studentSQL = "SELECT last_name, student_number, section, nfc_uid FROM students WHERE nfc_uid = '$uid'";
+  $studentSQL = "SELECT last_name, id_number, section, nfc_uid FROM students WHERE nfc_uid = '$uid'";
   $studentStmt = mysqli_prepare($connection, $studentSQL);
   mysqli_stmt_execute($studentStmt);
   $result = mysqli_stmt_get_result($studentStmt);
 
   // If no student found
   if ($result == NULL || mysqli_num_rows($result) == 0) {
-    echo json_encode(['studentData' => ['last_name' => 'none', 'student_number' => 'none', 'nfc_uid' => $uid]]);
+    echo json_encode(['studentData' => ['last_name' => 'none', 'id_number' => 'none', 'nfc_uid' => $uid]]);
     exit;
   }
 
   // Get student data
   $studentData = mysqli_fetch_assoc($result);
-  $studentNumber = $studentData['student_number'];
+  $studentNumber = $studentData['id_number'];
   mysqli_free_result($result);
 
   // Response: Student Data
@@ -31,7 +31,7 @@ if (isset($_POST['UIDresult'])) {
   // SQL query to retrieve HDF data
   $hdfSQL = "SELECT * 
              FROM hdf 
-             WHERE student_number = '$studentNumber'
+             WHERE id_number = '$studentNumber'
              AND DATE(timestamp) = '$date'";
   $hdfStmt = mysqli_prepare($connection, $hdfSQL);
   mysqli_stmt_execute($hdfStmt);
