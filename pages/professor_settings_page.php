@@ -224,7 +224,7 @@ if (isset($_POST['change-password'])) {
               </tr>
               <tr>
                 <td>Password</td>
-                <td><?php echo $userPassword;?></td>
+                <td>********</td>
                 <td>
                   <div class="change-button-container">
                     <button onclick="openChangePassModal()" class="change-button" id="changePassBtn" name = change-password-btn>CHANGE</button>
