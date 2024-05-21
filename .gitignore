@@ -9,3 +9,6 @@ package.json
 
 # Ignore image captures
 /captures/*
+
+# Ignore ENV
+.env
