@@ -12,7 +12,7 @@ const char* password = "Jacob1234***";
 
 // Server config
 const String serverIP = "192.168.1.7";
-const String phpScript = "PUP-HDF-Attendance-System/services/record_attendance.php";
+const String phpScript = "2FA-Attendance-System/services/record_attendance.php";
 const String destinationUrl = "http://" + serverIP + "/" + phpScript;
 
 // Device config
@@ -185,10 +185,10 @@ void loop() {
 
     // If no student found
     if (name == "none" && studentNumber == "none") {
-      noStudentFound();
+      noStudentFound(UIDResultSend);
     } else {
       Serial.println(status);
-      displayStudentInfo();
+      displayStudentInfo(name, studentNumber);
       if (status == "No schedule") {
         noSchedule();
       } else if (status == "Present") {
@@ -201,7 +201,7 @@ void loop() {
     }
 
     // Reset LCD
-    resetLCD();
+    resetLCD(title);
 
     // Close http connection
     http.end();
@@ -252,7 +252,7 @@ void array_to_string(byte array[], unsigned int len, char buffer[]) {
 }
 
 // LCD Responses
-void noStudentFound() {
+void noStudentFound(String UIDResultSend) {
   Serial.println("No student found");
 
   lcd.clear();
@@ -265,7 +265,7 @@ void noStudentFound() {
   delay(750);
   digitalWrite(buzzer, LOW);
 
-  String UIDresultDisplay = "    " + UIDresultSend + "    ";
+  String UIDresultDisplay = "    " + UIDResultSend + "    ";
   lcd.clear();
   lcd.setCursor(0, 0);
   lcd.print("      UID:      ");
@@ -275,7 +275,7 @@ void noStudentFound() {
   delay(3000);
 }
 
-void displayStudentInfo() {
+void displayStudentInfo(String name, String studentNumber) {
   lcd.clear();
   lcd.setCursor(0, 0);
   lcd.print(name);
@@ -348,7 +348,7 @@ void alreadyRecorded() {
   delay(450);
 }
 
-void resetLCD() {
+void resetLCD(String title) {
   lcd.clear();
   lcd.setCursor(0, 0);
   lcd.print(title);
