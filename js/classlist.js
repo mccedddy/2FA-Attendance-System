@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var captureButton = document.getElementById("capture");
   var processImagesButton = document.getElementById("processImages");
   var uploadFeaturesButton = document.getElementById("uploadFeatures");
+  var clearDataButton = document.getElementById("clearData");
   var target;
 
   // Initial setup
@@ -70,6 +71,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   fileInput.addEventListener("change", () => {
     updateFileName();
+  });
+
+  clearDataButton.addEventListener("click", () => {
+    clearDataFeatures();
   });
 });
 
@@ -430,4 +435,56 @@ function compareSecondColumn(row1, row2) {
 
   // Use localeCompare for alphabetical sorting
   return cell1.textContent.localeCompare(cell2.textContent);
+}
+
+function clearDataFeatures(){
+
+  // Extract id number from modal
+  var idNumber = document.getElementById("idNumber").textContent;
+  var url = "../includes/delete_features.php";
+
+  // Send the id number to the server
+  if (idNumber.length > 0) {
+    $.ajax({
+      url: url,
+      method: "POST",
+      data: { idNumber: idNumber },
+      success: function (response) {
+        location.reload();
+        //alert("Cleared Features");
+      },
+      error: function (error) {
+        console.error("Error:", error);
+      },
+    });
+  } else {
+    // Inform the user that is no id number
+    //alert("Error Encountered");
+  }
+}
+
+function deleteCapturesAndCsv(idNumber) {
+  fetch('../includes/delete_features.php', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: `idNumber=${encodeURIComponent(idNumber)}`
+  })
+  .then(response => {
+      if (!response.ok) {
+          return response.text().then(text => { throw new Error(text); });
+      }
+      return response.json();
+  })
+  .then(data => {
+      if (data.status === 'success') {
+          console.log('Folder/CSV line deleted successfully!');
+      } else {
+          console.error('Failed to delete folder/CSV line: ' + data.message);
+      }
+  })
+  .catch(error => {
+      console.error('An error occurred while deleting the folder/CSV line: ' + error.message);
+  });
 }
