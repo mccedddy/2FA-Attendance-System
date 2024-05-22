@@ -7,6 +7,7 @@ $dotenv = Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
 
 $idNumber = $_POST['idNumber'];
+$pythonPath = 'C:\Users\libre\AppData\Local\Programs\Python\Python312\python.exe';
 $pythonPath = $_ENV['PYTHON_PATH'];
 $scriptPath = 'generate_features.py'; 
 $command = escapeshellcmd("$pythonPath $scriptPath 2>&1");

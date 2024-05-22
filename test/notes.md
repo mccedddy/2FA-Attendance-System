@@ -11,7 +11,7 @@ ADMIN CLASSLIST
 - delete student folder on captures (../captures/2020-XXXXX-MN-0).
 - delete student features on features_all.csv (../captures/features_all.csv)
 
-3. registered column on classlist should be reflected on whether student has features on features table.
+// 3. registered column on classlist should be reflected on whether student has features on features table. 
 
 4. add alerts:
 

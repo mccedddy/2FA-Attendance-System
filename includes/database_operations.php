@@ -9,6 +9,7 @@ if (!isset($_SESSION)) {
 
 // FETCH
 
+
 // Fetch profile data
 if (!isset($_SESSION['user_name'])) {
   $userId = $_SESSION['id_number'];
@@ -75,6 +76,27 @@ function fetchClasslist($tableName, $condition = '') {
   mysqli_free_result($classlistResult);   
   return $classlist;
 }
+
+// Fetch features
+function fetchFeatures(){
+  global $connection;
+
+  $featuresSQL = "SELECT id_number FROM features";
+  $featuresResult = mysqli_query($connection, $featuresSQL);
+  $features = [];
+  while ($row = mysqli_fetch_assoc($featuresResult)) {
+    $features[] = $row['id_number'];
+  }
+  mysqli_free_result($featuresResult);
+  return json_encode($features);
+}
+
+// Include any necessary files or configurations
+
+// Define your other PHP functions here
+
+// Check if the AJAX request is sent
+
 
 // Fetch schedule
 function fetchSchedule() {

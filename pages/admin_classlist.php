@@ -57,6 +57,9 @@ if (isset($_POST['edit-student'])) {
   }
 }
 
+// Fetch Features
+$features = fetchFeatures();
+
 // Fetch classlist
 $classlist = fetchClasslist('students', "WHERE section = '$sectionPage'");
 ?>
@@ -209,7 +212,7 @@ $classlist = fetchClasslist('students', "WHERE section = '$sectionPage'");
               <td><?php echo $student['nfcUid']; ?></td>
               <td><?php echo $student['email']; ?></td>
               <td style="display: none;" data-exclude="true"><?php echo $student['id']; ?></td>
-              <td data-exclude="true">No</td>
+              <td></td>
               <td data-exclude="true"><button id="registerStudentBtn">Register</button></td>
             </tr>
           <?php endforeach; ?>
@@ -394,6 +397,21 @@ $classlist = fetchClasslist('students', "WHERE section = '$sectionPage'");
               document.body.removeChild(link);
           })
           .catch(error => console.error('Error downloading file:', error));
+      }
+      var phpArray = <?php echo json_encode($features); ?>;
+      var table = document.getElementById("classlistTable");
+      for (var i = 1; i < table.rows.length; i++) { // Start from 1 to skip the header row
+        var contentCell = table.rows[i].cells[3]; // Index of content cell
+        var registeredCell = table.rows[i].cells[8]; // Index of registered cell
+        var idNumber = contentCell.innerHTML.trim(); // Assuming id_numbers are stored in the content cell
+
+        if (phpArray.includes(idNumber)) {
+          // Do something if idNumber is in phpArray
+          registeredCell.innerHTML = "Yes"; // Example action
+        } else {
+          // Do something if idNumber is not in phpArray
+          registeredCell.innerHTML = "No"; // Example action
+        }
       }
     </script>
   </body>
