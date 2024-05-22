@@ -132,6 +132,7 @@ function importAttendance() {
     reader.readAsBinaryString(file);
   } else {
     console.error("No file selected.");
+    showToastr("error", "No file selected");
   }
 }
 
@@ -188,6 +189,6 @@ function addAttendance(event) {
       location.reload();
     })
     .catch((error) => {
-      // console.error("Error:", error);
+      console.error("Error:", error);
     });
 }

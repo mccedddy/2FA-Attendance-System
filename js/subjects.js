@@ -66,7 +66,6 @@ function editSelectedSubject() {
       success: function (response) {
         // Parse the response JSON
         var subjectData = JSON.parse(response);
-        // console.log(response);
 
         // Set the default values for the textboxes
         document.getElementById("editSubjectCode").value =
@@ -80,6 +79,7 @@ function editSelectedSubject() {
     });
   } else {
     console.log("No checkbox selected.");
+    showToastr("info", "No checkbox selected.");
   }
 }
 
@@ -111,7 +111,7 @@ function deleteSelectedSubjects() {
     });
   } else {
     // Inform the user that no subjects are selected
-    alert("No subjects selected for deletion.");
+    showToastr("info", "No subjects selected for deletion.");
   }
 }
 

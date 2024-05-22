@@ -118,7 +118,7 @@ function deleteSelectedSchedule() {
     });
   } else {
     // Inform the user that no students are selected
-    alert("No schedules selected for deletion.");
+    showToastr("info", "No schedules selected for deletion.");
   }
 }
 
