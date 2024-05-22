@@ -75,7 +75,7 @@ function processImages(event) {
   var formData = new FormData();
   formData.append("idNumber", idNumber);
 
-  showToastr("info", "Processing images...");
+  showToastr("info", "Processing images.", "Please wait...");
 
   fetch(processUrl, {
     method: "POST",
@@ -99,7 +99,10 @@ function processImages(event) {
         })
         .then((parsedData) => {
           console.log("Uploaded Features:", parsedData);
-          showToastr("success", "Uploaded features");
+          showToastr("success", "Uploaded features!", "Reloading page...");
+          setTimeout(() => {
+            location.reload();
+          }, 3000);
           // location.reload();
         })
         .catch((error) => {
@@ -369,7 +372,7 @@ function importClasslist() {
 
     reader.readAsBinaryString(file);
   } else {
-    console.error("No file selected.");
+    showToastr("info", "No file selected");
   }
 }
 
