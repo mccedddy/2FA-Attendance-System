@@ -71,6 +71,7 @@ $schedule = fetchSchedule();
     <link rel="stylesheet" href="../css/dashboard.css" />
     <link rel="stylesheet" href="../css/table.css" />
     <link rel="stylesheet" href="../css/modal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <script type="text/javascript" src="../js/tableToExcel.js"></script>
   </head>
   <body>
@@ -341,6 +342,8 @@ $schedule = fetchSchedule();
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="../js/toastr.js"></script>
     <script src="../js/schedule.js"></script>
     <script src="../js/navbar_controller.js"></script>
     <script>

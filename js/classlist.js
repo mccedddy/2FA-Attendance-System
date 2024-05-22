@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", function () {
   var video = document.getElementById("camera-stream");
   var captureButton = document.getElementById("capture");
   var processImagesButton = document.getElementById("processImages");
-  var uploadFeaturesButton = document.getElementById("uploadFeatures");
   var target;
 
   // Initial setup
@@ -48,10 +47,6 @@ document.addEventListener("DOMContentLoaded", function () {
     processImages(event);
   });
 
-  uploadFeaturesButton.addEventListener("click", (event) => {
-    uploadFeatures(event);
-  });
-
   editButton.addEventListener("click", () => {
     editSelectedStudent();
   });
@@ -73,46 +68,43 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-function uploadFeatures(event) {
-  event.preventDefault();
-  var url = "../includes/upload_features.php";
-
-  fetch(url, {
-    method: "POST",
-  })
-    .then((response) => response.text())
-    .then((data) => {
-      console.log("Response from server:", data);
-      return JSON.parse(data);
-    })
-    .then((parsedData) => {
-      console.log("DONE:", parsedData);
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
-}
-
 function processImages(event) {
   event.preventDefault();
   var idNumber = document.getElementById("idNumber").innerHTML;
-  var url = "../includes/trigger_generate_features.php";
+  var processUrl = "../includes/trigger_generate_features.php";
   var formData = new FormData();
   formData.append("idNumber", idNumber);
 
-  console.log("Processing images...");
+  showToastr("info", "Processing images...");
 
-  fetch(url, {
+  fetch(processUrl, {
     method: "POST",
     body: formData,
   })
     .then((response) => response.text())
     .then((data) => {
-      console.log("Response from server:", data);
       return JSON.parse(data);
     })
     .then((parsedData) => {
-      console.log("DONE:", parsedData);
+      console.log("Generated Features:", parsedData);
+
+      var uploadUrl = "../includes/upload_features.php";
+
+      fetch(uploadUrl, {
+        method: "POST",
+      })
+        .then((response) => response.text())
+        .then((data) => {
+          return JSON.parse(data);
+        })
+        .then((parsedData) => {
+          console.log("Uploaded Features:", parsedData);
+          showToastr("success", "Uploaded features");
+          // location.reload();
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     })
     .catch((error) => {
       console.error("Error:", error);
@@ -186,6 +178,14 @@ function captureImage(event, video, button) {
     canvasWidth,
     canvasHeight
   );
+
+  console.log("Captured!");
+
+  // Display the captured image for 1 second, then clear the canvas
+  setTimeout(() => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }, 1000);
+
   // Get the image count from the server
   let xhrCount = new XMLHttpRequest();
   xhrCount.open("POST", "../includes/upload.php", true);
@@ -218,11 +218,6 @@ function captureImage(event, video, button) {
             "&idNumber=" +
             idNumber
         );
-
-        // Display the captured image for 1 second, then clear the canvas
-        setTimeout(() => {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }, 1000);
       } else {
         console.error("Error getting image count:", response.message);
       }
@@ -292,7 +287,7 @@ function editSelectedStudent() {
       },
     });
   } else {
-    console.log("No checkbox selected.");
+    showToastr("info", "No checkbox selected");
   }
 }
 
@@ -329,7 +324,7 @@ function deleteSelectedStudents() {
     });
   } else {
     // Inform the user that no students are selected
-    alert("No students selected for deletion.");
+    showToastr("info", "No students selected for deletion.");
   }
 }
 
