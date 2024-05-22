@@ -212,7 +212,7 @@ $classlist = fetchClasslist('students', "WHERE section = '$sectionPage'");
               <td><?php echo $student['nfcUid']; ?></td>
               <td><?php echo $student['email']; ?></td>
               <td style="display: none;" data-exclude="true"><?php echo $student['id']; ?></td>
-              <td></td>
+              <td data-exclude="true"></td>
               <td data-exclude="true"><button id="registerStudentBtn">Register</button></td>
             </tr>
           <?php endforeach; ?>
