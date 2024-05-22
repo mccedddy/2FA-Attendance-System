@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", function () {
   var video = document.getElementById("camera-stream");
   var captureButton = document.getElementById("capture");
   var processImagesButton = document.getElementById("processImages");
-  var uploadFeaturesButton = document.getElementById("uploadFeatures");
   var clearDataButton = document.getElementById("clearData");
   var target;
 
@@ -47,10 +46,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   processImagesButton.addEventListener("click", (event) => {
     processImages(event);
-  });
-
-  uploadFeaturesButton.addEventListener("click", (event) => {
-    uploadFeatures(event);
   });
 
   editButton.addEventListener("click", () => {
