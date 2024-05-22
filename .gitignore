@@ -12,3 +12,6 @@ package.json
 
 # Ignore ENV
 .env
+
+# Ignore vendor
+/vendor
