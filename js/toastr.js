@@ -18,14 +18,14 @@ toastr.options = {
 };
 
 // Function to show Toastr notification
-function showToastr(type, message) {
+function showToastr(type, title = "", message = "") {
   if (type == "success") {
-    toastr.success(message);
+    toastr.success(message, title);
   } else if (type == "error") {
-    toastr.error(message);
+    toastr.error(message, title);
   } else if (type == "warning") {
-    toastr.warning(message);
+    toastr.warning(message, title);
   } else {
-    toastr.info(message);
+    toastr.info(message, title);
   }
 }

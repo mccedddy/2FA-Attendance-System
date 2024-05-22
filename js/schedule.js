@@ -163,6 +163,7 @@ function importSchedule() {
     reader.readAsBinaryString(file);
   } else {
     console.error("No file selected.");
+    showToastr("info", "No file selected");
   }
 }
 

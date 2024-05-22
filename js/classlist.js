@@ -106,6 +106,7 @@ function processImages(event) {
   formData.append("idNumber", idNumber);
 
   console.log("Processing images...");
+  showToastr("info", "Processing images.", "Please wait...");
 
   fetch(url, {
     method: "POST",
@@ -118,6 +119,28 @@ function processImages(event) {
     })
     .then((parsedData) => {
       console.log("DONE:", parsedData);
+      console.log("Generated Features:", parsedData);
+
+      var uploadUrl = "../includes/upload_features.php";
+
+      fetch(uploadUrl, {
+        method: "POST",
+      })
+        .then((response) => response.text())
+        .then((data) => {
+          return JSON.parse(data);
+        })
+        .then((parsedData) => {
+          console.log("Uploaded Features:", parsedData);
+          showToastr("success", "Uploaded features!", "Reloading page...");
+          setTimeout(() => {
+            location.reload();
+          }, 3000);
+          // location.reload();
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     })
     .catch((error) => {
       console.error("Error:", error);
@@ -379,7 +402,7 @@ function importClasslist() {
 
     reader.readAsBinaryString(file);
   } else {
-    console.error("No file selected.");
+    showToastr("info", "No file selected");
   }
 }
 

@@ -15,8 +15,8 @@ ADMIN CLASSLIST
 
 4. add alerts:
 
-- images processed
-- featuress uploaded
+- images processed (done)
+- featuress uploaded (done)
 - cleared features
 
 // 5. what if: process images + upload features in 1 button. After processing images, automatically upload features to db. (done)
