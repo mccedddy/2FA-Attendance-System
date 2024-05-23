@@ -153,7 +153,7 @@ $classlist = fetchClasslist('students', "WHERE section = '$sectionPage'");
           <h6>ADMIN</h6>
         </div>
       </div>
-      <h2 class="page-title" id="title">SECTION <?php echo $sectionPage ?> CLASSLIST</h2>
+      <h2 class="page-title" id="title"><?php echo $sectionPage ?> CLASSLIST</h2>
       <div class="table-controls">
         <div class="left">
           <button onclick="openAddStudentModal()">
@@ -247,10 +247,10 @@ $classlist = fetchClasslist('students', "WHERE section = '$sectionPage'");
             <input type="email" name="email" required></input>
           </div>
           <div>
-            <p>Year Number</p>
-            <input type="text" name="year" value="<?php echo $sectionPage[0]; ?>" required readonly></input>
-            <p>Section Number</p>
-            <input type="text" name="section"  value="<?php echo $sectionPage[2]; ?>" required readonly></input>
+            <p>Course and Year</p>
+            <input type="text" name="year" value="<?php echo explode('-', $sectionPage)[0]; ?>" required readonly></input>
+            <p>Section</p>
+            <input type="text" name="section"  value="<?php echo explode('-', $sectionPage)[1]; ?>" required readonly></input>
           </div>
           <div class="submit-button-container">
             <button type="submit" name="add-student" id="addButton" class="add-button">ADD</button>
@@ -288,13 +288,13 @@ $classlist = fetchClasslist('students', "WHERE section = '$sectionPage'");
             <input type="email" name="email" id="editEmail" class="modal-input" required></input>
           </div>
           <div>
-            <p>Year Number</p>
-            <input type="text" name="year" class="modal-input" value="<?php echo $sectionPage[0]; ?>" required readonly></input>
-            <p>Section Number</p>
-            <input type="text" name="section" class="modal-input" value="<?php echo $sectionPage[2]; ?>" required readonly></input>
+            <p>Course and Year</p>
+            <input type="text" name="year" class="modal-input" value="<?php echo explode('-', $sectionPage)[0]; ?>" required readonly></input>
+            <p>Section</p>
+            <input type="text" name="section" class="modal-input" value="<?php echo explode('-', $sectionPage)[1]; ?>" required readonly></input>
           </div>
           <div class="submit-button-container">
-            <button type="submit" name="edit-student" id="addButton" class="add-button">ADD</button>
+            <button type="submit" name="edit-student" id="addButton" class="add-button">SAVE</button>
           </div>
         </form>
       </div>

@@ -16,37 +16,43 @@ document.addEventListener("DOMContentLoaded", function () {
   // Initial setup
   sortTable();
 
-  // Request access to the camera
-  navigator.mediaDevices
-    .getUserMedia({ video: true, audio: false })
-    .then((stream) => {
-      // Set the video source to the camera stream
-      video.srcObject = stream;
-      video.play();
-    })
-    .catch((error) => {
-      console.error("Error accessing camera:", error);
+  if (video) {
+    // Request access to the camera
+    navigator.mediaDevices
+      .getUserMedia({ video: true, audio: false })
+      .then((stream) => {
+        // Set the video source to the camera stream
+        video.srcObject = stream;
+        video.play();
+      })
+      .catch((error) => {
+        console.error("Error accessing camera:", error);
+      });
+
+    // Event Listeners
+    tbody.addEventListener("click", function (event) {
+      target = event.target;
+      if (
+        target &&
+        target.tagName === "BUTTON" &&
+        target.id === "registerStudentBtn"
+      ) {
+        registerStudent(target);
+      }
     });
+  }
 
-  // Event Listeners
-  tbody.addEventListener("click", function (event) {
-    target = event.target;
-    if (
-      target &&
-      target.tagName === "BUTTON" &&
-      target.id === "registerStudentBtn"
-    ) {
-      registerStudent(target);
-    }
-  });
+  if (captureButton) {
+    captureButton.addEventListener("click", (event) => {
+      captureImage(event, video, target);
+    });
+  }
 
-  captureButton.addEventListener("click", (event) => {
-    captureImage(event, video, target);
-  });
-
-  processImagesButton.addEventListener("click", (event) => {
-    processImages(event);
-  });
+  if (processImagesButton) {
+    processImagesButton.addEventListener("click", (event) => {
+      processImages(event);
+    });
+  }
 
   editButton.addEventListener("click", () => {
     editSelectedStudent();
@@ -126,33 +132,36 @@ function processImages(event) {
           return JSON.parse(data);
         })
         .then((parsedData) => {
-
           //delete in captures
-          fetch('../includes/delete_captures.php', {
-            method: 'POST',
+          fetch("../includes/delete_captures.php", {
+            method: "POST",
             headers: {
-              'Content-Type': 'application/x-www-form-urlencoded'
+              "Content-Type": "application/x-www-form-urlencoded",
             },
-            body: `idNumber=${encodeURIComponent(idNumber)}`
+            body: `idNumber=${encodeURIComponent(idNumber)}`,
           })
-          .then(response => {
-            if (!response.ok) {
-              return response.text().then(text => { throw new Error(text); });
-            }
-            return response.json();
-          })
-          .then(data => {
-            if (data.status === 'success') {
-              console.log(data.message); // Log the success message
-              showToastr("success", "HATDOG", "Reloading page...");
-            } else {
-              console.error('Failed to delete folder or line: ' + data.message);
-            }
-          })
-          .catch(error => {
-            console.error('An error occurred: ' + error.message);
-          });
-          
+            .then((response) => {
+              if (!response.ok) {
+                return response.text().then((text) => {
+                  throw new Error(text);
+                });
+              }
+              return response.json();
+            })
+            .then((data) => {
+              if (data.status === "success") {
+                console.log(data.message); // Log the success message
+                showToastr("success", "HATDOG", "Reloading page...");
+              } else {
+                console.error(
+                  "Failed to delete folder or line: " + data.message
+                );
+              }
+            })
+            .catch((error) => {
+              console.error("An error occurred: " + error.message);
+            });
+
           console.log("Uploaded Features:", parsedData);
           showToastr("success", "Uploaded features!", "Reloading page...");
           setTimeout(() => {
@@ -482,8 +491,7 @@ function compareSecondColumn(row1, row2) {
   return cell1.textContent.localeCompare(cell2.textContent);
 }
 
-function clearDataFeatures(){
-
+function clearDataFeatures() {
   // Extract id number from modal
   var idNumber = document.getElementById("idNumber").textContent;
   var url = "../includes/delete_features.php";
@@ -496,32 +504,36 @@ function clearDataFeatures(){
       data: { idNumber: idNumber },
       success: function (response) {
         showToastr("success", "Cleared Data!", "Reloading page...");
-        fetch('../includes/delete_features.php', {
-          method: 'POST',
+        fetch("../includes/delete_features.php", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            "Content-Type": "application/x-www-form-urlencoded",
           },
-          body: `idNumber=${encodeURIComponent(idNumber)}`
+          body: `idNumber=${encodeURIComponent(idNumber)}`,
         })
-        .then(response => {
-          if (!response.ok) {
-            return response.text().then(text => { throw new Error(text); });
-          }
-          return response.json();
-        })
-        .then(data => {
-          if (data.status === 'success') {
-            console.log('Features in db are deleted successfully!');
-            showToastr("success", "Cleared Data!", "Reloading page...");
-          } else {
-            console.error('Failed to delete features in db ' + data.message);
-            showToastr("info", "Failed to clear data");
-          }
-        })
-        .catch(error => {
-          console.error('An error occurred while deleting the in db ' + error.message);
-          showToastr("error", "An error occurred");
-        });
+          .then((response) => {
+            if (!response.ok) {
+              return response.text().then((text) => {
+                throw new Error(text);
+              });
+            }
+            return response.json();
+          })
+          .then((data) => {
+            if (data.status === "success") {
+              console.log("Features in db are deleted successfully!");
+              showToastr("success", "Cleared Data!", "Reloading page...");
+            } else {
+              console.error("Failed to delete features in db " + data.message);
+              showToastr("info", "Failed to clear data");
+            }
+          })
+          .catch((error) => {
+            console.error(
+              "An error occurred while deleting the in db " + error.message
+            );
+            showToastr("error", "An error occurred");
+          });
       },
       error: function (error) {
         showToastr("error", "An error occurred");

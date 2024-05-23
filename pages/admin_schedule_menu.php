@@ -108,7 +108,7 @@ if (isset($_POST['section-button'])) {
         <?php foreach ($sections as $section): ?>
           <form method="POST">
             <input type="hidden" name="section" value="<?php echo $section; ?>">
-            <button type="submit" name="section-button" class="section-button">SECTION <?php echo $section; ?></button>
+            <button type="submit" name="section-button" class="section-button"><?php echo $section; ?></button>
           </form>
         <?php endforeach; ?>
       </div>

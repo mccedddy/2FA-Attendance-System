@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
       // Get the value of the hidden input
       selectedSection = inputElement.value;
 
-      deleteSectionMessage.innerHTML = "DELETE SECTION " + selectedSection;
+      deleteSectionMessage.innerHTML = "DELETE " + selectedSection;
     });
   });
 

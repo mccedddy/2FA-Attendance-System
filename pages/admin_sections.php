@@ -116,7 +116,7 @@ if (isset($_POST['section-button'])) {
           <form method="POST">
             <span class="delete-section" onclick="openDeleteSectionModal()">&times;</span>
             <input type="hidden" name="section" value="<?php echo $section; ?>">
-            <button type="submit" name="section-button" class="section-button">SECTION <?php echo $section; ?></button>
+            <button type="submit" name="section-button" class="section-button"><?php echo $section; ?></button>
           </form>
         <?php endforeach; ?>
         <form method="POST">
@@ -134,9 +134,9 @@ if (isset($_POST['section-button'])) {
         <span class="close-modal" onclick="closeAddSectionModal()">&times;</span>
         <form method="POST" class="add-student-form">
           <div class="add-student-container">
-            <p>Year Number</p>
+            <p>Course and Year</p>
             <input type="text" name="year" class="year-section-textbox" required></input>
-            <p>Section Number</p>
+            <p>Section</p>
             <input type="text" name="section" class="year-section-textbox" required></input>
           </div>
           <div class="submit-button-container">

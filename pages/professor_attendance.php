@@ -96,7 +96,7 @@ $subjects = fetchSubjects();
           <h6><?php echo $userId; ?></h6>
         </div>
       </div>
-      <h2 class="page-title" id="title">SECTION <?php echo $sectionPage ?> ATTENDANCE</h2>
+      <h2 class="page-title" id="title"><?php echo $sectionPage ?> ATTENDANCE</h2>
       <input type="date" id="date" class="date-filter" required value="<?php echo date('Y-m-d'); ?>">
       <div class="table-controls">
         <div class="left">

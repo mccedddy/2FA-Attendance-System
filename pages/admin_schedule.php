@@ -143,7 +143,7 @@ $schedule = fetchSchedule();
           <h6>ADMIN</h6>
         </div>
       </div>
-      <h2 class="page-title" id="title">SECTION <?php echo $sectionPage ?> SCHEDULE</h2>
+      <h2 class="page-title" id="title"><?php echo $sectionPage ?> SCHEDULE</h2>
       <div class="table-controls">
         <div class="left">
           <button onclick="openAddScheduleModal()">
