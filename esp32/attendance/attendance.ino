@@ -3,15 +3,15 @@
 // WiFi config
 // const char* ssid = "TP-Link_95A7";
 // const char* password = "98568758";
-// const char* ssid = "TP-Link_12B6";
-// const char* password = "66303336";
+const char* ssid = "TP-Link_12B6";
+const char* password = "66303336";
 // const char* ssid = "JAM";
 // const char* password = "C3dricJ0yce";
-const char* ssid = "home broadband";
-const char* password = "Jacob1234***";
+// const char* ssid = "home broadband";
+// const char* password = "Jacob1234***";
 
 // Server config
-const String serverIP = "192.168.1.7";
+const String serverIP = "192.168.1.116";
 const String phpScript = "2FA-Attendance-System/services/record_attendance.php";
 const String destinationUrl = "http://" + serverIP + "/" + phpScript;
 
@@ -173,19 +173,19 @@ void loop() {
     String nfcUid = doc["studentData"]["nfc_uid"];
     String status = doc["studentData"]["status"];
 
-    // if (payload.indexOf("\"status\":\"Present\"") != -1) {
-    //   status = "Present";
-    // } else if (payload.indexOf("\"status\":\"Late\"") != -1) {
-    //   status = "Late";
-    // } else if (payload.indexOf("\"status\":\"Already recorded\"") != -1) {
-    //   status = "Already recorded";
-    // } else {
-    //   status = "No schedule";
-    // }
+    if (payload.indexOf("\"status\":\"Present\"") != -1) {
+      status = "Present";
+    } else if (payload.indexOf("\"status\":\"Late\"") != -1) {
+      status = "Late";
+    } else if (payload.indexOf("\"status\":\"Already recorded\"") != -1) {
+      status = "Already recorded";
+    } else {
+      status = "No schedule";
+    }
 
     // If no student found
     if (name == "none" && studentNumber == "none") {
-      noStudentFound(UIDResultSend);
+      noStudentFound(UIDresultSend);
     } else {
       Serial.println(status);
       displayStudentInfo(name, studentNumber);
