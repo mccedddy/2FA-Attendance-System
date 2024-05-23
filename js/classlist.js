@@ -126,6 +126,33 @@ function processImages(event) {
           return JSON.parse(data);
         })
         .then((parsedData) => {
+
+          //delete in captures
+          fetch('../includes/delete_captures.php', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `idNumber=${encodeURIComponent(idNumber)}`
+          })
+          .then(response => {
+            if (!response.ok) {
+              return response.text().then(text => { throw new Error(text); });
+            }
+            return response.json();
+          })
+          .then(data => {
+            if (data.status === 'success') {
+              console.log(data.message); // Log the success message
+              showToastr("success", "HATDOG", "Reloading page...");
+            } else {
+              console.error('Failed to delete folder or line: ' + data.message);
+            }
+          })
+          .catch(error => {
+            console.error('An error occurred: ' + error.message);
+          });
+          
           console.log("Uploaded Features:", parsedData);
           showToastr("success", "Uploaded features!", "Reloading page...");
           setTimeout(() => {
@@ -352,7 +379,7 @@ function deleteSelectedStudents() {
     });
   } else {
     // Inform the user that no students are selected
-    alert("No students selected for deletion.");
+    showToastr("info", "No students selected for deletion.");
   }
 }
 
@@ -468,41 +495,40 @@ function clearDataFeatures(){
       method: "POST",
       data: { idNumber: idNumber },
       success: function (response) {
-        location.reload();
-        //alert("Cleared Features");
+        showToastr("success", "Cleared Data!", "Reloading page...");
+        fetch('../includes/delete_features.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: `idNumber=${encodeURIComponent(idNumber)}`
+        })
+        .then(response => {
+          if (!response.ok) {
+            return response.text().then(text => { throw new Error(text); });
+          }
+          return response.json();
+        })
+        .then(data => {
+          if (data.status === 'success') {
+            console.log('Features in db are deleted successfully!');
+            showToastr("success", "Cleared Data!", "Reloading page...");
+          } else {
+            console.error('Failed to delete features in db ' + data.message);
+            showToastr("info", "Failed to clear data");
+          }
+        })
+        .catch(error => {
+          console.error('An error occurred while deleting the in db ' + error.message);
+          showToastr("error", "An error occurred");
+        });
       },
       error: function (error) {
-        console.error("Error:", error);
+        showToastr("error", "An error occurred");
       },
     });
   } else {
     // Inform the user that is no id number
     //alert("Error Encountered");
   }
-}
-
-function deleteCapturesAndCsv(idNumber) {
-  fetch('../includes/delete_features.php', {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: `idNumber=${encodeURIComponent(idNumber)}`
-  })
-  .then(response => {
-      if (!response.ok) {
-          return response.text().then(text => { throw new Error(text); });
-      }
-      return response.json();
-  })
-  .then(data => {
-      if (data.status === 'success') {
-          console.log('Folder/CSV line deleted successfully!');
-      } else {
-          console.error('Failed to delete folder/CSV line: ' + data.message);
-      }
-  })
-  .catch(error => {
-      console.error('An error occurred while deleting the folder/CSV line: ' + error.message);
-  });
 }
