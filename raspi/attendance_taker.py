@@ -151,25 +151,29 @@ class Face_Recognizer:
 
     #  cv2 window / putText on cv2 window
     def draw_note(self, img_rd):
-        #  / Add some info on windows
-        cv2.putText(img_rd, "Face Recognizer with Deep Learning", (20, 40), self.font, 1, (255, 255, 255), 1,
-                    cv2.LINE_AA)
-        cv2.putText(img_rd, "Frame:  " + str(self.frame_cnt), (20, 100), self.font, 0.8, (0, 255, 0), 1,
-                    cv2.LINE_AA)
-        cv2.putText(img_rd, "FPS:    " + str(self.fps.__round__(2)), (20, 130), self.font, 0.8, (0, 255, 0), 1,
-                    cv2.LINE_AA)
-        cv2.putText(img_rd, "Faces:  " + str(self.current_frame_face_cnt), (20, 160), self.font, 0.8, (0, 255, 0), 1,
-                    cv2.LINE_AA)
-        cv2.putText(img_rd, "Q: Quit", (20, 450), self.font, 0.8, (255, 255, 255), 1, cv2.LINE_AA)
+        # Get the dimensions of the image
+        height, width = img_rd.shape[:2]
 
-        for i in range(len(self.current_frame_face_name_list)):
-            img_rd = cv2.putText(img_rd, "Face_" + str(i + 1), tuple(
-                [int(self.current_frame_face_centroid_list[i][0]), int(self.current_frame_face_centroid_list[i][1])]),
-                                 self.font,
-                                 0.8, (255, 190, 0),
-                                 1,
-                                 cv2.LINE_AA)
+        # Text to be displayed
+        text = "Attendance Verification"
+        font_scale = 1.5
+        font_thickness = 2
 
+        # Calculate the size of the text
+        text_size = cv2.getTextSize(text, self.font, font_scale, font_thickness)[0]
+
+        # Calculate the position for the text to be centered
+        text_x = (width - text_size[0]) // 2
+        text_y = text_size[1] + 20  # Slightly below the top edge
+
+        # Add a white rectangle as background
+        rectangle_bgr = (255, 255, 255)
+        top_left = (text_x - 10, text_y - text_size[1] - 10)
+        bottom_right = (text_x + text_size[0] + 10, text_y + 10)
+        cv2.rectangle(img_rd, top_left, bottom_right, rectangle_bgr, cv2.FILLED)
+
+        # Add the text to the frame
+        cv2.putText(img_rd, text, (text_x, text_y), self.font, font_scale, (0, 0, 0), font_thickness, cv2.LINE_AA)
     # insert data in database
 
     def attendance(self, id_number):
