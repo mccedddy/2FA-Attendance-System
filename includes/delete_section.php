@@ -7,21 +7,27 @@ if (isset($_POST['selectedSection'])) {
     $selectedSection = $_POST['selectedSection'];
 
     // Use prepared statement to prevent SQL injection
+    $deleteFeaturesSQL = "DELETE f FROM features f INNER JOIN students s ON f.id_number = s.id_number WHERE s.section = '$selectedSection'";
     $deleteStudentsSQL = "DELETE FROM students WHERE section = '$selectedSection'";
     $deleteSectionSQL = "DELETE FROM sections WHERE section = '$selectedSection'";
     
-    // Prepare and execute the statement
-    $stmtStudent = mysqli_prepare($connection, $deleteStudentsSQL);
+    // Prepare the statements
+    $stmtFeatures = mysqli_prepare($connection, $deleteFeaturesSQL);
+    $stmtStudents = mysqli_prepare($connection, $deleteStudentsSQL);
     $stmtSection = mysqli_prepare($connection, $deleteSectionSQL);
-    $successStudent = mysqli_stmt_execute($stmtStudent);
+
+    // Execute the statements
+    $successFeatures = mysqli_stmt_execute($stmtFeatures);
+    $successStudents = mysqli_stmt_execute($stmtStudents);
     $successSection = mysqli_stmt_execute($stmtSection);
 
     // Close the statements
-    mysqli_stmt_close($stmtStudent);
+    mysqli_stmt_close($stmtFeatures);
+    mysqli_stmt_close($stmtStudents);
     mysqli_stmt_close($stmtSection);
 
     // Check if both deletions were successful
-    if ($successStudent && $successSection) {
+    if ($successFeatures && $successStudents && $successSection) {
         // Respond with a success message
         echo json_encode(['status' => 'success', 'message' => 'Deletion successful']);
     } else {
