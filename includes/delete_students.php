@@ -8,11 +8,14 @@ if (isset($_POST['idNumbers'])) {
   $placeholders = implode("','", $idNumbers);
   $deleteAttendanceSQL = "DELETE FROM attendance WHERE id_number IN ('$placeholders')";
   $deleteStudentSQL = "DELETE FROM students WHERE id_number IN ('$placeholders')";
+  $deleteFeaturesSQL = "DELETE FROM features WHERE id_number IN ('$placeholders')";
 
   // Prepare and execute the statement
   $stmtAttendance = mysqli_prepare($connection, $deleteAttendanceSQL);
   $stmtStudent = mysqli_prepare($connection, $deleteStudentSQL);
+  $stmtFeatures = mysqli_prepare($connection, $deleteFeaturesSQL);
   mysqli_stmt_execute($stmtAttendance);
+  mysqli_stmt_execute($stmtFeatures);
   $success = mysqli_stmt_execute($stmtStudent);
 
   // Close the statement
