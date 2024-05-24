@@ -176,7 +176,7 @@ class Face_Recognizer:
         cv2.putText(img_rd, text, (text_x, text_y), self.font, font_scale, (0, 0, 0), font_thickness, cv2.LINE_AA)
     # insert data in database
 
-    def attendance(self, id_number):
+    def attendance(self, id_number, img_rd):
         current_date = datetime.now().strftime('%Y-%m-%d')
 
         # Define the maximum allowed time difference (10 minutes)
@@ -205,7 +205,33 @@ class Face_Recognizer:
                     cursor.execute("UPDATE attendance SET verified = 1 WHERE id_number = %s AND date = %s",(id_number, current_date))
                     conn.commit()
                     print(f"{id_number} attendance verified for {current_date}.")
-                    
+                    # Display prompt for 1 second
+                    start_time = time.time()
+                    while time.time() - start_time < 1:  # Display for 1 second
+                        # Fill the entire frame with a black rectangle
+                        img_rd = cv2.rectangle(img_rd, (0, 0), (img_rd.shape[1], img_rd.shape[0]), (0, 0, 0), -1)
+                        
+                        # Get the dimensions of the image
+                        height, width = img_rd.shape[:2]
+
+                        # Text to be displayed
+                        text = "Attendance Verified"
+                        font_scale = 1.5
+                        font_thickness = 2
+
+                        # Calculate the size of the text
+                        text_size = cv2.getTextSize(text, self.font, font_scale, font_thickness)[0]
+
+                        # Calculate the position for the text to be centered
+                        text_x = (width - text_size[0]) // 2
+                        text_y = (height + text_size[1]) // 2
+
+                        # Add the text to the frame
+                        img_rd = cv2.putText(img_rd, text, (text_x, text_y), self.font, font_scale, (0, 255, 0), font_thickness, cv2.LINE_AA)
+
+                        cv2.imshow("camera", img_rd)
+                        cv2.waitKey(1)  # Update display
+
         except mysql.connector.Error as err:
             print(f"Error: {err}")
 
@@ -326,7 +352,7 @@ class Face_Recognizer:
 
                                 # Retrieve the ID number from the CSV file
                                 id_number = self.face_name_known_list[similar_person_num]
-                                self.attendance(id_number)
+                                self.attendance(id_number, img_rd)
                             else:
                                 logging.debug("Face recognition result: Unknown person")
 
