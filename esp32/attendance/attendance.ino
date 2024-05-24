@@ -3,15 +3,19 @@
 // WiFi config
 // const char* ssid = "TP-Link_95A7";
 // const char* password = "98568758";
-const char* ssid = "TP-Link_12B6";
-const char* password = "66303336";
+// const char* ssid = "TP-Link_12B6";
+// const char* password = "66303336";
 // const char* ssid = "JAM";
 // const char* password = "C3dricJ0yce";
 // const char* ssid = "home broadband";
 // const char* password = "Jacob1234***";
+const char* ssid = "TP-Link_5118";
+const char* password = "93206389";
+
+
 
 // Server config
-const String serverIP = "192.168.1.116";
+const String serverIP = "192.168.0.26";
 const String phpScript = "2FA-Attendance-System/services/record_attendance.php";
 const String destinationUrl = "http://" + serverIP + "/" + phpScript;
 
