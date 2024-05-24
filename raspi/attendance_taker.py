@@ -196,22 +196,16 @@ class Face_Recognizer:
                 database=db_name
             )
 
-            print("connected?")
-
             if conn.is_connected():
-                print("connected!!!")
                 cursor = conn.cursor()
-                cursor.execute("SELECT * FROM attendance WHERE id_number = %s AND date = %s AND time >= %s", (id_number, current_date, threshold_time_str))
+                cursor.execute("SELECT * FROM attendance WHERE id_number = %s AND date = %s AND time >= %s AND verified = 0", (id_number, current_date, threshold_time_str))
                 existing_entry = cursor.fetchone()
-                print(existing_entry)
-                print(id_number)
 
                 if existing_entry:
                     cursor.execute("UPDATE attendance SET verified = 1 WHERE id_number = %s AND date = %s",(id_number, current_date))
                     conn.commit()
                     print(f"{id_number} attendance verified for {current_date}.")
-                else:
-                    print(f"{id_number} has no attendance for {current_date}.")
+                    
         except mysql.connector.Error as err:
             print(f"Error: {err}")
 
