@@ -9,10 +9,8 @@
 // const char* password = "C3dricJ0yce";
 // const char* ssid = "home broadband";
 // const char* password = "Jacob1234***";
-const char* ssid = "TP-Link_5118";
-const char* password = "93206389";
-
-
+const char *ssid = "TP-Link_5118";
+const char *password = "93206389";
 
 // Server config
 const String serverIP = "192.168.0.26";
@@ -60,7 +58,8 @@ char str[32] = "";
 String StrUID;
 
 // Setup
-void setup() {
+void setup()
+{
   Serial.begin(115200);
 
   // Initialize buzzer
@@ -90,7 +89,8 @@ void setup() {
   Serial.print("Connecting...");
 
   // Wait for connection
-  while (WiFi.status() != WL_CONNECTED) {
+  while (WiFi.status() != WL_CONNECTED)
+  {
     Serial.print(".");
     // Blink while connecting to the WiFi
     digitalWrite(ON_Board_LED, LOW);
@@ -131,11 +131,13 @@ void setup() {
 }
 
 // Loop
-void loop() {
+void loop()
+{
   // Read NFC card
   readsuccess = getid();
 
-  if (readsuccess) {
+  if (readsuccess)
+  {
     digitalWrite(ON_Board_LED, LOW);
 
     // Declare object of class HTTPClient
@@ -165,7 +167,8 @@ void loop() {
     DynamicJsonDocument doc(1024);
     DeserializationError error = deserializeJson(doc, payload);
 
-    if (error) {
+    if (error)
+    {
       Serial.print("Failed to parse JSON: ");
       Serial.println(error.c_str());
       return;
@@ -177,29 +180,46 @@ void loop() {
     String nfcUid = doc["studentData"]["nfc_uid"];
     String status = doc["studentData"]["status"];
 
-    if (payload.indexOf("\"status\":\"Present\"") != -1) {
+    if (payload.indexOf("\"status\":\"Present\"") != -1)
+    {
       status = "Present";
-    } else if (payload.indexOf("\"status\":\"Late\"") != -1) {
+    }
+    else if (payload.indexOf("\"status\":\"Late\"") != -1)
+    {
       status = "Late";
-    } else if (payload.indexOf("\"status\":\"Already recorded\"") != -1) {
+    }
+    else if (payload.indexOf("\"status\":\"Already recorded\"") != -1)
+    {
       status = "Already recorded";
-    } else {
+    }
+    else
+    {
       status = "No schedule";
     }
 
     // If no student found
-    if (name == "none" && studentNumber == "none") {
+    if (name == "none" && studentNumber == "none")
+    {
       noStudentFound(UIDresultSend);
-    } else {
+    }
+    else
+    {
       Serial.println(status);
       displayStudentInfo(name, studentNumber);
-      if (status == "No schedule") {
+      if (status == "No schedule")
+      {
         noSchedule();
-      } else if (status == "Present") {
+      }
+      else if (status == "Present")
+      {
         present();
-      } else if (status == "Late") {
+      }
+      else if (status == "Late")
+      {
         late();
-      } else if (status == "Already recorded") {
+      }
+      else if (status == "Already recorded")
+      {
         alreadyRecorded();
       }
     }
@@ -214,29 +234,36 @@ void loop() {
   }
 }
 
-void scrollText(int row, String message, int delayTime) {
-  for (int i = 0; i < LCD_COLUMNS; i++) {
+void scrollText(int row, String message, int delayTime)
+{
+  for (int i = 0; i < LCD_COLUMNS; i++)
+  {
     message = " " + message;
   }
   message = message + " ";
-  for (int pos = 0; pos < message.length(); pos++) {
+  for (int pos = 0; pos < message.length(); pos++)
+  {
     lcd.setCursor(0, row);
     lcd.print(message.substring(pos, pos + LCD_COLUMNS));
     delay(delayTime);
   }
 }
 
-int getid() {
-  if (!mfrc522.PICC_IsNewCardPresent()) {
+int getid()
+{
+  if (!mfrc522.PICC_IsNewCardPresent())
+  {
     return 0;
   }
-  if (!mfrc522.PICC_ReadCardSerial()) {
+  if (!mfrc522.PICC_ReadCardSerial())
+  {
     return 0;
   }
 
   Serial.print("THE UID OF THE SCANNED CARD IS : ");
 
-  for (int i = 0; i < 4; i++) {
+  for (int i = 0; i < 4; i++)
+  {
     readcard[i] = mfrc522.uid.uidByte[i];
     array_to_string(readcard, 4, str);
     StrUID = str;
@@ -245,8 +272,10 @@ int getid() {
   return 1;
 }
 
-void array_to_string(byte array[], unsigned int len, char buffer[]) {
-  for (unsigned int i = 0; i < len; i++) {
+void array_to_string(byte array[], unsigned int len, char buffer[])
+{
+  for (unsigned int i = 0; i < len; i++)
+  {
     byte nib1 = (array[i] >> 4) & 0x0F;
     byte nib2 = (array[i] >> 0) & 0x0F;
     buffer[i * 2 + 0] = nib1 < 0xA ? '0' + nib1 : 'A' + nib1 - 0xA;
@@ -256,7 +285,8 @@ void array_to_string(byte array[], unsigned int len, char buffer[]) {
 }
 
 // LCD Responses
-void noStudentFound(String UIDResultSend) {
+void noStudentFound(String UIDResultSend)
+{
   Serial.println("No student found");
 
   lcd.clear();
@@ -279,7 +309,8 @@ void noStudentFound(String UIDResultSend) {
   delay(3000);
 }
 
-void displayStudentInfo(String name, String studentNumber) {
+void displayStudentInfo(String name, String studentNumber)
+{
   lcd.clear();
   lcd.setCursor(0, 0);
   lcd.print(name);
@@ -294,7 +325,8 @@ void displayStudentInfo(String name, String studentNumber) {
   lcd.clear();
 }
 
-void noSchedule() {
+void noSchedule()
+{
   lcd.setCursor(0, 0);
   lcd.print("  No schedule   ");
 
@@ -304,11 +336,10 @@ void noSchedule() {
   delay(250);
 }
 
-void present() {
+void present()
+{
   lcd.setCursor(0, 0);
   lcd.print("    Recorded    ");
-  lcd.setCursor(0, 1);
-  lcd.print("    Present    ");
 
   digitalWrite(buzzer, HIGH);
   delay(100);
@@ -316,11 +347,11 @@ void present() {
   delay(650);
 }
 
-void late() {
+void late()
+{
   lcd.setCursor(0, 0);
   lcd.print("    Recorded    ");
   lcd.setCursor(0, 1);
-  lcd.print("      Late      ");
 
   digitalWrite(buzzer, HIGH);
   delay(100);
@@ -336,7 +367,8 @@ void late() {
   delay(250);
 }
 
-void alreadyRecorded() {
+void alreadyRecorded()
+{
   lcd.setCursor(0, 0);
   lcd.print("   Attendance   ");
   lcd.setCursor(0, 1);
@@ -352,7 +384,8 @@ void alreadyRecorded() {
   delay(450);
 }
 
-void resetLCD(String title) {
+void resetLCD(String title)
+{
   lcd.clear();
   lcd.setCursor(0, 0);
   lcd.print(title);
