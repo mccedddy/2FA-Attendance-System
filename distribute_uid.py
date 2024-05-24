@@ -78,7 +78,7 @@ def resetUID(cursor, conn):
 
 def distributeUID(target_section, cursor, conn):
   distribute_sql = "UPDATE students SET nfc_uid = %s WHERE id_number = %s"
-  section_filter_sql = "SELECT id_number FROM students WHERE section = %s"
+  section_filter_sql = "SELECT id_number FROM students WHERE section = %s ORDER BY last_name"
   cursor.execute(section_filter_sql, (target_section,))
   students_in_section = cursor.fetchall()
   for index, uid in uid_list:
