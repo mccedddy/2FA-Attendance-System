@@ -16,7 +16,7 @@ if (isset($_POST['date'])) {
           INNER JOIN schedule sch ON a.schedule_id = sch.id
           INNER JOIN subjects sub ON sch.subject_code = sub.subject_code
           LEFT JOIN professors p ON sch.professor = p.id_number
-          WHERE a.date = '$date' AND s.section = '$selectedSection' 
+          WHERE a.date = '$date' AND s.section = '$selectedSection' AND a.verified = '1'
           ORDER BY s.last_name";
   } else {
     $sql = "SELECT a.id_number, a.room, a.schedule_id, TIME_FORMAT(a.time, '%H:%i') AS time, a.date, s.last_name AS student_last_name, s.first_name AS student_first_name, a.status, p.last_name AS professor_last_name, p.first_name AS professor_first_name, sub.subject_name AS subject_name
@@ -25,7 +25,7 @@ if (isset($_POST['date'])) {
           INNER JOIN schedule sch ON a.schedule_id = sch.id
           INNER JOIN subjects sub ON sch.subject_code = sub.subject_code
           LEFT JOIN professors p ON sch.professor = p.id_number
-          WHERE a.date = '$date' AND s.section = '$selectedSection' AND sub.subject_code = '$subject'
+          WHERE a.date = '$date' AND s.section = '$selectedSection' AND sub.subject_code = '$subject' AND a.verified = '1'
           ORDER BY s.last_name";
   }
 
