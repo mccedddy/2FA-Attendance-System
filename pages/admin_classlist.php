@@ -70,7 +70,7 @@ $classlist = fetchClasslist('students', "WHERE section = '$sectionPage'");
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PUP HDF Attendance System</title>
+    <title>2FA Attendance System</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -115,18 +115,6 @@ $classlist = fetchClasslist('students', "WHERE section = '$sectionPage'");
         <a onclick="toSubjects()"
           ><img src="..\assets\images\icons\book.svg" alt="book" class="button"
         /></a>
-        <a onclick="toAnalytics()"
-          ><img
-            src="..\assets\images\icons\graph.svg"
-            alt="graph"
-            class="button"
-        /></a>
-        <a onclick="toSettings()"
-          ><img
-            src="..\assets\images\icons\settings.svg"
-            alt="settings"
-            class="button"
-        /></a>
       </div>
       <form method="POST" class="bottom">
         <button type="submit" name="logout" class="logout">
@@ -147,7 +135,7 @@ $classlist = fetchClasslist('students', "WHERE section = '$sectionPage'");
             class="hamburger"
             onclick="toggleMobileNavbar()"
           />
-          <h3 onclick="toAdminHomepage()" class="title">PUPHAS</h3>
+          <h3 onclick="toAdminHomepage()" class="title">2FA Attendance System</h3>
         </div>
         <div class="right">
           <h6>ADMIN</h6>

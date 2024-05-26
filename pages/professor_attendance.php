@@ -27,7 +27,7 @@ $subjects = fetchSubjects();
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PUP HDF Attendance System</title>
+    <title>2FA Attendance System</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -63,12 +63,12 @@ $subjects = fetchSubjects();
             alt="group"
             class="button"
         /></a>
-        <!-- <a onclick="toSettings()"
+        <a onclick="toSettings()"
           ><img
             src="..\assets\images\icons\settings.svg"
             alt="settings"
             class="button"
-        /></a> -->
+        /></a>
       </div>
       <form method="POST" class="bottom">
         <button type="submit" name="logout" class="logout">
@@ -89,7 +89,7 @@ $subjects = fetchSubjects();
             class="hamburger"
             onclick="toggleMobileNavbar()"
           />
-          <h3 onclick="toProfessorHomepage()" class="title">PUPHAS</h3>
+          <h3 onclick="toProfessorHomepage()" class="title">2FA Attendance System</h3>
         </div>
         <div class="right">
           <h6><?php echo $userName; ?></h6>
@@ -238,7 +238,7 @@ $subjects = fetchSubjects();
         return false;
       }
       function toSettings() {
-        window.location.href = "professor_settings_page.php";
+        window.location.href = "professor_settings.php";
         return false;
       }
       function toSection() {

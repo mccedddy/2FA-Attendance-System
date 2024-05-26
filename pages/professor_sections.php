@@ -23,7 +23,7 @@ if (isset($_POST['section-button'])) {
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PUP HDF Attendance System</title>
+    <title>2FA Attendance System</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -82,7 +82,7 @@ if (isset($_POST['section-button'])) {
             class="hamburger"
             onclick="toggleMobileNavbar()"
           />
-          <h3 onclick="toProfessorHomepage()" class="title">PUPHAS</h3>
+          <h3 onclick="toProfessorHomepage()" class="title">2FA Attendance System</h3>
         </div>
         <div class="right">
           <h6><?php echo $userName; ?></h6>
@@ -111,7 +111,7 @@ if (isset($_POST['section-button'])) {
         return false;
       }
       function toSettings() {
-        window.location.href = "professor_settings_page.php";
+        window.location.href = "professor_settings.php";
         return false;
       }
       function toSection() {
