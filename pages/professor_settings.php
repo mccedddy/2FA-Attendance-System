@@ -43,20 +43,11 @@ if (isset($_POST['change-email'])) {
       }
     }
   } else if ($newEmail != $confirmEmail) {
-    echo 'wrong email';
+    header("Location: professor_settings_page.php");
   } else {
-    echo 'error';
+    header("Location: professor_settings_page.php");
   }
 }
-
-/* if (isset($_POST['change-password-btn'])){
-  $currentPassword = $_POST['current_password'];
-
-  if($currentPassword == password_verify($password, $professors['password'])){
-    $error_message = 'Kindly check your password.';
-  }
-} */
-
 
 // Change email and password details
 if (isset($_POST['change-password'])) {
@@ -98,10 +89,10 @@ if (isset($_POST['change-password'])) {
         $error_message = 'Kindly check the length of the password.';
       }
     }else{
-      $userPassword = 'pass diff';
+      header("Location: professor_settings_page.php");
     }
   }else{
-    $userPassword = 'wrong password';
+    header("Location: professor_settings_page.php");
   }
 }
 ?>
