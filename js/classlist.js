@@ -278,10 +278,15 @@ function captureImage(event, video, button) {
             idNumber
         );
 
-        // Display the captured image for 1 second, then clear the canvas
+        canvas.style.border = "3px solid #810000";
+        console.log(1);
+
+        // Display the captured image for 0.5 second, then clear the canvas
         setTimeout(() => {
+          console.log(2);
           ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }, 1000);
+          canvas.style.border = "0px";
+        }, 500);
       } else {
         console.error("Error getting image count:", response.message);
       }
