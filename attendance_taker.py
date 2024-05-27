@@ -205,21 +205,18 @@ class Face_Recognizer:
                 cursor.execute("SELECT * FROM attendance WHERE id_number = %s AND date = %s AND time >= %s AND verified = 0", (id_number, current_date, threshold_time_str))
                 existing_entry = cursor.fetchone()
 
-                self.detection_end_time = time.time()
-                print(f"Start Time: {self.detection_end_time}")
-                elapsed_time = self.detection_end_time - self.detection_start_time
-                print(f"Elapsed time from face detection to attendance verification: {elapsed_time:.2f} seconds")
-
-
                 if existing_entry:
                     cursor.execute("UPDATE attendance SET verified = 1 WHERE id_number = %s AND date = %s",(id_number, current_date))
                     conn.commit()
                     print(f"{id_number} attendance verified for {current_date}.")
 
                     self.detection_end_time = time.time()
-                    print(f"Start Time: {self.detection_end_time}")
                     elapsed_time = self.detection_end_time - self.detection_start_time
                     print(f"Elapsed time from face detection to attendance verification: {elapsed_time:.2f} seconds")
+                    
+                    # Write elapsed time to file
+                    with open("elapsed_time.txt", "a") as file:
+                        file.write(f"{id_number} - {elapsed_time:.2f} seconds\n")
 
                     # Display prompt for 1 second
                     start_time = time.time()
@@ -266,10 +263,8 @@ class Face_Recognizer:
 
                 if faces:
                     self.detection_start_time = time.time()
-                    print(f"Start Time: {self.detection_start_time}")
                 else :
                     self.detection_start_time = None
-                    print(f"Start Time: {self.detection_start_time}")
 
                 # 3. Update cnt for faces in frames
                 self.last_frame_face_cnt = self.current_frame_face_cnt
