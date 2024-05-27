@@ -91,7 +91,7 @@ if (isset($_POST['section-button'])) {
           <h6>ADMIN</h6>
         </div>
       </div>
-      <h2 class="page-title">Computer Engineering Schedules</h2>
+      <h2 class="page-title">SCHEDULES</h2>
       <div class="section-button-container">
         <?php foreach ($sections as $section): ?>
           <form method="POST">

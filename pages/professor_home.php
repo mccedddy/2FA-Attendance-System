@@ -81,7 +81,7 @@ unset($_SESSION['selected_section']);
           <h6><?php echo $userId?></h6>
         </div>
       </div>
-      <h2 class="page-title">Computer Engineering Department</h2>
+      <h2 class="page-title">HOME</h2>
       <div class="section-button-container">
         <button class="section-button" onclick="toSection()" onmouseover="changeSectionImage(true)" onmouseout="changeSectionImage(false)">
           <img src="../assets/images/icons/group_large_dark.svg" id="sectionButtonImg" />

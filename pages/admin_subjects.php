@@ -124,7 +124,7 @@ $subjects = fetchSubjects();
           <h6>ADMIN</h6>
         </div>
       </div>
-      <h2 class="page-title">Computer Engineering Subjects</h2>
+      <h2 class="page-title">SUBJECTS</h2>
       <div class="table-controls">
         <div class="left">
           <button onclick="openAddSubjectModal()">

@@ -92,7 +92,7 @@ if (isset($_POST['section-button'])) {
           <h6>ADMIN</h6>
         </div>
       </div>
-      <h2 class="page-title">Computer Engineering Sections</h2>
+      <h2 class="page-title">SECTIONS</h2>
       <div class="add-section-container">
         <button class="add-section-button" onclick="openAddSectionModal()">
           <img src="..\assets\images\icons\plus.svg">

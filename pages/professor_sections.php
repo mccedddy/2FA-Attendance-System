@@ -89,7 +89,7 @@ if (isset($_POST['section-button'])) {
           <h6><?php echo $userId; ?></h6>
         </div>
       </div>
-      <h2 class="page-title">Computer Engineering Department Sections</h2>
+      <h2 class="page-title">SECTIONS</h2>
       <div class="section-button-container">
         <?php foreach ($sections as $section): ?>
           <form method="POST">

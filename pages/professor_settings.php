@@ -173,7 +173,7 @@ if (isset($_POST['change-password'])) {
         </div>
       </div>
       <div class="settings">
-        <h2 class="page-title" id="title">Account Settings</h2>
+        <h2 class="page-title" id="title">ACCOUNT SETTINGS</h2>
         <div class = "tableContainer">
           <table class = "tableInfo" id = "basicInfoTable">
             <thead>
