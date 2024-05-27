@@ -138,6 +138,9 @@ void loop()
 
   if (readsuccess)
   {
+    // START TIME
+    unsigned long startTime = millis();
+
     digitalWrite(ON_Board_LED, LOW);
 
     // Declare object of class HTTPClient
@@ -196,6 +199,15 @@ void loop()
     {
       status = "No schedule";
     }
+    
+    // END TIME
+    unsigned long endTime = millis();
+    unsigned long elapsedTime = endTime - startTime;
+
+    // Print the time passed between start time and end time
+    Serial.print("Time elapsed: ");
+    Serial.print(elapsedTime);
+    Serial.println(" ms");
 
     // If no student found
     if (name == "none" && studentNumber == "none")
