@@ -16,5 +16,8 @@ package.json
 # Ignore vendor
 /vendor
 
+# Ignore elapsed time
+elapsed_time.txt
+
 # Ignore features all
 /data/features_all.csv
