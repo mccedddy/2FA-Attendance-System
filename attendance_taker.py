@@ -84,6 +84,10 @@ class Face_Recognizer:
         #  Reclassify after 'reclassify_interval' frames
         self.reclassify_interval_cnt = 0
         self.reclassify_interval = 10
+        
+        # Detection time variables
+        self.detection_start_time = None
+        self.detection_end_time = None
 
     #  "features_all.csv"  / Get known faces from "features_all.csv"
     def get_face_database(self):
@@ -201,10 +205,22 @@ class Face_Recognizer:
                 cursor.execute("SELECT * FROM attendance WHERE id_number = %s AND date = %s AND time >= %s AND verified = 0", (id_number, current_date, threshold_time_str))
                 existing_entry = cursor.fetchone()
 
+                self.detection_end_time = time.time()
+                print(f"Start Time: {self.detection_end_time}")
+                elapsed_time = self.detection_end_time - self.detection_start_time
+                print(f"Elapsed time from face detection to attendance verification: {elapsed_time:.2f} seconds")
+
+
                 if existing_entry:
                     cursor.execute("UPDATE attendance SET verified = 1 WHERE id_number = %s AND date = %s",(id_number, current_date))
                     conn.commit()
                     print(f"{id_number} attendance verified for {current_date}.")
+
+                    self.detection_end_time = time.time()
+                    print(f"Start Time: {self.detection_end_time}")
+                    elapsed_time = self.detection_end_time - self.detection_start_time
+                    print(f"Elapsed time from face detection to attendance verification: {elapsed_time:.2f} seconds")
+
                     # Display prompt for 1 second
                     start_time = time.time()
                     while time.time() - start_time < 1:  # Display for 1 second
@@ -247,6 +263,13 @@ class Face_Recognizer:
 
                 # 2. Detect faces for frame X
                 faces = detector(img_rd, 0)
+
+                if faces:
+                    self.detection_start_time = time.time()
+                    print(f"Start Time: {self.detection_start_time}")
+                else :
+                    self.detection_start_time = None
+                    print(f"Start Time: {self.detection_start_time}")
 
                 # 3. Update cnt for faces in frames
                 self.last_frame_face_cnt = self.current_frame_face_cnt
