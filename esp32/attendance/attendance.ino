@@ -9,11 +9,13 @@
 // const char* password = "C3dricJ0yce";
 // const char* ssid = "home broadband";
 // const char* password = "Jacob1234***";
-const char *ssid = "TP-Link_5118";
-const char *password = "93206389";
+// const char *ssid = "TP-Link_5118";
+// const char *password = "93206389";
+const char *ssid = "PLDTHOMEFIBRd1572b";
+const char *password = "123abc123";
 
 // Server config
-const String serverIP = "192.168.0.26";
+const String serverIP = "192.168.71.152";
 const String phpScript = "2FA-Attendance-System/services/record_attendance.php";
 const String destinationUrl = "http://" + serverIP + "/" + phpScript;
 

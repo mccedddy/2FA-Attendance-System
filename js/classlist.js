@@ -185,11 +185,11 @@ function registerStudent(button) {
   var idNumberElem = document.getElementById("idNumber");
   var registerModal = document.getElementById("registerModal");
   var row = button.closest("tr");
-  var idNumberCell = row.cells[3];
+  var idNumberCell = row.cells[4];
   var idNumber = idNumberCell.textContent.trim();
-  var firstNameCell = row.cells[2];
+  var firstNameCell = row.cells[3];
   var firstName = firstNameCell.textContent.trim();
-  var lastNameCell = row.cells[1];
+  var lastNameCell = row.cells[2];
   var lastName = lastNameCell.textContent.trim();
 
   registerTitle.innerHTML = "REGISTER STUDENT " + idNumber;
@@ -202,7 +202,7 @@ function registerStudent(button) {
 function captureImage(event, video, button) {
   event.preventDefault();
   var row = button.closest("tr");
-  var idNumberCell = row.cells[3];
+  var idNumberCell = row.cells[4];
   var idNumber = idNumberCell.textContent.trim();
   const canvas = document.getElementById("canvas");
   const ctx = canvas.getContext("2d");
