@@ -315,7 +315,7 @@ function editSelectedStudent() {
     // Get student number
     var idNumber = checkbox
       .closest("tr")
-      .querySelector("td:nth-child(4)").textContent;
+      .querySelector("td:nth-child(5)").textContent;
 
     if (title != "PROFESSORS") {
       editStudentTitle.textContent = "EDIT STUDENT " + idNumber;
@@ -369,7 +369,7 @@ function deleteSelectedStudents() {
 
   // Extract student numbers from checked checkboxes
   var idNumbers = Array.from(checkboxes).map(function (checkbox) {
-    return checkbox.closest("tr").querySelector("td:nth-child(4)").textContent;
+    return checkbox.closest("tr").querySelector("td:nth-child(5)").textContent;
   });
 
   if (title != "PROFESSORS") {
@@ -489,8 +489,8 @@ function sortTable() {
 }
 
 function compareSecondColumn(row1, row2) {
-  const cell1 = row1.querySelector("td:nth-child(2)");
-  const cell2 = row2.querySelector("td:nth-child(2)");
+  const cell1 = row1.querySelector("td:nth-child(3)");
+  const cell2 = row2.querySelector("td:nth-child(3)");
 
   // Use localeCompare for alphabetical sorting
   return cell1.textContent.localeCompare(cell2.textContent);

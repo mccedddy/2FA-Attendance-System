@@ -61,7 +61,7 @@ if (isset($_POST['edit-student'])) {
 $features = fetchFeatures();
 
 // Fetch classlist
-$classlist = fetchClasslist('students', "WHERE section = '$sectionPage'");
+$classlist = fetchClasslist('students', "WHERE section = '$sectionPage' ORDER BY last_name");
 ?>
 
 <!DOCTYPE html>
@@ -176,6 +176,7 @@ $classlist = fetchClasslist('students', "WHERE section = '$sectionPage'");
         <thead>
           <tr>
             <th data-exclude="true"></th>
+            <th data-exclude="true">#</th>
             <th>LAST NAME</th>
             <th>FIRST NAME</th>
             <th>STUDENT NUMBER</th>
@@ -188,9 +189,12 @@ $classlist = fetchClasslist('students', "WHERE section = '$sectionPage'");
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($classlist as $student): ?>
+          <?php
+          $index = 1; // Initialize the counter variable
+          foreach ($classlist as $student): ?>
             <tr>
               <td data-exclude="true"><input type="checkbox" name="selectedStudents[]"></td>
+              <td data-exclude="true"><?php echo $index; ?></td> <!-- Display the index -->
               <td><?php echo $student['lastName']; ?></td>
               <td><?php echo $student['firstName']; ?></td>
               <td><?php echo $student['idNumber']; ?></td>
@@ -201,7 +205,9 @@ $classlist = fetchClasslist('students', "WHERE section = '$sectionPage'");
               <td data-exclude="true"></td>
               <td data-exclude="true"><button id="registerStudentBtn">Register</button></td>
             </tr>
-          <?php endforeach; ?>
+          <?php
+          $index++; // Increment the counter variable
+          endforeach; ?>
         </tbody>
       </table>
       <div style="padding:15px;"></div>
@@ -389,8 +395,8 @@ $classlist = fetchClasslist('students', "WHERE section = '$sectionPage'");
       var phpArray = <?php echo json_encode($features); ?>;
       var table = document.getElementById("classlistTable");
       for (var i = 1; i < table.rows.length; i++) { // Start from 1 to skip the header row
-        var contentCell = table.rows[i].cells[3]; // Index of content cell
-        var registeredCell = table.rows[i].cells[8]; // Index of registered cell
+        var contentCell = table.rows[i].cells[4]; // Index of content cell
+        var registeredCell = table.rows[i].cells[9]; // Index of registered cell
         var idNumber = contentCell.innerHTML.trim(); // Assuming id_numbers are stored in the content cell
 
         if (phpArray.includes(idNumber)) {
