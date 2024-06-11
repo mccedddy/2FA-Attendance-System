@@ -1,65 +1,45 @@
 document.addEventListener("DOMContentLoaded", function () {
-
-  const xValues = ["4-1", "4-2", "4-3", "4-4", "4-5", "4-6"];
-
-  const present = [73, 50, 60, 75, 83, 81, 72, 0, 100];
-  const late =    [20, 40, 30, 18, 10, 10, 20, 0, 100];
-  const absent =  [7, 10, 10, 7, 7, 9, 8, 0, 100];
-
-  const presentColors = ['#810000', '#810000', '#810000', '#810000', '#810000', '#810000'];
-  const lateColors = ['#FFE000', '#FFE000', '#FFE000', '#FFE000', '#FFE000', '#FFE000'];
-  const absentColors = ['#DBA61A', '#DBA61A', '#DBA61A', '#DBA61A', '#DBA61A', '#DBA61A'];
-
-  const attendanceOverview = new Chart("attendanceOverview", {
+  var ctx = document.getElementById("attendanceOverviewTable").getContext("2d");
+  var labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
+  var dataset = [
+    [35, 33, 34, 35, 33, 25, 33, 34, 32],
+    [5, 6, 4, 2, 5, 10, 2, 6, 4],
+    [0, 1, 2, 3, 2, 5, 5, 0, 2],
+  ];
+  var attendanceOverview = new Chart(ctx, {
     type: "bar",
     data: {
-      labels: xValues,
+      labels: labels,
       datasets: [
         {
-          label: 'Present',
-          backgroundColor: presentColors,
-          data: present,
-          barThickness: 10,
+          label: "Present",
+          data: dataset[0],
+          backgroundColor: "#810000",
         },
         {
-          label: 'Late',
-          backgroundColor: lateColors,
-          data: late,
-          barThickness: 10,
+          label: "Late",
+          data: dataset[1],
+          backgroundColor: "#FFE000",
         },
         {
-          label: 'Absent',
-          backgroundColor: absentColors,
-          data: absent,
-          barThickness: 10,
+          label: "Absent",
+          data: dataset[2],
+          backgroundColor: "#DBA61A",
         },
-      ]
+      ],
     },
     options: {
-      maintainAspectRatio: true,
-      responsive: true,
-      layout: {
-        autoPadding: true
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+        x: {
+          beginAtZero: true,
+        },
       },
-    }
-  });
-
-  var yValues = [90, 70, 87, 66, 88, 94, 0, 100]
-
-  const attendanceByClass = new Chart("attendanceByClass", {
-    type: "horizontalBar",
-    data: {
-      labels: xValues,
-      datasets: [{
-        label: 'Attendance Percentage',
-        backgroundColor: presentColors,
-        data: yValues,
-        barThickness: 10,
-      }]
+      barThickness: 8,
+      categoryPercentage: 0.5,
+      barPercentage: 0.8,
     },
-    options: {
-      maintainAspectRatio: true,
-      responsive: true,
-    }
   });
 });

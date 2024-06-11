@@ -56,6 +56,12 @@ if (isset($_POST['section-button'])) {
             alt="group"
             class="button"
         /></a>
+        <a onclick="toAnalytics()"
+          ><img
+            src="..\assets\images\icons\graph.svg"
+            alt="group"
+            class="button"
+        /></a>
         <a onclick="toSettings()"
           ><img
             src="..\assets\images\icons\settings.svg"
@@ -116,6 +122,10 @@ if (isset($_POST['section-button'])) {
       }
       function toSection() {
         window.location.href = "professor_sections.php";
+        return false;
+      }
+      function toAnalytics() {
+        window.location.href = "professor_analytics.php";
         return false;
       }
     </script>

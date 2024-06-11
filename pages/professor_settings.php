@@ -137,6 +137,12 @@ if (isset($_POST['change-password'])) {
             alt="group"
             class="button"
         /></a>
+        <a onclick="toAnalytics()"
+          ><img
+            src="..\assets\images\icons\graph.svg"
+            alt="group"
+            class="button"
+        /></a>
         <a onclick="toSettings()"
           ><img
             src="..\assets\images\icons\settings.svg"
@@ -320,7 +326,12 @@ if (isset($_POST['change-password'])) {
       function toSection() {
         window.location.href = "professor_sections.php";
         return false;
-      }   
+      }  
+      function toAnalytics() {
+        window.location.href = "professor_analytics.php";
+        return false;
+      }
+
       function openChangeEmailModal() {
         var changeEmailModal = document.getElementById("changeEmailModal");
         changeEmailModal.style.display = "block";

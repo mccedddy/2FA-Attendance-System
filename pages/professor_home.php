@@ -48,6 +48,12 @@ unset($_SESSION['selected_section']);
             alt="group"
             class="button"
         /></a>
+        <a onclick="toAnalytics()"
+          ><img
+            src="..\assets\images\icons\graph.svg"
+            alt="group"
+            class="button"
+        /></a>
         <a onclick="toSettings()"
           ><img
             src="..\assets\images\icons\settings.svg"
@@ -87,6 +93,10 @@ unset($_SESSION['selected_section']);
           <img src="../assets/images/icons/group_large_dark.svg" id="sectionButtonImg" />
           CHECK ATTENDANCE
         </button>
+        <button class="section-button" onclick="toAnalytics()" onmouseover="changeAnalyticsImage(true)" onmouseout="changeAnalyticsImage(false)">
+          <img src="../assets/images/icons/graph_large_dark.svg" id="analyticsButtonImg" />
+          ATTENDANCE ANALYTICS
+        </button>
         <button class="section-button" onclick="toSettings()" onmouseover="changeSettingsImage(true)" onmouseout="changeSettingsImage(false)">
           <img src="../assets/images/icons/settings_large_dark.svg" id="settingsButtonImg" />
           SETTINGS
@@ -111,7 +121,10 @@ unset($_SESSION['selected_section']);
         window.location.href = "professor_sections.php";
         return false;
       }
-
+      function toAnalytics() {
+        window.location.href = "professor_analytics.php";
+        return false;
+      }
 
       function changeSectionImage(isHovered) {
         var imgElement = document.getElementById("sectionButtonImg");
@@ -140,6 +153,16 @@ unset($_SESSION['selected_section']);
           imgElement.src = "../assets/images/icons/book_large.svg"; 
         } else {
           imgElement.src = "../assets/images/icons/book_large_dark.svg"; 
+        }
+      }
+
+      function changeAnalyticsImage(isHovered) {
+        var imgElement = document.getElementById("analyticsButtonImg");
+
+        if (isHovered) {
+          imgElement.src = "../assets/images/icons/graph_large.svg"; 
+        } else {
+          imgElement.src = "../assets/images/icons/graph_large_dark.svg"; 
         }
       }
 

@@ -141,7 +141,8 @@ table th {
   cursor: pointer;
 }
 
-#subject .subjectOption {
+#subject .subjectOption,
+option {
   background-color: white;
   color: #810000;
   border: 1px solid #810000;
