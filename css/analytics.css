@@ -19,7 +19,8 @@ select {
 }
 
 .page-button:active,
-.page-button:hover {
+.page-button:hover,
+.page-button:focus {
   outline: none !important;
 }
 
