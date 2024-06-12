@@ -56,7 +56,8 @@ function fetchAttendance(date, subject) {
     .then((data) => {
       console.log(data);
       displayAttendanceData(data);
-      // updateOriginalData(data);
+      fetchAbsent(date, subject);
+      fetchUnverified(date, subject);
     })
     .catch((error) => {
       console.error("Error:", error);
@@ -191,4 +192,103 @@ function addAttendance(event) {
     .catch((error) => {
       console.error("Error:", error);
     });
+}
+
+function fetchAbsent(date, subject) {
+  var url = "../includes/fetch_absent.php";
+  var formData = new FormData();
+  formData.append("date", date);
+  formData.append("subject", subject);
+
+  fetch(url, {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      displayAbsentData(data);
+      // updateOriginalData(data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
+
+function displayAbsentData(data) {
+  const table = document.getElementById("absentTable");
+  const tbody = table.querySelector("tbody");
+  tbody.innerHTML = "";
+
+  data.forEach((rowData) => {
+    let row = document.createElement("tr");
+    // Create and append cells in the desired order
+    let cells = [
+      "student_name",
+      "id_number",
+      "status",
+      "date",
+      "subject_name",
+      "professor_name",
+      // "schedule_id"
+    ].map((key) => {
+      const cell = document.createElement("td");
+      cell.innerText = rowData[key];
+      return cell;
+    });
+    cells.forEach((cell) => {
+      row.appendChild(cell);
+    });
+    tbody.appendChild(row);
+  });
+}
+
+function fetchUnverified(date, subject) {
+  var url = "../includes/fetch_unverified.php";
+  var formData = new FormData();
+  formData.append("date", date);
+  formData.append("subject", subject);
+
+  fetch(url, {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      displayUnverifiedData(data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
+
+function displayUnverifiedData(data) {
+  const table = document.getElementById("unverifiedTable");
+  const tbody = table.querySelector("tbody");
+  tbody.innerHTML = "";
+
+  data.forEach((rowData) => {
+    let row = document.createElement("tr");
+    // Create and append cells in the desired order
+    let cells = [
+      "student_name",
+      "id_number",
+      "status",
+      "time",
+      "date",
+      "room",
+      "subject_name",
+      "professor_name",
+      // "schedule_id"
+    ].map((key) => {
+      const cell = document.createElement("td");
+      cell.innerText = rowData[key];
+      return cell;
+    });
+    cells.forEach((cell) => {
+      row.appendChild(cell);
+    });
+    tbody.appendChild(row);
+  });
 }

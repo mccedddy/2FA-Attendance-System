@@ -64,7 +64,7 @@ if (isset($_POST['UIDresult'])) {
     mysqli_free_result($existingAttendance);
 
     // Determine the status
-    $lateThreshold = strtotime("$startTime +15 minutes");
+    $lateThreshold = strtotime("$startTime +30 minutes");
     $status = (strtotime($time) > $lateThreshold) ? "Late" : "Present";
 
     // Insert attendance data
@@ -72,6 +72,20 @@ if (isset($_POST['UIDresult'])) {
                 VALUES ('$studentNumber', '$room', '$time', '$date', '$status', '$scheduleId')";
     $insertAttendanceStmt = mysqli_prepare($connection, $insertAttendanceSQL);
     mysqli_stmt_execute($insertAttendanceStmt);
+
+    // Check if it is the first entry
+    $sql = "SELECT COUNT(*) as count FROM attendance WHERE schedule_id = '$scheduleId' AND date = '$date'";
+    $result = mysqli_query($connection, $sql);
+    $row = mysqli_fetch_assoc($result);
+    if ($row['count'] == 1) {
+      // Trigger background process
+      $cmd = "start /B php mark_absent.php $scheduleId $date";
+      $process = popen($cmd, "r");
+      if ($process === false) {
+      } else {
+        pclose($process);
+      }
+    }
 
     // Response: Success
     echo json_encode(['status' => $status]);

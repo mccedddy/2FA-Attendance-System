@@ -157,6 +157,43 @@ $subjects = fetchSubjects();
         </tbody>
       </table>
       <div style="padding:15px;"></div>
+      <h3>ABSENT</h3>
+      <table id="absentTable" data-cols-width="15,20,20,10,15,35">
+        <thead>
+          <tr>
+            <th>STUDENT NAME</th>
+            <th>STUDENT NUMBER</th>
+            <th>STATUS</th>
+            <th>DATE</th>
+            <th>SUBJECT</th>
+            <th>PROFESSOR</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        </tbody>
+      </table>
+      <div style="padding:15px;"></div>
+      <h3>UNVERIFIED</h3>
+      <table id="unverifiedTable" data-cols-width="15,20,20,10,15,35">
+        <thead>
+          <tr>
+            <th>STUDENT NAME</th>
+            <th>STUDENT NUMBER</th>
+            <th>STATUS</th>
+            <th>TIME</th>
+            <th>DATE</th>
+            <th>ROOM</th>
+            <th>SUBJECT</th>
+            <th>PROFESSOR</th>
+            <!-- <th>SCHEDULE ID</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          
+        </tbody>
+      </table>
+      <div style="padding:15px;"></div>
     </section>
 
      <div id="addModal" class="modal-blur">
