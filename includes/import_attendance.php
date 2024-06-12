@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $scheduleId = $scheduleRow['id'];
 
             // Insert attendance data into the attendance table
-            $attendanceQuery = $connection->prepare("INSERT INTO attendance (id_number, room, time, date, status, schedule_id) VALUES ('$idNumber', '$room', '$time', '$date', '$status', '$scheduleId')");
+            $attendanceQuery = $connection->prepare("INSERT INTO attendance (id_number, room, time, date, status, schedule_id, verified) VALUES ('$idNumber', '$room', '$time', '$date', '$status', '$scheduleId', '1')");
             $attendanceQuery->execute();
           } else {
             // Respond with an error if no matching schedule is found
