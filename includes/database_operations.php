@@ -170,36 +170,35 @@ if (isset($_POST['fetchAttendance'])) {
   $endDate = $_POST['endDate'];
 
   if ($subject != 'ALL' && $section != 'ALL') {
-    $sql = "SELECT a.id_number, a.schedule_id, TIME_FORMAT(a.time, '%H:%i') AS time, a.date, s.last_name AS student_last_name, s.first_name AS student_first_name, a.status, sub.subject_code AS subject_code
+    $sql = "SELECT a.id_number, a.schedule_id, a.verified, TIME_FORMAT(a.time, '%H:%i') AS time, a.date, s.last_name AS student_last_name, s.first_name AS student_first_name, a.status, sub.subject_code AS subject_code
           FROM attendance a
           INNER JOIN students s ON a.id_number = s.id_number
           INNER JOIN schedule sch ON a.schedule_id = sch.id
           INNER JOIN subjects sub ON sch.subject_code = sub.subject_code
-          WHERE s.section = '$section' AND sub.subject_code = '$subject' AND a.verified = '1'
+          WHERE s.section = '$section' AND sub.subject_code = '$subject'
           ORDER BY s.last_name";
   } else if ($subject == 'ALL' && $section != 'ALL') {
-    $sql = "SELECT a.id_number, a.schedule_id, TIME_FORMAT(a.time, '%H:%i') AS time, a.date, s.last_name AS student_last_name, s.first_name AS student_first_name, a.status, sub.subject_code AS subject_code
+    $sql = "SELECT a.id_number, a.schedule_id, a.verified, TIME_FORMAT(a.time, '%H:%i') AS time, a.date, s.last_name AS student_last_name, s.first_name AS student_first_name, a.status, sub.subject_code AS subject_code
           FROM attendance a
           INNER JOIN students s ON a.id_number = s.id_number
           INNER JOIN schedule sch ON a.schedule_id = sch.id
           INNER JOIN subjects sub ON sch.subject_code = sub.subject_code
-          WHERE s.section = '$section' AND a.verified = '1'
+          WHERE s.section = '$section'
           ORDER BY s.last_name";
   } else if ($subject != 'ALL' && $section == 'ALL') {
-    $sql = "SELECT a.id_number, a.schedule_id, TIME_FORMAT(a.time, '%H:%i') AS time, a.date, s.last_name AS student_last_name, s.first_name AS student_first_name, a.status, sub.subject_code AS subject_code
+    $sql = "SELECT a.id_number, a.schedule_id, a.verified, TIME_FORMAT(a.time, '%H:%i') AS time, a.date, s.last_name AS student_last_name, s.first_name AS student_first_name, a.status, sub.subject_code AS subject_code
           FROM attendance a
           INNER JOIN students s ON a.id_number = s.id_number
           INNER JOIN schedule sch ON a.schedule_id = sch.id
           INNER JOIN subjects sub ON sch.subject_code = sub.subject_code
-          WHERE sub.subject_code = '$subject' AND a.verified = '1'
+          WHERE sub.subject_code = '$subject'
           ORDER BY s.last_name";
   } else {
-    $sql = "SELECT a.id_number, a.schedule_id, TIME_FORMAT(a.time, '%H:%i') AS time, a.date, s.last_name AS student_last_name, s.first_name AS student_first_name, a.status, sub.subject_code AS subject_code
+    $sql = "SELECT a.id_number, a.schedule_id, a.verified, TIME_FORMAT(a.time, '%H:%i') AS time, a.date, s.last_name AS student_last_name, s.first_name AS student_first_name, a.status, sub.subject_code AS subject_code
           FROM attendance a
           INNER JOIN students s ON a.id_number = s.id_number
           INNER JOIN schedule sch ON a.schedule_id = sch.id
           INNER JOIN subjects sub ON sch.subject_code = sub.subject_code
-          WHERE a.verified = '1'
           ORDER BY s.last_name";
   }
 

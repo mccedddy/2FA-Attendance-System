@@ -25,6 +25,9 @@ function filter(section, subject, startDate, endDate) {
 function fetchAttendance(section, subject, startDate, endDate) {
   var latePercentageElements =
     document.getElementsByClassName("latePercentage");
+  var attendancePercentageElements = document.getElementsByClassName(
+    "attendancePercentage"
+  );
   var formData = new FormData();
   formData.append("section", section);
   formData.append("subject", subject);
@@ -41,23 +44,54 @@ function fetchAttendance(section, subject, startDate, endDate) {
     .then((data) => {
       console.log(data);
 
-      // Calculate late count
-      let lateCount = 0;
+      // Calculate total count
       let totalCount = data.length;
+      console.log("totalCount", totalCount);
 
+      // Calculate total verified count
+      let totalVerifiedCount = 0;
       data.forEach((record) => {
-        if (record.status === "Late") {
+        if (record.verified === "1") {
+          totalVerifiedCount++;
+        }
+      });
+      console.log("totalVerifiedCount", totalVerifiedCount);
+
+      // Calculate attendance count [(present+late)/total]
+      let attendanceCount = 0;
+      data.forEach((record) => {
+        if (
+          (record.status === "Present" || record.status === "Late") &&
+          record.verified === "1"
+        ) {
+          attendanceCount++;
+        }
+      });
+      console.log("attendanceCount", attendanceCount);
+
+      let attendancePercentage = (attendanceCount / totalCount) * 100;
+      if (attendanceCount == 0 && totalCount == 0) {
+        attendancePercentage = 0;
+      }
+
+      for (var i = 0; i < attendancePercentageElements.length; i++) {
+        attendancePercentageElements[i].innerHTML =
+          attendancePercentage.toFixed(2) + "%";
+      }
+
+      // Calculate late count [late/verified(present+late)]
+      let lateCount = 0;
+      data.forEach((record) => {
+        if (record.status === "Late" && record.verified === "1") {
           lateCount++;
         }
       });
+      console.log("lateCount", lateCount);
 
-      let latePercentage = (lateCount / totalCount) * 100;
-
-      if (lateCount == 0 && totalCount == 0) {
+      let latePercentage = (lateCount / totalVerifiedCount) * 100;
+      if (lateCount == 0 && totalVerifiedCount == 0) {
         latePercentage = 0;
       }
-
-      console.log(lateCount, "/", totalCount, "=", latePercentage);
 
       for (var i = 0; i < latePercentageElements.length; i++) {
         latePercentageElements[i].innerHTML = latePercentage.toFixed(2) + "%";

@@ -156,8 +156,8 @@ $weekBefore = date('Y-m-d', strtotime('-1 week'));
           <div class="container">
             <img src="../assets/images/icons/check_overview.svg" />
             <div class="text-container">
-              <p>OVERALL ATTENDANCE PERCENTAGE</p>
-              <h2>80%</h2>
+              <p>OVERALL VERIFIED ATTENDANCE PERCENTAGE</p>
+              <h2 class="attendancePercentage">80%</h2>
             </div>
           </div>
           <div class="container">
@@ -181,6 +181,13 @@ $weekBefore = date('Y-m-d', strtotime('-1 week'));
             <div class="text-container">
               <p>TOTAL NUMBER OF STUDENTS</p>
               <h2 class="totalStudents">100</h2>
+            </div>
+          </div>
+          <div class="container">
+            <img src="../assets/images/icons/check_overview.svg" />
+            <div class="text-container">
+              <p>OVERALL VERIFIED ATTENDANCE PERCENTAGE</p>
+              <h2 class="attendancePercentage">80%</h2>
             </div>
           </div>
           <div class="container">
