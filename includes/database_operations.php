@@ -162,6 +162,77 @@ if (isset($_POST['fetchStudentCount'])) {
   echo json_encode($studentCount);
 }
 
+if (isset($_POST['fetchAttendance'])) {
+  global $connection;
+  $section = $_POST['section'];
+  $subject = $_POST['subject'];
+  $startDate = $_POST['startDate'];
+  $endDate = $_POST['endDate'];
+
+  if ($subject != 'ALL' && $section != 'ALL') {
+    $sql = "SELECT a.id_number, a.schedule_id, TIME_FORMAT(a.time, '%H:%i') AS time, a.date, s.last_name AS student_last_name, s.first_name AS student_first_name, a.status, sub.subject_code AS subject_code
+          FROM attendance a
+          INNER JOIN students s ON a.id_number = s.id_number
+          INNER JOIN schedule sch ON a.schedule_id = sch.id
+          INNER JOIN subjects sub ON sch.subject_code = sub.subject_code
+          WHERE s.section = '$section' AND sub.subject_code = '$subject' AND a.verified = '1'
+          ORDER BY s.last_name";
+  } else if ($subject == 'ALL' && $section != 'ALL') {
+    $sql = "SELECT a.id_number, a.schedule_id, TIME_FORMAT(a.time, '%H:%i') AS time, a.date, s.last_name AS student_last_name, s.first_name AS student_first_name, a.status, sub.subject_code AS subject_code
+          FROM attendance a
+          INNER JOIN students s ON a.id_number = s.id_number
+          INNER JOIN schedule sch ON a.schedule_id = sch.id
+          INNER JOIN subjects sub ON sch.subject_code = sub.subject_code
+          WHERE s.section = '$section' AND a.verified = '1'
+          ORDER BY s.last_name";
+  } else if ($subject != 'ALL' && $section == 'ALL') {
+    $sql = "SELECT a.id_number, a.schedule_id, TIME_FORMAT(a.time, '%H:%i') AS time, a.date, s.last_name AS student_last_name, s.first_name AS student_first_name, a.status, sub.subject_code AS subject_code
+          FROM attendance a
+          INNER JOIN students s ON a.id_number = s.id_number
+          INNER JOIN schedule sch ON a.schedule_id = sch.id
+          INNER JOIN subjects sub ON sch.subject_code = sub.subject_code
+          WHERE sub.subject_code = '$subject' AND a.verified = '1'
+          ORDER BY s.last_name";
+  } else {
+    $sql = "SELECT a.id_number, a.schedule_id, TIME_FORMAT(a.time, '%H:%i') AS time, a.date, s.last_name AS student_last_name, s.first_name AS student_first_name, a.status, sub.subject_code AS subject_code
+          FROM attendance a
+          INNER JOIN students s ON a.id_number = s.id_number
+          INNER JOIN schedule sch ON a.schedule_id = sch.id
+          INNER JOIN subjects sub ON sch.subject_code = sub.subject_code
+          WHERE a.verified = '1'
+          ORDER BY s.last_name";
+  }
+
+  // Prepare and execute the statement
+  $stmt = mysqli_prepare($connection, $sql);
+  mysqli_stmt_execute($stmt);
+
+  // Get the result
+  $result = mysqli_stmt_get_result($stmt);
+
+  if (!$result) {
+    echo json_encode(['error' => 'Query error.']);
+  } else {
+    // Fetch the data as an associative array
+    $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+    // Format the name of the student and professor
+    foreach ($data as &$row) {
+      $row['student_name'] = $row['student_last_name'] . ', ' . $row['student_first_name'];
+      // Remove unnecessary columns
+      unset($row['student_last_name']);
+      unset($row['student_first_name']);
+
+      // Reorder the fields
+      $row = ['student_name' => $row['student_name']] + $row;
+    }
+    unset($row); // Unset the reference
+
+    // Return the modified data as JSON
+    echo json_encode($data);
+  }
+}
+
 // ADD
 
 // Add profile (student or professor)
@@ -353,8 +424,8 @@ if (isset($_POST['student'])) {
     $scheduleId = $scheduleData['id'];
 
     // SQL query to insert data into the attendance table
-    $sql_insert = "INSERT INTO attendance (id_number, room, time, date, status, schedule_id)
-                   VALUES ('$studentIdNumber', '$room', '$time', '$date', '$status', '$scheduleId')";
+    $sql_insert = "INSERT INTO attendance (id_number, room, time, date, status, schedule_id, verified)
+                   VALUES ('$studentIdNumber', '$room', '$time', '$date', '$status', '$scheduleId', '1')";
 
     // Execute insert query
     mysqli_query($connection, $sql_insert);

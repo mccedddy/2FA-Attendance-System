@@ -93,7 +93,7 @@ $weekBefore = date('Y-m-d', strtotime('-1 week'));
           <h6><?php echo $userId; ?></h6>
         </div>
       </div>
-      <h2 class="page-title" id="title">ATTENDANCE ANALYTICS</h2>
+      <h2 class="page-title" id="title">ATTENDANCE REPORT</h2>
       <div class="table-controls">
         <div class="left">
           <div>
@@ -164,7 +164,7 @@ $weekBefore = date('Y-m-d', strtotime('-1 week'));
             <img src="../assets/images/icons/time_overview.svg" />
             <div class="text-container">
               <p>LATE PERCENTAGE</p>
-              <h2>50%</h2>
+              <h2 class="latePercentage">50%</h2>
             </div>
           </div>
         </div>
@@ -187,7 +187,7 @@ $weekBefore = date('Y-m-d', strtotime('-1 week'));
             <img src="../assets/images/icons/time_overview.svg" />
             <div class="text-container">
               <p>LATE PERCENTAGE</p>
-              <h2>50%</h2>
+              <h2 class="latePercentage">50%</h2>
             </div>
           </div>
         </div>

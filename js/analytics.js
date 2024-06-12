@@ -16,9 +16,56 @@ document.addEventListener("DOMContentLoaded", function () {
   filter(sectionFilter.value, subjectFilter.value);
 });
 
-function filter(section, subject) {
+function filter(section, subject, startDate, endDate) {
   console.log("Filter:", section, "-", subject);
   fetchStudentCount(section, subject);
+  fetchAttendance(section, subject, startDate, endDate);
+}
+
+function fetchAttendance(section, subject, startDate, endDate) {
+  var latePercentageElements =
+    document.getElementsByClassName("latePercentage");
+  var formData = new FormData();
+  formData.append("section", section);
+  formData.append("subject", subject);
+  formData.append("startDate", startDate);
+  formData.append("endDate", endDate);
+  formData.append("fetchAttendance", true);
+
+  var url = "../includes/database_operations.php";
+  fetch(url, {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+
+      // Calculate late count
+      let lateCount = 0;
+      let totalCount = data.length;
+
+      data.forEach((record) => {
+        if (record.status === "Late") {
+          lateCount++;
+        }
+      });
+
+      let latePercentage = (lateCount / totalCount) * 100;
+
+      if (lateCount == 0 && totalCount == 0) {
+        latePercentage = 0;
+      }
+
+      console.log(lateCount, "/", totalCount, "=", latePercentage);
+
+      for (var i = 0; i < latePercentageElements.length; i++) {
+        latePercentageElements[i].innerHTML = latePercentage.toFixed(2) + "%";
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 }
 
 function fetchStudentCount(section, subject) {
