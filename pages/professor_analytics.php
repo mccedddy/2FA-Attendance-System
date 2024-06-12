@@ -97,7 +97,7 @@ $weekBefore = date('Y-m-d', strtotime('-1 week'));
       <div class="table-controls">
         <div class="left">
           <div>
-            <select id="subject">
+            <select id="sectionFilter" class="filter">
               <option value="ALL">ALL</option>
                 <?php
                   require '../includes/database_connection.php';
@@ -114,7 +114,7 @@ $weekBefore = date('Y-m-d', strtotime('-1 week'));
                   mysqli_close($connection);
                 ?>
             </select>
-            <select id="subject">
+            <select id="subjectFilter" class="filter">
               <option value="ALL">ALL</option>
                 <?php
                   require '../includes/database_connection.php';
@@ -150,7 +150,7 @@ $weekBefore = date('Y-m-d', strtotime('-1 week'));
             <img src="../assets/images/icons/group_overview.svg" />
             <div class="text-container">
               <p>TOTAL NUMBER OF STUDENTS</p>
-              <h2>100</h2>
+              <h2 class="totalStudents">100</h2>
             </div>
           </div>
           <div class="container">
@@ -180,7 +180,7 @@ $weekBefore = date('Y-m-d', strtotime('-1 week'));
             <img src="../assets/images/icons/group_overview.svg" />
             <div class="text-container">
               <p>TOTAL NUMBER OF STUDENTS</p>
-              <h2>100</h2>
+              <h2 class="totalStudents">100</h2>
             </div>
           </div>
           <div class="container">

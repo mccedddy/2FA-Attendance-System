@@ -8,6 +8,12 @@ select {
   height: 28px;
 }
 
+.filter {
+  background-color: #810000;
+  color: #fff;
+  outline: none;
+}
+
 .page-button {
   width: auto !important;
   padding: 15px 0px 15px 0px !important;

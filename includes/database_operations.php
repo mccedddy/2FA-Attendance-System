@@ -131,7 +131,7 @@ function fetchSchedule() {
 // Fetch subjects
 function fetchSubjects() {
   global $connection;
-  
+
   $subjectsSQL = "SELECT * FROM subjects";
   $subjectsResult = mysqli_query($connection, $subjectsSQL);
   $subjects = [];
@@ -144,6 +144,22 @@ function fetchSubjects() {
   }
   mysqli_free_result($subjectsResult);
   return $subjects;
+}
+
+if (isset($_POST['fetchStudentCount'])) {
+  $section = $_POST['section'];
+  $subject = $_POST['subject'];
+
+  if ($section != "ALL") {
+    $sql = "SELECT COUNT(*) as count FROM students WHERE section = '$section'";
+  } else {
+    $sql = "SELECT COUNT(*) as count FROM students";
+  }
+
+  $result = mysqli_query($connection, $sql);
+  $studentCount = mysqli_fetch_assoc($result)['count'];
+
+  echo json_encode($studentCount);
 }
 
 // ADD
