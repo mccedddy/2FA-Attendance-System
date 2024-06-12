@@ -1,23 +1,58 @@
 document.addEventListener("DOMContentLoaded", function () {
   var sectionFilter = document.getElementById("sectionFilter");
   var subjectFilter = document.getElementById("subjectFilter");
+  var startDate = document.getElementById("startDate");
+  var endDate = document.getElementById("endDate");
 
   // Event listeners
   sectionFilter.addEventListener("change", function () {
-    filter(sectionFilter.value, subjectFilter.value);
+    filter(
+      sectionFilter.value,
+      subjectFilter.value,
+      startDate.value,
+      endDate.value
+    );
   });
 
   subjectFilter.addEventListener("change", function () {
-    filter(sectionFilter.value, subjectFilter.value);
+    filter(
+      sectionFilter.value,
+      subjectFilter.value,
+      startDate.value,
+      endDate.value
+    );
+  });
+
+  startDate.addEventListener("change", function () {
+    filter(
+      sectionFilter.value,
+      subjectFilter.value,
+      startDate.value,
+      endDate.value
+    );
+  });
+
+  endDate.addEventListener("change", function () {
+    filter(
+      sectionFilter.value,
+      subjectFilter.value,
+      startDate.value,
+      endDate.value
+    );
   });
 
   // Initialize
   loadAttendanceOverview();
-  filter(sectionFilter.value, subjectFilter.value);
+  filter(
+    sectionFilter.value,
+    subjectFilter.value,
+    startDate.value,
+    endDate.value
+  );
 });
 
 function filter(section, subject, startDate, endDate) {
-  console.log("Filter:", section, "-", subject);
+  console.log("Filter:", section, "-", subject, "-", startDate, "-", endDate);
   fetchStudentCount(section, subject);
   fetchAttendance(section, subject, startDate, endDate);
 }
@@ -42,11 +77,8 @@ function fetchAttendance(section, subject, startDate, endDate) {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
-
       // Calculate total count
       let totalCount = data.length;
-      console.log("totalCount", totalCount);
 
       // Calculate total verified count
       let totalVerifiedCount = 0;
@@ -55,7 +87,6 @@ function fetchAttendance(section, subject, startDate, endDate) {
           totalVerifiedCount++;
         }
       });
-      console.log("totalVerifiedCount", totalVerifiedCount);
 
       // Calculate attendance count [(present+late)/total]
       let attendanceCount = 0;
@@ -67,7 +98,6 @@ function fetchAttendance(section, subject, startDate, endDate) {
           attendanceCount++;
         }
       });
-      console.log("attendanceCount", attendanceCount);
 
       let attendancePercentage = (attendanceCount / totalCount) * 100;
       if (attendanceCount == 0 && totalCount == 0) {
@@ -86,7 +116,6 @@ function fetchAttendance(section, subject, startDate, endDate) {
           lateCount++;
         }
       });
-      console.log("lateCount", lateCount);
 
       let latePercentage = (lateCount / totalVerifiedCount) * 100;
       if (lateCount == 0 && totalVerifiedCount == 0) {
@@ -117,7 +146,6 @@ function fetchStudentCount(section, subject) {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log("Student Count:", data);
       for (var i = 0; i < totalStudentsElements.length; i++) {
         totalStudentsElements[i].innerHTML = data;
       }
