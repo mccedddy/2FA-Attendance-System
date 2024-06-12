@@ -42,7 +42,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // Initialize
-  loadAttendanceOverview();
   filter(
     sectionFilter.value,
     subjectFilter.value,
@@ -125,6 +124,61 @@ function fetchAttendance(section, subject, startDate, endDate) {
       for (var i = 0; i < latePercentageElements.length; i++) {
         latePercentageElements[i].innerHTML = latePercentage.toFixed(2) + "%";
       }
+
+      // Process the data to get attendance counts
+      let attendanceCounts = {};
+      data.forEach((record) => {
+        let key = `${record.date}`; // Use only the date as the key
+        if (!attendanceCounts[key]) {
+          attendanceCounts[key] = { Present: 0, Late: 0, Absent: 0 };
+        }
+        if (record.verified === "1") {
+          if (record.status === "Present") {
+            attendanceCounts[key].Present++;
+          } else if (record.status === "Late") {
+            attendanceCounts[key].Late++;
+          }
+        }
+      });
+
+      // Prepare data for chart
+      let labels = [];
+      let presentData = [];
+      let lateData = [];
+      let absentData = [];
+
+      for (let key in attendanceCounts) {
+        labels.push(key);
+        presentData.push(attendanceCounts[key].Present);
+        lateData.push(attendanceCounts[key].Late);
+        // Calculate absent count
+        let total = attendanceCounts[key].Present + attendanceCounts[key].Late;
+        let totalStudents = data.filter((record) => record.date === key).length;
+        absentData.push(totalStudents - total);
+      }
+
+      // Sort the labels and corresponding data
+      let sortedIndices = labels
+        .map((label, index) => ({ label, index }))
+        .sort((a, b) => new Date(a.label) - new Date(b.label))
+        .map((item) => item.index);
+
+      labels = sortedIndices.map((index) => labels[index]);
+      presentData = sortedIndices.map((index) => presentData[index]);
+      lateData = sortedIndices.map((index) => lateData[index]);
+      absentData = sortedIndices.map((index) => absentData[index]);
+
+      // Limit the number of displayed data points
+      const maxPoints = 10;
+      if (labels.length > maxPoints) {
+        labels = labels.slice(-maxPoints);
+        presentData = presentData.slice(-maxPoints);
+        lateData = lateData.slice(-maxPoints);
+        absentData = absentData.slice(-maxPoints);
+      }
+
+      // Update the chart
+      updateAttendanceOverviewChart(labels, presentData, lateData, absentData);
     })
     .catch((error) => {
       console.error("Error:", error);
@@ -155,32 +209,38 @@ function fetchStudentCount(section, subject) {
     });
 }
 
-function loadAttendanceOverview() {
+let attendanceOverviewChart;
+
+function updateAttendanceOverviewChart(
+  labels,
+  presentData,
+  lateData,
+  absentData
+) {
   var ctx = document.getElementById("attendanceOverviewTable").getContext("2d");
-  var labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
-  var dataset = [
-    [35, 33, 34, 35, 33, 25, 33, 34, 32],
-    [5, 6, 4, 2, 5, 10, 2, 6, 4],
-    [0, 1, 2, 3, 2, 5, 5, 0, 2],
-  ];
-  var attendanceOverview = new Chart(ctx, {
+
+  if (attendanceOverviewChart) {
+    attendanceOverviewChart.destroy();
+  }
+
+  attendanceOverviewChart = new Chart(ctx, {
     type: "bar",
     data: {
       labels: labels,
       datasets: [
         {
           label: "Present",
-          data: dataset[0],
+          data: presentData,
           backgroundColor: "#810000",
         },
         {
           label: "Late",
-          data: dataset[1],
+          data: lateData,
           backgroundColor: "#FFE000",
         },
         {
           label: "Absent",
-          data: dataset[2],
+          data: absentData,
           backgroundColor: "#DBA61A",
         },
       ],
