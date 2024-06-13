@@ -220,6 +220,91 @@ if (isset($_POST['fetchAttendance'])) {
   }
 }
 
+if (isset($_POST['fetchAbsentHours'])) {
+  global $connection;
+  $section = $_POST['section'];
+  $subject = $_POST['subject'];
+  $startDate = $_POST['startDate'];
+  $endDate = $_POST['endDate'];
+
+  // Query to get the attendance records for absences
+  $query = "SELECT 
+              a.id_number, 
+              CONCAT(s.last_name, ', ', s.first_name) AS name,
+              a.schedule_id, 
+              a.date,
+              a.status
+            FROM attendance a
+            INNER JOIN schedule sch ON a.schedule_id = sch.id
+            INNER JOIN students s ON a.id_number = s.id_number
+            WHERE a.status = 'Absent'
+            AND a.date BETWEEN '$startDate' AND '$endDate'";
+
+  // Add conditions based on the section and subject filters
+  if ($section != 'ALL' && $subject != 'ALL') {
+    $query .= " AND sch.section = '$section' AND sch.subject_code = '$subject'";
+  } else if ($section != 'ALL') {
+    $query .= " AND sch.section = '$section'";
+  } else if ($subject != 'ALL') {
+    $query .= " AND sch.subject_code = '$subject'";
+  }
+
+  $result = mysqli_query($connection, $query);
+  if (!$result) {
+    die('Query failed: ' . mysqli_error($connection));
+  }
+
+  // Fetch the schedule data to calculate hours and get section
+  $schedules = [];
+  $scheduleResult = mysqli_query($connection, "SELECT id, section, start_time, end_time FROM schedule");
+  while ($row = mysqli_fetch_assoc($scheduleResult)) {
+    $schedules[$row['id']] = $row;
+  }
+
+  $attendanceData = [];
+  while ($row = mysqli_fetch_assoc($result)) {
+    $schedule_id = $row['schedule_id'];
+    if (isset($schedules[$schedule_id])) {
+      $start_time = new DateTime($schedules[$schedule_id]['start_time']);
+      $end_time = new DateTime($schedules[$schedule_id]['end_time']);
+      $interval = $start_time->diff($end_time);
+      $hours_absent = $interval->h + ($interval->i / 60);
+
+      if (!isset($attendanceData[$row['id_number']])) {
+        $attendanceData[$row['id_number']] = [
+            'id_number' => $row['id_number'],
+            'name' => $row['name'],
+            'section' => $schedules[$schedule_id]['section'],
+            'total_hours_absent' => 0
+        ];
+      }
+
+      $attendanceData[$row['id_number']]['total_hours_absent'] += $hours_absent;
+    }
+  }
+
+  // Convert total_hours_absent to HH:MM format
+  foreach ($attendanceData as &$student) {
+    $total_hours_absent = $student['total_hours_absent'];
+    $hours = floor($total_hours_absent);
+    $minutes = round(($total_hours_absent - $hours) * 60);
+    $student['total_hours_absent'] = sprintf('%02d:%02d', $hours, $minutes);
+  }
+
+  // Filter out students with zero hours absent
+  $attendanceData = array_filter($attendanceData, function($student) {
+    return $student['total_hours_absent'] > 0;
+  });
+
+  // Sort by total_hours_absent descending
+  usort($attendanceData, function($a, $b) {
+    return $b['total_hours_absent'] <=> $a['total_hours_absent'];
+  });
+
+  echo json_encode(array_values($attendanceData));
+  exit();
+}
+
 // ADD
 
 // Add profile (student or professor)
@@ -232,27 +317,27 @@ function addProfile($profileType) {
   $firstName = $_POST['first_name'];
   $email = $_POST['email'];
   $idNumber = $_POST['id_number'];
-    
+  
   // Fields specific to students
   if ($profileType === 'student') {
     $idNumber = $_POST['id_number'];
     $section = $_POST['year'] . '-' . $_POST['section'];
     $nfcUid = $_POST['nfc_uid'];
   }
-    
+  
   // Hash the password (Default: Last Name)
   $hashedPassword = password_hash($lastName, PASSWORD_DEFAULT);
-    
+  
   // Encrypt email
   $encryptedEmail = $encryptionHelper->encryptData($email);
-    
+  
   // SQL query
   if ($profileType === 'student') {
     $sql = "INSERT INTO students (last_name, first_name, id_number, section, nfc_uid, email, password)
-          VALUES ('$lastName', '$firstName', '$idNumber', '$section', '$nfcUid', '$encryptedEmail', '$hashedPassword')";
+      VALUES ('$lastName', '$firstName', '$idNumber', '$section', '$nfcUid', '$encryptedEmail', '$hashedPassword')";
   } elseif ($profileType === 'professor') {
-      $sql = "INSERT INTO professors (last_name, first_name, id_number, email, password)
-          VALUES ('$lastName', '$firstName', '$idNumber', '$encryptedEmail', '$hashedPassword')";
+    $sql = "INSERT INTO professors (last_name, first_name, id_number, email, password)
+      VALUES ('$lastName', '$firstName', '$idNumber', '$encryptedEmail', '$hashedPassword')";
   }
     
   $stmt = mysqli_prepare($connection, $sql);

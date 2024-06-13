@@ -198,7 +198,7 @@ $weekBefore = date('Y-m-d', strtotime('-1 week'));
             </div>
           </div>
         </div>
-        <table id="attendanceTable" data-cols-width="15,20,20,10,15,35">
+        <table id="hoursAbsentTable" data-cols-width="15,20,20,10,15,35">
           <thead>
             <tr>
               <th>STUDENT NAME</th>
@@ -208,7 +208,7 @@ $weekBefore = date('Y-m-d', strtotime('-1 week'));
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <!-- <tr>
               <td>Jacob, Kyle Lester</td>
               <td>2020-12100-MN-0</td>
               <td>BSCPE 4-6</td>
@@ -231,7 +231,7 @@ $weekBefore = date('Y-m-d', strtotime('-1 week'));
               <td>2020-12345-MN-0</td>
               <td>BSCPE 4-6</td>
               <td>3</td>
-            </tr>
+            </tr> -->
           </tbody>
         </table>
       </div>

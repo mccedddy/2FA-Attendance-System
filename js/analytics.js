@@ -54,6 +54,7 @@ function filter(section, subject, startDate, endDate) {
   console.log("Filter:", section, "-", subject, "-", startDate, "-", endDate);
   fetchStudentCount(section, subject);
   fetchAttendance(section, subject, startDate, endDate);
+  fetchAbsentHours(section, subject, startDate, endDate);
 }
 
 function fetchAttendance(section, subject, startDate, endDate) {
@@ -203,6 +204,53 @@ function fetchStudentCount(section, subject) {
       for (var i = 0; i < totalStudentsElements.length; i++) {
         totalStudentsElements[i].innerHTML = data;
       }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
+
+function fetchAbsentHours(section, subject, startDate, endDate) {
+  var formData = new FormData();
+  formData.append("section", section);
+  formData.append("subject", subject);
+  formData.append("startDate", startDate);
+  formData.append("endDate", endDate);
+  formData.append("fetchAbsentHours", true);
+
+  var url = "../includes/database_operations.php";
+  fetch(url, {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      // Populate the hoursAbsentTable
+      var tbody = document.querySelector("#hoursAbsentTable tbody");
+      tbody.innerHTML = "";
+
+      data.forEach((record) => {
+        var tr = document.createElement("tr");
+
+        var nameTd = document.createElement("td");
+        nameTd.textContent = record.name;
+        tr.appendChild(nameTd);
+
+        var idNumberTd = document.createElement("td");
+        idNumberTd.textContent = record.id_number;
+        tr.appendChild(idNumberTd);
+
+        var sectionTd = document.createElement("td");
+        sectionTd.textContent = record.section;
+        tr.appendChild(sectionTd);
+
+        var hoursAbsentTd = document.createElement("td");
+        hoursAbsentTd.textContent = record.total_hours_absent;
+        tr.appendChild(hoursAbsentTd);
+
+        tbody.appendChild(tr);
+      });
     })
     .catch((error) => {
       console.error("Error:", error);
