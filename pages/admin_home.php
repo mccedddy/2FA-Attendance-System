@@ -56,6 +56,12 @@ unset($_SESSION['selected_section']);
         <a onclick="toSubjects()"
           ><img src="..\assets\images\icons\book.svg" alt="book" class="button"
         /></a>
+        <a onclick="toAnalytics()"
+          ><img
+            src="..\assets\images\icons\graph.svg"
+            alt="group"
+            class="button"
+        /></a>
       </div>
       <form method="POST" class="bottom">
         <button type="submit" name="logout" class="logout">
@@ -96,6 +102,10 @@ unset($_SESSION['selected_section']);
           <img src="../assets/images/icons/book_large_dark.svg" id="subjectsButtonImg" />
           SUBJECTS
         </button>
+        <button class="section-button" onclick="toAnalytics()" onmouseover="changeAnalyticsImage(true)" onmouseout="changeAnalyticsImage(false)">
+          <img src="../assets/images/icons/graph_large_dark.svg" id="analyticsButtonImg" />
+          ATTENDANCE ANALYTICS
+        </button>
       </div>
     </section>
     <script src="../js/navbar_controller.js"></script>
@@ -128,35 +138,56 @@ unset($_SESSION['selected_section']);
         window.location.href = "admin_settings_page.php";
         return false;
       }
-        function changeSectionImage(isHovered) {
-          var imgElement = document.getElementById("sectionButtonImg");
 
-          if (isHovered) {
-            imgElement.src = "../assets/images/icons/group_large.svg";
-          } else {
-            imgElement.src = "../assets/images/icons/group_large_dark.svg"; 
-          }
+      function changeSectionImage(isHovered) {
+        var imgElement = document.getElementById("sectionButtonImg");
+
+        if (isHovered) {
+          imgElement.src = "../assets/images/icons/group_large.svg";
+        } else {
+          imgElement.src = "../assets/images/icons/group_large_dark.svg"; 
         }
+      }
 
-        function changeScheduleImage(isHovered) {
-          var imgElement = document.getElementById("scheduleButtonImg");
+      function changeScheduleImage(isHovered) {
+        var imgElement = document.getElementById("scheduleButtonImg");
 
-          if (isHovered) {
-            imgElement.src = "../assets/images/icons/table_large.svg"; 
-          } else {
-            imgElement.src = "../assets/images/icons/table_large_dark.svg";
-          }
+        if (isHovered) {
+          imgElement.src = "../assets/images/icons/table_large.svg"; 
+        } else {
+          imgElement.src = "../assets/images/icons/table_large_dark.svg";
         }
+      }
 
-        function changeSubjectsImage(isHovered) {
-          var imgElement = document.getElementById("subjectsButtonImg");
+      function changeSubjectsImage(isHovered) {
+        var imgElement = document.getElementById("subjectsButtonImg");
 
-          if (isHovered) {
-            imgElement.src = "../assets/images/icons/book_large.svg"; 
-          } else {
-            imgElement.src = "../assets/images/icons/book_large_dark.svg"; 
-          }
+        if (isHovered) {
+          imgElement.src = "../assets/images/icons/book_large.svg"; 
+        } else {
+          imgElement.src = "../assets/images/icons/book_large_dark.svg"; 
         }
+      }
+
+      function changeAnalyticsImage(isHovered) {
+        var imgElement = document.getElementById("analyticsButtonImg");
+
+        if (isHovered) {
+          imgElement.src = "../assets/images/icons/graph_large.svg"; 
+        } else {
+          imgElement.src = "../assets/images/icons/graph_large_dark.svg"; 
+        }
+      }
+
+      function changeSettingsImage(isHovered) {
+        var imgElement = document.getElementById("settingsButtonImg");
+
+        if (isHovered) {
+          imgElement.src = "../assets/images/icons/settings_large.svg";
+        } else {
+          imgElement.src = "../assets/images/icons/settings_large_dark.svg"; 
+        }
+      }
     </script>
   </body>
 </html>

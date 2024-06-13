@@ -65,6 +65,12 @@ if (isset($_POST['section-button'])) {
         <a onclick="toSubjects()"
           ><img src="..\assets\images\icons\book.svg" alt="book" class="button"
         /></a>
+        <a onclick="toAnalytics()"
+          ><img
+            src="..\assets\images\icons\graph.svg"
+            alt="group"
+            class="button"
+        /></a>
       </div>
       <form method="POST" class="bottom">
         <button type="submit" name="logout" class="logout">

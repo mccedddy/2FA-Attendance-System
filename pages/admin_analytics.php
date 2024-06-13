@@ -3,7 +3,7 @@ session_start();
 require '../includes/database_connection.php';
 require '../includes/database_operations.php';
 require '../includes/utils.php';
-redirect('professor');
+redirect('admin');
 date_default_timezone_set('Asia/Manila');
 require_once '../includes/encryption.php';
 $encryptionHelper = new EncryptionHelper($encryptionKey);
@@ -42,7 +42,7 @@ $weekBefore = date('Y-m-d', strtotime('-1 week'));
           onclick="toggleMobileNavbar()"
           alt="arrow left"
         />
-        <a onclick="toProfessorHomepage()"
+        <a onclick="toAdminHomepage()"
           ><img
             src="..\assets\images\logos\pup_logo.png"
             alt="pup logo"
@@ -54,16 +54,19 @@ $weekBefore = date('Y-m-d', strtotime('-1 week'));
             alt="group"
             class="button"
         /></a>
+        <a onclick="toSchedule()"
+          ><img
+            src="..\assets\images\icons\table.svg"
+            alt="table"
+            class="button"
+        /></a>
+        <a onclick="toSubjects()"
+          ><img src="..\assets\images\icons\book.svg" alt="book" class="button"
+        /></a>
         <a onclick="toAnalytics()"
           ><img
             src="..\assets\images\icons\graph.svg"
             alt="group"
-            class="button"
-        /></a>
-        <a onclick="toSettings()"
-          ><img
-            src="..\assets\images\icons\settings.svg"
-            alt="settings"
             class="button"
         /></a>
       </div>
@@ -86,11 +89,10 @@ $weekBefore = date('Y-m-d', strtotime('-1 week'));
             class="hamburger"
             onclick="toggleMobileNavbar()"
           />
-          <h3 onclick="toProfessorHomepage()" class="title">2FA Attendance System</h3>
+          <h3 onclick="toAdminHomepage()" class="title">2FA Attendance System</h3>
         </div>
         <div class="right">
-          <h6><?php echo $userName; ?></h6>
-          <h6><?php echo $userId; ?></h6>
+          <h6>ADMIN</h6>
         </div>
       </div>
       <h2 class="page-title" id="title">ATTENDANCE REPORT</h2>
@@ -214,35 +216,48 @@ $weekBefore = date('Y-m-d', strtotime('-1 week'));
       </div>
       <div style="padding:15px;"></div>
     </section>
-            
+
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script src="../js/analytics.js"></script>
     <script src="../js/toastr.js"></script>
     <script src="../js/navbar_controller.js"></script>
+    <script src="../js/classlist.js"></script>
+    <script src="../js/analytics.js"></script>
     <script>
       function toLogin() {
         window.location.href = "../index.php";
         return false;
       }
-      function toProfessorHomepage() {
-        window.location.href = "professor_home.php";
-        return false;
-      }
-      function toSettings() {
-        window.location.href = "professor_settings.php";
+      function toAdminHomepage() {
+        window.location.href = "admin_home.php";
         return false;
       }
       function toSection() {
-        window.location.href = "professor_sections.php";
+        window.location.href = "admin_sections.php";
+        return false;
+      }
+      function toSubjects() {
+        window.location.href = "admin_subjects.php";
         return false;
       }
       function toAnalytics() {
-        window.location.href = "professor_analytics.php";
+        window.location.href = "admin_analytics.php";
+        return false;
+      }
+      function toSchedule() {
+        window.location.href = "admin_schedule_menu.php";
+        return false;
+      }
+      function toSettings() {
+        window.location.href = "admin_settings_page.php";
+        return false;
+      }
+      function toAnalytics() {
+        window.location.href = "admin_analytics.php";
         return false; 
       }
-
+      
       var attendanceOverview = document.getElementById("attendanceOverview");
       var attendanceOverviewButton = document.getElementById("attendanceOverviewButton");
       var hoursAbsent = document.getElementById("hoursAbsent");
