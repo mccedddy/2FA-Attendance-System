@@ -121,7 +121,7 @@ table th {
 }
 
 #subject {
-  width: 400px;
+  width: 250px;
   height: 28px;
   flex-shrink: 0;
   border-radius: 5px;
@@ -198,4 +198,8 @@ option {
 .download-template:focus {
   cursor: pointer;
   outline: 0px;
+}
+
+.hidden-cell {
+  display: none;
 }

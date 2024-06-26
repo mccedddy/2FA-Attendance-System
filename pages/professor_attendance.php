@@ -124,7 +124,14 @@ $subjects = fetchSubjects();
                 mysqli_close($connection);
               ?>
           </select>
-          <button id="addSchedule" onclick="openAddAttendanceModal()">ADD</Button>
+          <button id="addAttendance" onclick="openAddAttendanceModal()">
+            <img src="..\assets\images\icons\plus_white.svg"/>
+            ADD
+          </Button>
+          <button id="deleteAttendance">
+            <img src="..\assets\images\icons\trash_white.svg"/>
+            DELETE
+          </button>
         </div>
         <div class="right">
           <button class="download-template" onclick="downloadTemplate()">
@@ -141,6 +148,7 @@ $subjects = fetchSubjects();
       <table id="attendanceTable" data-cols-width="15,20,20,10,15,35">
         <thead>
           <tr>
+            <th data-exclude="true"></th>
             <th>STUDENT NAME</th>
             <th>STUDENT NUMBER</th>
             <th>STATUS</th>
@@ -161,6 +169,7 @@ $subjects = fetchSubjects();
       <table id="absentTable" data-cols-width="15,20,20,10,15,35">
         <thead>
           <tr>
+            <th data-exclude="true"></th>
             <th>STUDENT NAME</th>
             <th>STUDENT NUMBER</th>
             <th>STATUS</th>
@@ -178,6 +187,7 @@ $subjects = fetchSubjects();
       <table id="unverifiedTable" data-cols-width="15,20,20,10,15,35">
         <thead>
           <tr>
+            <th data-exclude="true"></th>
             <th>STUDENT NAME</th>
             <th>STUDENT NUMBER</th>
             <th>STATUS</th>
@@ -186,7 +196,6 @@ $subjects = fetchSubjects();
             <th>ROOM</th>
             <th>SUBJECT</th>
             <th>PROFESSOR</th>
-            <!-- <th>SCHEDULE ID</th> -->
           </tr>
         </thead>
         <tbody>

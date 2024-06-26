@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var importButton = document.getElementById("import");
   var exportButton = document.getElementById("export");
   var addAttendanceButton = document.getElementById("addButton");
+  var deleteAttendanceButton = document.getElementById("deleteAttendance");
   var fileInput = document.getElementById("fileInput");
 
   fetchAttendance(dateFilter.value, subjectFilter.value);
@@ -24,6 +25,9 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   addAttendanceButton.addEventListener("click", (event) => {
     addAttendance(event);
+  });
+  deleteAttendanceButton.addEventListener("click", () => {
+    deleteAttendance();
   });
   fileInput.addEventListener("change", () => {
     updateFileName();
@@ -71,6 +75,14 @@ function displayAttendanceData(data) {
 
   data.forEach((rowData) => {
     let row = document.createElement("tr");
+
+    // Create a cell with a checkbox
+    let checkboxCell = document.createElement("td");
+    checkboxCell.setAttribute("data-exclude", "true");
+    checkboxCell.innerHTML =
+      '<input type="checkbox" name="selectedStudents[]">';
+    row.appendChild(checkboxCell);
+
     // Create and append cells in the desired order
     let cells = [
       "student_name",
@@ -81,10 +93,13 @@ function displayAttendanceData(data) {
       "room",
       "subject_name",
       "professor_name",
-      // "schedule_id"
+      "id",
     ].map((key) => {
       const cell = document.createElement("td");
       cell.innerText = rowData[key];
+      if (key === "id") {
+        cell.classList.add("hidden-cell");
+      }
       return cell;
     });
     cells.forEach((cell) => {
@@ -222,6 +237,14 @@ function displayAbsentData(data) {
 
   data.forEach((rowData) => {
     let row = document.createElement("tr");
+
+    // Create a cell with a checkbox
+    let checkboxCell = document.createElement("td");
+    checkboxCell.setAttribute("data-exclude", "true");
+    checkboxCell.innerHTML =
+      '<input type="checkbox" name="selectedStudents[]">';
+    row.appendChild(checkboxCell);
+
     // Create and append cells in the desired order
     let cells = [
       "student_name",
@@ -230,10 +253,13 @@ function displayAbsentData(data) {
       "date",
       "subject_name",
       "professor_name",
-      // "schedule_id"
+      "id",
     ].map((key) => {
       const cell = document.createElement("td");
       cell.innerText = rowData[key];
+      if (key === "id") {
+        cell.classList.add("hidden-cell");
+      }
       return cell;
     });
     cells.forEach((cell) => {
@@ -270,6 +296,14 @@ function displayUnverifiedData(data) {
 
   data.forEach((rowData) => {
     let row = document.createElement("tr");
+
+    // Create a cell with a checkbox
+    let checkboxCell = document.createElement("td");
+    checkboxCell.setAttribute("data-exclude", "true");
+    checkboxCell.innerHTML =
+      '<input type="checkbox" name="selectedStudents[]">';
+    row.appendChild(checkboxCell);
+
     // Create and append cells in the desired order
     let cells = [
       "student_name",
@@ -280,10 +314,13 @@ function displayUnverifiedData(data) {
       "room",
       "subject_name",
       "professor_name",
-      // "schedule_id"
+      "id",
     ].map((key) => {
       const cell = document.createElement("td");
       cell.innerText = rowData[key];
+      if (key === "id") {
+        cell.classList.add("hidden-cell");
+      }
       return cell;
     });
     cells.forEach((cell) => {
@@ -291,4 +328,47 @@ function displayUnverifiedData(data) {
     });
     tbody.appendChild(row);
   });
+}
+
+function deleteAttendance() {
+  // Helper function to extract student numbers from a table
+  function extractIds(tableId, columnIndex) {
+    var checkboxes = document.querySelectorAll(
+      `#${tableId} tbody input[type="checkbox"]:checked`
+    );
+    return Array.from(checkboxes).map(function (checkbox) {
+      return checkbox
+        .closest("tr")
+        .querySelector(`td:nth-child(${columnIndex})`).textContent;
+    });
+  }
+
+  var presentIds = extractIds("attendanceTable", 10);
+  var absentIds = extractIds("absentTable", 8);
+  var unverifiedIds = extractIds("unverifiedTable", 10);
+
+  var attendanceIds = presentIds.concat(absentIds, unverifiedIds);
+
+  console.log("ID Numbers to delete:", attendanceIds);
+
+  var url = "../includes/delete_attendance.php";
+
+  // Send the list of student numbers to the server
+  if (attendanceIds.length > 0) {
+    $.ajax({
+      url: url,
+      method: "POST",
+      data: { attendanceIds: attendanceIds },
+      success: function (response) {
+        console.log(response);
+        location.reload();
+      },
+      error: function (error) {
+        console.error("Error:", error);
+      },
+    });
+  } else {
+    // Inform the user that no students are selected
+    showToastr("info", "No students selected for deletion.");
+  }
 }

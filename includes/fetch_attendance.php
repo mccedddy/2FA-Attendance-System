@@ -10,7 +10,7 @@ if (isset($_POST['date'])) {
 
   // Use prepared statement to prevent SQL injection
   if ($subject == 'ALL') {
-    $sql = "SELECT a.id_number, a.room, a.schedule_id, TIME_FORMAT(a.time, '%H:%i') AS time, a.date, s.last_name AS student_last_name, s.first_name AS student_first_name, a.status, p.last_name AS professor_last_name, p.first_name AS professor_first_name, sub.subject_name AS subject_name
+    $sql = "SELECT a.id, a.id_number, a.room, a.schedule_id, TIME_FORMAT(a.time, '%H:%i') AS time, a.date, s.last_name AS student_last_name, s.first_name AS student_first_name, a.status, p.last_name AS professor_last_name, p.first_name AS professor_first_name, sub.subject_name AS subject_name
           FROM attendance a
           INNER JOIN students s ON a.id_number = s.id_number
           INNER JOIN schedule sch ON a.schedule_id = sch.id
@@ -19,7 +19,7 @@ if (isset($_POST['date'])) {
           WHERE a.date = '$date' AND s.section = '$selectedSection' AND a.verified = '1'
           ORDER BY s.last_name";
   } else {
-    $sql = "SELECT a.id_number, a.room, a.schedule_id, TIME_FORMAT(a.time, '%H:%i') AS time, a.date, s.last_name AS student_last_name, s.first_name AS student_first_name, a.status, p.last_name AS professor_last_name, p.first_name AS professor_first_name, sub.subject_name AS subject_name
+    $sql = "SELECT a.id, a.id_number, a.room, a.schedule_id, TIME_FORMAT(a.time, '%H:%i') AS time, a.date, s.last_name AS student_last_name, s.first_name AS student_first_name, a.status, p.last_name AS professor_last_name, p.first_name AS professor_first_name, sub.subject_name AS subject_name
           FROM attendance a
           INNER JOIN students s ON a.id_number = s.id_number
           INNER JOIN schedule sch ON a.schedule_id = sch.id
